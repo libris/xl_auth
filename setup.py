@@ -12,9 +12,9 @@ from xl_auth import __name__, __version__
 
 
 def _get_readme_contents():
-    """Read *README.md* from project root dir."""
+    """Read *README.rst* from project root dir."""
 
-    with open('README.md') as readme_file:
+    with open('README.rst') as readme_file:
         return readme_file.read()
 
 
