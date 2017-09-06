@@ -24,3 +24,11 @@ Technology choices:
 * DB migration support, probably we should go with
   [Alembic](http://alembic.zzzcomputing.com/en/latest/)
 
+
+## Changelog
+
+### v. 0.1
+
+* Establishing initial project requirements, with none of 
+  the intended functionality in place
+
