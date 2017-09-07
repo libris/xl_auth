@@ -8,8 +8,6 @@
 
     ----
 
-    .. moduleauthor:: Mats Blomdahl <mats.blomdahl@gmail.com>
-
     .. versionadded:: 0.1
 """
 

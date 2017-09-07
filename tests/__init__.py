@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 """
     :py:mod:`tests` -- Root Tests Package
-    ====================================
+    =====================================
 
     Tests package! :)
 
 
     ----
-
-    .. moduleauthor:: Mats Blomdahl <mats.blomdahl@gmail.com>
 
     .. versionadded:: 0.1
 """
