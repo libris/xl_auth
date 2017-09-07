@@ -30,6 +30,10 @@ setup(
     keywords='librisxl',
     packages=['xl_auth'],
     package_dir={'xl_auth': 'xl_auth'},
+    install_requires=[
+        'Flask>=0.12',
+        'Flask-Oauthlib>=0.9'
+    ],
     include_package_data=True,
     zip_safe=False,
     test_suite='tests',
