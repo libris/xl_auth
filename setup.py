@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from __future__ import print_function, absolute_import, unicode_literals, division
+from __future__ import (
+    print_function, absolute_import, unicode_literals, division)
 
 try:
     from setuptools import setup
@@ -30,9 +31,19 @@ setup(
     keywords='librisxl',
     packages=['xl_auth'],
     package_dir={'xl_auth': 'xl_auth'},
+    entry_points={
+        'console_scripts': [
+            'xl_auth-ping = xl_auth.scripts.say_pong',
+            'xl_auth-wsgi = xl_auth.scripts.run_wsgi'
+        ]
+    },
     install_requires=[
         'Flask>=0.12',
         'Flask-Oauthlib>=0.9'
+    ],
+    tests_requires=[
+        'mock>=2.0',
+        'testfixtures>=5.2'
     ],
     include_package_data=True,
     zip_safe=False,
