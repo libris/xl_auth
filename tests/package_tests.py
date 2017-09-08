@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-    :py:mod:`~tests.package_identifiers_tests`
-    ==========================================
+    :py:mod:`~tests.package_tests`
+    ==============================
 
     First tests module! :)
 
@@ -19,14 +19,14 @@ from . import XlAuthTestCase
 import xl_auth
 
 
-__all__ = ['PackageIdentifiersTestCase']
+__all__ = ['PackageTestCase']
 
 
-class PackageIdentifiersTestCase(XlAuthTestCase):
+class PackageTestCase(XlAuthTestCase):
     """Tests' module for :py:mod:`xl_auth` package identifiers."""
 
-    def test_package_name_is_xl_auth(self):
+    def test_package_name_is_xl_auth(self):  # noqa
         self.assertEqual(xl_auth.__name__, 'xl_auth')
 
-    def test_package_version_is_0_1(self):
+    def test_package_version_is_0_1(self):  # noqa
         self.assertEqual(xl_auth.__version__, '0.1')

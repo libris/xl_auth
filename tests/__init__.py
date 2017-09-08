@@ -16,6 +16,8 @@ from __future__ import (
 
 from unittest import TestCase
 
+from xl_auth import factory
+
 
 __all__ = ['XlAuthTestCase']
 
@@ -26,5 +28,14 @@ class XlAuthTestCase(TestCase):
     def setUp(self):  # noqa
         super(XlAuthTestCase, self).setUp()
 
+        self.wsgi_app = factory.create_app(application_name='tests')
+        if self.wsgi_app:
+            self.client = self.wsgi_app.test_client(use_cookies=False)
+            self.app_context = self.wsgi_app.app_context()
+            self.app_context.push()
+
     def tearDown(self):  # noqa
         super(XlAuthTestCase, self).tearDown()
+
+        if self.app_context:
+            self.app_context.pop()
