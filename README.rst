@@ -162,8 +162,8 @@ Access rights:
 Changelog
 =========
 
-v. 0.1
-------
+v. 0.1.0
+--------
 
 * Establishing initial project requirements, with none of
   the intended functionality in place
