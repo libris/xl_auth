@@ -1,15 +1,15 @@
 .. -*- coding: utf-8 -*-
 
-
-xl_auth
-=======
+=========
+ xl_auth
+=========
 
 OAuth2 authentication for LibrisXL, replacing BibDB counterpart.
 
 
 
 Project Notes
--------------
+=============
 
 Technology choices:
 
@@ -32,8 +32,33 @@ Technology choices:
 
 
 
+DB Models
+---------
+
+User:
+
+* Email
+* Full name
+* Password (Argon2/bcrypt/scrypt + salt (libsodium))
+* User role (admin, etc.)
+
+Collection:
+
+* Code ("S") - unique
+* Name ("Kungliga biblioteket")
+* Category (library/bibliography/?)
+* "Active" (bool?)
+
+Access rights:
+
+* User ID
+* Collection ID
+* 'kat'|'reg'
+
+
+
 Development Environment
------------------------
+=======================
 
 Getting started with a fresh virtualenv:
 
@@ -59,10 +84,10 @@ Building the documentation:
 
 
 Changelog
----------
+=========
 
 v. 0.1
-^^^^^^
+------
 
 * Establishing initial project requirements, with none of
   the intended functionality in place
