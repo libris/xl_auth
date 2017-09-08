@@ -1,0 +1,17 @@
+{
+    "extends": ["eslint:recommended", "google"],
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "parser": "babel-eslint",
+    "rules": {
+        "max-len": ["error", {"code": 100, "ignoreStrings": true}],
+        "comma-dangle": ["error", "never"]
+    },
+    "globals": {
+        "__dirname": true,
+        "jQuery": true,
+        "$": true
+    }
+}
