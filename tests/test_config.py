@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """Test configs."""
 
+from __future__ import print_function, absolute_import, unicode_literals, division
+
 from xl_auth.app import create_app
 from xl_auth.settings import DevConfig, ProdConfig
 

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """User views."""
 
+from __future__ import print_function, absolute_import, unicode_literals, division
+
 from flask import Blueprint, render_template
 from flask_login import login_required
 

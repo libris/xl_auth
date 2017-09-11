@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """Defines fixtures available to all tests."""
 
+from __future__ import print_function, absolute_import, unicode_literals, division
+
 import pytest
 from webtest import TestApp
 

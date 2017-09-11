@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """Public forms."""
 
+from __future__ import print_function, absolute_import, unicode_literals, division
+
 from flask_wtf import Form
 from wtforms import PasswordField, StringField
 from wtforms.validators import DataRequired

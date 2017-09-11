@@ -4,6 +4,8 @@
 See: http://webtest.readthedocs.org/
 """
 
+from __future__ import print_function, absolute_import, unicode_literals, division
+
 from flask import url_for
 
 from xl_auth.user.models import User

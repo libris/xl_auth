@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """Helper utilities and decorators."""
 
+from __future__ import print_function, absolute_import, unicode_literals, division
+
 from flask import flash
 
 

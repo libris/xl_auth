@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """The app module, containing the app factory function."""
 
+from __future__ import print_function, absolute_import, unicode_literals, division
+
 from flask import Flask, render_template
 
 from xl_auth import commands, public, user

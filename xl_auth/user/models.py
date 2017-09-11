@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """User models."""
 
+from __future__ import print_function, absolute_import, unicode_literals, division
+
 import datetime as dt
 
 from flask_login import UserMixin

@@ -1,8 +1,16 @@
 # -*- coding: utf-8 -*-
 """Database module, including the SQLAlchemy database object and DB-related utilities."""
 
-from .compat import basestring
+from __future__ import print_function, absolute_import, unicode_literals, division
+
 from .extensions import db
+
+try:
+    # noinspection PyCompatibility
+    basestring  # py2
+except NameError:
+    # noinspection PyShadowingBuiltins
+    basestring = str  # py3
 
 # Alias common SQLAlchemy names.
 Column = db.Column
