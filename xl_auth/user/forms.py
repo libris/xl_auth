@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """User forms."""
 
-from __future__ import print_function, absolute_import, unicode_literals, division
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from flask_wtf import Form
 from wtforms import PasswordField, StringField
@@ -24,13 +24,11 @@ class RegisterForm(Form):
 
     def __init__(self, *args, **kwargs):
         """Create instance."""
-
         super(RegisterForm, self).__init__(*args, **kwargs)
         self.user = None
 
     def validate(self):
         """Validate the form."""
-
         initial_validation = super(RegisterForm, self).validate()
 
         if not initial_validation:

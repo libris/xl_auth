@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 """Test login form."""
 
-from __future__ import print_function, absolute_import, unicode_literals, division
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from xl_auth.public.forms import LoginForm
 
 
 def test_validate_success(user):
     """Login successful."""
-
     user.set_password('example')
     user.save()
     form = LoginForm(username=user.username, password='example')
@@ -19,7 +18,6 @@ def test_validate_success(user):
 # noinspection PyUnusedLocal
 def test_validate_unknown_username(db):
     """Unknown username."""
-
     form = LoginForm(username='unknown', password='example')
     assert form.validate() is False
     assert 'Unknown username' in form.username.errors
@@ -28,7 +26,6 @@ def test_validate_unknown_username(db):
 
 def test_validate_invalid_password(user):
     """Invalid password."""
-
     user.set_password('example')
     user.save()
     form = LoginForm(username=user.username, password='wrongPassword')
@@ -38,7 +35,6 @@ def test_validate_invalid_password(user):
 
 def test_validate_inactive_user(user):
     """Inactive user."""
-
     user.active = False
     user.set_password('example')
     user.save()

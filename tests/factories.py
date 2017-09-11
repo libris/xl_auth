@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Factories to help in tests."""
 
-from __future__ import print_function, absolute_import, unicode_literals, division
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from factory import PostGenerationMethodCall, Sequence
 from factory.alchemy import SQLAlchemyModelFactory

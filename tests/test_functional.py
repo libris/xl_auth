@@ -4,7 +4,7 @@
 See: http://webtest.readthedocs.org/
 """
 
-from __future__ import print_function, absolute_import, unicode_literals, division
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from flask import url_for
 
@@ -18,7 +18,6 @@ class TestLoggingIn(object):
 
     def test_can_log_in_returns_200(self, user, testapp):
         """Login successful."""
-
         # Goes to homepage.
         res = testapp.get('/')
         # Fills out login form in navbar.
@@ -31,7 +30,6 @@ class TestLoggingIn(object):
 
     def test_sees_alert_on_log_out(self, user, testapp):
         """Show alert on logout."""
-
         res = testapp.get('/')
         # Fills out login form in navbar.
         form = res.forms['loginForm']
@@ -45,7 +43,6 @@ class TestLoggingIn(object):
 
     def test_sees_error_message_if_password_is_incorrect(self, user, testapp):
         """Show error if password is incorrect."""
-
         # Goes to homepage.
         res = testapp.get('/')
         # Fills out login form, password incorrect.
@@ -60,7 +57,6 @@ class TestLoggingIn(object):
     # noinspection PyUnusedLocal
     def test_sees_error_message_if_username_doesnt_exist(self, user, testapp):
         """Show error if username doesn't exist."""
-
         # Goes to homepage.
         res = testapp.get('/')
         # Fills out login form, password incorrect.
@@ -99,7 +95,6 @@ class TestRegistering(object):
     # noinspection PyUnusedLocal
     def test_sees_error_message_if_passwords_dont_match(self, user, testapp):
         """Show error if passwords don't match."""
-
         # Goes to registration page.
         res = testapp.get(url_for('public.register'))
         # Fills out form, but passwords don't match.
@@ -116,7 +111,6 @@ class TestRegistering(object):
     # noinspection PyUnusedLocal
     def test_sees_error_message_if_user_already_registered(self, user, testapp):
         """Show error if user already registered."""
-
         user = UserFactory(active=True)  # A registered user.
         user.save()
         # Goes to registration page.

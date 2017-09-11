@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Click commands."""
 
-from __future__ import print_function, absolute_import, unicode_literals, division
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import os
 from glob import glob
@@ -20,7 +20,6 @@ TEST_PATH = os.path.join(PROJECT_ROOT, 'tests')
 @click.command()
 def test():
     """Run the tests."""
-
     import pytest
     rv = pytest.main([TEST_PATH, '--verbose'])
     exit(rv)
@@ -31,8 +30,7 @@ def test():
               help='Fix imports using isort, before linting')
 def lint(fix_imports):
     """Lint and check code style with flake8 and isort."""
-
-    skip = ['node_modules', 'requirements']
+    skip = ['node_modules', 'venv', 'py36venv', 'py27venv', 'requirements']
     root_files = glob('*.py')
     root_directories = [
         name for name in next(os.walk('.'))[1] if not name.startswith('.')]
@@ -58,7 +56,6 @@ def clean():
 
     Borrowed from Flask-Script, converted to use Click.
     """
-
     for dirpath, dirnames, filenames in os.walk('.'):
         for filename in filenames:
             if filename.endswith('.pyc') or filename.endswith('.pyo'):
@@ -78,7 +75,6 @@ def urls(url, order):
 
     Borrowed from Flask-Script, converted to use Click.
     """
-
     rows = []
     column_length = 0
     column_headers = ('Rule', 'Endpoint', 'Arguments')

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """User models."""
 
-from __future__ import print_function, absolute_import, unicode_literals, division
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import datetime as dt
 
@@ -21,12 +21,10 @@ class Role(SurrogatePK, Model):
 
     def __init__(self, name, **kwargs):
         """Create instance."""
-
         db.Model.__init__(self, name=name, **kwargs)
 
     def __repr__(self):
         """Represent instance as a unique string."""
-
         return '<Role({name})>'.format(name=self.name)
 
 
@@ -46,7 +44,6 @@ class User(UserMixin, SurrogatePK, Model):
 
     def __init__(self, username, email, password=None, **kwargs):
         """Create instance."""
-
         db.Model.__init__(self, username=username, email=email, **kwargs)
         if password:
             self.set_password(password)
@@ -55,21 +52,17 @@ class User(UserMixin, SurrogatePK, Model):
 
     def set_password(self, password):
         """Set password."""
-
         self.password = bcrypt.generate_password_hash(password)
 
     def check_password(self, value):
         """Check password."""
-
         return bcrypt.check_password_hash(self.password, value)
 
     @property
     def full_name(self):
         """Full user name."""
-
         return '{0} {1}'.format(self.first_name, self.last_name)
 
     def __repr__(self):
         """Represent instance as a unique string."""
-
         return '<User({username!r})>'.format(username=self.username)
