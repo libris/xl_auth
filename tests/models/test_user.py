@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 """Unit tests for User model."""
 
+from __future__ import print_function, absolute_import, unicode_literals, division
+
 import datetime as dt
 
 import pytest
 
 from xl_auth.user.models import Role, User
 
-from .factories import UserFactory
+from ..factories import UserFactory
 
 
 @pytest.mark.usefixtures('db')

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """Test register form."""
 
+from __future__ import print_function, absolute_import, unicode_literals, division
+
 from xl_auth.user.forms import RegisterForm
 
 
