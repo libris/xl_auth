@@ -9,4 +9,4 @@ __all__ = ['__name__', '__version__']
 
 __name__ = 'xl_auth'
 
-__version__ = '0.1.0'
+__version__ = '0.2.0'
