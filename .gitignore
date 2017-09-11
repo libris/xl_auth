@@ -36,6 +36,8 @@ docs/_build/
 
 # Virtualenvs
 venv/
+py27venv/
+py36venv/
 
 # npm
 node_modules/
