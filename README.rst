@@ -112,6 +112,18 @@ in your ``settings.py`` ::
     SEND_FILE_MAX_AGE_DEFAULT = 31556926  # one year
 
 
+Docker
+======
+
+The latest application build can be deployed using Docker for testing purposes ::
+
+    docker run -it -p 5000:5000 mblomdahl/xl_auth
+
+
+All Flask command-line tools are accessed by optional input argument to the container, e.g.
+``flask shell -> docker run -it ...ahl/auth shell``, ``flask db -> docker run -it ...ahl/auth db``.
+
+
 Project Notes
 =============
 
