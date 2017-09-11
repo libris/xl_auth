@@ -6,11 +6,11 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import login_required, login_user, logout_user
 
-from xl_auth.extensions import login_manager
-from xl_auth.public.forms import LoginForm
-from xl_auth.user.forms import RegisterForm
-from xl_auth.user.models import User
-from xl_auth.utils import flash_errors
+from ..extensions import login_manager
+from ..public.forms import LoginForm
+from ..user.forms import RegisterForm
+from ..user.models import User
+from ..utils import flash_errors
 
 blueprint = Blueprint('public', __name__, static_folder='../static')
 

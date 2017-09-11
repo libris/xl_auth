@@ -7,8 +7,8 @@ import datetime as dt
 
 from flask_login import UserMixin
 
-from xl_auth.database import Column, Model, SurrogatePK, db, reference_col, relationship
-from xl_auth.extensions import bcrypt
+from ..database import Column, Model, SurrogatePK, db, reference_col, relationship
+from ..extensions import bcrypt
 
 
 class Role(SurrogatePK, Model):

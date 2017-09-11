@@ -5,10 +5,10 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from flask import Flask, render_template
 
-from xl_auth import commands, public, user
-from xl_auth.extensions import (bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager,
-                                migrate, webpack)
-from xl_auth.settings import ProdConfig
+from . import commands, public, user
+from .extensions import (bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager, migrate,
+                         webpack)
+from .settings import ProdConfig
 
 
 def create_app(config_object=ProdConfig):
