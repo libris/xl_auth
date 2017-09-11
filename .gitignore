@@ -16,10 +16,11 @@ pip-log.txt
 # Unit test / coverage reports
 .coverage
 .tox
-.cache/
+.cache
 nosetests.xml
 
 # Mr Developer
+.idea/
 .mr.developer.cfg
 .project
 .pydevproject

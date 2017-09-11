@@ -10,7 +10,7 @@ from xl_auth.settings import ProdConfig
 
 
 def create_app(config_object=ProdConfig):
-    """An application factory, as explained here: http://flask.pocoo.org/docs/patterns/appfactories/.
+    """An application factory, explained here: http://flask.pocoo.org/docs/patterns/appfactories/
 
     :param config_object: The configuration object to use.
     """
@@ -52,9 +52,11 @@ def register_error_handlers(app):
 
     def render_error(error):
         """Render error template."""
+
         # If a HTTPException, pull the `code` attribute; default to 500
         error_code = getattr(error, 'code', 500)
         return render_template('{0}.html'.format(error_code)), error_code
+
     for errcode in [401, 404, 500]:
         app.errorhandler(errcode)(render_error)
     return None
