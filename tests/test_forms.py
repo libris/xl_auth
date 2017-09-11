@@ -2,37 +2,6 @@
 """Test forms."""
 
 from xl_auth.public.forms import LoginForm
-from xl_auth.user.forms import RegisterForm
-
-
-class TestRegisterForm(object):
-    """Register form."""
-
-    def test_validate_user_already_registered(self, user):
-        """Enter username that is already registered."""
-
-        form = RegisterForm(username=user.username, email='foo@bar.com',
-                            password='example', confirm='example')
-
-        assert form.validate() is False
-        assert 'Username already registered' in form.username.errors
-
-    def test_validate_email_already_registered(self, user):
-        """Enter email that is already registered."""
-
-        form = RegisterForm(username='unique', email=user.email,
-                            password='example', confirm='example')
-
-        assert form.validate() is False
-        assert 'Email already registered' in form.email.errors
-
-    # noinspection PyUnusedLocal
-    def test_validate_success(self, db):
-        """Register with success."""
-
-        form = RegisterForm(username='newUsername', email='new@test.test',
-                            password='example', confirm='example')
-        assert form.validate() is True
 
 
 class TestLoginForm(object):
