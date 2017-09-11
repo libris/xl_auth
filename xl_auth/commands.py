@@ -12,6 +12,9 @@ from flask import current_app
 from flask.cli import with_appcontext
 from werkzeug.exceptions import MethodNotAllowed, NotFound
 
+# Disable warnings on discouraged Py3 use (http://click.pocoo.org/python3/).
+click.disable_unicode_literals_warning = True
+
 HERE = os.path.abspath(os.path.dirname(__file__))
 PROJECT_ROOT = os.path.join(HERE, os.pardir)
 TEST_PATH = os.path.join(PROJECT_ROOT, 'tests')
