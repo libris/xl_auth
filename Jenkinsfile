@@ -105,7 +105,7 @@ pipeline {
                     },
                     'pytest (py27)': {
                         sh 'scl enable python27 ". py27venv/bin/activate && FLASK_APP=autoapp.py flask test"'
-                    }
+                    },
                     'pytest (py35)': {
                         sh 'scl enable rh-python35 ". py35venv/bin/activate && FLASK_APP=autoapp.py flask test"'
                     }
