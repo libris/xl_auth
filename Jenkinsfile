@@ -60,22 +60,21 @@ pipeline {
                         }
                     }
 
-                    def getNpmTag = { String fullBranchName ->
+                    def getBuildType = { String fullBranchName ->
                         switch (getBranchTypeAndName(fullBranchName)[0]) {
                             case 'master':
                                 return 'latest'
                             case 'release':
                                 return 'next'
                             default:
-                                return ''
+                                return 'develop'
                         }
                     }
 
                     env.BUILD_VERSION = getBuildVersion(BRANCH_NAME as String, BUILD_NUMBER)
-                    env.NPM_TAG = getNpmTag(BRANCH_NAME as String)
                     env.DOCKER_TAG = env.BUILD_VERSION.replace('+', '_')
-                    env.DOCKER_TAG_ALIAS = env.NPM_TAG
-                    env.BUILD_TYPE = env.NPM_TAG ? env.NPM_TAG : 'develop'  // latest, next or develop
+                    env.BUILD_TYPE = getBuildType(BRANCH_NAME as String)
+                    env.DOCKER_TAG_ALIAS = env.BUILD_TYPE != 'develop' ? env.BUILD_TYPE : null;
 
                     if (env.BUILD_TYPE == 'next') {
                         sh 'npm version $BUILD_VERSION'
@@ -87,63 +86,46 @@ pipeline {
             steps {
                 stash 'pre_install_git_checkout'
                 sh 'npm install'
+                sh 'virtualenv venv && ./venv/bin/pip install -r requirements/dev.txt'
             }
         }
-        stage('Run ESLint') {
-            steps {
-                sh 'npm run lint'
-            }
-        }
-        stage('Build Artifacts') {
+        stage('Run Tests') {
             steps {
                 //noinspection GroovyAssignabilityCheck
                 parallel(
-                    'Development Bundle': {
-                        sh 'npm run browserify'
-                        archiveArtifacts "dist/mapbox-gl-circle-${BUILD_VERSION}.js"
+                    'ESLint': {
+                        sh 'npm run lint'
                     },
-                    'Production Bundle': {
-                        sh 'npm run prepare'
-                        archiveArtifacts "dist/mapbox-gl-circle-${BUILD_VERSION}.min.js"
+                    'flake8': {
+                        sh 'source venv/bin/activate && FLASK_APP=autoapp.py flask lint'
                     },
-                    'API Docs': {
-                        sh 'npm run docs'
+                    'pytest': {
+                        sh 'source venv/bin/activate && FLASK_APP=autoapp.py flask test'
                     }
                 )
             }
         }
-        stage('Publish') {
+        stage('Build and Publish') {
             when {
                 expression { env.BUILD_TYPE in ['next', 'latest'] }
             }
             environment {
-                NPM_TOKEN = credentials('mblomdahl_npm')
-                DOCKER_LOGIN = credentials('docker_smithmicro_io')
+                DOCKER_LOGIN = credentials('mblomdahl_docker')
             }
             steps {
-                //noinspection GroovyAssignabilityCheck
-                parallel(
-                    'Docker Image': {
-                        dir('_docker-build') {
-                            unstash 'pre_install_git_checkout'
-                            sh 'docker login -u $DOCKER_LOGIN_USR -p $DOCKER_LOGIN_PSW docker.smithmicro.io'
-                            sh 'docker build -t docker.smithmicro.io/mapbox-gl-circle:$DOCKER_TAG .'
-                            sh 'docker save docker.smithmicro.io/mapbox-gl-circle:$DOCKER_TAG | gzip - \
-> mapbox-gl-circle-$BUILD_VERSION.docker.tar.gz'
-                            archiveArtifacts "mapbox-gl-circle-${BUILD_VERSION}.docker.tar.gz"
+                dir('_docker-build') {
+                    unstash 'pre_install_git_checkout'
+                    sh 'docker login -u $DOCKER_LOGIN_USR -p $DOCKER_LOGIN_PSW'
+                    sh 'docker build -t mblomdahl/xl_auth:$DOCKER_TAG .'
+                    sh 'docker save mblomdahl/xl_auth:$DOCKER_TAG | gzip - > xl_auth-$BUILD_VERSION.docker.tar.gz'
+                    archiveArtifacts "mapbox-gl-circle-${BUILD_VERSION}.docker.tar.gz"
 
-                            sh 'docker push docker.smithmicro.io/mapbox-gl-circle:$DOCKER_TAG'
-                            sh 'docker tag docker.smithmicro.io/mapbox-gl-circle:$DOCKER_TAG \
-docker.smithmicro.io/mapbox-gl-circle:$DOCKER_TAG_ALIAS'
-                            sh 'docker push docker.smithmicro.io/mapbox-gl-circle:$DOCKER_TAG_ALIAS'
-                            deleteDir()
-                        }
-                    },
-                    'NPM Package': {
-                        sh 'echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc'
-                        sh 'npm publish --tag $NPM_TAG .'
-                    }
-                )
+                    sh 'docker push mblomdahl/xl_auth:$DOCKER_TAG'
+                    sh 'docker tag mblomdahl/xl_auth:$DOCKER_TAG mblomdahl/xl_auth:$DOCKER_TAG_ALIAS'
+                    sh 'docker push mblomdahl/xl_auth:$DOCKER_TAG_ALIAS'
+                    sh 'docker logout'
+                    deleteDir()
+                }
             }
         }
     }
