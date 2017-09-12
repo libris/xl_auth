@@ -79,18 +79,30 @@ pipeline {
                     if (env.BUILD_TYPE == 'next') {
                         sh 'npm version $BUILD_VERSION'
                     }
+
+                    stash 'pre_install_git_checkout'
                 }
             }
         }
         stage('Install Dependencies') {
             steps {
-                stash 'pre_install_git_checkout'
-                sh 'npm install && npm run build'
-                sh 'mkdir -p /tmp/xl_auth'
-                sh 'scl enable python27 "virtualenv /tmp/xl_auth/py27venv"'
-                sh 'scl enable python27 "/tmp/xl_auth/py27venv/bin/pip install -r requirements/dev.txt"'
-                sh 'scl enable rh-python35 "virtualenv /tmp/xl_auth/py35venv"'
-                sh 'scl enable rh-python35 "/tmp/xl_auth/py35venv/bin/pip install -r requirements/dev.txt"'
+                //noinspection GroovyAssignabilityCheck
+                parallel(
+                    'Npm install + build assets': {
+                        sh 'npm install'
+                        sh 'npm run build'
+                    },
+                    'Create virtualenv (py27)': {
+                        sh 'mkdir -p /tmp/xl_auth'
+                        sh 'scl enable python27 "virtualenv /tmp/xl_auth/py27venv"'
+                        sh 'scl enable python27 "/tmp/xl_auth/py27venv/bin/pip install -r requirements/dev.txt"'
+                    },
+                    'Create virtualenv (py35)': {
+                        sh 'mkdir -p /tmp/xl_auth'
+                        sh 'scl enable rh-python35 "virtualenv /tmp/xl_auth/py35venv"'
+                        sh 'scl enable rh-python35 "/tmp/xl_auth/py35venv/bin/pip install -r requirements/dev.txt"'
+                    }
+                )
             }
         }
         stage('Run Tests') {
