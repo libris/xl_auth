@@ -85,8 +85,9 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 stash 'pre_install_git_checkout'
-                sh 'npm install'
-                sh 'virtualenv venv && ./venv/bin/pip install -r requirements/dev.txt'
+                sh 'npm install && npm run build'
+                sh 'scl enable python27 "virtualenv py27venv && py27venv/bin/pip install -r requirements/dev.txt"'
+                sh 'scl enable rh-python35 "virtualenv py35venv && py35venv/bin/pip install -r requirements/dev.txt"'
             }
         }
         stage('Run Tests') {
@@ -96,11 +97,17 @@ pipeline {
                     'ESLint': {
                         sh 'npm run lint'
                     },
-                    'flake8': {
-                        sh 'source venv/bin/activate && FLASK_APP=autoapp.py flask lint'
+                    'flake8 (py27)': {
+                        sh 'scl enable python27 ". py27venv/bin/activate && FLASK_APP=autoapp.py flask lint"'
                     },
-                    'pytest': {
-                        sh 'source venv/bin/activate && FLASK_APP=autoapp.py flask test'
+                    'flake8 (py35)': {
+                        sh 'scl enable rh-python35 ". py35venv/bin/activate && FLASK_APP=autoapp.py flask lint"'
+                    },
+                    'pytest (py27)': {
+                        sh 'scl enable python27 ". py27venv/bin/activate && FLASK_APP=autoapp.py flask test"'
+                    }
+                    'pytest (py35)': {
+                        sh 'scl enable rh-python35 ". py35venv/bin/activate && FLASK_APP=autoapp.py flask test"'
                     }
                 )
             }
