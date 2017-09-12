@@ -86,11 +86,17 @@ pipeline {
             steps {
                 stash 'pre_install_git_checkout'
                 sh 'npm install && npm run build'
-                sh 'scl enable python27 "virtualenv py27venv && py27venv/bin/pip install -r requirements/dev.txt"'
-                sh 'scl enable rh-python35 "virtualenv py35venv && py35venv/bin/pip install -r requirements/dev.txt"'
+                sh 'mkdir -p /tmp/xl_auth'
+                sh 'scl enable python27 "virtualenv /tmp/xl_auth/py27venv"'
+                sh 'scl enable python27 "/tmp/xl_auth/py27venv/bin/pip install -r requirements/dev.txt"'
+                sh 'scl enable rh-python35 "virtualenv /tmp/xl_auth/py35venv"'
+                sh 'scl enable rh-python35 "/tmp/xl_auth/py35venv/bin/pip install -r requirements/dev.txt"'
             }
         }
         stage('Run Tests') {
+            environment {
+                FLASK_APP = 'autoapp.py'
+            }
             steps {
                 //noinspection GroovyAssignabilityCheck
                 parallel(
@@ -98,16 +104,16 @@ pipeline {
                         sh 'npm run lint'
                     },
                     'flake8 (py27)': {
-                        sh 'scl enable python27 ". py27venv/bin/activate && FLASK_APP=autoapp.py flask lint"'
+                        sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && flask lint"'
                     },
                     'flake8 (py35)': {
-                        sh 'scl enable rh-python35 ". py35venv/bin/activate && FLASK_APP=autoapp.py flask lint"'
+                        sh 'scl enable rh-python35 ". /tmp/xl_auth/py35venv/bin/activate && flask lint"'
                     },
                     'pytest (py27)': {
-                        sh 'scl enable python27 ". py27venv/bin/activate && FLASK_APP=autoapp.py flask test"'
+                        sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && flask test"'
                     },
                     'pytest (py35)': {
-                        sh 'scl enable rh-python35 ". py35venv/bin/activate && FLASK_APP=autoapp.py flask test"'
+                        sh 'scl enable rh-python35 ". /tmp/xl_auth/py35venv/bin/activate && flask test"'
                     }
                 )
             }
@@ -138,6 +144,7 @@ pipeline {
     }
     post {
         always {
+            sh 'rm -rf /tmp/xl_auth'
             deleteDir()
         }
         success {
