@@ -69,6 +69,7 @@ def run_migrations_online():
                       target_metadata=target_metadata,
                       process_revision_directives=process_revision_directives,
                       compare_type=True,
+                      render_as_batch=True,
                       **current_app.extensions['migrate'].configure_args)
 
     try:
