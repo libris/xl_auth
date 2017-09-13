@@ -15,7 +15,7 @@ from ..factories import UserFactory
 @pytest.mark.usefixtures('db')
 def test_get_by_id():
     """Get user by ID."""
-    user = User('foo@bar.com')
+    user = User('foo@bar.com', 'Mr. Foo Bar')
     user.save()
 
     retrieved = User.get_by_id(user.id)
@@ -25,7 +25,7 @@ def test_get_by_id():
 @pytest.mark.usefixtures('db')
 def test_created_at_defaults_to_datetime():
     """Test creation date."""
-    user = User(email='foo@bar.com')
+    user = User(email='foo@bar.com', full_name='Mr. Foo Bar')
     user.save()
     assert bool(user.created_at)
     assert isinstance(user.created_at, dt.datetime)
@@ -34,7 +34,7 @@ def test_created_at_defaults_to_datetime():
 @pytest.mark.usefixtures('db')
 def test_password_is_nullable():
     """Test null password."""
-    user = User(email='foo@bar.com')
+    user = User(email='foo@bar.com', full_name='Mr. Foo Bar')
     user.save()
     assert user.password is None
 
@@ -45,7 +45,11 @@ def test_factory(db):
     user = UserFactory(password='myPrecious')
     db.session.commit()
     assert bool(user.email)
+    assert bool(user.full_name)
     assert bool(user.created_at)
+    assert not hasattr(user, 'username')
+    assert not hasattr(user, 'first_name')
+    assert not hasattr(user, 'last_name')
     assert user.is_admin is False
     assert user.active is True
     assert user.check_password('myPrecious')
@@ -54,7 +58,7 @@ def test_factory(db):
 @pytest.mark.usefixtures('db')
 def test_check_password():
     """Check password."""
-    user = User.create(email='foo@bar.com', password='fooBarBaz123')
+    user = User.create(email='foo@bar.com', full_name='Mr. Foo Bar', password='fooBarBaz123')
     assert user.check_password('fooBarBaz123') is True
     assert user.check_password('barFooBaz') is False
 
@@ -62,7 +66,7 @@ def test_check_password():
 @pytest.mark.usefixtures('db')
 def test_full_name():
     """User full name."""
-    user = UserFactory(first_name='Foo', last_name='Bar')
+    user = UserFactory(full_name='Foo Bar')
     assert user.full_name == 'Foo Bar'
 
 
