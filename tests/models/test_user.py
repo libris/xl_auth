@@ -15,7 +15,7 @@ from ..factories import UserFactory
 @pytest.mark.usefixtures('db')
 def test_get_by_id():
     """Get user by ID."""
-    user = User('foo', 'foo@bar.com')
+    user = User('foo@bar.com')
     user.save()
 
     retrieved = User.get_by_id(user.id)
@@ -25,7 +25,7 @@ def test_get_by_id():
 @pytest.mark.usefixtures('db')
 def test_created_at_defaults_to_datetime():
     """Test creation date."""
-    user = User(username='foo', email='foo@bar.com')
+    user = User(email='foo@bar.com')
     user.save()
     assert bool(user.created_at)
     assert isinstance(user.created_at, dt.datetime)
@@ -34,7 +34,7 @@ def test_created_at_defaults_to_datetime():
 @pytest.mark.usefixtures('db')
 def test_password_is_nullable():
     """Test null password."""
-    user = User(username='foo', email='foo@bar.com')
+    user = User(email='foo@bar.com')
     user.save()
     assert user.password is None
 
@@ -44,7 +44,6 @@ def test_factory(db):
     """Test user factory."""
     user = UserFactory(password='myPrecious')
     db.session.commit()
-    assert bool(user.username)
     assert bool(user.email)
     assert bool(user.created_at)
     assert user.is_admin is False
@@ -55,8 +54,7 @@ def test_factory(db):
 @pytest.mark.usefixtures('db')
 def test_check_password():
     """Check password."""
-    user = User.create(username='foo', email='foo@bar.com',
-                       password='fooBarBaz123')
+    user = User.create(email='foo@bar.com', password='fooBarBaz123')
     assert user.check_password('fooBarBaz123') is True
     assert user.check_password('barFooBaz') is False
 
