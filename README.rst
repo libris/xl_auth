@@ -6,6 +6,10 @@
 
 OAuth2 authorization for LibrisXL, replacing BibDB counterpart.
 
+.. image:: http://jenkins.smithmicro.io:8080/job/xl_auth-multibranch/job/feature%252Fjenkinsfile/lastBuild/badge/icon
+    :target: http://jenkins.smithmicro.io:8080/job/xl_auth-multibranch/job/feature%252Fjenkinsfile/lastBuild/
+    :alt: Build Status
+
 
 Quickstart
 ==========
