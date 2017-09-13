@@ -13,7 +13,7 @@ from .models import User
 class RegisterForm(Form):
     """Register form."""
 
-    email = StringField('Email', validators=[DataRequired(), Email(), Length(min=6, max=255)])
+    username = StringField('Email', validators=[DataRequired(), Email(), Length(min=6, max=255)])
     full_name = StringField('Full name', validators=[DataRequired(), Length(min=3, max=255)])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6, max=64)])
     confirm = PasswordField('Verify password',
@@ -31,10 +31,10 @@ class RegisterForm(Form):
         if not initial_validation:
             return False
 
-        user = User.query.filter_by(email=self.email.data).first()
+        user = User.query.filter_by(email=self.username.data).first()
 
         if user:
-            self.email.errors.append('Email already registered')
+            self.username.errors.append('Email already registered')
             return False
 
         return True
