@@ -32,8 +32,8 @@ class User(UserMixin, SurrogatePK, Model):
     """A user of the app."""
 
     __tablename__ = 'users'
-    email = Column(db.String(80), unique=True, nullable=False)
-    full_name = Column(db.String(80), unique=False, nullable=False)
+    email = Column(db.String(255), unique=True, nullable=False)
+    full_name = Column(db.String(255), unique=False, nullable=False)
     #: The hashed password
     password = Column(db.Binary(128), nullable=True)
     created_at = Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
