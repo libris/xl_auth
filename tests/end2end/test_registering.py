@@ -20,8 +20,8 @@ def test_can_register(user, testapp):
     res = res.click('Create account')
     # Fills out the form
     form = res.forms['registerForm']
-    form['username'] = 'foobar'
     form['email'] = 'foo@bar.com'
+    form['full_name'] = 'Mr End2End'
     form['password'] = 'secret'
     form['confirm'] = 'secret'
     # Submits
@@ -38,8 +38,8 @@ def test_sees_error_message_if_passwords_dont_match(user, testapp):
     res = testapp.get(url_for('public.register'))
     # Fills out form, but passwords don't match.
     form = res.forms['registerForm']
-    form['username'] = 'foobar'
     form['email'] = 'foo@bar.com'
+    form['full_name'] = 'Mr End2End'
     form['password'] = 'secret'
     form['confirm'] = 'secrets'
     # Submits.
@@ -57,11 +57,11 @@ def test_sees_error_message_if_user_already_registered(user, testapp):
     res = testapp.get(url_for('public.register'))
     # Fills out form, but username is already registered.
     form = res.forms['registerForm']
-    form['username'] = user.username
-    form['email'] = 'foo@bar.com'
+    form['email'] = user.email
+    form['full_name'] = 'Mr End2End'
     form['password'] = 'secret'
     form['confirm'] = 'secret'
     # Submits.
     res = form.submit()
     # Sees error.
-    assert 'Username already registered' in res
+    assert 'Email already registered' in res
