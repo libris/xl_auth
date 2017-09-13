@@ -27,9 +27,9 @@ class LoginForm(Form):
         if not initial_validation:
             return False
 
-        self.user = User.query.filter_by(username=self.username.data).first()
+        self.user = User.query.filter_by(email=self.username.data).first()
         if not self.user:
-            self.username.errors.append('Unknown username')
+            self.username.errors.append('Unknown username/email')
             return False
 
         if not self.user.check_password(self.password.data):
