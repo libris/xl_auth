@@ -59,3 +59,22 @@ class User(UserMixin, SurrogatePK, Model):
     def __repr__(self):
         """Represent instance as a unique string."""
         return '<User({email!r})>'.format(email=self.email)
+
+
+class Collection(SurrogatePK, Model):
+    """A collection of library stuff, a.k.a. 'a sigel'."""
+
+    __tablename__ = 'collections'
+    code = Column(db.String(255), unique=True, nullable=False)
+    friendly_name = Column(db.String(255), unique=False, nullable=False)
+    category = Column(db.String(255), nullable=True)
+    active = Column(db.Boolean(), default=True)
+    created_at = Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
+
+    def __init__(self, code, friendly_name, **kwargs):
+        """Create instance."""
+        db.Model.__init__(self, code=code, friendly_name=friendly_name, **kwargs)
+
+    def __repr__(self):
+        """Represent instance as a unique string."""
+        return '<Collection({code!r})>'.format(code=self.code)
