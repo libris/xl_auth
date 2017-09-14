@@ -16,7 +16,8 @@ from ..factories import CollectionFactory
 @pytest.mark.usefixtures('db')
 def test_get_by_id():
     """Get collection by ID."""
-    collection = Collection(code='SKB', friendly_name='Literature by Strindberg')
+    collection = Collection(code='SKB', friendly_name='Literature by Strindberg',
+                            category='bibliography')
     collection.save()
 
     retrieved = Collection.get_by_id(collection.id)
@@ -26,18 +27,10 @@ def test_get_by_id():
 @pytest.mark.usefixtures('db')
 def test_created_at_defaults_to_datetime():
     """Test creation date."""
-    collection = Collection('KBX', 'Secret books')
+    collection = Collection('KBX', 'Secret books', 'library')
     collection.save()
     assert bool(collection.created_at)
     assert isinstance(collection.created_at, dt.datetime)
-
-
-@pytest.mark.usefixtures('db')
-def test_category_is_nullable():
-    """Test null category."""
-    collection = Collection('KBY', 'Old books', category=None)
-    collection.save()
-    assert collection.category is None
 
 
 @pytest.mark.usefixtures('db')
@@ -47,7 +40,7 @@ def test_factory(db):
     db.session.commit()
     assert bool(collection.code)
     assert bool(collection.friendly_name)
-    assert isinstance(collection.category, string_types) or collection.category is None
+    assert collection.category in {'bibliography', 'library', 'categorized'}
     assert bool(collection.created_at)
     assert collection.active is True
 

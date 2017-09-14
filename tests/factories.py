@@ -40,9 +40,9 @@ class UserFactory(BaseFactory):
 class CollectionFactory(BaseFactory):
     """Collection factory."""
 
-    code = Sequence(lambda _: 'collection{0}'.format(_))
+    code = Sequence(lambda _: 'sigel{0}'.format(_))
     friendly_name = Sequence(lambda _: 'friendly_name{0}'.format(_))
-    category = choice(['bibliography', 'library', None])
+    category = choice(['bibliography', 'library', 'categorized'])
     active = True
 
     class Meta:
