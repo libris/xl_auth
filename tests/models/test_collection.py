@@ -5,8 +5,8 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import datetime as dt
 
-from six import string_types
 import pytest
+from six import string_types
 
 from xl_auth.user.models import Collection
 

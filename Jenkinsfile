@@ -166,8 +166,8 @@ flask test --junit-xml=py35test-junit.xml"'
 flake8_junit py27flake8.log py27flake8-junit.xml"'
             junit 'py27flake8-junit.xml'
 
-            //sh 'rm -rf /tmp/xl_auth'
-            //deleteDir()
+            sh 'rm -rf /tmp/xl_auth'
+            deleteDir()
         }
         success {
             echo 'Build succeeded!'

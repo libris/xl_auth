@@ -9,7 +9,7 @@ from factory import PostGenerationMethodCall, Sequence
 from factory.alchemy import SQLAlchemyModelFactory
 
 from xl_auth.database import db
-from xl_auth.user.models import User, Collection
+from xl_auth.user.models import Collection, User
 
 
 class BaseFactory(SQLAlchemyModelFactory):
