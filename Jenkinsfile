@@ -122,10 +122,12 @@ pipeline {
                         sh 'scl enable rh-python35 ". /tmp/xl_auth/py35venv/bin/activate && flask lint"'
                     },
                     'pytest (py27)': {
-                        sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && flask test"'
+                        sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && \
+flask test --junit-xml=py27junit.xml"'
                     },
                     'pytest (py35)': {
-                        sh 'scl enable rh-python35 ". /tmp/xl_auth/py35venv/bin/activate && flask test"'
+                        sh 'scl enable rh-python35 ". /tmp/xl_auth/py35venv/bin/activate && \
+flask test --junit-xml=py35junit.xml"'
                     }
                 )
             }
@@ -156,6 +158,8 @@ pipeline {
     }
     post {
         always {
+            junit 'py27junit.xml'
+            junit 'py35junit.xml'
             sh 'rm -rf /tmp/xl_auth'
             deleteDir()
         }
