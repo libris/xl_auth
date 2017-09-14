@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Test register form."""
+"""Test user form(s)."""
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 

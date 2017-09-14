@@ -35,7 +35,7 @@ def test_created_at_defaults_to_datetime():
 @pytest.mark.usefixtures('db')
 def test_category_is_nullable():
     """Test null category."""
-    collection = Collection('KBY', 'Old books')
+    collection = Collection('KBY', 'Old books', category=None)
     collection.save()
     assert collection.category is None
 
