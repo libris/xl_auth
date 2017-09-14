@@ -117,7 +117,7 @@ pipeline {
                     },
                     'flake8 (py27)': {
                         sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && \
-flask lint > py27flake8.log"'
+flask lint | tee py27flake8.log ; ( exit ${PIPESTATUS} )"'
                     },
                     'flake8 (py35)': {
                         sh 'scl enable rh-python35 ". /tmp/xl_auth/py35venv/bin/activate && flask lint"'
