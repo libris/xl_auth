@@ -116,18 +116,19 @@ pipeline {
                         sh 'npm run lint'
                     },
                     'flake8 (py27)': {
-                        sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && flask lint"'
+                        sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && \
+flask lint > py27flake8.log"'
                     },
                     'flake8 (py35)': {
                         sh 'scl enable rh-python35 ". /tmp/xl_auth/py35venv/bin/activate && flask lint"'
                     },
                     'pytest (py27)': {
                         sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && \
-flask test --junit-xml=py27junit.xml"'
+flask test --junit-xml=py27test-junit.xml"'
                     },
                     'pytest (py35)': {
                         sh 'scl enable rh-python35 ". /tmp/xl_auth/py35venv/bin/activate && \
-flask test --junit-xml=py35junit.xml"'
+flask test --junit-xml=py35test-junit.xml"'
                     }
                 )
             }
@@ -158,8 +159,13 @@ flask test --junit-xml=py35junit.xml"'
     }
     post {
         always {
-            junit 'py27junit.xml'
-            junit 'py35junit.xml'
+            junit 'py27test-junit.xml'
+            junit 'py35test-junit.xml'
+
+            sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && \
+flake8_junit py27flake8.log py27flake8-junit.xml"'
+            junit 'py27flake8-junit.xml'
+
             sh 'rm -rf /tmp/xl_auth'
             deleteDir()
         }
