@@ -17,7 +17,7 @@ pip-log.txt
 .coverage
 .tox
 .cache
-nosetests.xml
+*junit.xml
 
 # Mr Developer
 .idea/

@@ -21,10 +21,14 @@ TEST_PATH = os.path.join(PROJECT_ROOT, 'tests')
 
 
 @click.command()
-def test():
+@click.option('-j', '--junit-xml', help='create JUnit XML output at given path')
+def test(junit_xml=None):
     """Run the tests."""
     import pytest
-    rv = pytest.main([TEST_PATH, '--verbose'])
+    args = [TEST_PATH, '--verbose']
+    if junit_xml:
+        args.append('--junit-xml={}'.format(junit_xml))
+    rv = pytest.main(args)
     exit(rv)
 
 
