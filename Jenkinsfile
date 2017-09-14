@@ -117,7 +117,7 @@ pipeline {
                     },
                     'flake8 (py27)': {
                         sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && \
-flask lint | tee py27flake8.log && ( exit $PIPESTATUS )"'
+flask lint" | tee py27flake8.log && ( exit $PIPESTATUS )'
                     },
                     'flake8 (py35)': {
                         sh 'scl enable rh-python35 ". /tmp/xl_auth/py35venv/bin/activate && flask lint"'
@@ -167,7 +167,7 @@ flake8_junit py27flake8.log py27flake8-junit.xml"'
             junit 'py27flake8-junit.xml'
 
             //sh 'rm -rf /tmp/xl_auth'
-            deleteDir()
+            //deleteDir()
         }
         success {
             echo 'Build succeeded!'
