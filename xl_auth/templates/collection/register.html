@@ -1,0 +1,28 @@
+<!-- collection/register.html -->
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container-narrow">
+        <h1>Register New Collection</h1>
+        <br/>
+        <form id="registerForm" class="form form-register" method="POST" action="" role="form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <div class="form-group">
+                {{ register_collection_form.code.label }}
+                {{ register_collection_form.code(placeholder="KfX", class_="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ register_collection_form.friendly_name.label }}
+                {{ register_collection_form.friendly_name(placeholder="Agricultural Classics", class_="form-control") }}
+            </div>
+            <div class="form-group">
+                {% for choice in register_collection_form.category %}
+                    <label class="radio">
+                        {{ choice }}
+                        {{ choice.label }}
+                    </label>
+                {% endfor %}
+            </div>
+            <p><input class="btn btn-default btn-submit" type="submit" value="Register"></p>
+        </form>
+    </div>
+{% endblock %}

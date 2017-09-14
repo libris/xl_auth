@@ -1,49 +1,56 @@
-
+<!-- nav.html -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container">
+    <div class="container">
 
-  <!-- Brand and toggle get grouped for better mobile display -->
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="{{ url_for('public.home') }}">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for('public.home') }}">
 
-      xl_auth
+                xl_auth
 
-    </a>
-  </div>
-  <!-- Collect the nav links, forms, and other content for toggling -->
-  <div class="collapse navbar-collapse navbar-ex1-collapse">
-    <ul class="nav navbar-nav">
-      <li><a href="{{ url_for('public.home') }}">Home</a></li>
-      <li><a href="{{ url_for('public.about') }}">About</a></li>
-    </ul>
-    {% if current_user and current_user.is_authenticated %}
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            <p class="navbar-text"><a class="navbar-link" href="{{ url_for('user.members') }}">Logged in as {{ current_user.full_name }}</a></p>
-        </li>
-        <li><a class="navbar-link" href="{{ url_for('public.logout') }}"><i class="fa fa-sign-out"></i></a></li>
+            </a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url_for('public.home') }}">Home</a></li>
+                <li><a href="{{ url_for('collection.home') }}">Collections</a></li>
+                <li><a href="{{ url_for('public.about') }}">About</a></li>
+            </ul>
+            {% if current_user and current_user.is_authenticated %}
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <p class="navbar-text"><a class="navbar-link"
+                                                  href="{{ url_for('user.members') }}">Logged in
+                            as {{ current_user.full_name }}</a></p>
+                    </li>
+                    <li>
+                        <a class="navbar-link" href="{{ url_for('public.logout') }}"><i
+                                class="fa fa-sign-out"></i></a>
+                    </li>
 
-    </ul>
-    {% elif form %}
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="{{ url_for('public.register') }}">Create account</a></li>
-    </ul>
-    <form id="loginForm" method="POST" class="navbar-form form-inline navbar-right" action="/" role="login">
-      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-      <div class="form-group">
-        {{ form.username(placeholder="user@example.com", class_="form-control") }}
-        {{ form.password(placeholder="********", class_="form-control") }}
-      </div>
-      <button type="submit" class="btn btn-default">Log in</button>
-    </form>
-    {% endif %}
-  </div><!-- /.navbar-collapse -->
-  </div><!-- /.container -->
+                </ul>
+            {% elif login_form %}
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ url_for('public.register') }}">Create account</a></li>
+                </ul>
+                <form id="loginForm" method="POST" class="navbar-form form-inline navbar-right"
+                      action="/" role="login">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <div class="form-group">
+                        {{ login_form.username(placeholder="user@example.com", class_="form-control") }}
+                        {{ login_form.password(placeholder="********", class_="form-control") }}
+                    </div>
+                    <button type="submit" class="btn btn-default">Log in</button>
+                </form>
+            {% endif %}
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container -->
 </nav>
-

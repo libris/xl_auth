@@ -1,0 +1,19 @@
+<!-- collection/home.html -->
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Collections</h1>
+    <strong>Actions:</strong>
+    <ul>
+        <li><a href="{{ url_for('collection.register') }}">Register New Collection</a></li>
+    </ul>
+
+    <strong>Existing collections:</strong>
+    <ul>
+        {% for item in collections_list %}
+            <li>
+                id: {{ item.id }} / code: {{ item.code }} / friendly_name: {{ item.friendly_name }} / category: {{ item.category }} / active: {{ item.active }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
