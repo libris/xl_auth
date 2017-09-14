@@ -11,7 +11,7 @@ from .models import User
 
 
 class RegisterForm(Form):
-    """Register form."""
+    """User registration form."""
 
     username = StringField('Email', validators=[DataRequired(), Email(), Length(min=6, max=255)])
     full_name = StringField('Full name', validators=[DataRequired(), Length(min=3, max=255)])
