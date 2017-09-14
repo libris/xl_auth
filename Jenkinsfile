@@ -116,8 +116,18 @@ pipeline {
                         sh 'npm run lint'
                     },
                     'flake8 (py27)': {
-                        sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && \
+                        script {
+                            try {
+                                sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && \
 flask lint" | tee py27flake8.log && ( exit $PIPESTATUS )'
+                            }
+                            catch (Throwable e) {
+                                sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && \
+flake8_junit py27flake8.log py27flake8-junit.xml"'
+                                junit 'py27flake8-junit.xml'
+                                throw e
+                            }
+                        }
                     },
                     'flake8 (py35)': {
                         sh 'scl enable rh-python35 ". /tmp/xl_auth/py35venv/bin/activate && flask lint"'
@@ -131,6 +141,12 @@ flask test --junit-xml=py27test-junit.xml"'
 flask test --junit-xml=py35test-junit.xml"'
                     }
                 )
+            }
+            post {
+                always {
+                    junit 'py27test-junit.xml'
+                    junit 'py35test-junit.xml'
+                }
             }
         }
         stage('Build and Publish') {
@@ -159,13 +175,6 @@ flask test --junit-xml=py35test-junit.xml"'
     }
     post {
         always {
-            junit 'py27test-junit.xml'
-            junit 'py35test-junit.xml'
-
-            sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && \
-flake8_junit py27flake8.log py27flake8-junit.xml"'
-            junit 'py27flake8-junit.xml'
-
             sh 'rm -rf /tmp/xl_auth'
             deleteDir()
         }
