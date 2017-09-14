@@ -56,4 +56,4 @@ def test_factory(db):
 def test_repr():
     """Check repr output."""
     collection = CollectionFactory(code='KBZ')
-    assert repr(collection) == '<Collection({!r})>'.format('KBZ')
+    assert repr(collection) == "<Collection('KBZ')>"
