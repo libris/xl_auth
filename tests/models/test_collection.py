@@ -8,7 +8,7 @@ import datetime as dt
 import pytest
 from six import string_types
 
-from xl_auth.user.models import Collection
+from xl_auth.collection.models import Collection
 
 from ..factories import CollectionFactory
 
