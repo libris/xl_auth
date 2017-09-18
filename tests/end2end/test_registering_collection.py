@@ -32,6 +32,11 @@ def test_can_register_new_collection(collection, testapp):
     assert res.status_code == 200
     # A new collection was created
     assert len(Collection.query.all()) == old_count + 1
+    # The new collection is listed under existing collections
+    assert 'id: {}'.format(Collection.query.filter(Collection.code == 'SfX').first().id) in res
+    assert 'code: {}'.format(form['code'].value) in res
+    assert 'friendly_name: {}'.format(form['friendly_name'].value) in res
+    assert 'category: {}'.format(form['category'].value) in res
 
 
 # noinspection PyUnusedLocal
