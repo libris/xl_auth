@@ -6,6 +6,10 @@
 
 OAuth2 authorization for LibrisXL, replacing BibDB counterpart.
 
+.. image:: http://jenkins.smithmicro.io:8080/job/xl_auth-multibranch/job/feature%252Fjenkinsfile/lastBuild/badge/icon
+    :target: http://jenkins.smithmicro.io:8080/job/xl_auth-multibranch/job/feature%252Fjenkinsfile/lastBuild/
+    :alt: Build Status
+
 
 Quickstart
 ==========
@@ -110,6 +114,18 @@ should cache all your assets forever by including the following line
 in your ``settings.py`` ::
 
     SEND_FILE_MAX_AGE_DEFAULT = 31556926  # one year
+
+
+Docker
+======
+
+The latest application build can be deployed using Docker for testing purposes ::
+
+    docker run -it -p 5000:5000 mblomdahl/xl_auth
+
+
+All Flask command-line tools are accessed by optional input argument to the container, e.g.
+``flask shell -> docker run -it ...ahl/auth shell``, ``flask db -> docker run -it ...ahl/auth db``.
 
 
 Project Notes
