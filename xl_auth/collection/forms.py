@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from flask_wtf import Form
 from wtforms import RadioField, StringField
-from wtforms.validators import DataRequired, Length
+from wtforms.validators import DataRequired, Length, ValidationError
 
 from .models import Collection
 
@@ -46,6 +46,16 @@ class RegisterForm(CollectionForm):
 
 class EditForm(CollectionForm):
     """Collection edit form."""
+
+    def __init__(self, target_collection_code, *args, **kwargs):
+        """Create instance."""
+        super(EditForm, self).__init__(*args, **kwargs)
+        self.target_collection_code = target_collection_code
+
+    def validate_code(self, field):
+        """Validate code field."""
+        if field.data and field.data != self.target_collection_code:
+            raise ValidationError('Code cannot be modified')
 
     def validate(self):
         """Validate the form."""
