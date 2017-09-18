@@ -10,8 +10,8 @@ from wtforms.validators import DataRequired, Length
 from .models import Collection
 
 
-class RegisterForm(Form):
-    """Collection registration form."""
+class CollectionForm(Form):
+    """Collection form."""
 
     code = StringField('Code', validators=[DataRequired(), Length(min=2, max=8)])
     friendly_name = StringField('Name', validators=[DataRequired(), Length(min=2, max=255)])
@@ -21,8 +21,12 @@ class RegisterForm(Form):
 
     def __init__(self, *args, **kwargs):
         """Create instance."""
-        super(RegisterForm, self).__init__(*args, **kwargs)
+        super(CollectionForm, self).__init__(*args, **kwargs)
         self.collection = None
+
+
+class RegisterForm(CollectionForm):
+    """Collection registration form."""
 
     def validate(self):
         """Validate the form."""
@@ -35,6 +39,24 @@ class RegisterForm(Form):
 
         if collection:
             self.code.errors.append('Code already registered')
+            return False
+
+        return True
+
+
+class EditForm(CollectionForm):
+    """Collection edit form."""
+
+    def validate(self):
+        """Validate the form."""
+        initial_validation = super(EditForm, self).validate()
+
+        if not initial_validation:
+            return False
+
+        collection = Collection.query.filter_by(code=self.code.data).first()
+        if not collection:
+            self.code.errors.append('Code does not exist')
             return False
 
         return True
