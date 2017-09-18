@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Test registering."""
+"""Test registering user."""
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
@@ -19,7 +19,7 @@ def test_user_can_register(user, testapp):
     # Clicks Create Account button
     res = res.click('Create account')
     # Fills out the form
-    form = res.forms['registerForm']
+    form = res.forms['registerUserForm']
     form['username'] = 'foo@bar.com'
     form['full_name'] = 'Mr End2End'
     form['password'] = 'secret'
@@ -37,7 +37,7 @@ def test_user_sees_error_message_if_passwords_dont_match(user, testapp):
     # Goes to registration page.
     res = testapp.get(url_for('public.register'))
     # Fills out form, but passwords don't match.
-    form = res.forms['registerForm']
+    form = res.forms['registerUserForm']
     form['username'] = 'foo@bar.com'
     form['full_name'] = 'Mr End2End'
     form['password'] = 'secret'
@@ -56,7 +56,7 @@ def test_user_sees_error_message_if_user_already_registered(user, testapp):
     # Goes to registration page.
     res = testapp.get(url_for('public.register'))
     # Fills out form, but username is already registered.
-    form = res.forms['registerForm']
+    form = res.forms['registerUserForm']
     form['username'] = user.email
     form['full_name'] = 'Mr End2End'
     form['password'] = 'secret'
