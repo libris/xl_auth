@@ -169,7 +169,7 @@ flask test --junit-xml=py35test-junit.xml"'
                     sh 'docker login -u $DOCKER_LOGIN_USR -p $DOCKER_LOGIN_PSW'
                     sh 'docker build -t mblomdahl/xl_auth:$DOCKER_TAG .'
                     sh 'docker save mblomdahl/xl_auth:$DOCKER_TAG | gzip - > xl_auth-$BUILD_VERSION.docker.tar.gz'
-                    archiveArtifacts "mapbox-gl-circle-${BUILD_VERSION}.docker.tar.gz"
+                    archiveArtifacts "xl_auth-${BUILD_VERSION}.docker.tar.gz"
 
                     sh 'docker push mblomdahl/xl_auth:$DOCKER_TAG'
                     sh 'docker tag mblomdahl/xl_auth:$DOCKER_TAG mblomdahl/xl_auth:$DOCKER_TAG_ALIAS'

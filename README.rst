@@ -6,8 +6,8 @@
 
 OAuth2 authorization for LibrisXL, replacing BibDB counterpart.
 
-.. image:: http://jenkins.smithmicro.io:8080/job/xl_auth-multibranch/job/feature%252Fjenkinsfile/lastBuild/badge/icon
-    :target: http://jenkins.smithmicro.io:8080/job/xl_auth-multibranch/job/feature%252Fjenkinsfile/lastBuild/
+.. image:: http://jenkins.smithmicro.io:8080/job/xl_auth-multibranch/job/master/lastBuild/badge/icon
+    :target: http://jenkins.smithmicro.io:8080/job/xl_auth-multibranch/job/master/lastBuild/
     :alt: Build Status
 
 
@@ -56,8 +56,8 @@ To deploy ::
     npm run build   # build assets with webpack
     flask run       # start the flask server
 
-In your production environment, make sure the ``FLASK_DEBUG`` environment
-variable is unset or is set to ``0``, so that ``ProdConfig`` is used.
+In your production environment, make sure the ``FLASK_DEBUG`` environment variable is
+unset or is set to ``0``, so that ``ProdConfig`` is used.
 
 
 Shell
@@ -97,21 +97,21 @@ For a full migration command reference, run ``flask db --help``.
 Asset Management
 ================
 
-Files placed inside the ``assets`` directory and its subdirectories
-(excluding ``js`` and ``css``) will be copied by webpack's
-``file-loader`` into the ``static/build`` directory, with hashes of
-their contents appended to their names.  For instance, if you have the
-file ``assets/img/favicon.ico``, this will get copied into something
+Files placed inside the ``assets`` directory and its subdirectories (excluding ``js`` and ``css``)
+will be copied by webpack's ``file-loader`` into the ``static/build`` directory, with hashes of
+their contents appended to their names.
+
+For instance, if you have a file ``assets/img/favicon.ico``, this will get copied into something
 like ``static/build/img/favicon.fec40b1d14528bf9179da3b6b78079ad.ico``.
+
 You can then put this line into your header ::
 
-    <link rel="shortcut icon" href="{{asset_url_for('img/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset_url_for('img/favicon.ico') }}">
 
-to refer to it inside your HTML page.  If all of your static files are
-managed this way, then their filenames will change whenever their
-contents do, and you can ask Flask to tell web browsers that they
-should cache all your assets forever by including the following line
-in your ``settings.py`` ::
+to refer to it inside your HTML page.  If all of your static files are managed this way, then
+their filenames will change whenever their contents do, and you can ask Flask to tell web browsers
+that they should cache all your assets forever by including the following line in
+your ``settings.py`` ::
 
     SEND_FILE_MAX_AGE_DEFAULT = 31556926  # one year
 
@@ -133,22 +133,14 @@ Project Notes
 
 Technology choices:
 
-* `libsodium <https://download.libsodium.org/doc/>`_ and
-  `Argon2 <https://en.wikipedia.org/wiki/Argon2>`_ for hashing
-* Early-on Docker integration for easy testing during ahead of first
-  stable release
-* Review `Beyond PEP-8 <https://www.youtube.com/watch?v=wf-BqAjZb8M>`_ for
-  inspiration with respect to code style
-* Solution implemented as Gunicorn-Flask application, intended to
-  run behind Nginx reverse-proxying for production and
-  utilizing `Flask-OAuthlib <https://flask-oauthlib.readthedocs.io/en/latest/>`_
+* ``libsodium`` and `Argon2 <https://en.wikipedia.org/wiki/Argon2>`_ for hashing?
+* Early-on Docker integration for easy testing during ahead of first stable release
+* Solution implemented as Gunicorn-Flask application, intended to run behind Nginx reverse-proxying
+  in production and utilizing `Flask-OAuthlib <https://flask-oauthlib.readthedocs.io/en/latest/>`_
   for OAuth2 support
 * Python 3.6 strongly preferred, but should probably run on 2.7 as well
 * Jenkins multi-branch declarative pipeline for CI during development
-* The production database of choice is Postgres, using SQLAlchemy PostgreSQL
-  Engine
-* DB migration support, probably we should go with
-  `Alembic <http://alembic.zzzcomputing.com/en/latest/>`_
+* The production database of choice is Postgres, using SQLAlchemy PostgreSQL Engine
 
 
 DB Models
@@ -178,9 +170,18 @@ Access rights:
 Changelog
 =========
 
+v. 0.2.0
+--------
+
+* Replaced project template with `<https://github.com/sloria/cookiecutter-flask>`_
+* Basic functionality of registering a user by email address and logging in
+* A simple form of "collections" can be added and edited
+* Dockerfile added for testing purposes (running Flask in debug mode with a ephemeral SQLite db)
+* Jenkinsfile (multibranch pipeline) added for testing/linting/building on any code changes
+
+
 v. 0.1.0
 --------
 
-* Establishing initial project requirements, with none of
-  the intended functionality in place
+* Establishing initial project requirements, with none of the intended functionality in place
 
