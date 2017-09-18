@@ -40,7 +40,7 @@ def test_register_form_validate_unsupported_category(db):
     form = RegisterForm(code='SF2', friendly_name='Top shelf', category='Made-up by me')
 
     assert form.validate() is False
-    assert "Not a valid choice" in form.category.errors
+    assert 'Not a valid choice' in form.category.errors
 
 
 # noinspection PyUnusedLocal

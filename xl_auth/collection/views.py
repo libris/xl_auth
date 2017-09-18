@@ -3,10 +3,9 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from flask import Blueprint, flash, render_template, request, redirect, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 
 from ..utils import flash_errors
-
 from .forms import RegisterForm
 from .models import Collection
 
