@@ -1,25 +1,19 @@
 # -*- coding: utf-8 -*-
-"""
-    :py:mod:`xl_auth`
-    =================
+"""Root Python package providing KB ``xl_auth`` OAuth2 provider."""
 
-    Python package providing the KB ``xl_auth`` OAuth2 provider.
+from __future__ import absolute_import, division, print_function, unicode_literals
 
+import json
+from os import path
 
-    ----
-
-    .. versionadded:: 0.1
-"""
-
-from __future__ import (
-    print_function, absolute_import, unicode_literals, division)
+__all__ = ['__name__', '__version__']
 
 
-__all__ = ['__name__', '__version__', '__release__']
+def _read_package_json_version():
+    with open(path.join(path.dirname(__file__), '..', 'package.json')) as package_json:
+        return json.load(package_json)['version']
 
 
 __name__ = 'xl_auth'
 
-__version__ = '0.1'
-
-__release__ = __version__
+__version__ = _read_package_json_version()

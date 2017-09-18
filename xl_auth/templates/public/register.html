@@ -1,0 +1,29 @@
+<!-- public/register.html -->
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container-narrow">
+        <h1>Register New User</h1>
+        <br/>
+        <form id="registerUserForm" class="form form-register" method="POST" action="" role="form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <div class="form-group">
+                {{ register_user_form.username.label }}
+                {{ register_user_form.username(placeholder="user@example.com", class_="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ register_user_form.full_name.label }}
+                {{ register_user_form.full_name(placeholder="First Last", class_="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ register_user_form.password.label }}
+                {{ register_user_form.password(placeholder="Password", class_="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ register_user_form.confirm.label }}
+                {{ register_user_form.confirm(placeholder="Password (again)", class_="form-control") }}
+            </div>
+            <p><input class="btn btn-default btn-submit" type="submit" value="Register"></p>
+        </form>
+        <p><em>Already registered?</em> Click <a href="/">here</a> to login.</p>
+    </div>
+{% endblock %}
