@@ -1,0 +1,41 @@
+<!-- collection/home.html -->
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Collections</h1>
+    <br/>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+            <strong>Existing Collections</strong>
+            <a class="btn btn-xs btn-primary pull-right"
+               href="{{ url_for('collection.register') }}">New Collection</a>
+        </div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Code</th>
+                <th>Friendly Name</th>
+                <th>Category</th>
+                <th>Active</th>
+                <th>Created At</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in collections_list %}
+                <tr>
+                    <td>{{ item.code }}</td>
+                    <td>{{ item.friendly_name }}</td>
+                    <td>{{ item.category.capitalize() if item.category in ['bibliography', 'library'] else 'No category' }}</td>
+                    <td>{{ item.active }}</td>
+                    <td>{{ item.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <td>
+                        <a class="btn btn-default"
+                           href="{{ url_for('collection.edit', collection_code=item.code) }}">Edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

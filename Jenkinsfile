@@ -115,17 +115,43 @@ pipeline {
                     'ESLint': {
                         sh 'npm run lint'
                     },
-                    'flake8 (py27)': {
-                        sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && flask lint"'
-                    },
-                    'flake8 (py35)': {
-                        sh 'scl enable rh-python35 ". /tmp/xl_auth/py35venv/bin/activate && flask lint"'
+                    'flake8 (py27,py35)': {
+                        script {
+                            try {
+                                sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && \
+flask lint" | tee flake8.log && ( exit $PIPESTATUS )'
+                                sh 'scl enable rh-python35 ". /tmp/xl_auth/py35venv/bin/activate && \
+flask lint" | tee flake8.log && ( exit $PIPESTATUS )'
+                            }
+                            catch (Throwable e) {
+                                sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && \
+flake8_junit flake8.log flake8-junit.xml"'
+                                junit 'flake8-junit.xml'
+                                throw e
+                            }
+                        }
                     },
                     'pytest (py27)': {
-                        sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && flask test"'
+                        script {
+                            try {
+                                sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && \
+flask test --junit-xml=py27test-junit.xml"'
+                            }
+                            finally {
+                                junit 'py27test-junit.xml'
+                            }
+                        }
                     },
                     'pytest (py35)': {
-                        sh 'scl enable rh-python35 ". /tmp/xl_auth/py35venv/bin/activate && flask test"'
+                        script {
+                            try {
+                                sh 'scl enable rh-python35 ". /tmp/xl_auth/py35venv/bin/activate && \
+flask test --junit-xml=py35test-junit.xml"'
+                            }
+                            finally {
+                                junit 'py35test-junit.xml'
+                            }
+                        }
                     }
                 )
             }
@@ -161,9 +187,6 @@ pipeline {
         }
         success {
             echo 'Build succeeded!'
-        }
-        unstable {
-            echo 'Build unstable :/'
         }
         failure {
             echo 'Build failed :('

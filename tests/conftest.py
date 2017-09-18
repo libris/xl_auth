@@ -10,7 +10,7 @@ from xl_auth.app import create_app
 from xl_auth.database import db as _db
 from xl_auth.settings import TestConfig
 
-from .factories import UserFactory
+from .factories import CollectionFactory, UserFactory
 
 
 @pytest.yield_fixture(scope='function')
@@ -54,3 +54,12 @@ def user(db):
     user = UserFactory(password='myPrecious')
     db.session.commit()
     return user
+
+
+# noinspection PyShadowingNames
+@pytest.fixture
+def collection(db):
+    """A collection for the tests."""
+    collection = CollectionFactory()
+    db.session.commit()
+    return collection
