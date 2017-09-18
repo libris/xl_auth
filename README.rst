@@ -170,6 +170,16 @@ Access rights:
 Changelog
 =========
 
+v. 0.2.0
+--------
+
+* Replaced project template with `<https://github.com/sloria/cookiecutter-flask>`_
+* Basic functionality of registering a user by email address and logging in
+* A simple form of "collections" can be added and edited
+* Dockerfile added for testing purposes (running Flask in debug mode with a ephemeral SQLite db)
+* Jenkinsfile (multibranch pipeline) added for testing/linting/building on any code changes
+
+
 v. 0.1.0
 --------
 
