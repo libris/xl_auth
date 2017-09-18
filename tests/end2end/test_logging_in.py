@@ -12,7 +12,7 @@ def test_can_log_in_returns_200(user, testapp):
     res = testapp.get('/')
     # Fills out login form in navbar.
     form = res.forms['loginForm']
-    form['username'] = user.username
+    form['username'] = user.email
     form['password'] = 'myPrecious'
     # Submits.
     res = form.submit().follow()
@@ -24,7 +24,7 @@ def test_sees_alert_on_log_out(user, testapp):
     res = testapp.get('/')
     # Fills out login form in navbar.
     form = res.forms['loginForm']
-    form['username'] = user.username
+    form['username'] = user.email
     form['password'] = 'myPrecious'
     # Submits.
     form.submit().follow()
@@ -39,7 +39,7 @@ def test_sees_error_message_if_password_is_incorrect(user, testapp):
     res = testapp.get('/')
     # Fills out login form, password incorrect.
     form = res.forms['loginForm']
-    form['username'] = user.username
+    form['username'] = user.email
     form['password'] = 'wrong'
     # Submits.
     res = form.submit()
@@ -54,7 +54,7 @@ def test_sees_error_message_if_username_doesnt_exist(user, testapp):
     res = testapp.get('/')
     # Fills out login form, password incorrect.
     form = res.forms['loginForm']
-    form['username'] = 'unknown'
+    form['username'] = 'unknown@nowhere.com'
     form['password'] = 'myPrecious'
     # Submits.
     res = form.submit()

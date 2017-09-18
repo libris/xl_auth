@@ -23,8 +23,8 @@ class BaseFactory(SQLAlchemyModelFactory):
 class UserFactory(BaseFactory):
     """User factory."""
 
-    username = Sequence(lambda _: 'user{0}'.format(_))
     email = Sequence(lambda _: 'user{0}@example.com'.format(_))
+    full_name = Sequence(lambda _: 'user{0}'.format(_))
     password = PostGenerationMethodCall('set_password', 'example')
     active = True
 
