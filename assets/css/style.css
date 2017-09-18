@@ -33,7 +33,7 @@ textarea {
 }
 
 
-.form-register {
+.form-register, .form-edit {
   width: 50%;
 }
 

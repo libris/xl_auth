@@ -6,7 +6,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 
 from ..utils import flash_errors
-from .forms import RegisterForm
+from .forms import EditForm, RegisterForm
 from .models import Collection
 
 blueprint = Blueprint('collection', __name__, url_prefix='/collections', static_folder='../static')
@@ -34,3 +34,24 @@ def register():
         flash_errors(register_collection_form)
     return render_template('collection/register.html',
                            register_collection_form=register_collection_form)
+
+
+@blueprint.route('/edit/<string:collection_code>', methods=['GET', 'POST'])
+def edit(collection_code):
+    """Edit existing collection."""
+    collection = Collection.query.filter(Collection.code == collection_code).first()
+    if not collection:
+        flash('Collection code "{}" does not exist'.format(collection_code), 'danger')
+        return redirect(url_for('collection.home'))
+
+    edit_collection_form = EditForm(collection_code, request.form)
+    edit_collection_form.category.default = 'No category'
+    if edit_collection_form.validate_on_submit():
+        collection.update(friendly_name=edit_collection_form.friendly_name.data,
+                          category=edit_collection_form.category.data).save()
+        flash('Thank you for editing collection {!r}.'.format(collection.code), 'success')
+        return redirect(url_for('collection.home'))
+    else:
+        flash_errors(edit_collection_form)
+    return render_template('collection/edit.html', edit_collection_form=edit_collection_form,
+                           collection=collection)
