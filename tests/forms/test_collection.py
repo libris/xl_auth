@@ -36,7 +36,7 @@ def test_register_form_validate_code_already_registered(collection):
 # noinspection PyUnusedLocal
 def test_edit_form_validate_code_does_not_exist(db):
     """Attempt to edit entry with code that is not registered."""
-    form = EditForm('missing', code='missing', friendly_name='KB wing 3, shelf 1', category='library')
+    form = EditForm('missing', code='missing', friendly_name='KB wing 3', category='library')
 
     assert form.validate() is False
     assert 'Code does not exist' in form.code.errors

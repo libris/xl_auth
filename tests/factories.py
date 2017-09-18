@@ -42,7 +42,7 @@ class CollectionFactory(BaseFactory):
 
     code = Sequence(lambda _: 'sigel{0}'.format(_))
     friendly_name = Sequence(lambda _: 'friendly_name{0}'.format(_))
-    category = choice(['bibliography', 'library', 'categorized'])
+    category = choice(['bibliography', 'library', 'uncategorized'])
     active = True
 
     class Meta:

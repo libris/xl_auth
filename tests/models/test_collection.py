@@ -40,7 +40,7 @@ def test_factory(db):
     db.session.commit()
     assert isinstance(collection.code, string_types)
     assert isinstance(collection.friendly_name, string_types)
-    assert collection.category in {'bibliography', 'library', 'categorized'}
+    assert collection.category in {'bibliography', 'library', 'uncategorized'}
     assert bool(collection.created_at)
     assert collection.active is True
 

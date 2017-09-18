@@ -13,7 +13,7 @@ from ..factories import CollectionFactory
 
 
 # noinspection PyUnusedLocal
-def test_can_register_new_collection(collection, testapp):
+def test_user_can_register_new_collection(collection, testapp):
     """Register a new collection."""
     old_count = len(Collection.query.all())
     # Goes to homepage
@@ -21,7 +21,7 @@ def test_can_register_new_collection(collection, testapp):
     # Clicks Collections button
     res = res.click('Collections')
     # Clicks Register New Collection button
-    res = res.click('Register New Collection')
+    res = res.click('New Collection')
     # Fills out the form
     form = res.forms['registerCollectionForm']
     form['code'] = 'SfX'
@@ -33,10 +33,12 @@ def test_can_register_new_collection(collection, testapp):
     # A new collection was created
     assert len(Collection.query.all()) == old_count + 1
     # The new collection is listed under existing collections
-    assert 'id: {}'.format(Collection.query.filter(Collection.code == 'SfX').first().id) in res
-    assert 'code: {}'.format(form['code'].value) in res
-    assert 'friendly_name: {}'.format(form['friendly_name'].value) in res
-    assert 'category: {}'.format(form['category'].value) in res
+    assert '<td>{}</td>'.format(form['code'].value) in res
+    assert '<td>{}</td>'.format(form['friendly_name'].value) in res
+    if form['category'].value in {'bibliography', 'library'}:
+        assert '<td>{}</td>'.format(form['category'].value.capitalize()) in res
+    else:
+        assert '<td>No category</td>' in res
 
 
 # noinspection PyUnusedLocal
