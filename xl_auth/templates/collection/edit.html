@@ -2,7 +2,7 @@
 {% extends "layout.html" %}
 {% block content %}
     <div class="container-narrow">
-        <h1>Edit Existing Collection</h1>
+        <h1>{{ _('Edit Existing Collection') }}</h1>
         <br/>
         <form id="editCollectionForm" class="form form-edit" method="POST" action="" role="form">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
@@ -26,7 +26,7 @@
                     </label>
                 {% endfor %}
             </div>
-            <p><input class="btn btn-default btn-submit" type="submit" value="Save"></p>
+            <p><input class="btn btn-default btn-submit" type="submit" value="{{ _('Save') }}"></p>
         </form>
     </div>
 {% endblock %}

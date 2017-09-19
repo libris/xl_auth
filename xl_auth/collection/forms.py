@@ -3,6 +3,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+from flask_babel import lazy_gettext as _
 from flask_wtf import Form
 from wtforms import RadioField, StringField
 from wtforms.validators import DataRequired, Length, ValidationError
@@ -13,11 +14,11 @@ from .models import Collection
 class CollectionForm(Form):
     """Collection form."""
 
-    code = StringField('Code', validators=[DataRequired(), Length(min=2, max=8)])
-    friendly_name = StringField('Name', validators=[DataRequired(), Length(min=2, max=255)])
-    category = RadioField('Category', choices=[('bibliography', 'Bibliography'),
-                                               ('library', 'Library'),
-                                               ('uncategorized', 'No category')])
+    code = StringField(_('Code'), validators=[DataRequired(), Length(min=2, max=8)])
+    friendly_name = StringField(_('Name'), validators=[DataRequired(), Length(min=2, max=255)])
+    category = RadioField(_('Category'), choices=[('bibliography', _('Bibliography')),
+                                                  ('library', _('Library')),
+                                                  ('uncategorized', _('No category'))])
 
     def __init__(self, *args, **kwargs):
         """Create instance."""
@@ -38,7 +39,7 @@ class RegisterForm(CollectionForm):
         collection = Collection.query.filter_by(code=self.code.data).first()
 
         if collection:
-            self.code.errors.append('Code already registered')
+            self.code.errors.append(_('Code already registered'))
             return False
 
         return True
@@ -55,7 +56,7 @@ class EditForm(CollectionForm):
     def validate_code(self, field):
         """Validate code field."""
         if field.data and field.data != self.target_collection_code:
-            raise ValidationError('Code cannot be modified')
+            raise ValidationError(_('Code cannot be modified'))
 
     def validate(self):
         """Validate the form."""
@@ -66,7 +67,7 @@ class EditForm(CollectionForm):
 
         collection = Collection.query.filter_by(code=self.code.data).first()
         if not collection:
-            self.code.errors.append('Code does not exist')
+            self.code.errors.append(_('Code does not exist'))
             return False
 
         return True

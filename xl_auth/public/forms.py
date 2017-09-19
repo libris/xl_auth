@@ -3,6 +3,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+from flask_babel import lazy_gettext as _
 from flask_wtf import Form
 from wtforms import PasswordField, StringField
 from wtforms.validators import DataRequired
@@ -13,8 +14,8 @@ from ..user.models import User
 class LoginForm(Form):
     """Login form."""
 
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    username = StringField(_('Username'), validators=[DataRequired()])
+    password = PasswordField(_('Password'), validators=[DataRequired()])
 
     def __init__(self, *args, **kwargs):
         """Create instance."""
@@ -29,15 +30,15 @@ class LoginForm(Form):
 
         self.user = User.query.filter_by(email=self.username.data).first()
         if not self.user:
-            self.username.errors.append('Unknown username/email')
+            self.username.errors.append(_('Unknown username/email'))
             return False
 
         if not self.user.check_password(self.password.data):
-            self.password.errors.append('Invalid password')
+            self.password.errors.append(_('Invalid password'))
             return False
 
         if not self.user.active:
-            self.username.errors.append('User not activated')
+            self.username.errors.append(_('User not activated'))
             return False
 
         return True
