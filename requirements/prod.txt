@@ -19,7 +19,7 @@ Flask-Migrate==2.1.1
 
 # Forms
 Flask-WTF==0.14.2
-WTForms==2.1
+git+git://github.com/mblomdahl/wtforms.git
 
 # Deployment
 gunicorn>=19.1.1
@@ -39,3 +39,8 @@ Flask-DebugToolbar==0.10.1
 
 # Python 2/3 compatibility
 six==1.10.0
+
+# Localization
+Flask-Babel==0.11.2
+Babel==2.5.1
+pytz==2017.2
