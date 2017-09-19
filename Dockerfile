@@ -12,9 +12,7 @@ WORKDIR /xl_auth
 COPY --from=build /xl_auth .
 RUN apt-get update && apt-get install -y --no-install-recommends git \
     && pip --no-cache-dir --disable-pip-version-check install -r requirements.txt \
-    && pybabel -v compile --statistics -d xl_auth/translations/ \
-    && rm -f dev.db && flask db upgrade \
-    && flask clean && du -s -h * \
+    && flask translate --compile-only && rm -f dev.db && flask db upgrade && flask clean \
     && apt-get --purge autoremove -y git && apt-get autoclean && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 5000
