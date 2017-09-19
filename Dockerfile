@@ -4,11 +4,18 @@ COPY . .
 RUN rm -rf *venv/ && rm -f assets/.DS_Store && npm install && npm run build && rm -rf node_modules/
 
 FROM python:3.6-slim
-WORKDIR /xl_auth
-COPY --from=build /xl_auth .
 ENV FLASK_DEBUG=1
 ENV FLASK_APP=autoapp.py
-RUN pip --no-cache-dir install -r requirements.txt && rm -f dev.db && flask db upgrade
+ENV BABEL_DEFAULT_LOCALE=sv
+
+WORKDIR /xl_auth
+COPY --from=build /xl_auth .
+RUN apt-get update && apt-get install -y --no-install-recommends git \
+    && pip --no-cache-dir --disable-pip-version-check install -r requirements.txt \
+    && pybabel -v compile --statistics -d xl_auth/translations/ \
+    && rm -f dev.db && flask db upgrade \
+    && flask clean && du -s -h * \
+    && apt-get --purge autoremove -y git && apt-get autoclean && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 5000
 
