@@ -3,6 +3,8 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+from flask_babel import gettext as _
+
 from xl_auth.user.forms import RegisterForm
 
 
@@ -13,7 +15,7 @@ def test_register_form_validate_without_full_name(db):
                         password='example', confirm='example')
 
     assert form.validate() is False
-    assert 'Field must be between 3 and 255 characters long.' in form.full_name.errors
+    assert _('Field must be between 3 and 255 characters long.') in form.full_name.errors
 
 
 def test_register_form_validate_email_already_registered(user):
@@ -22,7 +24,7 @@ def test_register_form_validate_email_already_registered(user):
                         password='example', confirm='example')
 
     assert form.validate() is False
-    assert 'Email already registered' in form.username.errors
+    assert _('Email already registered') in form.username.errors
 
 
 # noinspection PyUnusedLocal

@@ -6,6 +6,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from random import choice
 
 from flask import url_for
+from flask_babel import gettext as _
 from jinja2 import escape
 
 from xl_auth.collection.models import Collection
@@ -16,9 +17,9 @@ def test_user_can_edit_existing_collection(collection, testapp):
     # Goes to homepage
     res = testapp.get('/')
     # Clicks Collections button
-    res = res.click('Collections')
+    res = res.click(_('Collections'))
     # Clicks Edit button
-    res = res.click('Edit')
+    res = res.click(_('Edit'))
     # Fills out the form
     form = res.forms['editCollectionForm']
     form['code'] = collection.code
@@ -36,9 +37,9 @@ def test_user_can_edit_existing_collection(collection, testapp):
     assert '<td>{}</td>'.format(form['code'].value) in res
     assert '<td>{}</td>'.format(form['friendly_name'].value) in res
     if form['category'].value in {'bibliography', 'library'}:
-        assert '<td>{}</td>'.format(form['category'].value.capitalize()) in res
+        assert '<td>{}</td>'.format(_(form['category'].value.capitalize())) in res
     else:
-        assert '<td>No category</td>' in res
+        assert '<td>{}</td>'.format(_('No category')) in res
 
 
 def test_user_sees_error_message_if_code_is_changed(collection, testapp):
@@ -53,7 +54,7 @@ def test_user_sees_error_message_if_code_is_changed(collection, testapp):
     # Submits.
     res = form.submit()
     # Sees error message.
-    assert 'Code - Code cannot be modified' in res
+    assert '{} - {}'.format(_('Code'), _('Code cannot be modified')) in res
 
 
 def test_user_sees_error_message_if_friendly_name_is_missing(collection, testapp):
@@ -67,7 +68,7 @@ def test_user_sees_error_message_if_friendly_name_is_missing(collection, testapp
     # Submits.
     res = form.submit()
     # Sees error message.
-    assert 'Name - This field is required.' in res
+    assert '{} - {}'.format(_('Name'), _('This field is required.')) in res
 
 
 def test_user_sees_error_message_if_category_is_missing(collection, testapp):
@@ -81,7 +82,7 @@ def test_user_sees_error_message_if_category_is_missing(collection, testapp):
     # Submits.
     res = form.submit()
     # Sees error message.
-    assert 'Category - Not a valid choice' in res
+    assert '{} - {}'.format(_('Category'), _('Not a valid choice')) in res
 
 
 def test_user_sees_error_message_if_collection_does_not_exist(collection, testapp):
@@ -89,4 +90,4 @@ def test_user_sees_error_message_if_collection_does_not_exist(collection, testap
     # Goes to edit page for existing collection.
     res = testapp.get(url_for('collection.edit', collection_code='notFound')).follow()
     # Sees error message.
-    assert escape('Collection code "notFound" does not exist') in res
+    assert escape(_('Collection code "%(code)s" does not exist', code='notFound')) in res

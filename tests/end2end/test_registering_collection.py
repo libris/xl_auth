@@ -6,6 +6,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from random import choice
 
 from flask import url_for
+from flask_babel import gettext as _
 
 from xl_auth.collection.models import Collection
 
@@ -19,9 +20,9 @@ def test_user_can_register_new_collection(collection, testapp):
     # Goes to homepage
     res = testapp.get('/')
     # Clicks Collections button
-    res = res.click('Collections')
+    res = res.click(_('Collections'))
     # Clicks Register New Collection button
-    res = res.click('New Collection')
+    res = res.click(_('New Collection'))
     # Fills out the form
     form = res.forms['registerCollectionForm']
     form['code'] = 'SfX'
@@ -36,9 +37,9 @@ def test_user_can_register_new_collection(collection, testapp):
     assert '<td>{}</td>'.format(form['code'].value) in res
     assert '<td>{}</td>'.format(form['friendly_name'].value) in res
     if form['category'].value in {'bibliography', 'library'}:
-        assert '<td>{}</td>'.format(form['category'].value.capitalize()) in res
+        assert '<td>{}</td>'.format(_(form['category'].value.capitalize())) in res
     else:
-        assert '<td>No category</td>' in res
+        assert '<td>{}</td>'.format(_('No category')) in res
 
 
 # noinspection PyUnusedLocal
@@ -53,7 +54,7 @@ def test_user_sees_error_message_if_code_is_missing(collection, testapp):
     # Submits.
     res = form.submit()
     # Sees error message.
-    assert 'Code - This field is required.' in res
+    assert '{} - {}'.format(_('Code'), _('This field is required.')) in res
 
 
 # noinspection PyUnusedLocal
@@ -68,7 +69,7 @@ def test_user_sees_error_message_if_friendly_name_is_missing(collection, testapp
     # Submits.
     res = form.submit()
     # Sees error message.
-    assert 'Name - This field is required.' in res
+    assert '{} - {}'.format(_('Name'), _('This field is required.')) in res
 
 
 # noinspection PyUnusedLocal
@@ -83,7 +84,7 @@ def test_user_sees_error_message_if_category_is_missing(collection, testapp):
     # Submits.
     res = form.submit()
     # Sees error message.
-    assert 'Category - Not a valid choice' in res
+    assert '{} - {}'.format(_('Category'), _('Not a valid choice')) in res
 
 
 # noinspection PyUnusedLocal
@@ -101,4 +102,4 @@ def test_user_sees_error_message_if_collection_already_registered(collection, te
     # Submits.
     res = form.submit()
     # Sees error.
-    assert 'Code already registered' in res
+    assert _('Code already registered') in res
