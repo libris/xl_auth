@@ -20,33 +20,33 @@ msgstr ""
 
 #: xl_auth/collection/forms.py:17
 msgid "Code"
-msgstr ""
+msgstr "Kod"
 
 #: xl_auth/collection/forms.py:18
 msgid "Name"
-msgstr ""
+msgstr "Namn"
 
 #: xl_auth/collection/forms.py:19
 msgid "Bibliography"
-msgstr ""
+msgstr "Bibliografi"
 
 #: xl_auth/collection/forms.py:20
 msgid "Library"
-msgstr ""
+msgstr "Bibliotek"
 
 #: xl_auth/collection/forms.py:21
 msgid "No category"
-msgstr ""
+msgstr "Kategori saknas"
 
 #: xl_auth/collection/forms.py:42
 msgid "Code already registered"
-msgstr ""
+msgstr "Koden är redan registrerad"
 
 #: xl_auth/collection/forms.py:59
 msgid "Code cannot be modified"
-msgstr ""
+msgstr "Koden kan inte ändras"
 
 #: xl_auth/collection/forms.py:70
 msgid "Code does not exist"
-msgstr ""
+msgstr "Konden existerar ej"
 
