@@ -71,7 +71,7 @@ class _EditForm(Form):
 
         user = User.query.filter_by(email=self.username.data).first()
         if not user:
-            self.username.errors.append(_('Username does not exist'))
+            self.username.errors.append(_('User does not exist'))
             return False
 
         return True

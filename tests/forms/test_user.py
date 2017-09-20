@@ -37,7 +37,7 @@ def test_edit_details_form_validate_username_does_not_exist(db):
                            is_admin=choice([True, False]))
 
     assert form.validate() is False
-    assert _('Username does not exist') in form.username.errors
+    assert _('User does not exist') in form.username.errors
 
 
 def test_edit_details_form_validate_modifying_username(user):

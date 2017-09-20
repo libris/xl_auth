@@ -156,10 +156,10 @@ def test_user_sees_error_message_if_username_does_not_exist(user, testapp):
     # Goes to Edit Details page for a made-up user.
     res = testapp.get(url_for('user.edit_details', username='one.I.dreamt.up@gmail.com')).follow()
     # Sees error message.
-    assert _('Username/email "%(username)s" does not exist',
+    assert _('User "%(username)s" does not exist',
              username='one.I.dreamt.up@gmail.com') in res
     # Tries to open Change Password page for another made-up user.
     res = testapp.get(url_for('user.edit_details', username='another_fake_one@gmail.com')).follow()
     # Sees error message.
-    assert _('Username/email "%(username)s" does not exist',
+    assert _('User "%(username)s" does not exist',
              username='another_fake_one@gmail.com') in res

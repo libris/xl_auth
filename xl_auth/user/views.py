@@ -35,7 +35,7 @@ def edit_details(username):
     """Edit user details."""
     user = User.query.filter(User.email == username).first()
     if not user:
-        flash(_('Username/email "%(username)s" does not exist', username=username), 'danger')
+        flash(_('User "%(username)s" does not exist', username=username), 'danger')
         return redirect(url_for('user.home'))
 
     edit_details_form = EditDetailsForm(username, request.form)
@@ -58,7 +58,7 @@ def change_password(username):
     """Change user password."""
     user = User.query.filter(User.email == username).first()
     if not user:
-        flash(_('Username/email "%(username)s" does not exist', username=username), 'danger')
+        flash(_('User "%(username)s" does not exist', username=username), 'danger')
         return redirect(url_for('user.home'))
 
     change_password_form = ChangePasswordForm(username, request.form)
