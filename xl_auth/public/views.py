@@ -31,7 +31,7 @@ def home():
         if login_form.validate_on_submit():
             login_user(login_form.user)
             flash(_('You are logged in.'), 'success')
-            redirect_url = request.args.get('next') or url_for('user.members')
+            redirect_url = request.args.get('next') or url_for('user.profile')
             return redirect(redirect_url)
         else:
             flash_errors(login_form)
