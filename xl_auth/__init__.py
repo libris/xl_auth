@@ -6,7 +6,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import json
 from os import path
 
-__all__ = ['__name__', '__version__']
+__all__ = ['__name__', '__version__', '__author__', '__license__']
 
 
 def _read_package_json_version():
@@ -17,3 +17,7 @@ def _read_package_json_version():
 __name__ = 'xl_auth'
 
 __version__ = _read_package_json_version()
+
+__author__ = 'National Library of Sweden'
+
+__license__ = 'Apache-2.0'

@@ -1,0 +1,252 @@
+# Swedish translations for xl_auth.
+# Copyright (C) 2017 National Library of Sweden
+# This file is distributed under the same license as the xl_auth project.
+# Mats Blomdahl <mats.blomdahl@gmail.com>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version:  0.2.1\n"
+"Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
+"POT-Creation-Date: 2017-09-19 17:43+0200\n"
+"PO-Revision-Date: 2017-09-19 12:23+0200\n"
+"Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
+"Language: sv\n"
+"Language-Team: sv <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.1\n"
+
+#: tests/end2end/test_editing_collection.py:20 tests/end2end/test_registering_collection.py:23
+#: xl_auth/templates/collection/home.html:4 xl_auth/templates/nav.html:24
+msgid "Collections"
+msgstr "Samlingar"
+
+#: tests/end2end/test_editing_collection.py:22 xl_auth/templates/collection/home.html:35
+msgid "Edit"
+msgstr "Ändra"
+
+#: tests/end2end/test_editing_collection.py:40 tests/end2end/test_registering_collection.py:40
+msgid "category"
+msgstr "kategori"
+
+#: tests/end2end/test_editing_collection.py:42 tests/end2end/test_registering_collection.py:42
+#: xl_auth/collection/forms.py:21 xl_auth/templates/collection/home.html:29
+msgid "No category"
+msgstr "Kategori saknas"
+
+#: tests/end2end/test_editing_collection.py:57 tests/end2end/test_registering_collection.py:57
+#: xl_auth/collection/forms.py:17 xl_auth/templates/collection/home.html:16
+msgid "Code"
+msgstr "Kod"
+
+#: tests/end2end/test_editing_collection.py:57 tests/forms/test_collection.py:52
+#: xl_auth/collection/forms.py:59
+msgid "Code cannot be modified"
+msgstr "Koden kan inte ändras"
+
+#: tests/end2end/test_editing_collection.py:71 tests/end2end/test_registering_collection.py:72
+#: xl_auth/collection/forms.py:18
+msgid "Name"
+msgstr "Namn"
+
+#: tests/end2end/test_editing_collection.py:71 tests/end2end/test_registering_collection.py:57
+#: tests/end2end/test_registering_collection.py:72 tests/forms/test_collection.py:27
+msgid "This field is required."
+msgstr "Det här fältet är obligatoriskt."
+
+#: tests/end2end/test_editing_collection.py:85 tests/end2end/test_registering_collection.py:87
+#: xl_auth/collection/forms.py:19 xl_auth/templates/collection/home.html:18
+msgid "Category"
+msgstr "Kategori"
+
+#: tests/end2end/test_editing_collection.py:85 tests/end2end/test_registering_collection.py:87
+#: tests/forms/test_collection.py:78 tests/forms/test_collection.py:87
+msgid "Not a valid choice"
+msgstr "Inte ett giltigt val"
+
+#: tests/end2end/test_editing_collection.py:93 xl_auth/collection/views.py:45
+#, python-format
+msgid "Collection code \"%(code)s\" does not exist"
+msgstr "Samlingskod \"%(code)s\" existerar inte"
+
+#: tests/end2end/test_logging_in.py:34 xl_auth/public/views.py:46
+msgid "You are logged out."
+msgstr "Du är utloggad."
+
+#: tests/end2end/test_logging_in.py:48 tests/forms/test_public.py:35 xl_auth/public/forms.py:37
+msgid "Invalid password"
+msgstr "Felaktigt lösenord"
+
+#: tests/end2end/test_logging_in.py:63 tests/forms/test_public.py:25 xl_auth/public/forms.py:33
+msgid "Unknown username/email"
+msgstr "Okänd epost/användarnamn"
+
+#: tests/end2end/test_registering_collection.py:25 xl_auth/templates/collection/home.html:11
+msgid "New Collection"
+msgstr "Ny samling"
+
+#: tests/end2end/test_registering_collection.py:105 tests/forms/test_collection.py:35
+#: xl_auth/collection/forms.py:42
+msgid "Code already registered"
+msgstr "Koden är redan registrerad"
+
+#: tests/end2end/test_registering_user.py:21 xl_auth/templates/nav.html:46
+msgid "Create account"
+msgstr "Skapa användarkonto"
+
+#: tests/end2end/test_registering_user.py:49 xl_auth/user/forms.py:23
+msgid "Passwords must match"
+msgstr "Lösenorden måste stämma överens"
+
+#: tests/end2end/test_registering_user.py:68 tests/forms/test_user.py:27 xl_auth/user/forms.py:40
+msgid "Email already registered"
+msgstr "Epost-adressen är redan registrerad"
+
+#: tests/forms/test_collection.py:19
+msgid "Field must be between 2 and 8 characters long."
+msgstr "Fältet måste vara mellan 2 och 8 tecken långt."
+
+#: tests/forms/test_collection.py:44 xl_auth/collection/forms.py:70
+msgid "Code does not exist"
+msgstr "Koden existerar ej"
+
+#: tests/forms/test_collection.py:61 tests/forms/test_collection.py:69
+msgid "Field must be between 2 and 255 characters long."
+msgstr "Fältet måste vara mellan 2 och 255 tecken långt."
+
+#: tests/forms/test_public.py:46 xl_auth/public/forms.py:41
+msgid "User not activated"
+msgstr "Användarkontot ej aktiverat"
+
+#: tests/forms/test_user.py:18
+msgid "Field must be between 3 and 255 characters long."
+msgstr "Fältet måste vara mellan 3 och 255 tecken långt."
+
+#: xl_auth/collection/forms.py:19
+msgid "Bibliography"
+msgstr "Bibliografi"
+
+#: xl_auth/collection/forms.py:20
+msgid "Library"
+msgstr "Bibliotek"
+
+#: xl_auth/collection/views.py:32
+msgid "Thank you for registering a new collection."
+msgstr "Ny samling registrerad."
+
+#: xl_auth/collection/views.py:52
+#, python-format
+msgid "Thank you for editing collection \"%(code)s\"."
+msgstr "Samlingen \"%(code)s\" har uppdaterats."
+
+#: xl_auth/public/forms.py:17
+msgid "Username"
+msgstr "Användarnamn"
+
+#: xl_auth/public/forms.py:18 xl_auth/user/forms.py:20
+msgid "Password"
+msgstr "Lösenord"
+
+#: xl_auth/public/views.py:33
+msgid "You are logged in."
+msgstr "Du har loggat in."
+
+#: xl_auth/public/views.py:59
+msgid "Thank you for registering. You can now log in."
+msgstr "Tack för din registrering. Du kan nu logga in."
+
+#: xl_auth/templates/401.html:4
+msgid "Unauthorized"
+msgstr "Ej auktoriserad"
+
+#: xl_auth/templates/404.html:4
+msgid "Page Not Found"
+msgstr "Sidan kunde inte hittas"
+
+#: xl_auth/templates/500.html:4
+msgid "Server error"
+msgstr "Serverfel"
+
+#: xl_auth/templates/footer.html:5
+msgid "National Library of Sweden"
+msgstr "Kungliga Biblioteket"
+
+#: xl_auth/templates/footer.html:10 xl_auth/templates/nav.html:25 xl_auth/templates/public/about.html:7
+msgid "About"
+msgstr "Om webbplatsen"
+
+#: xl_auth/templates/footer.html:12
+msgid "Contact"
+msgstr "Kontakt"
+
+#: xl_auth/templates/nav.html:23
+msgid "Home"
+msgstr "Startsida"
+
+#: xl_auth/templates/nav.html:32
+#, python-format
+msgid "Logged in as %(user)s"
+msgstr "Inloggad som %(user)s"
+
+#: xl_auth/templates/nav.html:56
+msgid "Log in"
+msgstr "Logga in"
+
+#: xl_auth/templates/collection/edit.html:5
+msgid "Edit Existing Collection"
+msgstr "Ändra befintlig samling"
+
+#: xl_auth/templates/collection/edit.html:29
+msgid "Save"
+msgstr "Spara"
+
+#: xl_auth/templates/collection/home.html:9
+msgid "Existing Collections"
+msgstr "Befintliga samlingar"
+
+#: xl_auth/templates/collection/home.html:17
+msgid "Friendly Name"
+msgstr "Namn"
+
+#: xl_auth/templates/collection/home.html:19
+msgid "Active"
+msgstr "Aktiv"
+
+#: xl_auth/templates/collection/home.html:20
+msgid "Created At"
+msgstr "Skapad"
+
+#: xl_auth/templates/collection/home.html:21
+msgid "Actions"
+msgstr "Åtgärder"
+
+#: xl_auth/templates/collection/register.html:5
+msgid "Register New Collection"
+msgstr "Registrera ny samling"
+
+#: xl_auth/templates/collection/register.html:26
+msgid "Register"
+msgstr "Registrera"
+
+#: xl_auth/templates/public/home.html:7
+msgid "Welcome to xl_auth"
+msgstr "Välkommen till xl_auth"
+
+#: xl_auth/templates/public/register.html:5
+msgid "Register New User"
+msgstr "Registrera ny användare"
+
+#: xl_auth/user/forms.py:17
+msgid "Email"
+msgstr "Epost"
+
+#: xl_auth/user/forms.py:19
+msgid "Full name"
+msgstr "Fullständigt namn"
+
+#: xl_auth/user/forms.py:21
+msgid "Verify password"
+msgstr "Upprepa lösenord"
+

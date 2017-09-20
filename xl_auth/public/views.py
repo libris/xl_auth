@@ -4,6 +4,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask_babel import gettext as _
 from flask_login import login_required, login_user, logout_user
 
 from ..extensions import login_manager
@@ -29,7 +30,7 @@ def home():
     if request.method == 'POST':
         if login_form.validate_on_submit():
             login_user(login_form.user)
-            flash('You are logged in.', 'success')
+            flash(_('You are logged in.'), 'success')
             redirect_url = request.args.get('next') or url_for('user.members')
             return redirect(redirect_url)
         else:
@@ -42,7 +43,7 @@ def home():
 def logout():
     """Logout."""
     logout_user()
-    flash('You are logged out.', 'info')
+    flash(_('You are logged out.'), 'info')
     return redirect(url_for('public.home'))
 
 
@@ -55,7 +56,7 @@ def register():
                     full_name=register_user_form.full_name.data,
                     password=register_user_form.password.data,
                     active=True)
-        flash('Thank you for registering. You can now log in.', 'success')
+        flash(_('Thank you for registering. You can now log in.'), 'success')
         return redirect(url_for('public.home'))
     else:
         flash_errors(register_user_form)

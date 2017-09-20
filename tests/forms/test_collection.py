@@ -5,6 +5,8 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from random import choice
 
+from flask_babel import gettext as _
+
 from xl_auth.collection.forms import EditForm, RegisterForm
 
 
@@ -14,7 +16,7 @@ def test_register_form_validate_without_code(db):
     form = RegisterForm(code='1', friendly_name='The old books', category='library')
 
     assert form.validate() is False
-    assert 'Field must be between 2 and 8 characters long.' in form.code.errors
+    assert _('Field must be between 2 and 8 characters long.') in form.code.errors
 
 
 def test_edit_form_validate_without_code(collection):
@@ -22,7 +24,7 @@ def test_edit_form_validate_without_code(collection):
     form = EditForm(collection.code, friendly_name='The old books', category='library')
 
     assert form.validate() is False
-    assert 'This field is required.' in form.code.errors
+    assert _('This field is required.') in form.code.errors
 
 
 def test_register_form_validate_code_already_registered(collection):
@@ -30,7 +32,7 @@ def test_register_form_validate_code_already_registered(collection):
     form = RegisterForm(code=collection.code, friendly_name='Shelf no 3', category='uncategorized')
 
     assert form.validate() is False
-    assert 'Code already registered' in form.code.errors
+    assert _('Code already registered') in form.code.errors
 
 
 # noinspection PyUnusedLocal
@@ -39,7 +41,7 @@ def test_edit_form_validate_code_does_not_exist(db):
     form = EditForm('missing', code='missing', friendly_name='KB wing 3', category='library')
 
     assert form.validate() is False
-    assert 'Code does not exist' in form.code.errors
+    assert _('Code does not exist') in form.code.errors
 
 
 def test_edit_form_validate_modifying_code(collection):
@@ -47,7 +49,7 @@ def test_edit_form_validate_modifying_code(collection):
     form = EditForm(collection.code, code='newOne', friendly_name='KB Lib', category='library')
 
     assert form.validate() is False
-    assert 'Code cannot be modified' in form.code.errors
+    assert _('Code cannot be modified') in form.code.errors
 
 
 # noinspection PyUnusedLocal
@@ -56,7 +58,7 @@ def test_register_form_validate_without_friendly_name(db):
     form = RegisterForm(code='SFX', friendly_name='1', category='uncategorized')
 
     assert form.validate() is False
-    assert 'Field must be between 2 and 255 characters long.' in form.friendly_name.errors
+    assert _('Field must be between 2 and 255 characters long.') in form.friendly_name.errors
 
 
 def test_edit_form_validate_without_friendly_name(collection):
@@ -64,7 +66,7 @@ def test_edit_form_validate_without_friendly_name(collection):
     form = EditForm(collection.code, code=collection.code, friendly_name='0', category='library')
 
     assert form.validate() is False
-    assert 'Field must be between 2 and 255 characters long.' in form.friendly_name.errors
+    assert _('Field must be between 2 and 255 characters long.') in form.friendly_name.errors
 
 
 # noinspection PyUnusedLocal
@@ -73,7 +75,7 @@ def test_register_form_validate_unsupported_category(db):
     form = RegisterForm(code='SF2', friendly_name='Top shelf', category='Made-up by me')
 
     assert form.validate() is False
-    assert 'Not a valid choice' in form.category.errors
+    assert _('Not a valid choice') in form.category.errors
 
 
 def test_edit_form_validate_unsupported_category(collection):
@@ -82,7 +84,7 @@ def test_edit_form_validate_unsupported_category(collection):
                     category='Made-up by me')
 
     assert form.validate() is False
-    assert 'Not a valid choice' in form.category.errors
+    assert _('Not a valid choice') in form.category.errors
 
 
 # noinspection PyUnusedLocal

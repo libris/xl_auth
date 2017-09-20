@@ -53,8 +53,9 @@ Deployment
 To deploy ::
 
     export FLASK_DEBUG=0
-    npm run build   # build assets with webpack
-    flask run       # start the flask server
+    npm run build    # build assets with webpack
+    flask translate  # compile translations
+    flask run        # start the flask server
 
 In your production environment, make sure the ``FLASK_DEBUG`` environment variable is
 unset or is set to ``0``, so that ``ProdConfig`` is used.
@@ -68,6 +69,14 @@ To open the interactive shell, run ::
     flask shell
 
 By default, you will have access to the flask ``app``.
+
+
+Localization
+============
+
+To compile Swedish localization support using Babel, run ::
+
+    flask translate
 
 
 Running Tests
@@ -169,6 +178,12 @@ Access rights:
 
 Changelog
 =========
+
+v. 0.2.1
+--------
+
+* Added localization for Swedish and set it as the default ``BABEL_DEFAULT_LOCALE``
+
 
 v. 0.2.0
 --------

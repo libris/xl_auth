@@ -6,8 +6,8 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from flask import Flask, render_template
 
 from . import collection, commands, public, user
-from .extensions import (bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager, migrate,
-                         webpack)
+from .extensions import (babel, bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager,
+                         migrate, webpack)
 from .settings import ProdConfig
 
 
@@ -28,6 +28,7 @@ def create_app(config_object=ProdConfig):
 
 def register_extensions(app):
     """Register Flask extensions."""
+    babel.init_app(app)
     bcrypt.init_app(app)
     cache.init_app(app)
     db.init_app(app)
@@ -71,6 +72,7 @@ def register_shell_context(app):
 
 def register_commands(app):
     """Register Click commands."""
+    app.cli.add_command(commands.translate)
     app.cli.add_command(commands.test)
     app.cli.add_command(commands.lint)
     app.cli.add_command(commands.clean)

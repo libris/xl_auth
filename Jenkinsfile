@@ -104,6 +104,12 @@ pipeline {
                     }
                 )
             }
+            post {
+                success {
+                    sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && \
+FLASK_APP=autoapp.py flask translate"'
+                }
+            }
         }
         stage('Run Tests') {
             environment {
