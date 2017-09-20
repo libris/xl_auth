@@ -73,5 +73,3 @@ def change_password(username):
         flash_errors(change_password_form)
     return render_template('user/change_password.html', change_password_form=change_password_form,
                            user=user)
-
-
