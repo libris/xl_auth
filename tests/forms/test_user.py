@@ -3,6 +3,8 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+from random import choice
+
 from flask_babel import gettext as _
 
 from xl_auth.user.forms import ChangePasswordForm, EditDetailsForm, RegisterForm
@@ -31,7 +33,8 @@ def test_register_form_validate_email_already_registered(user):
 def test_edit_details_form_validate_username_does_not_exist(db):
     """Attempt to edit user details with a username that is not registered."""
     form = EditDetailsForm('missing@nowhere.com', username='missing@nowhere.com',
-                           full_name='Mr Foo')
+                           full_name='Mr Foo', active=choice([True, False]),
+                           is_admin=choice([True, False]))
 
     assert form.validate() is False
     assert _('Username does not exist') in form.username.errors
@@ -39,7 +42,8 @@ def test_edit_details_form_validate_username_does_not_exist(db):
 
 def test_edit_details_form_validate_modifying_username(user):
     """Attempt to edit user by giving it a new username/email."""
-    form = EditDetailsForm(user.email, username='new.address@kb.se', full_name=user.full_name)
+    form = EditDetailsForm(user.email, username='new.address@kb.se', full_name=user.full_name,
+                           active=user.active, is_admin=user.is_admin)
 
     assert form.validate() is False
     assert _('Email cannot be modified') in form.username.errors
@@ -65,7 +69,8 @@ def test_register_form_validate_success(db):
 
 def test_edit_details_form_validate_success(user):
     """Edit user details with success."""
-    form = EditDetailsForm(user.email, username=user.email, full_name=user.full_name)
+    form = EditDetailsForm(user.email, username=user.email, full_name='My New Name',
+                           active=not user.active, is_admin=not user.is_admin)
 
     assert form.validate() is True
 
