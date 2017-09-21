@@ -3,10 +3,21 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+import json
+from os import path
 
-__all__ = ['__name__', '__version__']
+__all__ = ['__name__', '__version__', '__author__', '__license__']
+
+
+def _read_package_json_version():
+    with open(path.join(path.dirname(__file__), '..', 'package.json')) as package_json:
+        return json.load(package_json)['version']
 
 
 __name__ = 'xl_auth'
 
-__version__ = '0.2.0'
+__version__ = _read_package_json_version()
+
+__author__ = 'National Library of Sweden'
+
+__license__ = 'Apache-2.0'

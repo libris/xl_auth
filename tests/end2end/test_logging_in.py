@@ -4,6 +4,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 from flask import url_for
+from flask_babel import gettext as _
 
 
 def test_can_log_in_returns_200(user, testapp):
@@ -30,7 +31,7 @@ def test_sees_alert_on_log_out(user, testapp):
     form.submit().follow()
     res = testapp.get(url_for('public.logout')).follow()
     # Sees alert.
-    assert 'You are logged out.' in res
+    assert _('You are logged out.') in res
 
 
 def test_sees_error_message_if_password_is_incorrect(user, testapp):
@@ -44,7 +45,7 @@ def test_sees_error_message_if_password_is_incorrect(user, testapp):
     # Submits.
     res = form.submit()
     # Sees error.
-    assert 'Invalid password' in res
+    assert _('Invalid password') in res
 
 
 # noinspection PyUnusedLocal
@@ -59,4 +60,4 @@ def test_sees_error_message_if_username_doesnt_exist(user, testapp):
     # Submits.
     res = form.submit()
     # Sees error.
-    assert 'Unknown user' in res
+    assert _('Unknown username/email') in res

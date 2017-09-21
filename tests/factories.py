@@ -8,8 +8,8 @@ from random import choice
 from factory import PostGenerationMethodCall, Sequence
 from factory.alchemy import SQLAlchemyModelFactory
 
-from xl_auth.database import db
 from xl_auth.collection.models import Collection
+from xl_auth.database import db
 from xl_auth.user.models import User
 
 
@@ -42,7 +42,7 @@ class CollectionFactory(BaseFactory):
 
     code = Sequence(lambda _: 'sigel{0}'.format(_))
     friendly_name = Sequence(lambda _: 'friendly_name{0}'.format(_))
-    category = choice(['bibliography', 'library', 'categorized'])
+    category = choice(['bibliography', 'library', 'uncategorized'])
     active = True
 
     class Meta:

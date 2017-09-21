@@ -1,14 +1,15 @@
+<!-- footer.html -->
 <footer>
-  <small>
-  <ul class="company">
-    <li>© 2017 National Library of Sweden</li>
-  </ul>
+    <small>
+        <ul class="company">
+            <li>© 2017 {{ _('National Library of Sweden') }}</li>
+        </ul>
 
-    <ul class="footer-nav">
+        <ul class="footer-nav">
 
-      <li><a href="{{ url_for('public.about') }}">About</a></li>
+            <li><a href="{{ url_for('public.about') }}">{{ _('About') }}</a></li>
 
-      <li><a href="mailto:mats.blomdahl@gmail.com">Contact</a></li>
-    </ul>
-  </small>
+            <li><a href="mailto:mats.blomdahl@gmail.com">{{ _('Contact') }}</a></li>
+        </ul>
+    </small>
 </footer>

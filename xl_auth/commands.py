@@ -36,7 +36,7 @@ def test(junit_xml=None):
 @click.option('-f', '--fix-imports', default=False, is_flag=True,
               help='Fix imports using isort, before linting')
 def lint(fix_imports):
-    """Lint and check code style with flake8 and isort."""
+    """Lint and check code style with flake8/isort."""
     skip = ['node_modules', 'venv', 'py27venv', 'py35venv', 'py36venv', 'requirements']
     root_files = glob('*.py')
     root_directories = [
@@ -58,12 +58,35 @@ def lint(fix_imports):
 
 
 @click.command()
+@click.option('-c', '--compile-only', default=False, is_flag=True, help='Only run compile step.')
+@with_appcontext
+def translate(compile_only):
+    """Run pybabel extract/update/compile."""
+    from sh import Command
+    pybabel = Command('pybabel')
+
+    if not compile_only:
+        click.echo(pybabel(
+            '-v', 'extract', '--width', '100', '--mapping-file', 'babel.cfg',
+            '--copyright-holder', current_app.config['APP_AUTHOR'],
+            '--project', current_app.config['APP_NAME'],
+            '--version', current_app.config['APP_VERSION'],
+            '--output-file', 'messages.pot', '.').stderr)
+        click.echo(pybabel(
+            '-v', 'update', '--width', '100', '--input-file', 'messages.pot', '--output-dir',
+            'xl_auth/translations/').stderr)
+
+    click.echo(pybabel(
+        '-v', 'compile', '--statistics', '--directory', 'xl_auth/translations/').stderr)
+
+
+@click.command()
 def clean():
-    """Remove *.pyc and *.pyo files recursively starting at current directory.
+    """Remove *.pyc and *.pyo files in xl_auth.
 
     Borrowed from Flask-Script, converted to use Click.
     """
-    for dirpath, dirnames, filenames in os.walk('.'):
+    for dirpath, dirnames, filenames in os.walk('xl_auth'):
         for filename in filenames:
             if filename.endswith('.pyc') or filename.endswith('.pyo'):
                 full_pathname = os.path.join(dirpath, filename)
@@ -72,13 +95,11 @@ def clean():
 
 
 @click.command()
-@click.option('--url', default=None,
-              help='Url to test (ex. /static/image.png)')
-@click.option('--order', default='rule',
-              help='Property on Rule to order by (default: rule)')
+@click.option('--url', default=None, help='Url to test (ex. /static/image.png)')
+@click.option('--order', default='rule', help='Property on Rule to order by (default: rule)')
 @with_appcontext
 def urls(url, order):
-    """Display all of the url matching routes for the project.
+    """Display the url matching routes for xl_auth.
 
     Borrowed from Flask-Script, converted to use Click.
     """

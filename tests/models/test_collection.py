@@ -38,9 +38,9 @@ def test_factory(db):
     """Test collection factory."""
     collection = CollectionFactory()
     db.session.commit()
-    assert bool(collection.code)
-    assert bool(collection.friendly_name)
-    assert collection.category in {'bibliography', 'library', 'categorized'}
+    assert isinstance(collection.code, string_types)
+    assert isinstance(collection.friendly_name, string_types)
+    assert collection.category in {'bibliography', 'library', 'uncategorized'}
     assert bool(collection.created_at)
     assert collection.active is True
 
