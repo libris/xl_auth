@@ -2,7 +2,7 @@
 {% extends "layout.html" %}
 {% block content %}
     <div class="container-narrow">
-        <h1>Register New User</h1>
+        <h1>{{ _('Register New User') }}</h1>
         <br/>
         <form id="registerUserForm" class="form form-register" method="POST" action="" role="form">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
