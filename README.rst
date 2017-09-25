@@ -182,8 +182,9 @@ Changelog
 v. 0.2.1
 --------
 
-* Added localization for Swedish and set it as the default ``BABEL_DEFAULT_LOCALE`` (libris/xl_auth#17)
-* Added support for editing users (#19)
+* Added localization for Swedish and set it as the default ``BABEL_DEFAULT_LOCALE``
+  (`#17 <https://github.com/libris/xl_auth/issues/17>`_)
+* Added support for editing users (`#19 <https://github.com/libris/xl_auth/issues/19>`_)
 
 
 v. 0.2.0
