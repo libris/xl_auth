@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 0.2.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-09-19 17:43+0200\n"
+"POT-Creation-Date: 2017-09-20 16:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,12 +46,13 @@ msgid "Code cannot be modified"
 msgstr ""
 
 #: tests/end2end/test_editing_collection.py:71 tests/end2end/test_registering_collection.py:72
-#: xl_auth/collection/forms.py:18
+#: xl_auth/collection/forms.py:18 xl_auth/templates/user/home.html:17
 msgid "Name"
 msgstr ""
 
-#: tests/end2end/test_editing_collection.py:71 tests/end2end/test_registering_collection.py:57
-#: tests/end2end/test_registering_collection.py:72 tests/forms/test_collection.py:27
+#: tests/end2end/test_editing_collection.py:71 tests/end2end/test_editing_user.py:143
+#: tests/end2end/test_registering_collection.py:57 tests/end2end/test_registering_collection.py:72
+#: tests/forms/test_collection.py:27
 msgid "This field is required."
 msgstr ""
 
@@ -68,6 +69,39 @@ msgstr ""
 #: tests/end2end/test_editing_collection.py:93 xl_auth/collection/views.py:45
 #, python-format
 msgid "Collection code \"%(code)s\" does not exist"
+msgstr ""
+
+#: tests/end2end/test_editing_user.py:23 tests/end2end/test_editing_user.py:58
+#: xl_auth/templates/nav.html:25 xl_auth/templates/user/home.html:4
+msgid "Users"
+msgstr ""
+
+#: tests/end2end/test_editing_user.py:25 xl_auth/templates/user/home.html:35
+msgid "Edit Details"
+msgstr ""
+
+#: tests/end2end/test_editing_user.py:60 xl_auth/templates/user/home.html:39
+msgid "Change Password"
+msgstr ""
+
+#: tests/end2end/test_editing_user.py:97 tests/end2end/test_editing_user.py:120
+#: xl_auth/templates/user/home.html:16 xl_auth/user/forms.py:14
+msgid "Email"
+msgstr ""
+
+#: tests/end2end/test_editing_user.py:97 tests/end2end/test_editing_user.py:120
+#: tests/forms/test_user.py:49 tests/forms/test_user.py:58 xl_auth/user/forms.py:63
+msgid "Email cannot be modified"
+msgstr ""
+
+#: tests/end2end/test_editing_user.py:143 xl_auth/user/forms.py:15
+msgid "Full name"
+msgstr ""
+
+#: tests/end2end/test_editing_user.py:159 tests/end2end/test_editing_user.py:164
+#: xl_auth/user/views.py:38 xl_auth/user/views.py:61
+#, python-format
+msgid "User \"%(username)s\" does not exist"
 msgstr ""
 
 #: tests/end2end/test_logging_in.py:34 xl_auth/public/views.py:46
@@ -91,15 +125,15 @@ msgstr ""
 msgid "Code already registered"
 msgstr ""
 
-#: tests/end2end/test_registering_user.py:21 xl_auth/templates/nav.html:46
+#: tests/end2end/test_registering_user.py:21 xl_auth/templates/nav.html:47
 msgid "Create account"
 msgstr ""
 
-#: tests/end2end/test_registering_user.py:49 xl_auth/user/forms.py:23
+#: tests/end2end/test_registering_user.py:49 xl_auth/user/forms.py:18
 msgid "Passwords must match"
 msgstr ""
 
-#: tests/end2end/test_registering_user.py:68 tests/forms/test_user.py:27 xl_auth/user/forms.py:40
+#: tests/end2end/test_registering_user.py:68 tests/forms/test_user.py:29 xl_auth/user/forms.py:44
 msgid "Email already registered"
 msgstr ""
 
@@ -119,8 +153,12 @@ msgstr ""
 msgid "User not activated"
 msgstr ""
 
-#: tests/forms/test_user.py:18
+#: tests/forms/test_user.py:20
 msgid "Field must be between 3 and 255 characters long."
+msgstr ""
+
+#: tests/forms/test_user.py:40 xl_auth/user/forms.py:74
+msgid "User does not exist"
 msgstr ""
 
 #: xl_auth/collection/forms.py:19
@@ -144,7 +182,7 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: xl_auth/public/forms.py:18 xl_auth/user/forms.py:20
+#: xl_auth/public/forms.py:18 xl_auth/user/forms.py:16
 msgid "Password"
 msgstr ""
 
@@ -172,7 +210,7 @@ msgstr ""
 msgid "National Library of Sweden"
 msgstr ""
 
-#: xl_auth/templates/footer.html:10 xl_auth/templates/nav.html:25 xl_auth/templates/public/about.html:7
+#: xl_auth/templates/footer.html:10 xl_auth/templates/nav.html:26 xl_auth/templates/public/about.html:7
 msgid "About"
 msgstr ""
 
@@ -184,12 +222,12 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: xl_auth/templates/nav.html:32
+#: xl_auth/templates/nav.html:33
 #, python-format
 msgid "Logged in as %(user)s"
 msgstr ""
 
-#: xl_auth/templates/nav.html:56
+#: xl_auth/templates/nav.html:57
 msgid "Log in"
 msgstr ""
 
@@ -197,7 +235,7 @@ msgstr ""
 msgid "Edit Existing Collection"
 msgstr ""
 
-#: xl_auth/templates/collection/edit.html:29
+#: xl_auth/templates/collection/edit.html:29 xl_auth/templates/user/edit_details.html:25
 msgid "Save"
 msgstr ""
 
@@ -209,15 +247,16 @@ msgstr ""
 msgid "Friendly Name"
 msgstr ""
 
-#: xl_auth/templates/collection/home.html:19
+#: xl_auth/templates/collection/home.html:19 xl_auth/templates/user/home.html:18
+#: xl_auth/user/forms.py:84
 msgid "Active"
 msgstr ""
 
-#: xl_auth/templates/collection/home.html:20
+#: xl_auth/templates/collection/home.html:20 xl_auth/templates/user/home.html:20
 msgid "Created At"
 msgstr ""
 
-#: xl_auth/templates/collection/home.html:21
+#: xl_auth/templates/collection/home.html:21 xl_auth/templates/user/home.html:21
 msgid "Actions"
 msgstr ""
 
@@ -237,15 +276,41 @@ msgstr ""
 msgid "Register New User"
 msgstr ""
 
+#: xl_auth/templates/user/change_password.html:5
+msgid "Change User Password"
+msgstr ""
+
+#: xl_auth/templates/user/edit_details.html:5
+msgid "Edit User Details"
+msgstr ""
+
+#: xl_auth/templates/user/home.html:9
+msgid "Existing Users"
+msgstr ""
+
+#: xl_auth/templates/user/home.html:11
+msgid "New User"
+msgstr ""
+
+#: xl_auth/templates/user/home.html:19
+msgid "Admin"
+msgstr ""
+
 #: xl_auth/user/forms.py:17
-msgid "Email"
-msgstr ""
-
-#: xl_auth/user/forms.py:19
-msgid "Full name"
-msgstr ""
-
-#: xl_auth/user/forms.py:21
 msgid "Verify password"
+msgstr ""
+
+#: xl_auth/user/forms.py:85
+msgid "Administrator"
+msgstr ""
+
+#: xl_auth/user/views.py:46
+#, python-format
+msgid "Thank you for updating user details for \"%(username)s\"."
+msgstr ""
+
+#: xl_auth/user/views.py:69
+#, python-format
+msgid "Thank you for changing password for \"%(username)s\"."
 msgstr ""
 

@@ -22,13 +22,14 @@
             <ul class="nav navbar-nav">
                 <li><a href="{{ url_for('public.home') }}">{{ _('Home') }}</a></li>
                 <li><a href="{{ url_for('collection.home') }}">{{ _('Collections') }}</a></li>
+                <li><a href="{{ url_for('user.home') }}">{{ _('Users') }}</a></li>
                 <li><a href="{{ url_for('public.about') }}">{{ _('About') }}</a></li>
             </ul>
             {% if current_user and current_user.is_authenticated %}
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <p class="navbar-text">
-                            <a class="navbar-link" href="{{ url_for('user.members') }}">
+                            <a class="navbar-link" href="{{ url_for('user.profile') }}">
                                 {{ _('Logged in as %(user)s', user=current_user.full_name) }}
                             </a>
                         </p>
