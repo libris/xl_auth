@@ -183,6 +183,7 @@ v. 0.2.1
 --------
 
 * Added localization for Swedish and set it as the default ``BABEL_DEFAULT_LOCALE``
+* Added support for editing users
 
 
 v. 0.2.0
