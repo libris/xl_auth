@@ -72,6 +72,14 @@ To compile Swedish localization support using Babel, run ::
     flask translate
 
 
+.. note::
+
+    Might fail with a `RuntimeError` if your shell env is set to use ASCII. Solve it like so ::
+
+        export LC_ALL=sv_SE.UTF-8
+        export LANG=sv_SE.UTF-8
+
+
 Running Tests
 =============
 
