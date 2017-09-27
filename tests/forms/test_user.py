@@ -21,8 +21,15 @@ def test_register_form_validate_without_full_name(db):
 
 
 def test_register_form_validate_email_already_registered(user):
-    """Attempt registering user with email that is already registered."""
-    form = RegisterForm(username=user.email, full_name='Another Name Perhaps',
+    """Attempt registering user with email that is already registered, irrespective of casing."""
+    if user.email.upper() != user.email:
+        existing_username_with_different_casing = user.email.upper()
+    else:
+        existing_username_with_different_casing = user.email.lower()
+    assert existing_username_with_different_casing != user.email
+
+    form = RegisterForm(username=existing_username_with_different_casing,
+                        full_name='Another Name Perhaps',
                         password='example', confirm='example')
 
     assert form.validate() is False
