@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 0.2.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-09-27 19:09+0200\n"
+"POT-Creation-Date: 2017-09-27 21:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,7 +90,7 @@ msgid "Email"
 msgstr ""
 
 #: tests/end2end/test_editing_user.py:97 tests/end2end/test_editing_user.py:120
-#: tests/forms/test_user.py:49 tests/forms/test_user.py:58 xl_auth/user/forms.py:62
+#: tests/forms/test_user.py:56 tests/forms/test_user.py:65 xl_auth/user/forms.py:62
 msgid "Email cannot be modified"
 msgstr ""
 
@@ -104,15 +104,15 @@ msgstr ""
 msgid "User \"%(username)s\" does not exist"
 msgstr ""
 
-#: tests/end2end/test_logging_in.py:34 xl_auth/public/views.py:46
+#: tests/end2end/test_logging_in.py:35 xl_auth/public/views.py:46
 msgid "You are logged out."
 msgstr ""
 
-#: tests/end2end/test_logging_in.py:48 tests/forms/test_public.py:35 xl_auth/public/forms.py:37
+#: tests/end2end/test_logging_in.py:49 tests/forms/test_public.py:36 xl_auth/public/forms.py:37
 msgid "Invalid password"
 msgstr ""
 
-#: tests/end2end/test_logging_in.py:63 tests/forms/test_public.py:25 xl_auth/public/forms.py:33
+#: tests/end2end/test_logging_in.py:64 tests/forms/test_public.py:26 xl_auth/public/forms.py:33
 msgid "Unknown username/email"
 msgstr ""
 
@@ -134,7 +134,7 @@ msgstr ""
 msgid "Passwords must match"
 msgstr ""
 
-#: tests/end2end/test_registering_user.py:68 tests/forms/test_user.py:29 xl_auth/user/forms.py:43
+#: tests/end2end/test_registering_user.py:68 tests/forms/test_user.py:36 xl_auth/user/forms.py:43
 msgid "Email already registered"
 msgstr ""
 
@@ -150,7 +150,7 @@ msgstr ""
 msgid "Field must be between 2 and 255 characters long."
 msgstr ""
 
-#: tests/forms/test_public.py:46 xl_auth/public/forms.py:41
+#: tests/forms/test_public.py:47 xl_auth/public/forms.py:41
 msgid "User not activated"
 msgstr ""
 
@@ -158,7 +158,7 @@ msgstr ""
 msgid "Field must be between 3 and 255 characters long."
 msgstr ""
 
-#: tests/forms/test_user.py:40 xl_auth/user/forms.py:73
+#: tests/forms/test_user.py:47 xl_auth/user/forms.py:73
 msgid "User does not exist"
 msgstr ""
 
