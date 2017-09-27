@@ -47,7 +47,7 @@ def test_register_form_validate_code_already_registered(collection):
                         category='uncategorized')
 
     assert form.validate() is False
-    assert _('Code already registered') in form.code.errors
+    assert _('Code "%(code)s" already registered', code=collection.code) in form.code.errors
 
 
 # noinspection PyUnusedLocal

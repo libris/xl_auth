@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2017-09-27 17:04+0200\n"
+"POT-Creation-Date: 2017-09-27 19:09+0200\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.5.1\n"
 
-#: tests/end2end/test_editing_collection.py:20 tests/end2end/test_registering_collection.py:23
+#: tests/end2end/test_editing_collection.py:20 tests/end2end/test_registering_collection.py:24
 #: xl_auth/templates/collection/home.html:4 xl_auth/templates/nav.html:24
 msgid "Collections"
 msgstr "Samlingar"
@@ -27,43 +27,43 @@ msgstr "Samlingar"
 msgid "Edit"
 msgstr "Ändra"
 
-#: tests/end2end/test_editing_collection.py:40 tests/end2end/test_registering_collection.py:40
+#: tests/end2end/test_editing_collection.py:40 tests/end2end/test_registering_collection.py:41
 msgid "category"
 msgstr "kategori"
 
-#: tests/end2end/test_editing_collection.py:42 tests/end2end/test_registering_collection.py:42
+#: tests/end2end/test_editing_collection.py:42 tests/end2end/test_registering_collection.py:43
 #: xl_auth/collection/forms.py:21 xl_auth/templates/collection/home.html:29
 msgid "No category"
 msgstr "Kategori saknas"
 
-#: tests/end2end/test_editing_collection.py:57 tests/end2end/test_registering_collection.py:57
+#: tests/end2end/test_editing_collection.py:57 tests/end2end/test_registering_collection.py:58
 #: xl_auth/collection/forms.py:17 xl_auth/templates/collection/home.html:16
 msgid "Code"
 msgstr "Kod"
 
-#: tests/end2end/test_editing_collection.py:57 tests/forms/test_collection.py:60
+#: tests/end2end/test_editing_collection.py:57 tests/forms/test_collection.py:67
 #: xl_auth/collection/forms.py:59
 msgid "Code cannot be modified"
 msgstr "Koden kan inte ändras"
 
-#: tests/end2end/test_editing_collection.py:71 tests/end2end/test_registering_collection.py:72
+#: tests/end2end/test_editing_collection.py:71 tests/end2end/test_registering_collection.py:73
 #: xl_auth/collection/forms.py:18 xl_auth/templates/user/home.html:17
 msgid "Name"
 msgstr "Namn"
 
 #: tests/end2end/test_editing_collection.py:71 tests/end2end/test_editing_user.py:143
-#: tests/end2end/test_registering_collection.py:57 tests/end2end/test_registering_collection.py:72
+#: tests/end2end/test_registering_collection.py:58 tests/end2end/test_registering_collection.py:73
 #: tests/forms/test_collection.py:19 tests/forms/test_collection.py:35
 msgid "This field is required."
 msgstr "Det här fältet är obligatoriskt."
 
-#: tests/end2end/test_editing_collection.py:85 tests/end2end/test_registering_collection.py:87
+#: tests/end2end/test_editing_collection.py:85 tests/end2end/test_registering_collection.py:88
 #: xl_auth/collection/forms.py:19 xl_auth/templates/collection/home.html:18
 msgid "Category"
 msgstr "Kategori"
 
-#: tests/end2end/test_editing_collection.py:85 tests/end2end/test_registering_collection.py:87
-#: tests/forms/test_collection.py:86 tests/forms/test_collection.py:95
+#: tests/end2end/test_editing_collection.py:85 tests/end2end/test_registering_collection.py:88
+#: tests/forms/test_collection.py:93 tests/forms/test_collection.py:102
 msgid "Not a valid choice"
 msgstr "Inte ett giltigt val"
 
@@ -117,14 +117,15 @@ msgstr "Felaktigt lösenord"
 msgid "Unknown username/email"
 msgstr "Okänd epost/användarnamn"
 
-#: tests/end2end/test_registering_collection.py:25 xl_auth/templates/collection/home.html:11
+#: tests/end2end/test_registering_collection.py:26 xl_auth/templates/collection/home.html:11
 msgid "New Collection"
 msgstr "Ny samling"
 
-#: tests/end2end/test_registering_collection.py:105 tests/forms/test_collection.py:43
+#: tests/end2end/test_registering_collection.py:106 tests/forms/test_collection.py:50
 #: xl_auth/collection/forms.py:42
-msgid "Code already registered"
-msgstr "Koden är redan registrerad"
+#, python-format
+msgid "Code \"%(code)s\" already registered"
+msgstr "Koden \"%(code)s\" är redan registrerad"
 
 #: tests/end2end/test_registering_user.py:21 xl_auth/templates/nav.html:47
 msgid "Create account"
@@ -142,11 +143,11 @@ msgstr "Epost-adressen är redan registrerad"
 msgid "Field must be between 1 and 5 characters long."
 msgstr "Fältet måste vara mellan 1 och 5 tecken långt."
 
-#: tests/forms/test_collection.py:52 xl_auth/collection/forms.py:70
+#: tests/forms/test_collection.py:59 xl_auth/collection/forms.py:70
 msgid "Code does not exist"
 msgstr "Koden existerar ej"
 
-#: tests/forms/test_collection.py:69 tests/forms/test_collection.py:77
+#: tests/forms/test_collection.py:76 tests/forms/test_collection.py:84
 msgid "Field must be between 2 and 255 characters long."
 msgstr "Fältet måste vara mellan 2 och 255 tecken långt."
 

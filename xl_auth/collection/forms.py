@@ -36,10 +36,10 @@ class RegisterForm(CollectionForm):
         if not initial_validation:
             return False
 
-        collection = Collection.query.filter_by(code=self.code.data).first()
+        collection = Collection.query.filter(Collection.code.ilike(self.code.data)).first()
 
         if collection:
-            self.code.errors.append(_('Code already registered'))
+            self.code.errors.append(_('Code "%(code)s" already registered', code=collection.code))
             return False
 
         return True
