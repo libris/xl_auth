@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2017-09-20 16:42+0200\n"
+"POT-Creation-Date: 2017-09-27 17:04+0200\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -41,7 +41,7 @@ msgstr "Kategori saknas"
 msgid "Code"
 msgstr "Kod"
 
-#: tests/end2end/test_editing_collection.py:57 tests/forms/test_collection.py:52
+#: tests/end2end/test_editing_collection.py:57 tests/forms/test_collection.py:60
 #: xl_auth/collection/forms.py:59
 msgid "Code cannot be modified"
 msgstr "Koden kan inte ändras"
@@ -53,7 +53,7 @@ msgstr "Namn"
 
 #: tests/end2end/test_editing_collection.py:71 tests/end2end/test_editing_user.py:143
 #: tests/end2end/test_registering_collection.py:57 tests/end2end/test_registering_collection.py:72
-#: tests/forms/test_collection.py:27
+#: tests/forms/test_collection.py:19 tests/forms/test_collection.py:35
 msgid "This field is required."
 msgstr "Det här fältet är obligatoriskt."
 
@@ -63,7 +63,7 @@ msgid "Category"
 msgstr "Kategori"
 
 #: tests/end2end/test_editing_collection.py:85 tests/end2end/test_registering_collection.py:87
-#: tests/forms/test_collection.py:78 tests/forms/test_collection.py:87
+#: tests/forms/test_collection.py:86 tests/forms/test_collection.py:95
 msgid "Not a valid choice"
 msgstr "Inte ett giltigt val"
 
@@ -86,16 +86,16 @@ msgid "Change Password"
 msgstr "Byt lösenord"
 
 #: tests/end2end/test_editing_user.py:97 tests/end2end/test_editing_user.py:120
-#: xl_auth/templates/user/home.html:16 xl_auth/user/forms.py:14
+#: xl_auth/templates/user/home.html:16 xl_auth/user/forms.py:13
 msgid "Email"
 msgstr "Epost"
 
 #: tests/end2end/test_editing_user.py:97 tests/end2end/test_editing_user.py:120
-#: tests/forms/test_user.py:49 tests/forms/test_user.py:58 xl_auth/user/forms.py:63
+#: tests/forms/test_user.py:49 tests/forms/test_user.py:58 xl_auth/user/forms.py:62
 msgid "Email cannot be modified"
 msgstr "Epost/användarnamn går inte att ändra"
 
-#: tests/end2end/test_editing_user.py:143 xl_auth/user/forms.py:15
+#: tests/end2end/test_editing_user.py:143 xl_auth/user/forms.py:14
 msgid "Full name"
 msgstr "Fullständigt namn"
 
@@ -121,7 +121,7 @@ msgstr "Okänd epost/användarnamn"
 msgid "New Collection"
 msgstr "Ny samling"
 
-#: tests/end2end/test_registering_collection.py:105 tests/forms/test_collection.py:35
+#: tests/end2end/test_registering_collection.py:105 tests/forms/test_collection.py:43
 #: xl_auth/collection/forms.py:42
 msgid "Code already registered"
 msgstr "Koden är redan registrerad"
@@ -130,23 +130,23 @@ msgstr "Koden är redan registrerad"
 msgid "Create account"
 msgstr "Skapa användarkonto"
 
-#: tests/end2end/test_registering_user.py:49 xl_auth/user/forms.py:18
+#: tests/end2end/test_registering_user.py:49 xl_auth/user/forms.py:17
 msgid "Passwords must match"
 msgstr "Lösenorden måste stämma överens"
 
-#: tests/end2end/test_registering_user.py:68 tests/forms/test_user.py:29 xl_auth/user/forms.py:44
+#: tests/end2end/test_registering_user.py:68 tests/forms/test_user.py:29 xl_auth/user/forms.py:43
 msgid "Email already registered"
 msgstr "Epost-adressen är redan registrerad"
 
-#: tests/forms/test_collection.py:19
-msgid "Field must be between 2 and 8 characters long."
-msgstr "Fältet måste vara mellan 2 och 8 tecken långt."
+#: tests/forms/test_collection.py:27
+msgid "Field must be between 1 and 5 characters long."
+msgstr "Fältet måste vara mellan 1 och 5 tecken långt."
 
-#: tests/forms/test_collection.py:44 xl_auth/collection/forms.py:70
+#: tests/forms/test_collection.py:52 xl_auth/collection/forms.py:70
 msgid "Code does not exist"
 msgstr "Koden existerar ej"
 
-#: tests/forms/test_collection.py:61 tests/forms/test_collection.py:69
+#: tests/forms/test_collection.py:69 tests/forms/test_collection.py:77
 msgid "Field must be between 2 and 255 characters long."
 msgstr "Fältet måste vara mellan 2 och 255 tecken långt."
 
@@ -158,7 +158,7 @@ msgstr "Användarkontot ej aktiverat"
 msgid "Field must be between 3 and 255 characters long."
 msgstr "Fältet måste vara mellan 3 och 255 tecken långt."
 
-#: tests/forms/test_user.py:40 xl_auth/user/forms.py:74
+#: tests/forms/test_user.py:40 xl_auth/user/forms.py:73
 msgid "User does not exist"
 msgstr "Användaren existerar inte"
 
@@ -183,7 +183,7 @@ msgstr "Samlingen \"%(code)s\" har uppdaterats."
 msgid "Username"
 msgstr "Användarnamn"
 
-#: xl_auth/public/forms.py:18 xl_auth/user/forms.py:16
+#: xl_auth/public/forms.py:18 xl_auth/user/forms.py:15
 msgid "Password"
 msgstr "Lösenord"
 
@@ -249,7 +249,7 @@ msgid "Friendly Name"
 msgstr "Namn"
 
 #: xl_auth/templates/collection/home.html:19 xl_auth/templates/user/home.html:18
-#: xl_auth/user/forms.py:84
+#: xl_auth/user/forms.py:83
 msgid "Active"
 msgstr "Aktiv"
 
@@ -295,13 +295,13 @@ msgstr "Ny användare"
 
 #: xl_auth/templates/user/home.html:19
 msgid "Admin"
-msgstr ""
+msgstr "Admin"
 
-#: xl_auth/user/forms.py:17
+#: xl_auth/user/forms.py:16
 msgid "Verify password"
 msgstr "Upprepa lösenord"
 
-#: xl_auth/user/forms.py:85
+#: xl_auth/user/forms.py:84
 msgid "Administrator"
 msgstr "Administratör"
 
