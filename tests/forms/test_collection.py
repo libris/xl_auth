@@ -102,10 +102,11 @@ def test_edit_form_validate_unsupported_category(collection):
     assert _('Not a valid choice') in form.category.errors
 
 
-# noinspection PyUnusedLocal
-def test_register_form_validate_success(db):
-    """Register entry with success."""
-    form = RegisterForm(code='XZY', friendly_name='National Library, section D9, shelf 2, row 1',
+def test_register_form_validate_success(collection):
+    """Register entry with success (using slightly different code than already exists)."""
+    slightly_different_code_than_existing_one = collection.code + 'X'
+    form = RegisterForm(code=slightly_different_code_than_existing_one,
+                        friendly_name='National Library, section D9, shelf 2, row 1',
                         category=choice(['bibliography', 'library', 'uncategorized']))
 
     assert form.validate() is True
