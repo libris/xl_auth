@@ -36,8 +36,15 @@ def test_edit_form_validate_without_code(collection):
 
 
 def test_register_form_validate_code_already_registered(collection):
-    """Attempt register code that is already registered."""
-    form = RegisterForm(code=collection.code, friendly_name='Shelf no 3', category='uncategorized')
+    """Attempt registering code that is already registered, irrespective of casing."""
+    if collection.code.upper() != collection.code:
+        existing_code_with_different_casing = collection.code.upper()
+    else:
+        existing_code_with_different_casing = collection.code.lower()
+    assert existing_code_with_different_casing != collection.code
+
+    form = RegisterForm(code=existing_code_with_different_casing, friendly_name='Shelf no 3',
+                        category='uncategorized')
 
     assert form.validate() is False
     assert _('Code already registered') in form.code.errors
