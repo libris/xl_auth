@@ -4,7 +4,7 @@
     <div class="container-narrow">
         <h1>{{ _('Edit Existing Collection') }}</h1>
         <br/>
-        <form id="editCollectionForm" class="form form-edit" method="POST" action="" role="form">
+        <form id="editCollectionForm" autocomplete="off" class="form form-edit" method="POST" action="" role="form">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <div class="form-group">
                 {{ edit_collection_form.code.label }}
@@ -12,7 +12,7 @@
             </div>
             <div class="form-group">
                 {{ edit_collection_form.friendly_name.label }}
-                {{ edit_collection_form.friendly_name(value=collection.friendly_name, class_="form-control") }}
+                {{ edit_collection_form.friendly_name(value=collection.friendly_name, class_="form-control", autocomplete="off") }}
             </div>
             <div class="form-group">
                 {% for choice in edit_collection_form.category %}
