@@ -71,7 +71,7 @@ def test_full_name():
 
 
 @pytest.mark.usefixtures('db')
-def test_permissions(collection):
+def test_adding_permissions(collection):
     """Grant a permission to a user."""
     user = UserFactory()
     user.save()
@@ -79,6 +79,18 @@ def test_permissions(collection):
     permission.save()
 
     assert permission in user.permissions
+
+
+@pytest.mark.usefixtures('db')
+def test_removing_permissions(collection):
+    """Withdraw permission from a user."""
+    user = UserFactory()
+    user.save()
+    permission = Permission(user=user, collection=collection)
+    permission.save()
+    permission.delete()
+
+    assert permission not in user.permissions
 
 
 @pytest.mark.usefixtures('db')
