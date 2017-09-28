@@ -9,11 +9,20 @@ from xl_auth.public.forms import LoginForm
 
 
 def test_login_form_validate_success(user):
-    """Login successful (irrespective of casing)."""
+    """Login successful."""
     user.set_password('example')
     user.save()
-    username_with_different_casing = user.email.upper()
-    form = LoginForm(username=username_with_different_casing, password='example')
+    form = LoginForm(username=user.email, password='example')
+    assert form.validate() is True
+    assert form.user == user
+
+
+def test_login_form_validate_success_with_different_username_casing(user):
+    """Login successful, but this time with username/email in different casing."""
+    user.email = 'me@lowercase-club.se'
+    user.set_password('example')
+    user.save()
+    form = LoginForm(username=user.email.upper(), password='example')
     assert form.validate() is True
     assert form.user == user
 
