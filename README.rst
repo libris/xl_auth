@@ -180,6 +180,13 @@ Access rights:
 Changelog
 =========
 
+v. 0.2.2
+--------
+
+* Bug fix for uniqueness checks on email addresses and collection codes
+  (`#30 <https://github.com/libris/xl_auth/issues/30>`_)
+
+
 v. 0.2.1
 --------
 
