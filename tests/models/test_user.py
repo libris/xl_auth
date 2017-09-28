@@ -72,7 +72,7 @@ def test_full_name():
 
 @pytest.mark.usefixtures('db')
 def test_permissions(collection):
-    """Add a role to a user."""
+    """Grant a permission to a user."""
     user = UserFactory()
     user.save()
     permission = Permission(user=user, collection=collection)
