@@ -17,6 +17,16 @@ def test_login_form_validate_success(user):
     assert form.user == user
 
 
+def test_login_form_validate_success_with_different_username_casing(user):
+    """Login successful, but this time with username/email in different casing."""
+    user.email = 'me@lowercase-club.se'
+    user.set_password('example')
+    user.save()
+    form = LoginForm(username=user.email.upper(), password='example')
+    assert form.validate() is True
+    assert form.user == user
+
+
 # noinspection PyUnusedLocal
 def test_login_form_validate_unknown_username(db):
     """Unknown username."""

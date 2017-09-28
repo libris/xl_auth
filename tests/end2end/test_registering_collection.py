@@ -7,6 +7,7 @@ from random import choice
 
 from flask import url_for
 from flask_babel import gettext as _
+from jinja2 import escape
 
 from xl_auth.collection.models import Collection
 
@@ -102,4 +103,4 @@ def test_user_sees_error_message_if_collection_already_registered(collection, te
     # Submits.
     res = form.submit()
     # Sees error.
-    assert _('Code already registered') in res
+    assert escape(_('Code "%(code)s" already registered', code=collection.code)) in res

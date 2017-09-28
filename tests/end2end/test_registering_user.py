@@ -58,7 +58,7 @@ def test_user_sees_error_message_if_user_already_registered(user, testapp):
     res = testapp.get(url_for('public.register'))
     # Fills out form, but username is already registered.
     form = res.forms['registerUserForm']
-    form['username'] = user.email
+    form['username'] = user.email.upper()  # Default would be `userN@example.com`, not upper-cased.
     form['full_name'] = 'Mr End2End'
     form['password'] = 'secret'
     form['confirm'] = 'secret'

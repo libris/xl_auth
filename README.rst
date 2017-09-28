@@ -27,24 +27,17 @@ Run the following commands to bootstrap your environment ::
     cd xl_auth
     virtualenv venv && source venv/bin/activate
     pip install -r requirements/dev.txt
+    FLASK_APP=$(PWD)/autoapp.py FLASK_DEBUG=1 flask db upgrade
     npm install
     npm start  # run webpack dev server and flask server using concurrently
 
 You will see a pretty welcome screen.
 
-In general, before running shell commands, set the ``FLASK_APP`` and
+In general, before running flask shell commands, set the ``FLASK_APP`` and
 ``FLASK_DEBUG`` environment variables ::
 
     export FLASK_APP=/path/to/autoapp.py
     export FLASK_DEBUG=1
-
-Once you have installed your DBMS, run the following to create your app's
-database tables and perform the initial migration ::
-
-    flask db init
-    flask db migrate
-    flask db upgrade
-    npm start
 
 
 Deployment
@@ -77,6 +70,14 @@ Localization
 To compile Swedish localization support using Babel, run ::
 
     flask translate
+
+
+.. note::
+
+    Might fail with a `RuntimeError` if your shell env is set to use ASCII. Solve it like so ::
+
+        export LC_ALL=sv_SE.UTF-8
+        export LANG=sv_SE.UTF-8
 
 
 Running Tests
@@ -178,6 +179,13 @@ Access rights:
 
 Changelog
 =========
+
+v. 0.2.2
+--------
+
+* Bug fix for uniqueness checks on email addresses and collection codes
+  (`#30 <https://github.com/libris/xl_auth/issues/30>`_)
+
 
 v. 0.2.1
 --------
