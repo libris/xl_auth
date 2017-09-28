@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from random import choice
 
-from factory import PostGenerationMethodCall, Sequence, LazyFunction
+from factory import LazyFunction, PostGenerationMethodCall, Sequence
 from factory.alchemy import SQLAlchemyModelFactory
 
 from xl_auth.collection.models import Collection

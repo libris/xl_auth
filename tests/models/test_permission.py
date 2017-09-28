@@ -6,6 +6,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import datetime as dt
 
 import pytest
+from sqlalchemy.exc import IntegrityError
 
 from xl_auth.collection.models import Collection
 from xl_auth.permission.models import Permission
@@ -52,3 +53,15 @@ def test_repr(user, collection):
     """Check repr output."""
     permission = PermissionFactory(user=user, collection=collection)
     assert repr(permission) == '<Permission({!r}@{!r})>'.format(user, collection)
+
+
+@pytest.mark.usefixtures('db')
+def test_unique_constraint(user, collection):
+    """Test uniqueness constraint for user-collection pairs."""
+    permission = PermissionFactory(user=user, collection=collection)
+    permission.save()
+
+    duplicate_permission = PermissionFactory(user=user, collection=collection)
+    # noinspection PyUnusedLocal
+    with pytest.raises(IntegrityError) as e_info:  # noqa
+        duplicate_permission.save()
