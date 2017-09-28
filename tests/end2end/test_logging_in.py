@@ -8,12 +8,13 @@ from flask_babel import gettext as _
 
 
 def test_can_log_in_returns_200(user, testapp):
-    """Login successful."""
+    """Login successful (irrespective of casing)."""
     # Goes to homepage.
     res = testapp.get('/')
     # Fills out login form in navbar.
+    username_with_different_casing = user.email.upper()  # Default would be userN@example.com.
     form = res.forms['loginForm']
-    form['username'] = user.email
+    form['username'] = username_with_different_casing
     form['password'] = 'myPrecious'
     # Submits.
     res = form.submit().follow()

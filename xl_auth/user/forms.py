@@ -4,7 +4,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 from flask_babel import lazy_gettext as _
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import BooleanField, PasswordField, StringField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
 
@@ -17,7 +17,7 @@ confirm = PasswordField(_('Verify password'), validators=[
     DataRequired(), EqualTo('password', message=_('Passwords must match'))])
 
 
-class RegisterForm(Form):
+class RegisterForm(FlaskForm):
     """User registration form."""
 
     username = username
@@ -37,7 +37,7 @@ class RegisterForm(Form):
         if not initial_validation:
             return False
 
-        user = User.query.filter_by(email=self.username.data).first()
+        user = User.query.filter(User.email.ilike(self.username.data)).first()
 
         if user:
             self.username.errors.append(_('Email already registered'))
@@ -46,7 +46,7 @@ class RegisterForm(Form):
         return True
 
 
-class _EditForm(Form):
+class _EditForm(FlaskForm):
     """Edit user form."""
 
     username = username

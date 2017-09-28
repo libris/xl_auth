@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 0.2.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-09-20 16:42+0200\n"
+"POT-Creation-Date: 2017-09-27 21:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.5.1\n"
 
-#: tests/end2end/test_editing_collection.py:20 tests/end2end/test_registering_collection.py:23
+#: tests/end2end/test_editing_collection.py:20 tests/end2end/test_registering_collection.py:24
 #: xl_auth/templates/collection/home.html:4 xl_auth/templates/nav.html:24
 msgid "Collections"
 msgstr ""
@@ -26,43 +26,43 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: tests/end2end/test_editing_collection.py:40 tests/end2end/test_registering_collection.py:40
+#: tests/end2end/test_editing_collection.py:40 tests/end2end/test_registering_collection.py:41
 msgid "category"
 msgstr ""
 
-#: tests/end2end/test_editing_collection.py:42 tests/end2end/test_registering_collection.py:42
+#: tests/end2end/test_editing_collection.py:42 tests/end2end/test_registering_collection.py:43
 #: xl_auth/collection/forms.py:21 xl_auth/templates/collection/home.html:29
 msgid "No category"
 msgstr ""
 
-#: tests/end2end/test_editing_collection.py:57 tests/end2end/test_registering_collection.py:57
+#: tests/end2end/test_editing_collection.py:57 tests/end2end/test_registering_collection.py:58
 #: xl_auth/collection/forms.py:17 xl_auth/templates/collection/home.html:16
 msgid "Code"
 msgstr ""
 
-#: tests/end2end/test_editing_collection.py:57 tests/forms/test_collection.py:52
+#: tests/end2end/test_editing_collection.py:57 tests/forms/test_collection.py:67
 #: xl_auth/collection/forms.py:59
 msgid "Code cannot be modified"
 msgstr ""
 
-#: tests/end2end/test_editing_collection.py:71 tests/end2end/test_registering_collection.py:72
+#: tests/end2end/test_editing_collection.py:71 tests/end2end/test_registering_collection.py:73
 #: xl_auth/collection/forms.py:18 xl_auth/templates/user/home.html:17
 msgid "Name"
 msgstr ""
 
 #: tests/end2end/test_editing_collection.py:71 tests/end2end/test_editing_user.py:143
-#: tests/end2end/test_registering_collection.py:57 tests/end2end/test_registering_collection.py:72
-#: tests/forms/test_collection.py:27
+#: tests/end2end/test_registering_collection.py:58 tests/end2end/test_registering_collection.py:73
+#: tests/forms/test_collection.py:19 tests/forms/test_collection.py:35
 msgid "This field is required."
 msgstr ""
 
-#: tests/end2end/test_editing_collection.py:85 tests/end2end/test_registering_collection.py:87
+#: tests/end2end/test_editing_collection.py:85 tests/end2end/test_registering_collection.py:88
 #: xl_auth/collection/forms.py:19 xl_auth/templates/collection/home.html:18
 msgid "Category"
 msgstr ""
 
-#: tests/end2end/test_editing_collection.py:85 tests/end2end/test_registering_collection.py:87
-#: tests/forms/test_collection.py:78 tests/forms/test_collection.py:87
+#: tests/end2end/test_editing_collection.py:85 tests/end2end/test_registering_collection.py:88
+#: tests/forms/test_collection.py:93 tests/forms/test_collection.py:102
 msgid "Not a valid choice"
 msgstr ""
 
@@ -85,16 +85,16 @@ msgid "Change Password"
 msgstr ""
 
 #: tests/end2end/test_editing_user.py:97 tests/end2end/test_editing_user.py:120
-#: xl_auth/templates/user/home.html:16 xl_auth/user/forms.py:14
+#: xl_auth/templates/user/home.html:16 xl_auth/user/forms.py:13
 msgid "Email"
 msgstr ""
 
 #: tests/end2end/test_editing_user.py:97 tests/end2end/test_editing_user.py:120
-#: tests/forms/test_user.py:49 tests/forms/test_user.py:58 xl_auth/user/forms.py:63
+#: tests/forms/test_user.py:56 tests/forms/test_user.py:65 xl_auth/user/forms.py:62
 msgid "Email cannot be modified"
 msgstr ""
 
-#: tests/end2end/test_editing_user.py:143 xl_auth/user/forms.py:15
+#: tests/end2end/test_editing_user.py:143 xl_auth/user/forms.py:14
 msgid "Full name"
 msgstr ""
 
@@ -104,52 +104,53 @@ msgstr ""
 msgid "User \"%(username)s\" does not exist"
 msgstr ""
 
-#: tests/end2end/test_logging_in.py:34 xl_auth/public/views.py:46
+#: tests/end2end/test_logging_in.py:35 xl_auth/public/views.py:46
 msgid "You are logged out."
 msgstr ""
 
-#: tests/end2end/test_logging_in.py:48 tests/forms/test_public.py:35 xl_auth/public/forms.py:37
+#: tests/end2end/test_logging_in.py:49 tests/forms/test_public.py:36 xl_auth/public/forms.py:37
 msgid "Invalid password"
 msgstr ""
 
-#: tests/end2end/test_logging_in.py:63 tests/forms/test_public.py:25 xl_auth/public/forms.py:33
+#: tests/end2end/test_logging_in.py:64 tests/forms/test_public.py:26 xl_auth/public/forms.py:33
 msgid "Unknown username/email"
 msgstr ""
 
-#: tests/end2end/test_registering_collection.py:25 xl_auth/templates/collection/home.html:11
+#: tests/end2end/test_registering_collection.py:26 xl_auth/templates/collection/home.html:11
 msgid "New Collection"
 msgstr ""
 
-#: tests/end2end/test_registering_collection.py:105 tests/forms/test_collection.py:35
+#: tests/end2end/test_registering_collection.py:106 tests/forms/test_collection.py:50
 #: xl_auth/collection/forms.py:42
-msgid "Code already registered"
+#, python-format
+msgid "Code \"%(code)s\" already registered"
 msgstr ""
 
 #: tests/end2end/test_registering_user.py:21 xl_auth/templates/nav.html:47
 msgid "Create account"
 msgstr ""
 
-#: tests/end2end/test_registering_user.py:49 xl_auth/user/forms.py:18
+#: tests/end2end/test_registering_user.py:49 xl_auth/user/forms.py:17
 msgid "Passwords must match"
 msgstr ""
 
-#: tests/end2end/test_registering_user.py:68 tests/forms/test_user.py:29 xl_auth/user/forms.py:44
+#: tests/end2end/test_registering_user.py:68 tests/forms/test_user.py:36 xl_auth/user/forms.py:43
 msgid "Email already registered"
 msgstr ""
 
-#: tests/forms/test_collection.py:19
-msgid "Field must be between 2 and 8 characters long."
+#: tests/forms/test_collection.py:27
+msgid "Field must be between 1 and 5 characters long."
 msgstr ""
 
-#: tests/forms/test_collection.py:44 xl_auth/collection/forms.py:70
+#: tests/forms/test_collection.py:59 xl_auth/collection/forms.py:70
 msgid "Code does not exist"
 msgstr ""
 
-#: tests/forms/test_collection.py:61 tests/forms/test_collection.py:69
+#: tests/forms/test_collection.py:76 tests/forms/test_collection.py:84
 msgid "Field must be between 2 and 255 characters long."
 msgstr ""
 
-#: tests/forms/test_public.py:46 xl_auth/public/forms.py:41
+#: tests/forms/test_public.py:47 xl_auth/public/forms.py:41
 msgid "User not activated"
 msgstr ""
 
@@ -157,7 +158,7 @@ msgstr ""
 msgid "Field must be between 3 and 255 characters long."
 msgstr ""
 
-#: tests/forms/test_user.py:40 xl_auth/user/forms.py:74
+#: tests/forms/test_user.py:47 xl_auth/user/forms.py:73
 msgid "User does not exist"
 msgstr ""
 
@@ -182,7 +183,7 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: xl_auth/public/forms.py:18 xl_auth/user/forms.py:16
+#: xl_auth/public/forms.py:18 xl_auth/user/forms.py:15
 msgid "Password"
 msgstr ""
 
@@ -248,7 +249,7 @@ msgid "Friendly Name"
 msgstr ""
 
 #: xl_auth/templates/collection/home.html:19 xl_auth/templates/user/home.html:18
-#: xl_auth/user/forms.py:84
+#: xl_auth/user/forms.py:83
 msgid "Active"
 msgstr ""
 
@@ -296,11 +297,11 @@ msgstr ""
 msgid "Admin"
 msgstr ""
 
-#: xl_auth/user/forms.py:17
+#: xl_auth/user/forms.py:16
 msgid "Verify password"
 msgstr ""
 
-#: xl_auth/user/forms.py:85
+#: xl_auth/user/forms.py:84
 msgid "Administrator"
 msgstr ""
 

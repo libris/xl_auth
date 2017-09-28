@@ -4,14 +4,14 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 from flask_babel import lazy_gettext as _
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField
 from wtforms.validators import DataRequired
 
 from ..user.models import User
 
 
-class LoginForm(Form):
+class LoginForm(FlaskForm):
     """Login form."""
 
     username = StringField(_('Username'), validators=[DataRequired()])
@@ -28,7 +28,7 @@ class LoginForm(Form):
         if not initial_validation:
             return False
 
-        self.user = User.query.filter_by(email=self.username.data).first()
+        self.user = User.query.filter(User.email.ilike(self.username.data)).first()
         if not self.user:
             self.username.errors.append(_('Unknown username/email'))
             return False

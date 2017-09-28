@@ -4,17 +4,17 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 from flask_babel import lazy_gettext as _
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import RadioField, StringField
 from wtforms.validators import DataRequired, Length, ValidationError
 
 from .models import Collection
 
 
-class CollectionForm(Form):
+class CollectionForm(FlaskForm):
     """Collection form."""
 
-    code = StringField(_('Code'), validators=[DataRequired(), Length(min=2, max=8)])
+    code = StringField(_('Code'), validators=[DataRequired(), Length(min=1, max=5)])
     friendly_name = StringField(_('Name'), validators=[DataRequired(), Length(min=2, max=255)])
     category = RadioField(_('Category'), choices=[('bibliography', _('Bibliography')),
                                                   ('library', _('Library')),
@@ -36,10 +36,10 @@ class RegisterForm(CollectionForm):
         if not initial_validation:
             return False
 
-        collection = Collection.query.filter_by(code=self.code.data).first()
+        collection = Collection.query.filter(Collection.code.ilike(self.code.data)).first()
 
         if collection:
-            self.code.errors.append(_('Code already registered'))
+            self.code.errors.append(_('Code "%(code)s" already registered', code=collection.code))
             return False
 
         return True
