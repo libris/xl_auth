@@ -7,6 +7,7 @@ import datetime as dt
 
 import pytest
 
+from xl_auth.permission.models import Permission
 from xl_auth.user.models import Role, User
 
 from ..factories import UserFactory
@@ -47,9 +48,8 @@ def test_factory(db):
     assert bool(user.email)
     assert bool(user.full_name)
     assert bool(user.created_at)
-    assert not hasattr(user, 'username')
-    assert not hasattr(user, 'first_name')
-    assert not hasattr(user, 'last_name')
+    assert isinstance(user.permissions, list)
+    assert isinstance(user.roles, list)
     assert user.is_admin is False
     assert user.active is True
     assert user.check_password('myPrecious')
@@ -68,6 +68,17 @@ def test_full_name():
     """User full name."""
     user = UserFactory(full_name='Foo Bar')
     assert user.full_name == 'Foo Bar'
+
+
+@pytest.mark.usefixtures('db')
+def test_permissions(collection):
+    """Add a role to a user."""
+    user = UserFactory()
+    user.save()
+    permission = Permission(user=user, collection=collection)
+    permission.save()
+
+    assert permission in user.permissions
 
 
 @pytest.mark.usefixtures('db')
