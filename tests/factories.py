@@ -5,11 +5,12 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from random import choice
 
-from factory import PostGenerationMethodCall, Sequence
+from factory import LazyFunction, PostGenerationMethodCall, Sequence
 from factory.alchemy import SQLAlchemyModelFactory
 
 from xl_auth.collection.models import Collection
 from xl_auth.database import db
+from xl_auth.permission.models import Permission
 from xl_auth.user.models import User
 
 
@@ -49,3 +50,15 @@ class CollectionFactory(BaseFactory):
         """Factory configuration."""
 
         model = Collection
+
+
+class PermissionFactory(BaseFactory):
+    """Permission factory."""
+
+    user = LazyFunction(UserFactory)
+    collection = LazyFunction(CollectionFactory)
+
+    class Meta:
+        """Factory configuration."""
+
+        model = Permission

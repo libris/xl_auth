@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-"""User models."""
+"""Collection model."""
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import datetime as dt
 
-from ..database import Column, Model, SurrogatePK, db
+from ..database import Column, Model, SurrogatePK, db, relationship
 
 
 class Collection(SurrogatePK, Model):
@@ -16,6 +16,7 @@ class Collection(SurrogatePK, Model):
     friendly_name = Column(db.String(255), unique=False, nullable=False)
     category = Column(db.String(255), nullable=False)
     active = Column(db.Boolean(), default=True)
+    permissions = relationship('Permission', back_populates='collection')
     created_at = Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
 
     def __init__(self, code, friendly_name, category, **kwargs):
