@@ -65,7 +65,6 @@ def test_register_form_validate_permission_already_registered(permission):
 
 def test_edit_form_validate_permission_already_registered(permission):
     """Attempt editing permissions with a already registered (user_id, collection_id) pair."""
-
     other_permission = PermissionFactory()
     other_permission.save()
     form = EditForm(other_permission.id, user_id=permission.user.id,
@@ -141,4 +140,3 @@ def test_edit_form_validate_success(permission, user, collection):
         'register': True,
         'catalogue': True
     }
-
