@@ -122,13 +122,23 @@ def test_register_form_validate_success(user, collection):
     form = RegisterForm(user_id=user.id, collection_id=collection.id)
 
     assert form.validate() is True
+    assert form.data == {
+        'user_id': user.id, 'collection_id': collection.id, 'register': False, 'catalogue': False}
 
 
 def test_edit_form_validate_success(permission, user, collection):
     """Edit entry with success."""
     assert permission.user.id != user.id  # Existing permission maps to different user.
     assert permission.collection.id != collection.id  # And a different collection..
-    form = EditForm(permission.id, user_id=user.id, collection_id=collection.id)
+    form = EditForm(permission.id, user_id=user.id, collection_id=collection.id,
+                    register=True, catalogue=True)
 
     assert form.validate() is True
+    assert form.data == {
+        'permission_id': permission.id,
+        'user_id': user.id,
+        'collection_id': collection.id,
+        'register': True,
+        'catalogue': True
+    }
 
