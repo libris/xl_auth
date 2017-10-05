@@ -35,6 +35,8 @@ def test_user_can_register_new_permission(user, collection, testapp):
     res = form.submit().follow()
     assert res.status_code == 200
     # A new permission was created
+    assert _('Added permissions for "%(username)s" on collection "%(code)s".',
+             username=user.email, code=collection.code) in res
     assert len(Permission.query.all()) == old_count + 1
     # The new permission is listed under existing collections
     assert '<td>{}</td>'.format(user.email) in res

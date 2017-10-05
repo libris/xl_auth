@@ -36,7 +36,9 @@ def test_user_can_edit_existing_permission(user, permission, testapp):
     # Submits
     res = form.submit().follow()
     assert res.status_code == 200
-    # Number of permissions are the same
+    # The permission was updated, and number of permissions are the same as initial state
+    assert _('Updated permissions for "%(username)s" on collection "%(code)s".',
+             username=permission.user.email, code=other_collection.code) in res
     assert len(Permission.query.all()) == old_count
     # The edited permission is listed under existing collections
     assert '<td>{}</td>'.format(permission.user.email) in res

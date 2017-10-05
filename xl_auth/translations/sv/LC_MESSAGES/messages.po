@@ -241,10 +241,6 @@ msgstr "Katalogisering"
 msgid "Permission"
 msgstr "Behörighet"
 
-#: xl_auth/permission/views.py:35
-msgid "Thank you for registering a new permission."
-msgstr ""
-
 #: xl_auth/permission/views.py:56
 #, python-format
 msgid "Updated permissions for \"%(username)s\" on collection \"%(code)s\"."

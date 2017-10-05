@@ -28,11 +28,12 @@ def register():
     """Register new permission."""
     register_permission_form = RegisterForm(request.form)
     if register_permission_form.validate_on_submit():
-        Permission.create(user_id=register_permission_form.user_id.data,
-                          collection_id=register_permission_form.collection_id.data,
-                          register=register_permission_form.register.data,
-                          catalogue=register_permission_form.catalogue.data)
-        flash(_('Thank you for registering a new permission.'), 'success')
+        permission = Permission.create(user_id=register_permission_form.user_id.data,
+                                       collection_id=register_permission_form.collection_id.data,
+                                       register=register_permission_form.register.data,
+                                       catalogue=register_permission_form.catalogue.data)
+        flash(_('Added permissions for "%(username)s" on collection "%(code)s".',
+                username=permission.user.email, code=permission.collection.code), 'success')
         return redirect(url_for('permission.home'))
     else:
         flash_errors(register_permission_form)
