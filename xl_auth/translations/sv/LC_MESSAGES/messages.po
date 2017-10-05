@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2017-10-05 15:26+0200\n"
+"POT-Creation-Date: 2017-10-05 15:48+0200\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -81,14 +81,14 @@ msgstr "Samlingskod \"%(code)s\" existerar inte"
 #: tests/end2end/test_registering_permission.py:25 tests/end2end/test_registering_permission.py:56
 #: xl_auth/templates/nav.html:26 xl_auth/templates/permissions/home.html:4
 msgid "Permissions"
-msgstr ""
+msgstr "Behörigheter"
 
 #: tests/end2end/test_editing_permission.py:71 tests/end2end/test_registering_permission.py:69
 #: tests/forms/test_permission.py:61 tests/forms/test_permission.py:74 xl_auth/permission/forms.py:59
 #: xl_auth/permission/forms.py:102
 #, python-format
 msgid "Permissions for user \"%(username)s\" on collection \"%(code)s\" already registered"
-msgstr ""
+msgstr "En behörighet för användare \"%(username)s\" på samling \"%(code)s\" finns redan registrerad"
 
 #: tests/end2end/test_editing_user.py:23 tests/end2end/test_editing_user.py:58
 #: xl_auth/templates/collections/home.html:19 xl_auth/templates/nav.html:25
@@ -149,7 +149,7 @@ msgstr "Koden \"%(code)s\" är redan registrerad"
 #: tests/end2end/test_registering_permission.py:27 tests/end2end/test_registering_permission.py:58
 #: xl_auth/templates/permissions/home.html:11
 msgid "New Permission"
-msgstr ""
+msgstr "Lägg till behörighet"
 
 #: tests/end2end/test_registering_user.py:21 xl_auth/templates/nav.html:48
 msgid "Create account"
@@ -180,17 +180,17 @@ msgstr "Fältet måste vara mellan 2 och 255 tecken långt."
 #: xl_auth/permission/views.py:72
 #, python-format
 msgid "Permission ID \"%(permission_id)s\" does not exist"
-msgstr ""
+msgstr "Behörighet med databas-ID \"%(permission_id)s\" existerar inte"
 
 #: tests/forms/test_permission.py:85 tests/forms/test_permission.py:95 xl_auth/permission/forms.py:36
 #, python-format
 msgid "User ID \"%(user_id)s\" does not exist"
-msgstr ""
+msgstr "Användare med databas-ID \"%(user_id)s\" existerar inte"
 
 #: tests/forms/test_permission.py:105 tests/forms/test_permission.py:115 xl_auth/permission/forms.py:43
 #, python-format
 msgid "Collection ID \"%(collection_id)s\" does not exist"
-msgstr ""
+msgstr "Samling med databas-ID \"%(collection_id)s\" existerar inte"
 
 #: tests/forms/test_public.py:56 xl_auth/public/forms.py:41
 msgid "User not activated"
@@ -223,23 +223,23 @@ msgstr "Samlingen \"%(code)s\" har uppdaterats."
 
 #: xl_auth/permission/forms.py:19 xl_auth/templates/permissions/home.html:16
 msgid "User"
-msgstr ""
+msgstr "Användare"
 
 #: xl_auth/permission/forms.py:20 xl_auth/templates/permissions/home.html:17
 msgid "Collection"
-msgstr ""
+msgstr "Samling"
 
 #: xl_auth/permission/forms.py:22 xl_auth/templates/permissions/home.html:18
 msgid "Registering Allowed"
-msgstr ""
+msgstr "Beståndsregistrering"
 
 #: xl_auth/permission/forms.py:23 xl_auth/templates/permissions/home.html:19
 msgid "Cataloguing Allowed"
-msgstr ""
+msgstr "Katalogisering"
 
 #: xl_auth/permission/forms.py:70
 msgid "Permission"
-msgstr ""
+msgstr "Behörighet"
 
 #: xl_auth/permission/views.py:35
 msgid "Thank you for registering a new permission."
@@ -248,12 +248,12 @@ msgstr ""
 #: xl_auth/permission/views.py:56
 #, python-format
 msgid "Updated permissions for \"%(username)s\" on collection \"%(code)s\"."
-msgstr ""
+msgstr "Behörighet uppdaterad för \"%(username)s\" på samling \"%(code)s\"."
 
 #: xl_auth/permission/views.py:77
 #, python-format
 msgid "Successfully deleted permissions for \"%(username)s\" on collection \"%(code)s\"."
-msgstr ""
+msgstr "Behörighet borttagen för \"%(username)s\" på samling \"%(code)s\"."
 
 #: xl_auth/public/forms.py:17
 msgid "Username"
@@ -346,19 +346,19 @@ msgstr "Registrera"
 
 #: xl_auth/templates/permissions/edit.html:7
 msgid "Delete Permission"
-msgstr ""
+msgstr "🙀 Ta bort behörighet"
 
 #: xl_auth/templates/permissions/edit.html:8
 msgid "Edit Existing Permission"
-msgstr ""
+msgstr "Ändra behörighet"
 
 #: xl_auth/templates/permissions/home.html:9
 msgid "Existing Permissions"
-msgstr ""
+msgstr "Befintliga behörigheter"
 
 #: xl_auth/templates/permissions/register.html:5
 msgid "Register New Permission"
-msgstr ""
+msgstr "Registrera ny behörighet"
 
 #: xl_auth/templates/public/home.html:7
 msgid "Welcome to xl_auth"
