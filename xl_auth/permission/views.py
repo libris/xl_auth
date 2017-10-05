@@ -19,7 +19,7 @@ blueprint = Blueprint('permission', __name__, url_prefix='/permissions', static_
 def home():
     """Permissions landing page."""
     permissions_list = Permission.query.all()
-    return render_template('permission/home.html', permissions_list=permissions_list)
+    return render_template('permissions/home.html', permissions_list=permissions_list)
 
 
 @blueprint.route('/register/', methods=['GET', 'POST'])
@@ -36,7 +36,7 @@ def register():
         return redirect(url_for('permission.home'))
     else:
         flash_errors(register_permission_form)
-        return render_template('permission/register.html',
+        return render_template('permissions/register.html',
                                register_permission_form=register_permission_form)
 
 
@@ -59,7 +59,7 @@ def edit(permission_id):
     else:
         edit_permission_form.set_defaults(permission)
         flash_errors(edit_permission_form)
-        return render_template('permission/edit.html', edit_permission_form=edit_permission_form,
+        return render_template('permissions/edit.html', edit_permission_form=edit_permission_form,
                                permission=permission)
 
 
