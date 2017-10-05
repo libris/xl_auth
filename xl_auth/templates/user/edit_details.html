@@ -8,21 +8,21 @@
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <div class="form-group">
                 {{ edit_details_form.username.label }}
-                {{ edit_details_form.username(value=user.email, class_="form-control", readonly=True) }}
+                {{ edit_details_form.username(class_="form-control", readonly=True) }}
             </div>
             <div class="form-group">
                 {{ edit_details_form.full_name.label }}
-                {{ edit_details_form.full_name(value=user.full_name, class_="form-control") }}
+                {{ edit_details_form.full_name(class_="form-control") }}
             </div>
             <div class="form-group">
                 {{ edit_details_form.active.label }}
-                {{ edit_details_form.active(checked=user.active) }}
+                {{ edit_details_form.active() }}
             </div>
             <div class="form-group">
                 {{ edit_details_form.is_admin.label }}
-                {{ edit_details_form.is_admin(checked=user.is_admin) }}
+                {{ edit_details_form.is_admin() }}
             </div>
-            <p><input class="btn btn-default btn-submit" type="submit" value="{{ _('Save') }}"></p>
+            <p><input class="btn btn-primary btn-submit" type="submit" value="{{ _('Save') }}"></p>
         </form>
     </div>
 {% endblock %}

@@ -15,6 +15,7 @@
             <tr>
                 <th>{{ _('Email') }}</th>
                 <th>{{ _('Name') }}</th>
+                <th>{{ _('Collections') }}</th>
                 <th>{{ _('Active') }}</th>
                 <th>{{ _('Admin') }}</th>
                 <th>{{ _('Created At') }}</th>
@@ -26,9 +27,10 @@
                 <tr>
                     <td>{{ user.email }}</td>
                     <td>{{ user.full_name }}</td>
+                    <td>{{ user.permissions | length }}</td>
                     <td>{{ user.active }}</td>
                     <td>{{ user.is_admin }}</td>
-                    <td>{{ user.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <td>{{ user.created_at.strftime('%y-%m-%d %H:%M:%S') }}</td>
                     <td>
                         <a class="btn btn-default"
                            href="{{ url_for('user.edit_details', username=user.email) }}">

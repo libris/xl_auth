@@ -31,7 +31,7 @@ def test_user_can_edit_existing_permission(user, permission, testapp):
     res = res.click(_('Edit'))
     # Fills out the form
     form = res.forms['editPermissionForm']
-    # Defaults are kept -- setting ``form['user_id'] = permission.user.id`` is redundant.
+    # Defaults are kept -- setting ``form['user_id'] = permission.user.id`` is redundant
     form['collection_id'] = other_collection.id
     # Submits
     res = form.submit().follow()

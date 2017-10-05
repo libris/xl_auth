@@ -83,6 +83,14 @@ class EditDetailsForm(_EditForm):
     active = BooleanField(_('Active'))
     is_admin = BooleanField(_('Administrator'))
 
+    def set_defaults(self, user):
+        """Apply 'user' attributes as field defaults."""
+        self.username.default = user.email
+        self.full_name.default = user.full_name
+        self.active.default = user.active
+        self.is_admin.default = user.is_admin
+        self.process()
+
 
 class ChangePasswordForm(_EditForm):
     """Change password form."""
