@@ -1,0 +1,43 @@
+<!-- permissions/home.html -->
+{% extends "layout.html" %}
+{% block content %}
+    <h1>{{ _('Permissions') }}</h1>
+    <br/>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+            <strong>{{ _('Existing Permissions') }}</strong>
+            <a class="btn btn-xs btn-primary pull-right"
+               href="{{ url_for('permission.register') }}">{{ _('New Permission') }}</a>
+        </div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>{{ _('User') }}</th>
+                <th>{{ _('Collection') }}</th>
+                <th>{{ _('Registering Allowed') }}</th>
+                <th>{{ _('Cataloguing Allowed') }}</th>
+                <th>{{ _('Created At') }}</th>
+                <th>{{ _('Actions') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in permissions_list %}
+                <tr>
+                    <td>{{ item.user.email }}</td>
+                    <td>{{ item.collection.code }}</td>
+                    <td>{{ item.register }}</td>
+                    <td>{{ item.catalogue }}</td>
+                    <td>{{ item.created_at.strftime('%y-%m-%d %H:%M:%S') }}</td>
+                    <td>
+                        <a class="btn btn-default"
+                           href="{{ url_for('permission.edit', permission_id=item.id) }}">
+                            {{ _('Edit') }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from flask_babel import lazy_gettext as _
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, IntegerField
+from wtforms import BooleanField, IntegerField, SelectField
 from wtforms.validators import DataRequired, ValidationError
 
 from ..collection.models import Collection
@@ -16,14 +16,18 @@ from .models import Permission
 class PermissionForm(FlaskForm):
     """Permission form."""
 
-    user_id = IntegerField(_('User'), validators=[DataRequired()])
-    collection_id = IntegerField(_('Collection'), validators=[DataRequired()])
+    user_id = SelectField(_('User'), choices=[], coerce=int, validators=[DataRequired()])
+    collection_id = SelectField(_('Collection'), choices=[], coerce=int,
+                                validators=[DataRequired()])
     register = BooleanField(_('Registering Allowed'))
     catalogue = BooleanField(_('Cataloguing Allowed'))
 
     def __init__(self, *args, **kwargs):
         """Create instance."""
         super(PermissionForm, self).__init__(*args, **kwargs)
+        self.user_id.choices = [(user.id, user.email) for user in User.query.all()]
+        self.collection_id.choices = [(collection.id, collection.code)
+                                      for collection in Collection.query.all()]
 
     # noinspection PyMethodMayBeStatic
     def validate_user_id(self, field):
@@ -52,10 +56,9 @@ class RegisterForm(PermissionForm):
         permission = Permission.query.filter_by(user_id=self.user_id.data,
                                                 collection_id=self.collection_id.data).first()
         if permission:
-            self.user_id.errors.append(_('Permissions for user ID "%(user_id)s" on collection ID '
-                                         '"%(collection_id)s" already registered',
-                                         user_id=permission.user.id,
-                                         collection_id=permission.collection.id))
+            self.user_id.errors.append(_(
+                'Permissions for user "%(username)s" on collection "%(code)s" already registered',
+                username=permission.user.email, code=permission.collection.code))
             return False
 
         return True
@@ -70,6 +73,14 @@ class EditForm(PermissionForm):
         """Create instance."""
         super(EditForm, self).__init__(*args, permission_id=target_permission_id, **kwargs)
         self.target_permission_id = target_permission_id
+
+    def set_defaults(self, permission):
+        """Apply 'permission' attributes as field defaults."""
+        self.user_id.default = permission.user_id
+        self.collection_id.default = permission.collection_id
+        self.register.default = permission.register
+        self.catalogue.default = permission.catalogue
+        self.process()
 
     def validate(self):
         """Validate the form."""
@@ -88,10 +99,9 @@ class EditForm(PermissionForm):
             Permission.id.isnot(target_permission.id)).filter_by(
                 user_id=self.user_id.data, collection_id=self.collection_id.data).first()
         if other_permission:
-            self.user_id.errors.append(_('Permissions for user ID "%(user_id)s" on collection ID '
-                                         '"%(collection_id)s" already registered',
-                                         user_id=other_permission.user.id,
-                                         collection_id=other_permission.collection.id))
+            self.user_id.errors.append(_(
+                'Permissions for user "%(username)s" on collection "%(code)s" already registered',
+                username=other_permission.user.email, code=other_permission.collection.code))
             return False
 
         return True

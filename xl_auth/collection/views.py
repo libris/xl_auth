@@ -17,7 +17,7 @@ blueprint = Blueprint('collection', __name__, url_prefix='/collections', static_
 def home():
     """Collections landing page."""
     collections_list = Collection.query.all()
-    return render_template('collection/home.html', collections_list=collections_list)
+    return render_template('collections/home.html', collections_list=collections_list)
 
 
 @blueprint.route('/register/', methods=['GET', 'POST'])
@@ -33,7 +33,7 @@ def register():
         return redirect(url_for('collection.home'))
     else:
         flash_errors(register_collection_form)
-    return render_template('collection/register.html',
+    return render_template('collections/register.html',
                            register_collection_form=register_collection_form)
 
 
@@ -53,5 +53,5 @@ def edit(collection_code):
         return redirect(url_for('collection.home'))
     else:
         flash_errors(edit_collection_form)
-    return render_template('collection/edit.html', edit_collection_form=edit_collection_form,
+    return render_template('collections/edit.html', edit_collection_form=edit_collection_form,
                            collection=collection)

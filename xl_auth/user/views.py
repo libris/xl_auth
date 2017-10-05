@@ -19,14 +19,14 @@ blueprint = Blueprint('user', __name__, url_prefix='/users', static_folder='../s
 def home():
     """Users landing page."""
     users_list = User.query.all()
-    return render_template('user/home.html', users_list=users_list)
+    return render_template('users/home.html', users_list=users_list)
 
 
 @blueprint.route('/profile/')
 @login_required
 def profile():
     """Own user profile."""
-    return render_template('user/profile.html')
+    return render_template('users/profile.html')
 
 
 @blueprint.route('/edit_details/<string:username>', methods=['GET', 'POST'])
@@ -47,9 +47,10 @@ def edit_details(username):
               'success')
         return redirect(url_for('user.home'))
     else:
+        edit_details_form.set_defaults(user)
         flash_errors(edit_details_form)
-    return render_template('user/edit_details.html', edit_details_form=edit_details_form,
-                           user=user)
+        return render_template(
+            'users/edit_details.html', edit_details_form=edit_details_form, user=user)
 
 
 @blueprint.route('/change_password/<string:username>', methods=['GET', 'POST'])
@@ -64,12 +65,11 @@ def change_password(username):
     change_password_form = ChangePasswordForm(username, request.form)
     if change_password_form.validate_on_submit():
         user.set_password(change_password_form.password.data)
-
         user.save()
         flash(_('Thank you for changing password for "%(username)s".', username=user.email),
               'success')
         return redirect(url_for('user.home'))
     else:
         flash_errors(change_password_form)
-    return render_template('user/change_password.html', change_password_form=change_password_form,
-                           user=user)
+        return render_template(
+            'users/change_password.html', change_password_form=change_password_form, user=user)

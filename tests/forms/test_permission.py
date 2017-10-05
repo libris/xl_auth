@@ -58,8 +58,8 @@ def test_register_form_validate_permission_already_registered(permission):
     form = RegisterForm(user_id=permission.user.id, collection_id=permission.collection.id)
 
     assert form.validate() is False
-    assert _('Permissions for user ID "%(user_id)s" on collection ID "%(collection_id)s" already '
-             'registered', user_id=permission.user.id, collection_id=permission.collection.id
+    assert _('Permissions for user "%(username)s" on collection "%(code)s" already registered',
+             username=permission.user.email, code=permission.collection.code
              ) in form.user_id.errors
 
 
@@ -71,8 +71,8 @@ def test_edit_form_validate_permission_already_registered(permission):
                     collection_id=permission.collection.id)
 
     assert form.validate() is False
-    assert _('Permissions for user ID "%(user_id)s" on collection ID "%(collection_id)s" already '
-             'registered', user_id=permission.user.id, collection_id=permission.collection.id
+    assert _('Permissions for user "%(username)s" on collection "%(code)s" already registered',
+             username=permission.user.email, code=permission.collection.code
              ) in form.user_id.errors
 
 

@@ -25,10 +25,9 @@ class Permission(SurrogatePK, Model):
 
     created_at = Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
 
-    def __init__(self, user=None, collection=None, register=False, catalogue=False, **kwargs):
+    def __init__(self, **kwargs):
         """Create instance."""
-        db.Model.__init__(self, user=user, collection=collection, register=register,
-                          catalogue=catalogue, **kwargs)
+        db.Model.__init__(self, **kwargs)
 
     def __repr__(self):
         """Represent instance as a unique string."""
