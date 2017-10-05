@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 0.2.2\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-05 16:38+0200\n"
+"POT-Creation-Date: 2017-10-05 16:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -170,7 +170,7 @@ msgstr ""
 msgid "Added permissions for \"%(username)s\" on collection \"%(code)s\"."
 msgstr ""
 
-#: tests/end2end/test_registering_user.py:21 xl_auth/templates/nav.html:48
+#: tests/end2end/test_registering_user.py:21 xl_auth/templates/nav.html:47
 msgid "Create account"
 msgstr ""
 
@@ -292,7 +292,7 @@ msgstr ""
 msgid "National Library of Sweden"
 msgstr ""
 
-#: xl_auth/templates/footer.html:10 xl_auth/templates/nav.html:27 xl_auth/templates/public/about.html:7
+#: xl_auth/templates/footer.html:10 xl_auth/templates/public/about.html:7
 msgid "About"
 msgstr ""
 
@@ -300,12 +300,12 @@ msgstr ""
 msgid "Contact"
 msgstr ""
 
-#: xl_auth/templates/nav.html:34
+#: xl_auth/templates/nav.html:33
 #, python-format
 msgid "Logged in as %(user)s"
 msgstr ""
 
-#: xl_auth/templates/nav.html:58
+#: xl_auth/templates/nav.html:57
 msgid "Log in"
 msgstr ""
 

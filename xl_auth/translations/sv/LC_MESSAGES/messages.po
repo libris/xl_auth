@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2017-10-05 16:38+0200\n"
+"POT-Creation-Date: 2017-10-05 16:45+0200\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -171,7 +171,7 @@ msgstr "Lägg till behörighet"
 msgid "Added permissions for \"%(username)s\" on collection \"%(code)s\"."
 msgstr "Behörighet tillagd för användare \"%(username)s\" på samling \"%(code)s\"."
 
-#: tests/end2end/test_registering_user.py:21 xl_auth/templates/nav.html:48
+#: tests/end2end/test_registering_user.py:21 xl_auth/templates/nav.html:47
 msgid "Create account"
 msgstr "Skapa användarkonto"
 
@@ -293,7 +293,7 @@ msgstr "Serverfel"
 msgid "National Library of Sweden"
 msgstr "Kungliga Biblioteket"
 
-#: xl_auth/templates/footer.html:10 xl_auth/templates/nav.html:27 xl_auth/templates/public/about.html:7
+#: xl_auth/templates/footer.html:10 xl_auth/templates/public/about.html:7
 msgid "About"
 msgstr "Om webbplatsen"
 
@@ -301,12 +301,12 @@ msgstr "Om webbplatsen"
 msgid "Contact"
 msgstr "Kontakt"
 
-#: xl_auth/templates/nav.html:34
+#: xl_auth/templates/nav.html:33
 #, python-format
 msgid "Logged in as %(user)s"
 msgstr "Inloggad som %(user)s"
 
-#: xl_auth/templates/nav.html:58
+#: xl_auth/templates/nav.html:57
 msgid "Log in"
 msgstr "Logga in"
 

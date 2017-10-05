@@ -24,7 +24,6 @@
                 <li><a href="{{ url_for('collection.home') }}">{{ _('Collections') }}</a></li>
                 <li><a href="{{ url_for('user.home') }}">{{ _('Users') }}</a></li>
                 <li><a href="{{ url_for('permission.home') }}">{{ _('Permissions') }}</a></li>
-                <li><a href="{{ url_for('public.about') }}">{{ _('About') }}</a></li>
             </ul>
             {% if current_user and current_user.is_authenticated %}
                 <ul class="nav navbar-nav navbar-right">
