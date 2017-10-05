@@ -1,0 +1,32 @@
+<!-- permissions/register.html -->
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container-narrow">
+        <h1>{{ _('Register New Permission') }}</h1>
+        <br/>
+        <form id="registerPermissionForm" autocomplete="off" class="form form-register"
+              method="POST" action="" role="form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <div class="form-group">
+                {{ register_permission_form.user_id.label }}
+                {{ register_permission_form.user_id(placeholder="123", class_="form-control", autocomplete="off") }}
+            </div>
+            <div class="form-group">
+                {{ register_permission_form.collection_id.label }}
+                {{ register_permission_form.collection_id(placeholder="456", class_="form-control", autocomplete="off") }}
+            </div>
+            <div class="form-group">
+                <label class="checkbox">
+                    {{ register_permission_form.register() }}
+                    {{ register_permission_form.register.label }}
+                </label>
+                <label class="checkbox">
+                    {{ register_permission_form.catalogue() }}
+                    {{ register_permission_form.catalogue.label }}
+                </label>
+            </div>
+            <p><input class="btn btn-default btn-submit" type="submit" value="{{ _('Register') }}">
+            </p>
+        </form>
+    </div>
+{% endblock %}

@@ -1,4 +1,4 @@
-<!-- collection/home.html -->
+<!-- collections/home.html -->
 {% extends "layout.html" %}
 {% block content %}
     <h1>{{ _('Collections') }}</h1>
@@ -16,6 +16,7 @@
                 <th>{{ _('Code') }}</th>
                 <th>{{ _('Friendly Name') }}</th>
                 <th>{{ _('Category') }}</th>
+                <th>{{ _('Users') }}</th>
                 <th>{{ _('Active') }}</th>
                 <th>{{ _('Created At') }}</th>
                 <th>{{ _('Actions') }}</th>
@@ -27,8 +28,9 @@
                     <td>{{ item.code }}</td>
                     <td>{{ item.friendly_name }}</td>
                     <td>{{ _(item.category.capitalize()) if item.category in ['bibliography', 'library'] else _('No category') }}</td>
+                    <td>{{ item.permissions | length }}</td>
                     <td>{{ item.active }}</td>
-                    <td>{{ item.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <td>{{ item.created_at.strftime('%y-%m-%d %H:%M:%S') }}</td>
                     <td>
                         <a class="btn btn-default"
                            href="{{ url_for('collection.edit', collection_code=item.code) }}">

@@ -1,4 +1,4 @@
-<!-- collection/register.html -->
+<!-- collections/register.html -->
 {% extends "layout.html" %}
 {% block content %}
     <div class="container-narrow">
@@ -18,7 +18,7 @@
             <div class="form-group">
                 {% for choice in register_collection_form.category %}
                     <label class="radio">
-                        {{ choice }}
+                        {{ choice() }}
                         {{ choice.label }}
                     </label>
                 {% endfor %}

@@ -9,6 +9,7 @@ import pytest
 from six import string_types
 
 from xl_auth.collection.models import Collection
+from xl_auth.permission.models import Permission
 
 from ..factories import CollectionFactory
 
@@ -41,8 +42,32 @@ def test_factory(db):
     assert isinstance(collection.code, string_types)
     assert isinstance(collection.friendly_name, string_types)
     assert collection.category in {'bibliography', 'library', 'uncategorized'}
-    assert bool(collection.created_at)
     assert collection.active is True
+    assert isinstance(collection.permissions, list)
+    assert bool(collection.created_at)
+
+
+@pytest.mark.usefixtures('db')
+def test_adding_permissions(user):
+    """Add a permission on the collection."""
+    collection = CollectionFactory()
+    collection.save()
+    permission = Permission(user=user, collection=collection)
+    permission.save()
+
+    assert permission in collection.permissions
+
+
+@pytest.mark.usefixtures('db')
+def test_removing_permissions(user):
+    """Remove the permissions an a collection."""
+    collection = CollectionFactory()
+    collection.save()
+    permission = Permission(user=user, collection=collection)
+    permission.save()
+    permission.delete()
+
+    assert permission not in collection.permissions
 
 
 @pytest.mark.usefixtures('db')

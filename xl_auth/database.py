@@ -64,6 +64,7 @@ class SurrogatePK(object):
         """Get record by ID."""
         if any((isinstance(record_id, basestring) and record_id.isdigit(),
                 isinstance(record_id, (int, float))),):
+            # noinspection PyUnresolvedReferences
             return cls.query.get(int(record_id))
         else:
             return None
