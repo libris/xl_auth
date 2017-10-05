@@ -156,29 +156,20 @@ Technology choices:
 DB Models
 ---------
 
-User:
-
-* Email
-* Full name
-* Password (Argon2/bcrypt/scrypt + salt (libsodium))
-* User role (admin, etc.)
-
-Collection:
-
-* Code ("S") - unique
-* Name ("Kungliga biblioteket")
-* Category (library/bibliography/?)
-* "Active" (bool?)
-
-Access rights:
-
-* User ID
-* Collection ID
-* 'kat'|'reg'
+.. image:: https://user-images.githubusercontent.com/18367829/30987221-8a1834d2-a496-11e7-8a54-27f00a24da7d.png
+    :target: https://github.com/libris/xl_auth/pull/33
+    :alt: screen shot 2017-09-28 at 9 42 42 pm
 
 
 Changelog
 =========
+
+v. 0.3.0
+--------
+
+* Added the concept of users having permissions on zero or more collections
+  (`#27 <https://github.com/libris/xl_auth/issues/27>`_)
+
 
 v. 0.2.2
 --------
