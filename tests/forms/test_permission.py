@@ -72,7 +72,7 @@ def test_edit_form_validate_permission_already_registered(permission):
 
     assert form.validate() is False
     assert _('Permissions for user "%(username)s" on collection "%(code)s" already registered',
-             user_id=permission.user.email, code=permission.collection.code
+             username=permission.user.email, code=permission.collection.code
              ) in form.user_id.errors
 
 
