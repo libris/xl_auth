@@ -164,6 +164,13 @@ DB Models
 Changelog
 =========
 
+v. 0.3.0
+--------
+
+* Added the concept of users having permissions on zero or more collections
+  (`#27 <https://github.com/libris/xl_auth/issues/27>`_)
+
+
 v. 0.2.2
 --------
 
