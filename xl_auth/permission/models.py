@@ -22,6 +22,7 @@ class Permission(SurrogatePK, Model):
 
     register = Column(db.Boolean(), default=False, nullable=False)
     catalogue = Column(db.Boolean(), default=False, nullable=False)
+    catalogue_admin = Column(db.Boolean(), default=False, nullable=False)
 
     created_at = Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
 

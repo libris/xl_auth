@@ -29,8 +29,6 @@ def test_user_can_register_new_permission(user, collection, testapp):
     form = res.forms['registerPermissionForm']
     form['user_id'] = user.id
     form['collection_id'] = collection.id
-    form['register'] = True
-    form['catalogue'] = True
     # Submits
     res = form.submit().follow()
     assert res.status_code == 200
@@ -62,8 +60,6 @@ def test_user_sees_error_message_if_permission_is_already_registered(user, permi
     form = res.forms['registerPermissionForm']
     form['user_id'] = permission.user.id
     form['collection_id'] = permission.collection.id
-    form['register'] = not permission.register
-    form['catalogue'] = not permission.catalogue
     # Submits
     res = form.submit()
     # Sees error

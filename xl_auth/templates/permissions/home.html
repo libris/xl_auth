@@ -17,6 +17,7 @@
                 <th>{{ _('Collection') }}</th>
                 <th>{{ _('Registering Allowed') }}</th>
                 <th>{{ _('Cataloguing Allowed') }}</th>
+                <th>{{ _('Cataloguing Administrator') }}</th>
                 <th>{{ _('Created At') }}</th>
                 <th>{{ _('Actions') }}</th>
             </tr>
@@ -28,6 +29,7 @@
                     <td>{{ item.collection.code }}</td>
                     <td>{{ item.register }}</td>
                     <td>{{ item.catalogue }}</td>
+                    <td>{{ item.catalogue_admin }}</td>
                     <td>{{ item.created_at.strftime('%y-%m-%d %H:%M:%S') }}</td>
                     <td>
                         <a class="btn btn-default"

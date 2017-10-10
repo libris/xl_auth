@@ -24,6 +24,10 @@
                     {{ register_permission_form.catalogue() }}
                     {{ register_permission_form.catalogue.label }}
                 </label>
+                <label class="checkbox">
+                    {{ register_permission_form.catalogue_admin() }}
+                    {{ register_permission_form.catalogue_admin.label }}
+                </label>
             </div>
             <p><input class="btn btn-default btn-submit" type="submit" value="{{ _('Register') }}">
             </p>
