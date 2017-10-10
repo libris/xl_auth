@@ -27,8 +27,9 @@ Run the following commands to bootstrap your environment ::
     cd xl_auth
     virtualenv venv && source venv/bin/activate
     pip install -r requirements/dev.txt
-    FLASK_APP=$(PWD)/autoapp.py FLASK_DEBUG=1 flask db upgrade
     npm install
+    npm build
+    FLASK_APP=$(PWD)/autoapp.py FLASK_DEBUG=1 flask db upgrade
     npm start  # run webpack dev server and flask server using concurrently
 
 You will see a pretty welcome screen.
@@ -200,4 +201,3 @@ v. 0.1.0
 --------
 
 * Establishing initial project requirements, with none of the intended functionality in place
-
