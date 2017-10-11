@@ -12,6 +12,8 @@ from flask import current_app
 from flask.cli import with_appcontext
 from werkzeug.exceptions import MethodNotAllowed, NotFound
 
+from xl_auth.user.models import User
+
 # Disable warnings on discouraged Py3 use (http://click.pocoo.org/python3/).
 click.disable_unicode_literals_warning = True
 
@@ -92,6 +94,21 @@ def clean():
                 full_pathname = os.path.join(dirpath, filename)
                 click.echo('Removing {}'.format(full_pathname))
                 os.remove(full_pathname)
+
+
+@click.command()
+@click.option('--email', required=True, default=None, help='Email for user')
+@click.option('--full-name', default=None, help='Full name for user (default: None)')
+@click.option('--password', default='password', help='Password for user (default: password)')
+@click.option('--active', default=True, is_flag=True, help='Activate account (default: True)')
+@click.option('--is-admin', default=False, is_flag=True, help='Create admin user (default: False)')
+@with_appcontext
+def create_user(email, full_name, password, active, is_admin):
+    """Create user account."""
+    full_name = full_name or email
+    user = User.create(email=email, full_name=full_name, password=password,
+                       active=active, is_admin=is_admin)
+    click.echo('Created account with login {0}'.format(user.email))
 
 
 @click.command()

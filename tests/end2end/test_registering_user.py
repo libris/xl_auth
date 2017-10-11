@@ -12,11 +12,17 @@ from ..factories import UserFactory
 
 
 # noinspection PyUnusedLocal
-def test_user_can_register(user, testapp):
+def test_user_can_register(superuser, testapp):
     """Register a new user."""
     old_count = len(User.query.all())
     # Goes to homepage
     res = testapp.get('/')
+    # Fills out login form in navbar
+    form = res.forms['loginForm']
+    form['username'] = superuser.email
+    form['password'] = 'myPrecious'
+    # Submits
+    form.submit().follow()
     # Clicks Create Account button
     res = res.click(_('Create account'))
     # Fills out the form
@@ -33,10 +39,18 @@ def test_user_can_register(user, testapp):
 
 
 # noinspection PyUnusedLocal
-def test_user_sees_error_message_if_passwords_dont_match(user, testapp):
+def test_user_sees_error_message_if_passwords_dont_match(superuser, user, testapp):
     """Show error if passwords don't match."""
+    # Goes to homepage
+    res = testapp.get('/')
+    # Fills out login form in navbar
+    form = res.forms['loginForm']
+    form['username'] = superuser.email
+    form['password'] = 'myPrecious'
+    # Submits
+    form.submit().follow()
     # Goes to registration page.
-    res = testapp.get(url_for('public.register'))
+    res = testapp.get(url_for('user.register'))
     # Fills out form, but passwords don't match.
     form = res.forms['registerUserForm']
     form['username'] = 'foo@bar.com'
@@ -50,12 +64,20 @@ def test_user_sees_error_message_if_passwords_dont_match(user, testapp):
 
 
 # noinspection PyUnusedLocal
-def test_user_sees_error_message_if_user_already_registered(user, testapp):
+def test_user_sees_error_message_if_user_already_registered(superuser, user, testapp):
     """Show error if user already registered."""
     user = UserFactory(active=True)  # A registered user.
     user.save()
+    # Goes to homepage
+    res = testapp.get('/')
+    # Fills out login form in navbar
+    form = res.forms['loginForm']
+    form['username'] = superuser.email
+    form['password'] = 'myPrecious'
+    # Submits
+    form.submit().follow()
     # Goes to registration page.
-    res = testapp.get(url_for('public.register'))
+    res = testapp.get(url_for('user.register'))
     # Fills out form, but username is already registered.
     form = res.forms['registerUserForm']
     form['username'] = user.email.upper()  # Default would be `userN@example.com`, not upper-cased.

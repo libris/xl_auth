@@ -38,6 +38,21 @@ class UserFactory(BaseFactory):
         model = User
 
 
+class SuperUserFactory(BaseFactory):
+    """Super user factory."""
+
+    email = Sequence(lambda _: 'user{0}@example.com'.format(_))
+    full_name = Sequence(lambda _: 'full_name{0}'.format(_))
+    password = PostGenerationMethodCall('set_password', 'example')
+    active = True
+    is_admin = True
+
+    class Meta:
+        """Factory configuration."""
+
+        model = User
+
+
 class CollectionFactory(BaseFactory):
     """Collection factory."""
 
