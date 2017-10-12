@@ -5,7 +5,6 @@ Revises: c336664ee988
 Create Date: 2017-10-12 11:16:13.605044
 
 """
-import sqlalchemy as sa
 from alembic import op
 
 # revision identifiers, used by Alembic.
@@ -18,16 +17,12 @@ depends_on = None
 def upgrade():
     """Rename 'catalogue' and 'register' columns."""
     with op.batch_alter_table('permissions', schema=None) as batch_op:
-        batch_op.add_column(sa.Column('cataloger', sa.Boolean(), nullable=False))
-        batch_op.add_column(sa.Column('registrant', sa.Boolean(), nullable=False))
-        batch_op.drop_column('catalogue')
-        batch_op.drop_column('register')
+        batch_op.alter_column('catalogue', new_column_name='cataloger')
+        batch_op.alter_column('register', new_column_name='registrant')
 
 
 def downgrade():
     """Undo rename of 'catalogue' and 'register' columns."""
     with op.batch_alter_table('permissions', schema=None) as batch_op:
-        batch_op.add_column(sa.Column('register', sa.BOOLEAN(), nullable=False))
-        batch_op.add_column(sa.Column('catalogue', sa.BOOLEAN(), nullable=False))
-        batch_op.drop_column('registrant')
-        batch_op.drop_column('cataloger')
+        batch_op.alter_column('cataloger', new_column_name='register')
+        batch_op.alter_column('registrant', new_column_name='catalogue')
