@@ -2,6 +2,11 @@
    App specific CSS file.
    ========================================================================== */
 
+/* Imports */
+@import '~bootstrap/less/bootstrap.less';
+@import '~kungbib-styles/dist/less/kb-style.less';
+
+@brand-primary: @happy-muted-teal;
 /* universal */
 
 html {
@@ -26,6 +31,15 @@ textarea {
 }
 
 /* Forms */
+.navbar {
+  .navbar-logo {
+    display: inline-block;
+    width: 50px;
+    padding: 0.1em;
+    .logotype {
+    }
+  }
+}
 
 .navbar-form input[type="text"],
 .navbar-form input[type="password"] {

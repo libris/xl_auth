@@ -21,8 +21,7 @@ module.exports = {
     main_js: './assets/js/main',
     main_css: [
       './node_modules/font-awesome/css/font-awesome.css',
-      './node_modules/bootstrap/dist/css/bootstrap.css',
-      './assets/css/style.css'
+      './assets/css/style.less'
     ]
   },
   output: {
@@ -32,7 +31,7 @@ module.exports = {
     chunkFilename: '[id].[hash].js'
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.css']
+    extensions: ['.js', '.jsx', '.css', 'less']
   },
   devtool: debug ? 'inline-sourcemap' : 'source-map',
   devServer: {
