@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: xl_auth 0.2.2\n"
+"Project-Id-Version: xl_auth 0.3.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-05 16:45+0200\n"
+"POT-Creation-Date: 2017-10-12 11:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,14 +19,14 @@ msgstr ""
 
 #: tests/end2end/test_deleting_permission.py:24 tests/end2end/test_editing_permission.py:29
 #: tests/end2end/test_editing_permission.py:61 tests/end2end/test_registering_permission.py:25
-#: tests/end2end/test_registering_permission.py:58 xl_auth/templates/nav.html:26
+#: tests/end2end/test_registering_permission.py:56 xl_auth/templates/nav.html:26
 #: xl_auth/templates/permissions/home.html:4
 msgid "Permissions"
 msgstr ""
 
 #: tests/end2end/test_deleting_permission.py:26 tests/end2end/test_editing_collection.py:22
 #: tests/end2end/test_editing_permission.py:31 tests/end2end/test_editing_permission.py:64
-#: xl_auth/templates/collections/home.html:37 xl_auth/templates/permissions/home.html:35
+#: xl_auth/templates/collections/home.html:37 xl_auth/templates/permissions/home.html:37
 msgid "Edit"
 msgstr ""
 
@@ -34,7 +34,7 @@ msgstr ""
 msgid "Delete Permission"
 msgstr ""
 
-#: tests/end2end/test_deleting_permission.py:33 xl_auth/permission/views.py:78
+#: tests/end2end/test_deleting_permission.py:33 xl_auth/permission/views.py:80
 #, python-format
 msgid "Successfully deleted permissions for \"%(username)s\" on collection \"%(code)s\"."
 msgstr ""
@@ -92,14 +92,14 @@ msgstr ""
 msgid "Collection code \"%(code)s\" does not exist"
 msgstr ""
 
-#: tests/end2end/test_editing_permission.py:40 xl_auth/permission/views.py:57
+#: tests/end2end/test_editing_permission.py:40 xl_auth/permission/views.py:59
 #, python-format
 msgid "Updated permissions for \"%(username)s\" on collection \"%(code)s\"."
 msgstr ""
 
-#: tests/end2end/test_editing_permission.py:73 tests/end2end/test_registering_permission.py:71
-#: tests/forms/test_permission.py:61 tests/forms/test_permission.py:74 xl_auth/permission/forms.py:59
-#: xl_auth/permission/forms.py:102
+#: tests/end2end/test_editing_permission.py:73 tests/end2end/test_registering_permission.py:67
+#: tests/forms/test_permission.py:61 tests/forms/test_permission.py:74 xl_auth/permission/forms.py:60
+#: xl_auth/permission/forms.py:104
 #, python-format
 msgid "Permissions for user \"%(username)s\" on collection \"%(code)s\" already registered"
 msgstr ""
@@ -160,12 +160,12 @@ msgstr ""
 msgid "Code \"%(code)s\" already registered"
 msgstr ""
 
-#: tests/end2end/test_registering_permission.py:27 tests/end2end/test_registering_permission.py:60
+#: tests/end2end/test_registering_permission.py:27 tests/end2end/test_registering_permission.py:58
 #: xl_auth/templates/permissions/home.html:11
 msgid "New Permission"
 msgstr ""
 
-#: tests/end2end/test_registering_permission.py:38 xl_auth/permission/views.py:35
+#: tests/end2end/test_registering_permission.py:36 xl_auth/permission/views.py:37
 #, python-format
 msgid "Added permissions for \"%(username)s\" on collection \"%(code)s\"."
 msgstr ""
@@ -195,18 +195,18 @@ msgstr ""
 msgid "Field must be between 2 and 255 characters long."
 msgstr ""
 
-#: tests/forms/test_permission.py:20 xl_auth/permission/forms.py:94 xl_auth/permission/views.py:50
-#: xl_auth/permission/views.py:73
+#: tests/forms/test_permission.py:20 xl_auth/permission/forms.py:96 xl_auth/permission/views.py:52
+#: xl_auth/permission/views.py:75
 #, python-format
 msgid "Permission ID \"%(permission_id)s\" does not exist"
 msgstr ""
 
-#: tests/forms/test_permission.py:85 tests/forms/test_permission.py:95 xl_auth/permission/forms.py:36
+#: tests/forms/test_permission.py:85 tests/forms/test_permission.py:95 xl_auth/permission/forms.py:37
 #, python-format
 msgid "User ID \"%(user_id)s\" does not exist"
 msgstr ""
 
-#: tests/forms/test_permission.py:105 tests/forms/test_permission.py:115 xl_auth/permission/forms.py:43
+#: tests/forms/test_permission.py:105 tests/forms/test_permission.py:115 xl_auth/permission/forms.py:44
 #, python-format
 msgid "Collection ID \"%(collection_id)s\" does not exist"
 msgstr ""
@@ -249,14 +249,18 @@ msgid "Collection"
 msgstr ""
 
 #: xl_auth/permission/forms.py:22 xl_auth/templates/permissions/home.html:18
-msgid "Registering Allowed"
+msgid "Registrant"
 msgstr ""
 
 #: xl_auth/permission/forms.py:23 xl_auth/templates/permissions/home.html:19
-msgid "Cataloguing Allowed"
+msgid "Cataloger"
 msgstr ""
 
-#: xl_auth/permission/forms.py:70
+#: xl_auth/permission/forms.py:24 xl_auth/templates/permissions/home.html:20
+msgid "Cataloguing Administrator"
+msgstr ""
+
+#: xl_auth/permission/forms.py:71
 msgid "Permission"
 msgstr ""
 
@@ -313,7 +317,7 @@ msgstr ""
 msgid "Edit Existing Collection"
 msgstr ""
 
-#: xl_auth/templates/collections/edit.html:29 xl_auth/templates/permissions/edit.html:31
+#: xl_auth/templates/collections/edit.html:29 xl_auth/templates/permissions/edit.html:35
 #: xl_auth/templates/users/change_password.html:21 xl_auth/templates/users/edit_details.html:25
 msgid "Save"
 msgstr ""
@@ -331,12 +335,12 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: xl_auth/templates/collections/home.html:21 xl_auth/templates/permissions/home.html:20
+#: xl_auth/templates/collections/home.html:21 xl_auth/templates/permissions/home.html:21
 #: xl_auth/templates/users/home.html:21
 msgid "Created At"
 msgstr ""
 
-#: xl_auth/templates/collections/home.html:22 xl_auth/templates/permissions/home.html:21
+#: xl_auth/templates/collections/home.html:22 xl_auth/templates/permissions/home.html:22
 #: xl_auth/templates/users/home.html:22
 msgid "Actions"
 msgstr ""
@@ -345,7 +349,7 @@ msgstr ""
 msgid "Register New Collection"
 msgstr ""
 
-#: xl_auth/templates/collections/register.html:26 xl_auth/templates/permissions/register.html:28
+#: xl_auth/templates/collections/register.html:26 xl_auth/templates/permissions/register.html:32
 msgid "Register"
 msgstr ""
 
