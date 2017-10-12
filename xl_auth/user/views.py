@@ -5,10 +5,10 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_babel import lazy_gettext as _
-from flask_login import login_required
+from flask_login import current_user, login_required
 
 from ..utils import flash_errors
-from .forms import ChangePasswordForm, EditDetailsForm
+from .forms import ChangePasswordForm, EditDetailsForm, RegisterForm
 from .models import User
 
 blueprint = Blueprint('user', __name__, url_prefix='/users', static_folder='../static')
@@ -29,6 +29,23 @@ def profile():
     return render_template('users/profile.html')
 
 
+@blueprint.route('/register/', methods=['GET', 'POST'])
+@login_required
+def register():
+    """Register new user."""
+    register_user_form = RegisterForm(current_user, request.form)
+    if register_user_form.validate_on_submit():
+        User.create(email=register_user_form.username.data,
+                    full_name=register_user_form.full_name.data,
+                    password=register_user_form.password.data,
+                    active=True)
+        flash(_('Thank you for registering. You can now log in.'), 'success')
+        return redirect(url_for('public.home'))
+    else:
+        flash_errors(register_user_form)
+    return render_template('users/register.html', register_user_form=register_user_form)
+
+
 @blueprint.route('/edit_details/<string:username>', methods=['GET', 'POST'])
 @login_required
 def edit_details(username):
@@ -38,7 +55,7 @@ def edit_details(username):
         flash(_('User "%(username)s" does not exist', username=username), 'danger')
         return redirect(url_for('user.home'))
 
-    edit_details_form = EditDetailsForm(username, request.form)
+    edit_details_form = EditDetailsForm(current_user, username, request.form)
     if edit_details_form.validate_on_submit():
         user.update(full_name=edit_details_form.full_name.data,
                     active=edit_details_form.active.data,
@@ -62,7 +79,7 @@ def change_password(username):
         flash(_('User "%(username)s" does not exist', username=username), 'danger')
         return redirect(url_for('user.home'))
 
-    change_password_form = ChangePasswordForm(username, request.form)
+    change_password_form = ChangePasswordForm(current_user, username, request.form)
     if change_password_form.validate_on_submit():
         user.set_password(change_password_form.password.data)
         user.save()

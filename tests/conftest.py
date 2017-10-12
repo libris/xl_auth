@@ -10,7 +10,7 @@ from xl_auth.app import create_app
 from xl_auth.database import db as _db
 from xl_auth.settings import TestConfig
 
-from .factories import CollectionFactory, PermissionFactory, UserFactory
+from .factories import CollectionFactory, PermissionFactory, SuperUserFactory, UserFactory
 
 
 @pytest.yield_fixture(scope='function')
@@ -54,6 +54,15 @@ def user(db):
     user = UserFactory(password='myPrecious')
     db.session.commit()
     return user
+
+
+# noinspection PyShadowingNames
+@pytest.fixture
+def superuser(db):
+    """A super user for the tests."""
+    super_user = SuperUserFactory(password='myPrecious')
+    db.session.commit()
+    return super_user
 
 
 # noinspection PyShadowingNames
