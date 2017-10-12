@@ -33,7 +33,7 @@ def register():
             collection_id=register_permission_form.collection_id.data,
             register=register_permission_form.register.data,
             catalogue=register_permission_form.catalogue.data,
-            catalogue_admin=register_permission_form.catalogue_admin.data)
+            cataloging_admin=register_permission_form.cataloging_admin.data)
         flash(_('Added permissions for "%(username)s" on collection "%(code)s".',
                 username=permission.user.email, code=permission.collection.code), 'success')
         return redirect(url_for('permission.home'))

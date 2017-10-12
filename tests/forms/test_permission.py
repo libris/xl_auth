@@ -126,7 +126,7 @@ def test_register_form_validate_success(user, collection):
         'collection_id': collection.id,
         'register': False,
         'catalogue': False,
-        'catalogue_admin': False
+        'cataloging_admin': False
     }
 
 
@@ -135,7 +135,7 @@ def test_edit_form_validate_success(permission, user, collection):
     assert permission.user.id != user.id  # Existing permission maps to different user.
     assert permission.collection.id != collection.id  # And a different collection..
     form = EditForm(permission.id, user_id=user.id, collection_id=collection.id,
-                    register=True, catalogue=True, catalogue_admin=True)
+                    register=True, catalogue=True, cataloging_admin=True)
 
     assert form.validate() is True
     assert form.data == {
@@ -144,5 +144,5 @@ def test_edit_form_validate_success(permission, user, collection):
         'collection_id': collection.id,
         'register': True,
         'catalogue': True,
-        'catalogue_admin': True
+        'cataloging_admin': True
     }

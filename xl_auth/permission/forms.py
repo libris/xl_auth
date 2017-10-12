@@ -21,7 +21,7 @@ class PermissionForm(FlaskForm):
                                 validators=[DataRequired()])
     register = BooleanField(_('Registering Allowed'))
     catalogue = BooleanField(_('Cataloguing Allowed'))
-    catalogue_admin = BooleanField(_('Cataloguing Administrator'))
+    cataloging_admin = BooleanField(_('Cataloguing Administrator'))
 
     def __init__(self, *args, **kwargs):
         """Create instance."""
@@ -81,7 +81,7 @@ class EditForm(PermissionForm):
         self.collection_id.default = permission.collection_id
         self.register.default = permission.register
         self.catalogue.default = permission.catalogue
-        self.catalogue_admin.default = permission.catalogue_admin
+        self.cataloging_admin.default = permission.cataloging_admin
         self.process()
 
     def validate(self):
