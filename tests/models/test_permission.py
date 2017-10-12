@@ -43,8 +43,9 @@ def test_factory(db):
 
     assert isinstance(permission.user, User)
     assert isinstance(permission.collection, Collection)
-    assert permission.register is False
-    assert permission.catalogue is False
+    assert permission.registrant is False
+    assert permission.cataloger is False
+    assert permission.cataloging_admin is False
     assert bool(permission.created_at)
 
 

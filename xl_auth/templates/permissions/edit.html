@@ -20,12 +20,16 @@
             </div>
             <div class="form-group">
                 <label class="checkbox">
-                    {{ edit_permission_form.register() }}
-                    {{ edit_permission_form.register.label }}
+                    {{ edit_permission_form.registrant() }}
+                    {{ edit_permission_form.registrant.label }}
                 </label>
                 <label class="checkbox">
-                    {{ edit_permission_form.catalogue() }}
-                    {{ edit_permission_form.catalogue.label }}
+                    {{ edit_permission_form.cataloger() }}
+                    {{ edit_permission_form.cataloger.label }}
+                </label>
+                <label class="checkbox">
+                    {{ edit_permission_form.cataloging_admin() }}
+                    {{ edit_permission_form.cataloging_admin.label }}
                 </label>
             </div>
             <p><input class="btn btn-primary btn-submit" type="submit" value="{{ _('Save') }}"></p>

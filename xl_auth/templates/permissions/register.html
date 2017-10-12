@@ -17,12 +17,16 @@
             </div>
             <div class="form-group">
                 <label class="checkbox">
-                    {{ register_permission_form.register() }}
-                    {{ register_permission_form.register.label }}
+                    {{ register_permission_form.registrant() }}
+                    {{ register_permission_form.registrant.label }}
                 </label>
                 <label class="checkbox">
-                    {{ register_permission_form.catalogue() }}
-                    {{ register_permission_form.catalogue.label }}
+                    {{ register_permission_form.cataloger() }}
+                    {{ register_permission_form.cataloger.label }}
+                </label>
+                <label class="checkbox">
+                    {{ register_permission_form.cataloging_admin() }}
+                    {{ register_permission_form.cataloging_admin.label }}
                 </label>
             </div>
             <p><input class="btn btn-default btn-submit" type="submit" value="{{ _('Register') }}">

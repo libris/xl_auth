@@ -77,4 +77,5 @@ def register_commands(app):
     app.cli.add_command(commands.test)
     app.cli.add_command(commands.lint)
     app.cli.add_command(commands.clean)
+    app.cli.add_command(commands.create_user)
     app.cli.add_command(commands.urls)
