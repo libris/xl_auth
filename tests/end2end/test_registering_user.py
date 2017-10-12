@@ -22,9 +22,11 @@ def test_user_can_register(superuser, testapp):
     form['username'] = superuser.email
     form['password'] = 'myPrecious'
     # Submits
-    form.submit().follow()
+    res = form.submit().follow()
+    # Navigate to Users
+    res = res.click(_('Users'))
     # Clicks Create Account button
-    res = res.click(_('Create account'))
+    res = res.click(_('New User'))
     # Fills out the form
     form = res.forms['registerUserForm']
     form['username'] = 'foo@bar.com'

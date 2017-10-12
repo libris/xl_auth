@@ -108,7 +108,7 @@ def create_user(email, full_name, password, active, is_admin):
     full_name = full_name or email
     user = User.create(email=email, full_name=full_name, password=password,
                        active=active, is_admin=is_admin)
-    click.echo('Created account with login {0}'.format(user.email))
+    click.echo('Created account with login {0}:{1}'.format(user.email, password))
 
 
 @click.command()

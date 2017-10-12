@@ -13,8 +13,7 @@ from xl_auth.user.forms import ChangePasswordForm, EditDetailsForm, RegisterForm
 # noinspection PyUnusedLocal
 def test_register_form_validate_without_full_name(superuser, db):
     """Attempt registering user with name shorter than 3 chars."""
-    form = RegisterForm(superuser, current_user=superuser, username='mr.librarian@kb.se',
-                        full_name='01',
+    form = RegisterForm(superuser, username='mr.librarian@kb.se', full_name='01',
                         password='example', confirm='example')
 
     assert form.validate() is False
