@@ -18,7 +18,10 @@ depends_on = None
 def upgrade():
     """Add column 'catalogue_admin' to permissions table."""
     with op.batch_alter_table('permissions', schema=None) as batch_op:
-        batch_op.add_column(sa.Column('catalogue_admin', sa.Boolean(), nullable=False))
+        batch_op.add_column(sa.Column('catalogue_admin', sa.Boolean(),
+                                      server_default='0', nullable=False))
+    with op.batch_alter_table('permissions', schema=None) as batch_op:
+        batch_op.alter_column('catalogue_admin', server_default=None)
 
 
 def downgrade():
