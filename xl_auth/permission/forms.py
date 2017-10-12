@@ -19,8 +19,8 @@ class PermissionForm(FlaskForm):
     user_id = SelectField(_('User'), choices=[], coerce=int, validators=[DataRequired()])
     collection_id = SelectField(_('Collection'), choices=[], coerce=int,
                                 validators=[DataRequired()])
-    register = BooleanField(_('Registering Allowed'))
-    catalogue = BooleanField(_('Cataloguing Allowed'))
+    registrant = BooleanField(_('Registrant'))
+    cataloger = BooleanField(_('Cataloger'))
     cataloging_admin = BooleanField(_('Cataloguing Administrator'))
 
     def __init__(self, *args, **kwargs):
@@ -79,8 +79,8 @@ class EditForm(PermissionForm):
         """Apply 'permission' attributes as field defaults."""
         self.user_id.default = permission.user_id
         self.collection_id.default = permission.collection_id
-        self.register.default = permission.register
-        self.catalogue.default = permission.catalogue
+        self.registrant.default = permission.registrant
+        self.cataloger.default = permission.cataloger
         self.cataloging_admin.default = permission.cataloging_admin
         self.process()
 

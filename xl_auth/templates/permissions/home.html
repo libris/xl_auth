@@ -15,8 +15,8 @@
             <tr>
                 <th>{{ _('User') }}</th>
                 <th>{{ _('Collection') }}</th>
-                <th>{{ _('Registering Allowed') }}</th>
-                <th>{{ _('Cataloguing Allowed') }}</th>
+                <th>{{ _('Registrant') }}</th>
+                <th>{{ _('Cataloger') }}</th>
                 <th>{{ _('Cataloguing Administrator') }}</th>
                 <th>{{ _('Created At') }}</th>
                 <th>{{ _('Actions') }}</th>
@@ -27,8 +27,8 @@
                 <tr>
                     <td>{{ item.user.email }}</td>
                     <td>{{ item.collection.code }}</td>
-                    <td>{{ item.register }}</td>
-                    <td>{{ item.catalogue }}</td>
+                    <td>{{ item.registrant }}</td>
+                    <td>{{ item.cataloger }}</td>
                     <td>{{ item.cataloging_admin }}</td>
                     <td>{{ item.created_at.strftime('%y-%m-%d %H:%M:%S') }}</td>
                     <td>

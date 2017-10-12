@@ -20,8 +20,8 @@ class Permission(SurrogatePK, Model):
     collection_id = reference_col('collections', nullable=False)
     collection = relationship('Collection', back_populates='permissions', uselist=False)
 
-    register = Column(db.Boolean(), default=False, nullable=False)
-    catalogue = Column(db.Boolean(), default=False, nullable=False)
+    registrant = Column(db.Boolean(), default=False, nullable=False)
+    cataloger = Column(db.Boolean(), default=False, nullable=False)
     cataloging_admin = Column(db.Boolean(), default=False, nullable=False)
 
     created_at = Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)

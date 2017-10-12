@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2017-10-10 16:14+0200\n"
+"POT-Creation-Date: 2017-10-12 11:11+0200\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -250,12 +250,12 @@ msgid "Collection"
 msgstr "Samling"
 
 #: xl_auth/permission/forms.py:22 xl_auth/templates/permissions/home.html:18
-msgid "Registering Allowed"
-msgstr "Beståndsregistrering"
+msgid "Registrant"
+msgstr "Beståndsregistrerare"
 
 #: xl_auth/permission/forms.py:23 xl_auth/templates/permissions/home.html:19
-msgid "Cataloguing Allowed"
-msgstr "Katalogisering"
+msgid "Cataloger"
+msgstr "Katalogisatör"
 
 #: xl_auth/permission/forms.py:24 xl_auth/templates/permissions/home.html:20
 msgid "Cataloguing Administrator"
