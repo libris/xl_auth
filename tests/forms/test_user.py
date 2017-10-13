@@ -79,6 +79,16 @@ def test_register_form_validate_success(db, superuser):
     assert form.validate() is True
 
 
+def test_register_form_validate_regular_user(db, user):
+    """Attempt to register user as regular user."""
+    form = RegisterForm(user, username='first.last@kb.se', full_name='First Last',
+                        password='example', confirm='example')
+
+    assert form.validate() is False
+    assert (_('You do not have sufficient privileges for this operation') in
+            form.username.errors)
+
+
 def test_edit_details_form_validate_success(superuser):
     """Edit user details with success."""
     form = EditDetailsForm(superuser, superuser.email, username=superuser.email,

@@ -3,7 +3,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import Blueprint, abort, flash, redirect, render_template, request, url_for
 from flask_babel import lazy_gettext as _
 from flask_login import current_user, login_required
 
@@ -33,17 +33,20 @@ def profile():
 @login_required
 def register():
     """Register new user."""
-    register_user_form = RegisterForm(current_user, request.form)
-    if register_user_form.validate_on_submit():
-        User.create(email=register_user_form.username.data,
-                    full_name=register_user_form.full_name.data,
-                    password=register_user_form.password.data,
-                    active=True)
-        flash(_('Thank you for registering. You can now log in.'), 'success')
-        return redirect(url_for('public.home'))
+    if current_user.is_admin:
+        register_user_form = RegisterForm(current_user, request.form)
+        if register_user_form.validate_on_submit():
+            User.create(email=register_user_form.username.data,
+                        full_name=register_user_form.full_name.data,
+                        password=register_user_form.password.data,
+                        active=True)
+            flash(_('Thank you for registering. You can now log in.'), 'success')
+            return redirect(url_for('public.home'))
+        else:
+            flash_errors(register_user_form)
+        return render_template('users/register.html', register_user_form=register_user_form)
     else:
-        flash_errors(register_user_form)
-    return render_template('users/register.html', register_user_form=register_user_form)
+        abort(403)
 
 
 @blueprint.route('/edit_details/<string:username>', methods=['GET', 'POST'])

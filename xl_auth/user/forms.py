@@ -29,6 +29,7 @@ class RegisterForm(FlaskForm):
         """Create instance."""
         super(RegisterForm, self).__init__(*args, **kwargs)
         self.user = None
+        self.active_user = active_user
 
     def validate(self):
         """Validate the form."""
@@ -38,6 +39,11 @@ class RegisterForm(FlaskForm):
             return False
 
         user = User.query.filter(User.email.ilike(self.username.data)).first()
+
+        if not self.active_user.is_admin:
+            self.username.errors.append(
+                _('You do not have sufficient privileges for this operation'))
+            return False
 
         if user:
             self.username.errors.append(_('Email already registered'))
