@@ -29,7 +29,7 @@
                     <td>{{ user.full_name }}</td>
                     <td>{{ user.permissions | length }}</td>
                     <td>{{ user.active }}</td>
-                    <td>{{ user.is_admin }}</td>
+                    <td class="{{ "bool-value-{}".format(user.is_admin).lower() }}">{{ _('Yes') if user.is_admin else _('No') }}</td>
                     <td>{{ user.created_at.strftime('%y-%m-%d %H:%M:%S') }}</td>
                     <td>
                         <a class="btn btn-default"
