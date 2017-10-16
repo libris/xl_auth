@@ -43,6 +43,8 @@ def test_factory(db):
     assert isinstance(collection.friendly_name, string_types)
     assert collection.category in {'bibliography', 'library', 'uncategorized'}
     assert collection.active is True
+    assert collection.replaces is None
+    assert collection.replaced_by is None
     assert isinstance(collection.permissions, list)
     assert bool(collection.created_at)
 
