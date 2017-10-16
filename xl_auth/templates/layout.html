@@ -27,11 +27,11 @@
 </head>
 <body class="{% block body_class %}{% endblock %}">
 {% block body %}
-  {% if current_user and current_user.is_authenticated %}
-    {% with form=form %}
-        {% include "nav.html" %}
-    {% endwith %}
-  {% endif %}
+    {% if current_user and current_user.is_authenticated %}
+        {% with form=form %}
+            {% include "nav.html" %}
+        {% endwith %}
+    {% endif %}
 
     <header>{% block header %}{% endblock %}</header>
     <div class="{% block content_class %}container{% endblock content_class %}">
