@@ -1,39 +1,64 @@
 <!-- public/home.html -->
 {% extends "layout.html" %}
 {% block content %}
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-
-        <h1>{{ _('Welcome to xl_auth') }}</h1>
-
-        <p>This is a starter Flask template. It includes Bootstrap 3, jQuery 2, Flask-SQLAlchemy,
-            WTForms, and various testing utilities out of the box.</p>
-        <p><a href="https://github.com/sloria/cookiecutter-flask"
-              class="btn btn-default btn-large">Learn more &raquo;</a></p>
-    </div><!-- /.jumbotron -->
-
     <div class="body-content">
         <div class="row">
+          {% if current_user and current_user.is_authenticated %}
+          <div class="jumbotron">
+
+              <h1>{{ _('Welcome to xl_auth') }}</h1>
+
+              <p>This is a starter Flask template. It includes Bootstrap 3, jQuery 2, Flask-SQLAlchemy,
+                  WTForms, and various testing utilities out of the box.</p>
+              <p><a href="https://github.com/sloria/cookiecutter-flask"
+                    class="btn btn-default btn-large">Learn more &raquo;</a></p>
+          </div><!-- /.jumbotron -->
+          {% elif login_form %}
+            <div class="col-md-12 login-panel panel panel-default">
+              <div class="col-md-8">
+                <div class="header">
+                  <div class="logo-small logotype logotype-black">
+                  </div>
+                  <h2>
+                    xl_auth
+                  </h2>
+              </div>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta quis dolor sed hendrerit. Maecenas varius augue vitae quam molestie condimentum. Pellentesque nec magna accumsan, placerat dui ut, tristique nulla.
+                </p>
+                <p>
+                  Nam commodo velit libero, ac lacinia tellus ornare a. Pellentesque magna arcu, consectetur eu orci eu, maximus ullamcorper turpis. Vivamus lobortis tellus non nibh vulputate, at rhoncus est vehicula.
+                </p>
+              </div>
+              <div class="col-md-4">
+                <h2>{{ _('Log in') }}</h2>
+                <form id="loginForm" method="POST" class="" action="/" role="login">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <div class="form-group login-form">
+                      <label for="username">{{ _('Username') }}</label>
+                      {{ login_form.username(placeholder="user@example.com", class_="form-control") }}
+                      <label for="password">{{ _('Password') }}</label>
+                      {{ login_form.password(placeholder="********", class_="form-control") }}
+                      <button type="submit" class="btn btn-default">{{ _('Log in') }}</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            {% endif %}
             <div class="col-lg-4">
-                <h2><i class="fa fa-code"></i> Bootstrap 3</h2>
-                <p>Sleek, intuitive, and powerful mobile-first front-end framework for faster and
-                    easier web development.</p>
-                <p><a class="btn btn-default" href="http://getbootstrap.com/">Official website
-                    &raquo;</a></p>
+                <h2><i class="fa fa-rss"></i> {{ _('The Libris blog') }}</h2>
+                <p>{{ _('Read the latest news about the Libris collaboration.') }}</p>
+                <p><a class="btn btn-default" href="http://librisbloggen.kb.se/">{{ _('Go to the blog') }}</a></p>
             </div>
             <div class="col-lg-4">
-                <h2><i class="fa fa-flask"></i> SQLAlchemy</h2>
-                <p>SQLAlchemy is the Python SQL toolkit and Object Relational Mapper that gives
-                    application developers the full power and flexibility of SQL.</p>
-                <p><a href="http://www.sqlalchemy.org/" class="btn btn-default">Official website
-                    &raquo;</a></p>
+                <h2><i class="fa fa-envelope"></i> {{ _('Libris customer service') }}</h2>
+                <p>{{ _('For questions about login or emergencies, send a mail to libris@kb.se') }}</p>
+                <p><a href="mailto:libris@kb.se" class="btn btn-default">{{ _('Send e-mail') }}</a></p>
             </div>
             <div class="col-lg-4">
-                <h2><i class="fa fa-edit"></i> WTForms</h2>
-                <p>WTForms is a flexible forms validation and rendering library for python web
-                    development.</p>
-                <p><a href="http://wtforms.simplecodes.com/" class="btn btn-default">Official
-                    website &raquo;</a></p>
+                <h2><i class="fa fa-comment"></i> {{ _('Support forum') }}</h2>
+                <p>{{ _('Get help, ask questions and report errors.') }}</p>
+                <p><a href="https://kundo.se/org/librisxl/" class="btn btn-default">{{ _('Go to kundo') }}</a></p>
             </div>
         </div><!-- /.row -->
     </div>
