@@ -20,7 +20,7 @@ def test_user_can_register_new_permission(user, collection, testapp):
     form['username'] = user.email
     form['password'] = 'myPrecious'
     # Submits
-    form.submit().follow()
+    res = form.submit().follow()
     # Clicks Permissions button
     res = res.click(_('Permissions'))
     # Clicks Register New Permission button
@@ -51,7 +51,7 @@ def test_user_sees_error_message_if_permission_is_already_registered(user, permi
     form['username'] = user.email
     form['password'] = 'myPrecious'
     # Submits
-    form.submit().follow()
+    res = form.submit().follow()
     # Clicks Permissions button
     res = res.click(_('Permissions'))
     # Clicks Register New Permission button

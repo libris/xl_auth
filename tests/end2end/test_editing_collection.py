@@ -12,10 +12,16 @@ from jinja2 import escape
 from xl_auth.collection.models import Collection
 
 
-def test_user_can_edit_existing_collection(collection, testapp):
+def test_user_can_edit_existing_collection(user, collection, testapp):
     """Edit an existing collection."""
     # Goes to homepage
     res = testapp.get('/')
+    # Fills out login form
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits
+    res = form.submit().follow()
     # Clicks Collections button
     res = res.click(_('Collections'))
     # Clicks Edit button

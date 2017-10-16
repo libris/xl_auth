@@ -15,11 +15,17 @@ from ..factories import CollectionFactory
 
 
 # noinspection PyUnusedLocal
-def test_user_can_register_new_collection(collection, testapp):
+def test_user_can_register_new_collection(user, collection, testapp):
     """Register a new collection."""
     old_count = len(Collection.query.all())
     # Goes to homepage
     res = testapp.get('/')
+    # Fills out login form
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits
+    res = form.submit().follow()
     # Clicks Collections button
     res = res.click(_('Collections'))
     # Clicks Register New Collection button
