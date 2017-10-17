@@ -3,7 +3,10 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+import datetime as dt
+import json
 import os
+from copy import deepcopy
 from glob import glob
 from subprocess import call
 
@@ -126,10 +129,7 @@ def urls(url, order):
 
     if url:
         try:
-            rule, arguments = (
-                current_app.url_map
-                           .bind('localhost')
-                           .match(url, return_rule=True))
+            rule, arguments = current_app.url_map.bind('localhost').match(url, return_rule=True)
             rows.append((rule.rule, rule.endpoint, arguments))
             column_length = 3
         except (NotFound, MethodNotAllowed) as e:
@@ -172,3 +172,254 @@ def urls(url, order):
 
     for row in rows:
         click.echo(str_template.format(*row[:column_length]))
+
+
+@click.command()
+@with_appcontext
+def import_data():
+    """Read data from Voyager dump and BibDB API to create DB entities.
+
+    Creates:
+        - collections
+        - user accounts for collection managers
+        - permissions between the two
+
+    """
+    import requests
+
+    from .collection.forms import RegisterForm as CollectionRegisterForm
+    from .collection.models import Collection
+    from .permission.models import Permission
+    from .user.forms import RegisterForm as UserRegisterForm
+    from .user.models import User
+
+    def _get_collection_details_from_bibdb(code):
+        raw_bibdb_api_data = json.loads(requests.get(
+            'https://bibdb.libris.kb.se/api/lib?level=brief&sigel={}'.format(code)).content)
+        if raw_bibdb_api_data['query']['operation'] == 'sigel {}'.format(code):
+            click.echo('.', nl=False)
+        else:
+            click.echo('-', nl=False)
+            raise AssertionError('Lookup failed for sigel %r' % code)
+
+        bibdb_api_data = None
+        for chunk in raw_bibdb_api_data['libraries']:
+            if chunk['sigel'] == code:
+                if bibdb_api_data is not None:
+                    raise AssertionError('Duplicate results for sigel %r' % code)
+                bibdb_api_data = chunk
+        if not bibdb_api_data:
+            raise AssertionError('Zero results for sigel %r' % code)
+
+        if bibdb_api_data['type'] in {'library', 'bibliography'}:
+            category = bibdb_api_data['type']
+        else:
+            category = 'uncategorized'
+        # assert bibdb_api_data['country_code'] == 'se'
+
+        if bibdb_api_data['dept']:
+            friendly_name = '%s, %s' % (bibdb_api_data['name'], bibdb_api_data['dept'])
+        else:
+            friendly_name = bibdb_api_data['name']
+
+        assert bibdb_api_data['alive'] in {True, False}
+
+        collection = {
+            'friendly_name': friendly_name,
+            'code': bibdb_api_data['sigel'],
+            'category': category,
+            'active': not bool(bibdb_api_data['sigel_new']),
+            'replaces': bibdb_api_data['sigel_old'],
+            'replaced_by': bibdb_api_data['sigel_new']
+        }
+
+        if bibdb_api_data['date_created']:
+            collection['created_at'] = \
+                dt.datetime.strptime(bibdb_api_data['date_created'], '%Y-%m-%dT%H:%M:%S')
+
+        return collection
+
+    def _get_voyager_data():
+        raw_voyager_sigels_and_locations = requests.get(
+            'https://github.com/libris/xl_auth/files/1375611/171011_KB--sigel_locations.txt'
+        ).content.decode('latin-1').splitlines()
+        voyager_sigels_and_collections = dict()
+        voyager_main_sigels, voyager_location_sigels = set(), set()
+        for voyager_row in raw_voyager_sigels_and_locations:
+            voyager_sigel, voyager_location = voyager_row.split(',')
+            assert voyager_sigel and voyager_location
+            voyager_main_sigels.add(voyager_sigel)
+            voyager_location_sigels.add(voyager_location)
+            if voyager_sigel in voyager_sigels_and_collections:
+                voyager_sigels_and_collections[voyager_sigel].add(voyager_location)
+            else:
+                voyager_sigels_and_collections[voyager_sigel] = {voyager_location}
+        print('voyager_main_sigels:', len(voyager_main_sigels), '/',
+              'voyager_location_sigels:', len(voyager_location_sigels))
+        print('(voyager_main_sigels | voyager_location_sigels):',
+              len(voyager_main_sigels | voyager_location_sigels))
+
+        return {
+            'sigel_to_collections': voyager_sigels_and_collections,
+            'sigels': voyager_main_sigels,
+            'collections': voyager_location_sigels
+        }
+
+    def _get_bibdb_data():
+        raw_bibdb_sigels_and_cataloging_admins = requests.get(
+            'https://libris.kb.se/libinfo/library_konreg.jsp').content.decode().splitlines()
+
+        registering_bibdb_sigels, bibdb_cataloging_admins = set(), set()
+        bibdb_sigels_and_cataloging_admins = dict()
+        bibdb_cataloging_admins_and_sigels = dict()
+        bibdb_cataloging_admin_emails_and_names = dict()
+        for bibdb_row in raw_bibdb_sigels_and_cataloging_admins:
+            bibdb_sigel, cataloging_admin_name, cataloging_admin_email = bibdb_row.split(',')
+            cataloging_admin_email = cataloging_admin_email.lower()
+            bibdb_cataloging_admin_emails_and_names[cataloging_admin_email] = cataloging_admin_name
+            assert bibdb_sigel != ''
+            registering_bibdb_sigels.add(bibdb_sigel)
+            if not cataloging_admin_email:
+                continue
+
+            bibdb_cataloging_admins.add(cataloging_admin_email)
+            bibdb_sigels_and_cataloging_admins[bibdb_sigel] = cataloging_admin_email
+
+            if cataloging_admin_email in bibdb_cataloging_admins_and_sigels:
+                bibdb_cataloging_admins_and_sigels[cataloging_admin_email].add(bibdb_sigel)
+            else:
+                bibdb_cataloging_admins_and_sigels[cataloging_admin_email] = {bibdb_sigel}
+
+        print('registering_bibdb_sigels:', len(registering_bibdb_sigels), '/',
+              'bibdb_cataloging_admins:', len(bibdb_cataloging_admins))
+
+        return {
+            'sigel_to_cataloging_admins': bibdb_sigels_and_cataloging_admins,
+            'cataloging_admin_to_sigels': bibdb_cataloging_admins_and_sigels,
+            'cataloging_admin_emails_to_names': bibdb_cataloging_admin_emails_and_names,
+            'sigels': registering_bibdb_sigels,
+            'cataloging_admins': bibdb_cataloging_admins,
+        }
+
+    def _get_bibdb_sigels_not_in_voyager(bibdb_sigels, voyager_sigels):
+        unknown_sigels = set()
+        for bibdb_sigel in bibdb_sigels:
+            if bibdb_sigel not in voyager_sigels:
+                unknown_sigels.add(bibdb_sigel)
+        return unknown_sigels
+
+    def _generate_xl_auth_cataloging_admins_and_collections(bibdb_cataloging_admin_to_sigels,
+                                                            voyager_sigel_to_collections):
+        pre_total, post_total = 0, 0
+        voyager_sigels_unknown_in_bibdb = set()
+        xl_auth_cataloging_admins = dict()
+        xl_auth_collections = dict()
+        for cataloging_admin, sigels in bibdb_cataloging_admin_to_sigels.items():
+            pre_total += len(sigels)
+            xl_auth_cataloging_admins[cataloging_admin] = set()
+            for sigel in sigels:
+                if sigel not in xl_auth_collections:
+                    xl_auth_collections[sigel] = _get_collection_details_from_bibdb(sigel)
+
+                xl_auth_cataloging_admins[cataloging_admin].add(sigel)
+                if sigel in bibdb_sigels_unknown_in_voyager:
+                    continue
+
+                for voyager_collection in voyager_sigel_to_collections[sigel]:
+                    if voyager_collection not in xl_auth_collections:
+                        try:
+                            xl_auth_collections[voyager_collection] = \
+                                _get_collection_details_from_bibdb(voyager_collection)
+                        except AssertionError:
+                            voyager_sigels_unknown_in_bibdb.add(voyager_collection)
+                            continue  # TODO: Review me!
+                    xl_auth_cataloging_admins[cataloging_admin].add(voyager_collection)
+
+            post_total += len(xl_auth_cataloging_admins[cataloging_admin])
+
+        print(pre_total, post_total)
+        click.echo(voyager_sigels_unknown_in_bibdb)
+
+        resolved_bibdb_refs = set()
+        unresolved_bibdb_refs = set()
+        for _, details in deepcopy(xl_auth_collections).items():
+            for old_new_ref in {'replaces', 'replaced_by'}:
+                if details[old_new_ref] and details[old_new_ref] not in xl_auth_collections:
+                    try:
+                        xl_auth_collections[details[old_new_ref]] = \
+                            _get_collection_details_from_bibdb(details[old_new_ref])
+                        resolved_bibdb_refs.add(details[old_new_ref])
+                    except AssertionError:
+                        unresolved_bibdb_refs.add(details[old_new_ref])
+        click.echo(resolved_bibdb_refs)
+        click.echo(unresolved_bibdb_refs)
+
+        return {
+            'collections': xl_auth_collections,
+            'cataloging_admins': xl_auth_cataloging_admins
+        }
+
+    voyager = _get_voyager_data()
+    bibdb = _get_bibdb_data()
+
+    bibdb_sigels_unknown_in_voyager = \
+        _get_bibdb_sigels_not_in_voyager(bibdb['sigels'], voyager['sigels'])
+    click.echo(bibdb_sigels_unknown_in_voyager)
+
+    xl_auth = _generate_xl_auth_cataloging_admins_and_collections(
+        bibdb['cataloging_admin_to_sigels'], voyager['sigel_to_collections'])
+
+    for collection, details in deepcopy(xl_auth['collections']).items():
+        with current_app.test_request_context():
+            collection_form = CollectionRegisterForm(code=details['code'],
+                                                     friendly_name=details['friendly_name'])
+            collection_form.validate()
+        if collection_form.code.errors or collection_form.friendly_name.errors:
+            for code_error in collection_form.code.errors:
+                click.echo('collection %r: %s' % (collection, code_error), err=True)
+            for friendly_name_error in collection_form.friendly_name.errors:
+                click.echo('friendly_name %r: %s'
+                           % (details['friendly_name'], friendly_name_error), err=True)
+            del xl_auth['collections'][collection]
+            continue
+
+        collection = Collection.query.filter_by(code=details['code']).first()
+        if not collection:
+            collection = Collection.create(**details)
+            collection.save()
+
+    for email, full_name in deepcopy(bibdb['cataloging_admin_emails_to_names']).items():
+        if email not in bibdb['cataloging_admins']:
+            del bibdb['cataloging_admin_emails_to_names'][email]
+            continue
+
+        with current_app.test_request_context():
+            user_form = UserRegisterForm(None, username=email, full_name=full_name)
+            user_form.validate()
+        if user_form.username.errors or user_form.full_name.errors:
+            click.echo('validation failed for %s <%s>' % (full_name, email))
+            for username_error in user_form.username.errors:
+                click.echo('email %r: %s' % (email, username_error), err=True, color='#ff0000')
+            for full_name_error in user_form.full_name.errors:
+                click.echo('full_name %r: %s' % (full_name, full_name_error), err=True)
+            del bibdb['cataloging_admin_emails_to_names'][email]
+            continue
+
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            user = User.create(email=email, full_name=full_name, active=False)
+            user.save()
+
+    for email, collections in xl_auth['cataloging_admins'].items():
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            continue
+
+        for code in collections:
+            collection = Collection.query.filter_by(code=code).first()
+            permission = Permission.query.filter_by(user_id=user.id,
+                                                    collection_id=collection.id).first()
+            if not permission:
+                permission = Permission.create(user=user, collection=collection, registrant=True,
+                                               cataloger=True, cataloging_admin=True)
+                permission.save()
