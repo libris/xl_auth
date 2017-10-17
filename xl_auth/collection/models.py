@@ -17,6 +17,8 @@ class Collection(SurrogatePK, Model):
     category = Column(db.String(255), nullable=False)
     active = Column(db.Boolean(), default=True)
     permissions = relationship('Permission', back_populates='collection')
+    replaces = Column(db.String(255))
+    replaced_by = Column(db.String(255))
     created_at = Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
 
     def __init__(self, code, friendly_name, category, **kwargs):
