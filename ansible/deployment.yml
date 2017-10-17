@@ -4,6 +4,8 @@
   hosts: all
   become: True
   roles:
-    - role: common
+    - common
+    - docker
+    - xl_auth
 
 ...
