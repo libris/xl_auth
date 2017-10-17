@@ -46,7 +46,7 @@ def test_user_can_edit_existing_collection(user, collection, testapp):
     if form['category'].value in {'bibliography', 'library'}:
         assert '<td>{}</td>'.format(_(form['category'].value.capitalize())) in res
     else:
-        assert '<td>{}</td>'.format(_('No category')) in res
+        assert '<td>{}</td>'.format(_('None')) in res
 
 
 def test_user_sees_error_message_if_code_is_changed(collection, testapp):
