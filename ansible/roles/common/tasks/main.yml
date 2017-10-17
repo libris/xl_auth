@@ -1,0 +1,41 @@
+---
+
+- name: install libselinux-python
+  yum: name=libselinux-python state=present
+  tags: common, selinux
+
+- name: install policycoreutils-python
+  yum: name=policycoreutils-python state=present
+  tags: common, selinux
+
+- name: enable selinux
+  selinux: policy=targeted state=enforcing
+  when: selinux_enabled
+  tags: common, selinux
+
+- name: disable selinux
+  selinux: policy=targeted state=permissive
+  when: not selinux_enabled
+  tags: common, selinux
+
+- name: configure system
+  import_tasks: configure-system.yml
+  tags: common
+
+- name: update firewall
+  import_tasks: firewall-update.yml
+  tags: common, firewall
+
+- name: install ntp
+  yum: name=ntp state=present
+  tags: common
+
+- name: ntpd running and enabled
+  service: name=ntpd state=started enabled=yes
+  tags: common
+
+- name: install base packages and epel stuff
+  import_tasks: install-packages.yml
+  tags: common
+
+...

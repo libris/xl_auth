@@ -1,0 +1,11 @@
+---
+
+- name: run updatedb
+  command: updatedb
+  check_mode: no
+
+- name: emacs config
+  shell: echo "(setq make-backup-files nil)" > /root/.emacs
+  check_mode: no
+
+...
