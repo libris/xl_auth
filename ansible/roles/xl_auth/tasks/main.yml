@@ -1,13 +1,68 @@
 ---
 
+- name: start postgres
+  docker_container:
+    name: postgres
+    image: postgres:9.4-alpine
+    state: started
+    volume_driver: local
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    env:
+      POSTGRES_DB: prod
+      POSTGRES_USER: xl_auth
+      POSTGRES_PASSWORD: xl_auth
+  tags: xl_auth
+
 - name: start xl_auth
   docker_container:
     name: xl_auth
-    image: mblomdahl/xl_auth
+    image: mblomdahl/xl_auth:cd
+    pull: yes
     command: run -h 0.0.0.0 -p 5000
     state: started
+    links:
+      - postgres
     ports:
-      - "80:5000"
+      - 80:5000
+    env:
+      FLASK_DEBUG: 0
+      SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
+  tags: xl_auth
+  register: start_xl_auth
+
+- block:
+  - name: run 'flask db upgrade'
+    docker_container:
+      name: xl_auth_db_upgrade
+      image: mblomdahl/xl_auth:cd
+      interactive: yes
+      tty: yes
+      auto_remove: yes
+      command: db upgrade
+      links:
+        - postgres
+      env:
+        FLASK_DEBUG: 0
+        SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
+
+  - name: run 'flask import_data'
+    docker_container:
+      name: xl_auth_import_data
+      image: mblomdahl/xl_auth:cd
+      interactive: yes
+      tty: yes
+      auto_remove: yes
+      command: import_data
+      links:
+        - postgres
+      env:
+        FLASK_DEBUG: 0
+        SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
+
+  when: start_xl_auth.changed
   tags: xl_auth
 
 ...

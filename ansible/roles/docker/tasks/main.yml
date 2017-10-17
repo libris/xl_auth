@@ -10,7 +10,6 @@
 
 - name: install docker-ce-17.06.1.ce
   yum: name=docker-ce-17.06.1.ce state=present
-  notify: restart docker
   tags: docker
 
 - name: install docker-compose-1.16.1
@@ -23,7 +22,6 @@
     state: present
     create: yes
     line: '{"experimental": true}'
-  notify: restart docker
   tags: docker
 
 - name: docker running and enabled
