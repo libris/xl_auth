@@ -19,12 +19,12 @@ def test_user_can_edit_existing_permission(user, permission, testapp):
     other_collection = CollectionFactory()
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form in navbar
+    # Fills out login form
     form = res.forms['loginForm']
     form['username'] = user.email
     form['password'] = 'myPrecious'
     # Submits
-    form.submit().follow()
+    res = form.submit().follow()
     # Clicks Permissions button
     res = res.click(_('Permissions'))
     # Clicks Edit button on a permission
@@ -56,7 +56,7 @@ def test_user_sees_error_message_if_permission_is_already_registered(user, permi
     form['username'] = user.email
     form['password'] = 'myPrecious'
     # Submits
-    form.submit().follow()
+    res = form.submit().follow()
     # Clicks Permissions button
     res = res.click(_('Permissions'))
     # Clicks Edit button on 'permission'

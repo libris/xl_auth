@@ -41,9 +41,29 @@ textarea {
   }
 }
 
-.navbar-form input[type="text"],
-.navbar-form input[type="password"] {
-  width: 180px;
+.login-panel {
+  padding: 1em;
+  .header {
+    display: flex;
+    align-items: center;
+    margin: 0px 0px 1em 0px;
+    > * {
+      display: inline-block;
+    }
+    .logotype {
+      width: 50px;
+      margin: 0px 1em 0px 0px;
+    }
+    h2 {
+      margin: 0;
+    }
+  }
+  .login-form {
+    input[type="text"], input[type="password"] {
+      display: block;
+      margin: 0px 0px 1em 0px;
+    }
+  }
 }
 
 
@@ -59,6 +79,16 @@ textarea {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
+}
+
+/* Table */
+td {
+    &.bool-value-true {
+        color: #009600;
+    }
+    &.bool-value-false {
+        color: #c10000;
+    }
 }
 
 /* footer */

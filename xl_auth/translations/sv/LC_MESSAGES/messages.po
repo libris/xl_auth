@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2017-10-12 11:11+0200\n"
+"POT-Creation-Date: 2017-10-16 16:43+0200\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -20,12 +20,12 @@ msgstr ""
 
 #: tests/end2end/test_deleting_permission.py:24 tests/end2end/test_editing_permission.py:29
 #: tests/end2end/test_editing_permission.py:61 tests/end2end/test_registering_permission.py:25
-#: tests/end2end/test_registering_permission.py:56 xl_auth/templates/nav.html:26
+#: tests/end2end/test_registering_permission.py:56 xl_auth/templates/nav.html:27
 #: xl_auth/templates/permissions/home.html:4
 msgid "Permissions"
 msgstr "Behörigheter"
 
-#: tests/end2end/test_deleting_permission.py:26 tests/end2end/test_editing_collection.py:22
+#: tests/end2end/test_deleting_permission.py:26 tests/end2end/test_editing_collection.py:28
 #: tests/end2end/test_editing_permission.py:31 tests/end2end/test_editing_permission.py:64
 #: xl_auth/templates/collections/home.html:37 xl_auth/templates/permissions/home.html:37
 msgid "Edit"
@@ -40,55 +40,55 @@ msgstr "🙀 Ta bort behörighet"
 msgid "Successfully deleted permissions for \"%(username)s\" on collection \"%(code)s\"."
 msgstr "Behörighet borttagen för \"%(username)s\" på samling \"%(code)s\"."
 
-#: tests/end2end/test_editing_collection.py:20 tests/end2end/test_registering_collection.py:24
-#: xl_auth/templates/collections/home.html:4 xl_auth/templates/nav.html:24
+#: tests/end2end/test_editing_collection.py:26 tests/end2end/test_registering_collection.py:30
+#: xl_auth/templates/collections/home.html:4 xl_auth/templates/nav.html:25
 #: xl_auth/templates/users/home.html:18
 msgid "Collections"
 msgstr "Samlingar"
 
-#: tests/end2end/test_editing_collection.py:40 tests/end2end/test_registering_collection.py:41
+#: tests/end2end/test_editing_collection.py:46 tests/end2end/test_registering_collection.py:47
 msgid "category"
 msgstr "kategori"
 
-#: tests/end2end/test_editing_collection.py:42 tests/end2end/test_registering_collection.py:43
+#: tests/end2end/test_editing_collection.py:48 tests/end2end/test_registering_collection.py:49
 #: xl_auth/collection/forms.py:21 xl_auth/templates/collections/home.html:30
 msgid "No category"
 msgstr "Kategori saknas"
 
-#: tests/end2end/test_editing_collection.py:57 tests/end2end/test_registering_collection.py:58
+#: tests/end2end/test_editing_collection.py:63 tests/end2end/test_registering_collection.py:64
 #: xl_auth/collection/forms.py:17 xl_auth/templates/collections/home.html:16
 msgid "Code"
 msgstr "Kod"
 
-#: tests/end2end/test_editing_collection.py:57 tests/forms/test_collection.py:70
+#: tests/end2end/test_editing_collection.py:63 tests/forms/test_collection.py:70
 #: xl_auth/collection/forms.py:59
 msgid "Code cannot be modified"
 msgstr "Koden kan inte ändras"
 
-#: tests/end2end/test_editing_collection.py:71 tests/end2end/test_registering_collection.py:73
+#: tests/end2end/test_editing_collection.py:77 tests/end2end/test_registering_collection.py:79
 #: xl_auth/collection/forms.py:18 xl_auth/templates/users/home.html:17
 msgid "Name"
 msgstr "Namn"
 
-#: tests/end2end/test_editing_collection.py:71 tests/end2end/test_editing_user.py:143
-#: tests/end2end/test_registering_collection.py:58 tests/end2end/test_registering_collection.py:73
+#: tests/end2end/test_editing_collection.py:77 tests/end2end/test_editing_user.py:143
+#: tests/end2end/test_registering_collection.py:64 tests/end2end/test_registering_collection.py:79
 #: tests/forms/test_collection.py:19 tests/forms/test_collection.py:35
 #: tests/forms/test_permission.py:29 tests/forms/test_permission.py:37
 #: tests/forms/test_permission.py:45 tests/forms/test_permission.py:53
 msgid "This field is required."
 msgstr "Det här fältet är obligatoriskt."
 
-#: tests/end2end/test_editing_collection.py:85 tests/end2end/test_registering_collection.py:88
+#: tests/end2end/test_editing_collection.py:91 tests/end2end/test_registering_collection.py:94
 #: xl_auth/collection/forms.py:19 xl_auth/templates/collections/home.html:18
 msgid "Category"
 msgstr "Kategori"
 
-#: tests/end2end/test_editing_collection.py:85 tests/end2end/test_registering_collection.py:88
+#: tests/end2end/test_editing_collection.py:91 tests/end2end/test_registering_collection.py:94
 #: tests/forms/test_collection.py:96 tests/forms/test_collection.py:105
 msgid "Not a valid choice"
 msgstr "Inte ett giltigt val"
 
-#: tests/end2end/test_editing_collection.py:93 xl_auth/collection/views.py:45
+#: tests/end2end/test_editing_collection.py:99 xl_auth/collection/views.py:45
 #, python-format
 msgid "Collection code \"%(code)s\" does not exist"
 msgstr "Samlingskod \"%(code)s\" existerar inte"
@@ -106,8 +106,8 @@ msgid "Permissions for user \"%(username)s\" on collection \"%(code)s\" already 
 msgstr "En behörighet för användare \"%(username)s\" på samling \"%(code)s\" finns redan registrerad"
 
 #: tests/end2end/test_editing_user.py:23 tests/end2end/test_editing_user.py:58
-#: xl_auth/templates/collections/home.html:19 xl_auth/templates/nav.html:25
-#: xl_auth/templates/users/home.html:4
+#: tests/end2end/test_registering_user.py:27 xl_auth/templates/collections/home.html:19
+#: xl_auth/templates/nav.html:26 xl_auth/templates/users/home.html:4
 msgid "Users"
 msgstr "Användare"
 
@@ -125,7 +125,7 @@ msgid "Email"
 msgstr "Epost"
 
 #: tests/end2end/test_editing_user.py:97 tests/end2end/test_editing_user.py:120
-#: tests/forms/test_user.py:60 tests/forms/test_user.py:69 xl_auth/user/forms.py:62
+#: tests/forms/test_user.py:61 tests/forms/test_user.py:70 xl_auth/user/forms.py:62
 msgid "Email cannot be modified"
 msgstr "Epost/användarnamn går inte att ändra"
 
@@ -134,12 +134,12 @@ msgid "Full name"
 msgstr "Fullständigt namn"
 
 #: tests/end2end/test_editing_user.py:159 tests/end2end/test_editing_user.py:164
-#: xl_auth/user/views.py:38 xl_auth/user/views.py:62
+#: xl_auth/user/views.py:55 xl_auth/user/views.py:79
 #, python-format
 msgid "User \"%(username)s\" does not exist"
 msgstr "Användaren \"%(username)s\" existerar inte"
 
-#: tests/end2end/test_logging_in.py:35 xl_auth/public/views.py:46
+#: tests/end2end/test_logging_in.py:35 xl_auth/public/views.py:45
 msgid "You are logged out."
 msgstr "Du är utloggad."
 
@@ -151,11 +151,11 @@ msgstr "Felaktigt lösenord"
 msgid "Unknown username/email"
 msgstr "Okänd epost/användarnamn"
 
-#: tests/end2end/test_registering_collection.py:26 xl_auth/templates/collections/home.html:11
+#: tests/end2end/test_registering_collection.py:32 xl_auth/templates/collections/home.html:11
 msgid "New Collection"
 msgstr "Ny samling"
 
-#: tests/end2end/test_registering_collection.py:106 tests/forms/test_collection.py:43
+#: tests/end2end/test_registering_collection.py:112 tests/forms/test_collection.py:43
 #: tests/forms/test_collection.py:53 xl_auth/collection/forms.py:42
 #, python-format
 msgid "Code \"%(code)s\" already registered"
@@ -171,15 +171,15 @@ msgstr "Lägg till behörighet"
 msgid "Added permissions for \"%(username)s\" on collection \"%(code)s\"."
 msgstr "Behörighet tillagd för användare \"%(username)s\" på samling \"%(code)s\"."
 
-#: tests/end2end/test_registering_user.py:21 xl_auth/templates/nav.html:47
-msgid "Create account"
-msgstr "Skapa användarkonto"
+#: tests/end2end/test_registering_user.py:29 xl_auth/templates/users/home.html:11
+msgid "New User"
+msgstr "Ny användare"
 
-#: tests/end2end/test_registering_user.py:49 xl_auth/user/forms.py:17
+#: tests/end2end/test_registering_user.py:65 xl_auth/user/forms.py:17
 msgid "Passwords must match"
 msgstr "Lösenorden måste stämma överens"
 
-#: tests/end2end/test_registering_user.py:68 tests/forms/test_user.py:29 tests/forms/test_user.py:40
+#: tests/end2end/test_registering_user.py:92 tests/forms/test_user.py:29 tests/forms/test_user.py:40
 #: xl_auth/user/forms.py:43
 msgid "Email already registered"
 msgstr "Epost-adressen är redan registrerad"
@@ -265,21 +265,17 @@ msgstr "Katalogiseringsadmin"
 msgid "Permission"
 msgstr "Behörighet"
 
-#: xl_auth/public/forms.py:17
+#: xl_auth/public/forms.py:17 xl_auth/templates/public/home.html:42
 msgid "Username"
 msgstr "Användarnamn"
 
-#: xl_auth/public/forms.py:18 xl_auth/user/forms.py:15
+#: xl_auth/public/forms.py:18 xl_auth/templates/public/home.html:44 xl_auth/user/forms.py:15
 msgid "Password"
 msgstr "Lösenord"
 
-#: xl_auth/public/views.py:33
+#: xl_auth/public/views.py:32
 msgid "You are logged in."
 msgstr "Du har loggat in."
-
-#: xl_auth/public/views.py:59
-msgid "Thank you for registering. You can now log in."
-msgstr "Tack för din registrering. Du kan nu logga in."
 
 #: xl_auth/templates/401.html:4
 msgid "Unauthorized"
@@ -305,14 +301,14 @@ msgstr "Om webbplatsen"
 msgid "Contact"
 msgstr "Kontakt"
 
+#: xl_auth/templates/layout.html:13 xl_auth/templates/nav.html:19 xl_auth/templates/public/home.html:23
+msgid "xl_auth"
+msgstr "Libris Login (alpha)"
+
 #: xl_auth/templates/nav.html:33
 #, python-format
 msgid "Logged in as %(user)s"
 msgstr "Inloggad som %(user)s"
-
-#: xl_auth/templates/nav.html:57
-msgid "Log in"
-msgstr "Logga in"
 
 #: xl_auth/templates/collections/edit.html:5
 msgid "Edit Existing Collection"
@@ -362,17 +358,63 @@ msgstr "Ändra behörighet"
 msgid "Existing Permissions"
 msgstr "Befintliga behörigheter"
 
+#: xl_auth/templates/permissions/home.html:30 xl_auth/templates/permissions/home.html:31
+#: xl_auth/templates/permissions/home.html:32
+msgid "Yes"
+msgstr "Ja"
+
+#: xl_auth/templates/permissions/home.html:30 xl_auth/templates/permissions/home.html:31
+#: xl_auth/templates/permissions/home.html:32
+msgid "No"
+msgstr "Nej"
+
 #: xl_auth/templates/permissions/register.html:5
 msgid "Register New Permission"
 msgstr "Registrera ny behörighet"
 
-#: xl_auth/templates/public/home.html:7
+#: xl_auth/templates/public/home.html:9
 msgid "Welcome to xl_auth"
 msgstr "Välkommen till xl_auth"
 
-#: xl_auth/templates/public/register.html:5
-msgid "Register New User"
-msgstr "Registrera ny användare"
+#: xl_auth/templates/public/home.html:38 xl_auth/templates/public/home.html:46
+msgid "Log in"
+msgstr "Logga in"
+
+#: xl_auth/templates/public/home.html:53
+msgid "The Libris blog"
+msgstr "Librisbloggen"
+
+#: xl_auth/templates/public/home.html:54
+msgid "Read the latest news about the Libris collaboration."
+msgstr "Läs senaste nytt om Libris-samarbetet."
+
+#: xl_auth/templates/public/home.html:55
+msgid "Go to the blog"
+msgstr "Gå till bloggen"
+
+#: xl_auth/templates/public/home.html:58
+msgid "Libris customer service"
+msgstr "Libris kundservice"
+
+#: xl_auth/templates/public/home.html:59
+msgid "For questions about login or emergencies, send a mail to libris@kb.se"
+msgstr "För frågor om inlogg eller akuta problem, maila till libris@kb.se"
+
+#: xl_auth/templates/public/home.html:60
+msgid "Send e-mail"
+msgstr "Skicka e-post"
+
+#: xl_auth/templates/public/home.html:63
+msgid "Support forum"
+msgstr "Supportforum"
+
+#: xl_auth/templates/public/home.html:64
+msgid "Get help, ask questions and report errors."
+msgstr "Få hjälp, ställ frågor och rapportera fel."
+
+#: xl_auth/templates/public/home.html:65
+msgid "Go to kundo"
+msgstr "Gå till kundo"
 
 #: xl_auth/templates/users/change_password.html:5
 msgid "Change User Password"
@@ -386,13 +428,13 @@ msgstr "Ändra användarinställningar"
 msgid "Existing Users"
 msgstr "Befintliga användare"
 
-#: xl_auth/templates/users/home.html:11
-msgid "New User"
-msgstr "Ny användare"
-
 #: xl_auth/templates/users/home.html:20
 msgid "Admin"
 msgstr "Admin"
+
+#: xl_auth/templates/users/register.html:5
+msgid "Register New User"
+msgstr "Registrera ny användare"
 
 #: xl_auth/user/forms.py:16
 msgid "Verify password"
@@ -402,16 +444,23 @@ msgstr "Upprepa lösenord"
 msgid "Administrator"
 msgstr "Administratör"
 
-#: xl_auth/user/views.py:46
+#: xl_auth/user/views.py:42
+msgid "Thank you for registering. You can now log in."
+msgstr "Tack för din registrering. Du kan nu logga in."
+
+#: xl_auth/user/views.py:63
 #, python-format
 msgid "Thank you for updating user details for \"%(username)s\"."
 msgstr "Användarinställningar uppdaterade för \"%(username)s\"."
 
-#: xl_auth/user/views.py:69
+#: xl_auth/user/views.py:86
 #, python-format
 msgid "Thank you for changing password for \"%(username)s\"."
 msgstr "Lösenord för \"%(username)s\" har ändrats."
 
 #~ msgid "Home"
 #~ msgstr "Startsida"
+
+#~ msgid "Create account"
+#~ msgstr "Skapa användarkonto"
 

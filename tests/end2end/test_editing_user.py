@@ -41,7 +41,9 @@ def test_user_can_edit_details_for_existing_user(user, testapp):
     assert '<td>{}</td>'.format(form['username'].value) in res
     assert '<td>{}</td>'.format(form['full_name'].value) in res
     assert '<td>{}</td>'.format(form['active'].checked) in res
-    assert '<td>{}</td>'.format(form['is_admin'].checked) in res
+    assert '<td class="bool-value-{}">{}</td>'.format(
+        format(form['is_admin'].checked).lower(),
+        _('Yes' if form['is_admin'].checked else 'No')) in res
 
 
 def test_user_can_change_password_for_existing_user(user, testapp):
