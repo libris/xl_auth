@@ -1,0 +1,9 @@
+---
+
+- name: provision stuff for alpha roll-out
+  hosts: all
+  become: True
+  roles:
+    - role: common
+
+...
