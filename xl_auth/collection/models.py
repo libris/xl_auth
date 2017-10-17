@@ -5,6 +5,8 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import datetime as dt
 
+from flask_babel import lazy_gettext as _
+
 from ..database import Column, Model, SurrogatePK, db, relationship
 
 
@@ -29,3 +31,15 @@ class Collection(SurrogatePK, Model):
     def __repr__(self):
         """Represent instance as a unique string."""
         return '<Collection({code!r})>'.format(code=self.code)
+
+    def get_replaces_and_replaced_by_str(self):
+        """Build string with replaces/replaced-by info."""
+        if self.replaced_by and self.replaces:
+            return _('Replaces %(replaces_code)s, then replaced by %(replaced_by_code)s',
+                     replaces_code=self.replaces, replaced_by_code=self.replaced_by)
+        elif self.replaces:
+            return _('Replaces %(replaces_code)s', replaces_code=self.replaces)
+        elif self.replaced_by:
+            return _('Replaced by %(replaced_by_code)s', replaced_by_code=self.replaced_by)
+        else:
+            return ''
