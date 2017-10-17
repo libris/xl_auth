@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2017-10-16 16:43+0200\n"
+"POT-Creation-Date: 2017-10-17 11:27+0200\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -27,7 +27,7 @@ msgstr "Behörigheter"
 
 #: tests/end2end/test_deleting_permission.py:26 tests/end2end/test_editing_collection.py:28
 #: tests/end2end/test_editing_permission.py:31 tests/end2end/test_editing_permission.py:64
-#: xl_auth/templates/collections/home.html:37 xl_auth/templates/permissions/home.html:37
+#: xl_auth/templates/collections/home.html:38 xl_auth/templates/permissions/home.html:37
 msgid "Edit"
 msgstr "Ändra"
 
@@ -51,7 +51,7 @@ msgid "category"
 msgstr "kategori"
 
 #: tests/end2end/test_editing_collection.py:48 tests/end2end/test_registering_collection.py:49
-#: xl_auth/collection/forms.py:21 xl_auth/templates/collections/home.html:30
+#: xl_auth/collection/forms.py:21 xl_auth/templates/collections/home.html:31
 msgid "No category"
 msgstr "Kategori saknas"
 
@@ -70,7 +70,7 @@ msgstr "Koden kan inte ändras"
 msgid "Name"
 msgstr "Namn"
 
-#: tests/end2end/test_editing_collection.py:77 tests/end2end/test_editing_user.py:143
+#: tests/end2end/test_editing_collection.py:77 tests/end2end/test_editing_user.py:146
 #: tests/end2end/test_registering_collection.py:64 tests/end2end/test_registering_collection.py:79
 #: tests/forms/test_collection.py:19 tests/forms/test_collection.py:35
 #: tests/forms/test_permission.py:29 tests/forms/test_permission.py:37
@@ -105,7 +105,7 @@ msgstr "Behörighet uppdaterad för \"%(username)s\" på samling \"%(code)s\"."
 msgid "Permissions for user \"%(username)s\" on collection \"%(code)s\" already registered"
 msgstr "En behörighet för användare \"%(username)s\" på samling \"%(code)s\" finns redan registrerad"
 
-#: tests/end2end/test_editing_user.py:23 tests/end2end/test_editing_user.py:58
+#: tests/end2end/test_editing_user.py:23 tests/end2end/test_editing_user.py:61
 #: tests/end2end/test_registering_user.py:27 xl_auth/templates/collections/home.html:19
 #: xl_auth/templates/nav.html:26 xl_auth/templates/users/home.html:4
 msgid "Users"
@@ -115,25 +115,37 @@ msgstr "Användare"
 msgid "Edit Details"
 msgstr "Ändra profil"
 
-#: tests/end2end/test_editing_user.py:60 xl_auth/templates/users/home.html:41
+#: tests/end2end/test_editing_user.py:46 xl_auth/templates/permissions/home.html:30
+#: xl_auth/templates/permissions/home.html:31 xl_auth/templates/permissions/home.html:32
+#: xl_auth/templates/users/home.html:32
+msgid "Yes"
+msgstr "Ja"
+
+#: tests/end2end/test_editing_user.py:46 xl_auth/templates/permissions/home.html:30
+#: xl_auth/templates/permissions/home.html:31 xl_auth/templates/permissions/home.html:32
+#: xl_auth/templates/users/home.html:32
+msgid "No"
+msgstr "Nej"
+
+#: tests/end2end/test_editing_user.py:63 xl_auth/templates/users/home.html:41
 msgid "Change Password"
 msgstr "Byt lösenord"
 
-#: tests/end2end/test_editing_user.py:97 tests/end2end/test_editing_user.py:120
+#: tests/end2end/test_editing_user.py:100 tests/end2end/test_editing_user.py:123
 #: xl_auth/templates/users/home.html:16 xl_auth/user/forms.py:13
 msgid "Email"
 msgstr "Epost"
 
-#: tests/end2end/test_editing_user.py:97 tests/end2end/test_editing_user.py:120
+#: tests/end2end/test_editing_user.py:100 tests/end2end/test_editing_user.py:123
 #: tests/forms/test_user.py:61 tests/forms/test_user.py:70 xl_auth/user/forms.py:62
 msgid "Email cannot be modified"
 msgstr "Epost/användarnamn går inte att ändra"
 
-#: tests/end2end/test_editing_user.py:143 xl_auth/user/forms.py:14
+#: tests/end2end/test_editing_user.py:146 xl_auth/user/forms.py:14
 msgid "Full name"
 msgstr "Fullständigt namn"
 
-#: tests/end2end/test_editing_user.py:159 tests/end2end/test_editing_user.py:164
+#: tests/end2end/test_editing_user.py:162 tests/end2end/test_editing_user.py:167
 #: xl_auth/user/views.py:55 xl_auth/user/views.py:79
 #, python-format
 msgid "User \"%(username)s\" does not exist"
@@ -223,6 +235,21 @@ msgstr "Fältet måste vara mellan 3 och 255 tecken långt."
 #: tests/forms/test_user.py:51 xl_auth/user/forms.py:73
 msgid "User does not exist"
 msgstr "Användaren existerar inte"
+
+#: tests/models/test_collection.py:81 xl_auth/collection/models.py:38
+#, python-format
+msgid "Replaces %(replaces_code)s, then replaced by %(replaced_by_code)s"
+msgstr "Ersätter %(replaces_code)s, därefter ersatt av samling %(replaced_by_code)s"
+
+#: tests/models/test_collection.py:84 xl_auth/collection/models.py:41
+#, python-format
+msgid "Replaces %(replaces_code)s"
+msgstr "Ersätter samling %(replaces_code)s"
+
+#: tests/models/test_collection.py:87 xl_auth/collection/models.py:43
+#, python-format
+msgid "Replaced by %(replaced_by_code)s"
+msgstr "Ersatt av samling %(replaced_by_code)s"
 
 #: xl_auth/collection/forms.py:19
 msgid "Bibliography"
@@ -358,16 +385,6 @@ msgstr "Ändra behörighet"
 msgid "Existing Permissions"
 msgstr "Befintliga behörigheter"
 
-#: xl_auth/templates/permissions/home.html:30 xl_auth/templates/permissions/home.html:31
-#: xl_auth/templates/permissions/home.html:32
-msgid "Yes"
-msgstr "Ja"
-
-#: xl_auth/templates/permissions/home.html:30 xl_auth/templates/permissions/home.html:31
-#: xl_auth/templates/permissions/home.html:32
-msgid "No"
-msgstr "Nej"
-
 #: xl_auth/templates/permissions/register.html:5
 msgid "Register New Permission"
 msgstr "Registrera ny behörighet"
@@ -457,10 +474,3 @@ msgstr "Användarinställningar uppdaterade för \"%(username)s\"."
 #, python-format
 msgid "Thank you for changing password for \"%(username)s\"."
 msgstr "Lösenord för \"%(username)s\" har ändrats."
-
-#~ msgid "Home"
-#~ msgstr "Startsida"
-
-#~ msgid "Create account"
-#~ msgstr "Skapa användarkonto"
-
