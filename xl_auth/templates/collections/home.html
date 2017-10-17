@@ -24,7 +24,7 @@
             </thead>
             <tbody>
             {% for item in collections_list %}
-                <tr class="{{ 'tooltip' if (item.replaces or item.replaced_by) }}"
+                <tr class="{{ 'collection-row-tooltip' if (item.replaces or item.replaced_by) }}"
                     title="{{ item.get_replaces_and_replaced_by_str() }}">
                     <td>{{ item.code }}</td>
                     <td>{{ item.friendly_name }}</td>
