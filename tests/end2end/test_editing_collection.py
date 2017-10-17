@@ -25,7 +25,7 @@ def test_user_can_edit_existing_collection(user, collection, testapp):
     # Clicks Collections button
     res = res.click(_('Collections'))
     # Clicks Edit button
-    res = res.click(_('Edit'))
+    res = res.click(href='/collections/edit/' + collection.code)
     # Fills out the form
     form = res.forms['editCollectionForm']
     form['code'] = collection.code
@@ -40,7 +40,8 @@ def test_user_can_edit_existing_collection(user, collection, testapp):
     assert edited_collection.friendly_name == form['friendly_name'].value
     assert edited_collection.category == form['category'].value
     # The edited collection is listed under existing collections
-    assert '<td>{}</td>'.format(form['code'].value) in res
+    assert '<td><a class="anchor" id="collection-{}"></a>{}</td>'.format(form['code'].value,
+                                                                         form['code'].value) in res
     assert '<td>{}</td>'.format(form['friendly_name'].value) in res
     if form['category'].value in {'bibliography', 'library'}:
         assert '<td>{}</td>'.format(_(form['category'].value.capitalize())) in res
