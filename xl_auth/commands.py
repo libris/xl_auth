@@ -199,7 +199,7 @@ def import_data():
         if raw_bibdb_api_data['query']['operation'] == 'sigel {}'.format(code):
             print('.', end='')
         else:
-            print('-', end='')
+            print('x', end='')
             raise AssertionError('Lookup failed for sigel %r' % code)
 
         bibdb_api_data = None
@@ -264,7 +264,7 @@ def import_data():
             'collections': voyager_location_sigels
         }
 
-    def _get_bibdb_data():
+    def _get_bibdb_cataloging_admins():
         raw_bibdb_sigels_and_cataloging_admins = requests.get(
             'https://libris.kb.se/libinfo/library_konreg.jsp').content.decode().splitlines()
 
@@ -313,20 +313,25 @@ def import_data():
         voyager_sigels_unknown_in_bibdb = set()
         xl_auth_cataloging_admins = dict()
         xl_auth_collections = dict()
+        # Prepare permissions for cataloging admins.
         for cataloging_admin, sigels in bibdb_cataloging_admin_to_sigels.items():
             pre_total += len(sigels)
             xl_auth_cataloging_admins[cataloging_admin] = set()
             for sigel in sigels:
+                # Fetch details if necessary.
                 if sigel not in xl_auth_collections:
                     xl_auth_collections[sigel] = _get_collection_details_from_bibdb(sigel)
 
                 xl_auth_cataloging_admins[cataloging_admin].add(sigel)
-                if sigel in bibdb_sigels_unknown_in_voyager:
-                    continue
 
+                if sigel in bibdb_sigels_unknown_in_voyager:
+                    continue  # Don't attempt resolving sigels that does not exist in Voyager.
+
+                # Add additional sigels from Voyager sigel-to-"sub-sigel" mapping.
                 for voyager_collection in voyager_sigel_to_collections[sigel]:
                     if voyager_collection not in xl_auth_collections:
                         try:
+                            # Fetch details if necessary.
                             xl_auth_collections[voyager_collection] = \
                                 _get_collection_details_from_bibdb(voyager_collection)
                         except AssertionError:
@@ -341,15 +346,19 @@ def import_data():
 
         resolved_bibdb_refs = set()
         unresolved_bibdb_refs = set()
-        for _, details in deepcopy(xl_auth_collections).items():
-            for old_new_ref in {'replaces', 'replaced_by'}:
-                if details[old_new_ref] and details[old_new_ref] not in xl_auth_collections:
-                    try:
-                        xl_auth_collections[details[old_new_ref]] = \
-                            _get_collection_details_from_bibdb(details[old_new_ref])
-                        resolved_bibdb_refs.add(details[old_new_ref])
-                    except AssertionError:
-                        unresolved_bibdb_refs.add(details[old_new_ref])
+        print('before-replaces-lookups:', len(xl_auth_collections))
+        for _ in range(10):
+            for _, details in deepcopy(xl_auth_collections).items():
+                for old_new_ref in {'replaces', 'replaced_by'}:
+                    if details[old_new_ref] and details[old_new_ref] not in xl_auth_collections:
+                        try:
+                            xl_auth_collections[details[old_new_ref]] = \
+                                _get_collection_details_from_bibdb(details[old_new_ref])
+                            resolved_bibdb_refs.add(details[old_new_ref])
+                        except AssertionError:
+                            unresolved_bibdb_refs.add(details[old_new_ref])
+        print('after-replaces-lookups:', len(xl_auth_collections))
+
         print('resolved_bibdb_refs:', resolved_bibdb_refs)
         print('unresolved_bibdb_refs:', unresolved_bibdb_refs)
 
@@ -358,16 +367,19 @@ def import_data():
             'cataloging_admins': xl_auth_cataloging_admins
         }
 
+    # Gather data.
     voyager = _get_voyager_data()
-    bibdb = _get_bibdb_data()
+    bibdb = _get_bibdb_cataloging_admins()
 
     bibdb_sigels_unknown_in_voyager = \
         _get_bibdb_sigels_not_in_voyager(bibdb['sigels'], voyager['sigels'])
     print('bibdb_sigels_unknown_in_voyager:', bibdb_sigels_unknown_in_voyager)
 
+    # Compile it into xl_auth-compatible model.
     xl_auth = _generate_xl_auth_cataloging_admins_and_collections(
         bibdb['cataloging_admin_to_sigels'], voyager['sigel_to_collections'])
 
+    # Store collections.
     for collection, details in deepcopy(xl_auth['collections']).items():
         with current_app.test_request_context():
             collection_form = CollectionRegisterForm(code=details['code'],
@@ -386,6 +398,7 @@ def import_data():
             collection = Collection.create(**details)
             collection.save()
 
+    # Store users.
     for email, full_name in deepcopy(bibdb['cataloging_admin_emails_to_names']).items():
         if email not in bibdb['cataloging_admins']:
             del bibdb['cataloging_admin_emails_to_names'][email]
@@ -408,6 +421,7 @@ def import_data():
             user = User.create(email=email, full_name=full_name, active=False)
             user.save()
 
+    # Store permissions.
     for email, collections in xl_auth['cataloging_admins'].items():
         user = User.query.filter_by(email=email).first()
         if not user:
