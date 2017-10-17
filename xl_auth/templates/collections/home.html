@@ -24,13 +24,14 @@
             </thead>
             <tbody>
             {% for item in collections_list %}
-                <tr>
+                <tr class="{{ 'tooltip' if (item.replaces or item.replaced_by) }}"
+                    title="{{ item.get_replaces_and_replaced_by_str() }}">
                     <td>{{ item.code }}</td>
                     <td>{{ item.friendly_name }}</td>
                     <td>{{ _(item.category.capitalize()) if item.category in ['bibliography', 'library'] else _('No category') }}</td>
                     <td>{{ item.permissions | length }}</td>
                     <td>{{ item.active }}</td>
-                    <td>{{ item.created_at.strftime('%y-%m-%d %H:%M:%S') }}</td>
+                    <td>{{ item.created_at.strftime('%Y-%m-%d') }}</td>
                     <td>
                         <a class="btn btn-default"
                            href="{{ url_for('collection.edit', collection_code=item.code) }}">
