@@ -52,7 +52,10 @@ def test_user_cant_register(user, testapp):
     # Submits
     res = form.submit().follow()
     # Navigate to Users
-    res = res.click(_('Users'))
+    # We see no link to Users
+    assert res.lxml.xpath("//a[contains(@text,'{0}')]".format(_('Users'))) == []
+    # We go there directly
+    res = testapp.get('/users')
     # We see no link to Create Account
     assert res.lxml.xpath("//a[starts-with(@href,'/users/register')]") == []
     # We try to go there directly

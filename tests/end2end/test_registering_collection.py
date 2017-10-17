@@ -15,14 +15,14 @@ from ..factories import CollectionFactory
 
 
 # noinspection PyUnusedLocal
-def test_user_can_register_new_collection(user, collection, testapp):
+def test_user_can_register_new_collection(superuser, collection, testapp):
     """Register a new collection."""
     old_count = len(Collection.query.all())
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form
+    # Fills out login form in navbar
     form = res.forms['loginForm']
-    form['username'] = user.email
+    form['username'] = superuser.email
     form['password'] = 'myPrecious'
     # Submits
     res = form.submit().follow()
@@ -50,8 +50,16 @@ def test_user_can_register_new_collection(user, collection, testapp):
 
 
 # noinspection PyUnusedLocal
-def test_user_sees_error_message_if_code_is_missing(collection, testapp):
+def test_user_sees_error_message_if_code_is_missing(superuser, collection, testapp):
     """Show error if form does not include collection code."""
+    # Goes to homepage
+    res = testapp.get('/')
+    # Fills out login form in navbar
+    form = res.forms['loginForm']
+    form['username'] = superuser.email
+    form['password'] = 'myPrecious'
+    # Submits
+    res = form.submit().follow()
     # Goes to registration page.
     res = testapp.get(url_for('collection.register'))
     # Fills out form, but omits code.
@@ -65,8 +73,16 @@ def test_user_sees_error_message_if_code_is_missing(collection, testapp):
 
 
 # noinspection PyUnusedLocal
-def test_user_sees_error_message_if_friendly_name_is_missing(collection, testapp):
+def test_user_sees_error_message_if_friendly_name_is_missing(superuser, collection, testapp):
     """Show error if form does not include Name."""
+    # Goes to homepage
+    res = testapp.get('/')
+    # Fills out login form in navbar
+    form = res.forms['loginForm']
+    form['username'] = superuser.email
+    form['password'] = 'myPrecious'
+    # Submits
+    res = form.submit().follow()
     # Goes to registration page.
     res = testapp.get(url_for('collection.register'))
     # Fills out form, but omits friendly_name.
@@ -80,8 +96,16 @@ def test_user_sees_error_message_if_friendly_name_is_missing(collection, testapp
 
 
 # noinspection PyUnusedLocal
-def test_user_sees_error_message_if_category_is_missing(collection, testapp):
+def test_user_sees_error_message_if_category_is_missing(superuser, collection, testapp):
     """Show error if form does not include a valid category."""
+    # Goes to homepage
+    res = testapp.get('/')
+    # Fills out login form in navbar
+    form = res.forms['loginForm']
+    form['username'] = superuser.email
+    form['password'] = 'myPrecious'
+    # Submits
+    res = form.submit().follow()
     # Goes to registration page.
     res = testapp.get(url_for('collection.register'))
     # Fills out form, but omits category.
@@ -95,10 +119,18 @@ def test_user_sees_error_message_if_category_is_missing(collection, testapp):
 
 
 # noinspection PyUnusedLocal
-def test_user_sees_error_message_if_collection_already_registered(collection, testapp):
+def test_user_sees_error_message_if_collection_already_registered(superuser, collection, testapp):
     """Show error if collection already registered."""
     collection = CollectionFactory(active=True)  # A registered collection.
     collection.save()
+    # Goes to homepage
+    res = testapp.get('/')
+    # Fills out login form in navbar
+    form = res.forms['loginForm']
+    form['username'] = superuser.email
+    form['password'] = 'myPrecious'
+    # Submits
+    res = form.submit().follow()
     # Goes to registration page.
     res = testapp.get(url_for('collection.register'))
     # Fills out form, but collection code is already registered.
@@ -110,3 +142,24 @@ def test_user_sees_error_message_if_collection_already_registered(collection, te
     res = form.submit()
     # Sees error.
     assert escape(_('Code "%(code)s" already registered', code=collection.code)) in res
+
+
+def test_user_cannot_register_collection(user, collection, testapp):
+    """Attempt to register a collection."""
+    # Goes to homepage
+    res = testapp.get('/')
+    # Fills out login form in navbar
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits
+    res = form.submit().follow()
+
+    # We click the Collections button
+    res = res.click(_('Collections'))
+
+    # No New Collection button for regular users
+    assert res.lxml.xpath("//a[contains(@text,'{0}')]".format(_('New Collection'))) == []
+
+    # Try to go directly to register
+    testapp.get('/collections/register/', status=403)
