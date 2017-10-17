@@ -1,4 +1,4 @@
-"""Add cataloguing_admin to permissions table.
+"""Add catalogue_admin to permissions table.
 
 Revision ID: 564f2b578774
 Revises: 1ef27f7e11c8
@@ -8,7 +8,7 @@ Create Date: 2017-10-10 16:06:45.827883
 import sqlalchemy as sa
 from alembic import op
 
-# revision identifiers, used by Alembic.
+# Revision identifiers, used by Alembic.
 revision = '564f2b578774'
 down_revision = '1ef27f7e11c8'
 branch_labels = None
