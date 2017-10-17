@@ -1,0 +1,13 @@
+---
+
+- name: start xl_auth
+  docker_container:
+    name: xl_auth
+    image: mblomdahl/xl_auth
+    command: run -h 0.0.0.0 -p 5000
+    state: started
+    ports:
+      - "80:5000"
+  tags: xl_auth
+
+...
