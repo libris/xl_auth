@@ -93,7 +93,10 @@ def edit_details(username):
         user.update(full_name=edit_details_form.full_name.data).save()
         flash(_('Thank you for updating user details for "%(username)s".', username=user.email),
               'success')
-        return redirect(url_for('user.home'))
+        if current_user.is_admin:
+            return redirect(url_for('user.home'))
+        else:
+            return redirect(url_for('user.profile'))
     else:
         edit_details_form.set_defaults(user)
         flash_errors(edit_details_form)
@@ -116,7 +119,10 @@ def change_password(username):
         user.save()
         flash(_('Thank you for changing password for "%(username)s".', username=user.email),
               'success')
-        return redirect(url_for('user.home'))
+        if current_user.is_admin:
+            return redirect(url_for('user.home'))
+        else:
+            return redirect(url_for('user.profile'))
     else:
         flash_errors(change_password_form)
         return render_template(
