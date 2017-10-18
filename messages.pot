@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-18 11:18+0200\n"
+"POT-Creation-Date: 2017-10-18 15:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,14 +22,15 @@ msgstr ""
 #: tests/end2end/test_editing_permission.py:91 tests/end2end/test_editing_user.py:181
 #: tests/end2end/test_registering_permission.py:25 tests/end2end/test_registering_permission.py:58
 #: tests/end2end/test_registering_permission.py:85 xl_auth/templates/nav.html:28
-#: xl_auth/templates/permissions/home.html:4 xl_auth/templates/users/profile.html:24
+#: xl_auth/templates/permissions/home.html:4 xl_auth/templates/users/profile.html:35
 msgid "Permissions"
 msgstr ""
 
 #: tests/end2end/test_deleting_permission.py:26 tests/end2end/test_editing_collection.py:28
 #: tests/end2end/test_editing_collection.py:149 tests/end2end/test_editing_permission.py:31
 #: tests/end2end/test_editing_permission.py:66 tests/end2end/test_editing_user.py:187
-#: xl_auth/templates/collections/home.html:41 xl_auth/templates/permissions/home.html:37
+#: tests/end2end/test_editing_user.py:213 xl_auth/templates/collections/home.html:41
+#: xl_auth/templates/permissions/home.html:37
 msgid "Edit"
 msgstr ""
 
@@ -43,7 +44,7 @@ msgid "Successfully deleted permissions for \"%(username)s\" on collection \"%(c
 msgstr ""
 
 #: tests/end2end/test_editing_collection.py:26 tests/end2end/test_editing_collection.py:146
-#: tests/end2end/test_registering_collection.py:30 tests/end2end/test_registering_collection.py:159
+#: tests/end2end/test_registering_collection.py:30 tests/end2end/test_registering_collection.py:161
 #: xl_auth/templates/collections/home.html:4 xl_auth/templates/nav.html:25
 #: xl_auth/templates/users/home.html:20
 msgid "Collections"
@@ -60,12 +61,12 @@ msgstr ""
 
 #: tests/end2end/test_editing_collection.py:71 tests/end2end/test_registering_collection.py:72
 #: xl_auth/collection/forms.py:17 xl_auth/templates/collections/home.html:18
-#: xl_auth/templates/users/profile.html:29
+#: xl_auth/templates/users/profile.html:40
 msgid "Code"
 msgstr ""
 
-#: tests/end2end/test_editing_collection.py:71 tests/forms/test_collection.py:75
-#: xl_auth/collection/forms.py:60
+#: tests/end2end/test_editing_collection.py:71 tests/forms/test_collection.py:77
+#: xl_auth/collection/forms.py:63
 msgid "Code cannot be modified"
 msgstr ""
 
@@ -76,7 +77,7 @@ msgstr ""
 
 #: tests/end2end/test_editing_collection.py:93 tests/end2end/test_editing_user.py:144
 #: tests/end2end/test_registering_collection.py:72 tests/end2end/test_registering_collection.py:95
-#: tests/forms/test_collection.py:19 tests/forms/test_collection.py:36
+#: tests/forms/test_collection.py:21 tests/forms/test_collection.py:38
 #: tests/forms/test_permission.py:31 tests/forms/test_permission.py:39
 #: tests/forms/test_permission.py:47 tests/forms/test_permission.py:55
 msgid "This field is required."
@@ -88,7 +89,7 @@ msgid "Category"
 msgstr ""
 
 #: tests/end2end/test_editing_collection.py:115 tests/end2end/test_registering_collection.py:118
-#: tests/forms/test_collection.py:102 tests/forms/test_collection.py:111
+#: tests/forms/test_collection.py:104 tests/forms/test_collection.py:113
 msgid "Not a valid choice"
 msgstr ""
 
@@ -159,6 +160,11 @@ msgstr ""
 msgid "User \"%(username)s\" does not exist"
 msgstr ""
 
+#: tests/end2end/test_editing_user.py:209 tests/end2end/test_editing_user.py:221
+#: tests/end2end/test_editing_user.py:223 xl_auth/templates/users/profile.html:6
+msgid "Welcome"
+msgstr ""
+
 #: tests/end2end/test_logging_in.py:35 xl_auth/public/views.py:45
 msgid "You are logged out."
 msgstr ""
@@ -171,13 +177,13 @@ msgstr ""
 msgid "Unknown username/email"
 msgstr ""
 
-#: tests/end2end/test_registering_collection.py:32 tests/end2end/test_registering_collection.py:162
+#: tests/end2end/test_registering_collection.py:32 tests/end2end/test_registering_collection.py:164
 #: xl_auth/templates/collections/home.html:12
 msgid "New Collection"
 msgstr ""
 
-#: tests/end2end/test_registering_collection.py:144 tests/forms/test_collection.py:45
-#: tests/forms/test_collection.py:57 xl_auth/collection/forms.py:43
+#: tests/end2end/test_registering_collection.py:146 tests/forms/test_collection.py:47
+#: tests/forms/test_collection.py:59 xl_auth/collection/forms.py:46
 #, python-format
 msgid "Code \"%(code)s\" already registered"
 msgstr ""
@@ -205,16 +211,25 @@ msgstr ""
 msgid "Email already registered"
 msgstr ""
 
-#: tests/forms/test_collection.py:28
+#: tests/forms/test_collection.py:30
 msgid "Field must be between 1 and 5 characters long."
 msgstr ""
 
-#: tests/forms/test_collection.py:66 xl_auth/collection/forms.py:71
+#: tests/forms/test_collection.py:68 xl_auth/collection/forms.py:77
 msgid "Code does not exist"
 msgstr ""
 
-#: tests/forms/test_collection.py:84 tests/forms/test_collection.py:93
+#: tests/forms/test_collection.py:86 tests/forms/test_collection.py:95
 msgid "Field must be between 2 and 255 characters long."
+msgstr ""
+
+#: tests/forms/test_collection.py:124 tests/forms/test_collection.py:135
+#: tests/forms/test_permission.py:144 tests/forms/test_permission.py:174 tests/forms/test_user.py:63
+#: tests/forms/test_user.py:106 tests/forms/test_user.py:132 tests/forms/test_user.py:169
+#: xl_auth/collection/forms.py:41 xl_auth/collection/forms.py:73 xl_auth/permission/forms.py:59
+#: xl_auth/permission/forms.py:100 xl_auth/user/forms.py:44 xl_auth/user/forms.py:97
+#: xl_auth/user/forms.py:123 xl_auth/user/forms.py:150
+msgid "You do not have sufficient privileges for this operation."
 msgstr ""
 
 #: tests/forms/test_permission.py:22 xl_auth/permission/forms.py:104 xl_auth/permission/views.py:61
@@ -231,13 +246,6 @@ msgstr ""
 #: tests/forms/test_permission.py:109 tests/forms/test_permission.py:120 xl_auth/permission/forms.py:45
 #, python-format
 msgid "Collection ID \"%(collection_id)s\" does not exist"
-msgstr ""
-
-#: tests/forms/test_permission.py:144 tests/forms/test_permission.py:174 tests/forms/test_user.py:63
-#: tests/forms/test_user.py:106 tests/forms/test_user.py:132 tests/forms/test_user.py:169
-#: xl_auth/permission/forms.py:59 xl_auth/permission/forms.py:100 xl_auth/user/forms.py:44
-#: xl_auth/user/forms.py:97 xl_auth/user/forms.py:123 xl_auth/user/forms.py:150
-msgid "You do not have sufficient privileges for this operation."
 msgstr ""
 
 #: tests/forms/test_public.py:56 xl_auth/public/forms.py:41
@@ -293,17 +301,17 @@ msgid "Collection"
 msgstr ""
 
 #: xl_auth/permission/forms.py:22 xl_auth/templates/permissions/home.html:18
-#: xl_auth/templates/users/profile.html:31
+#: xl_auth/templates/users/profile.html:42
 msgid "Registrant"
 msgstr ""
 
 #: xl_auth/permission/forms.py:23 xl_auth/templates/permissions/home.html:19
-#: xl_auth/templates/users/profile.html:32
+#: xl_auth/templates/users/profile.html:43
 msgid "Cataloger"
 msgstr ""
 
 #: xl_auth/permission/forms.py:24 xl_auth/templates/permissions/home.html:20
-#: xl_auth/templates/users/profile.html:33
+#: xl_auth/templates/users/profile.html:44
 msgid "Cataloguing Administrator"
 msgstr ""
 
@@ -374,7 +382,7 @@ msgstr ""
 msgid "Existing Collections"
 msgstr ""
 
-#: xl_auth/templates/collections/home.html:19 xl_auth/templates/users/profile.html:30
+#: xl_auth/templates/collections/home.html:19 xl_auth/templates/users/profile.html:41
 msgid "Friendly Name"
 msgstr ""
 
@@ -433,7 +441,7 @@ msgstr ""
 msgid "Go to the blog"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:58
+#: xl_auth/templates/public/home.html:58 xl_auth/templates/users/profile.html:29
 msgid "Libris customer service"
 msgstr ""
 
@@ -473,12 +481,16 @@ msgstr ""
 msgid "Admin"
 msgstr ""
 
-#: xl_auth/templates/users/profile.html:6
-msgid "Welcome"
-msgstr ""
-
 #: xl_auth/templates/users/profile.html:9
 msgid "This is your personal profile page."
+msgstr ""
+
+#: xl_auth/templates/users/profile.html:24
+msgid "Important"
+msgstr ""
+
+#: xl_auth/templates/users/profile.html:27
+msgid "Contact customer service if there is any mistake in the information below."
 msgstr ""
 
 #: xl_auth/templates/users/register.html:5
@@ -493,7 +505,7 @@ msgstr ""
 msgid "Administrator"
 msgstr ""
 
-#: xl_auth/user/views.py:44
+#: xl_auth/user/views.py:46
 msgid "Thank you for registering. You can now log in."
 msgstr ""
 
