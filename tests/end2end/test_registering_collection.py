@@ -15,7 +15,7 @@ from ..factories import CollectionFactory
 
 
 # noinspection PyUnusedLocal
-def test_user_can_register_new_collection(superuser, collection, testapp):
+def test_superuser_can_register_new_collection(superuser, collection, testapp):
     """Register a new collection."""
     old_count = len(Collection.query.all())
     # Goes to homepage
@@ -50,7 +50,7 @@ def test_user_can_register_new_collection(superuser, collection, testapp):
 
 
 # noinspection PyUnusedLocal
-def test_user_sees_error_message_if_code_is_missing(superuser, collection, testapp):
+def test_superuser_sees_error_message_if_code_is_missing(superuser, collection, testapp):
     """Show error if form does not include collection code."""
     # Goes to homepage
     res = testapp.get('/')
@@ -73,7 +73,7 @@ def test_user_sees_error_message_if_code_is_missing(superuser, collection, testa
 
 
 # noinspection PyUnusedLocal
-def test_user_sees_error_message_if_friendly_name_is_missing(superuser, collection, testapp):
+def test_superuser_sees_error_message_if_friendly_name_is_missing(superuser, collection, testapp):
     """Show error if form does not include Name."""
     # Goes to homepage
     res = testapp.get('/')
@@ -96,7 +96,7 @@ def test_user_sees_error_message_if_friendly_name_is_missing(superuser, collecti
 
 
 # noinspection PyUnusedLocal
-def test_user_sees_error_message_if_category_is_missing(superuser, collection, testapp):
+def test_superuser_sees_error_message_if_category_is_missing(superuser, collection, testapp):
     """Show error if form does not include a valid category."""
     # Goes to homepage
     res = testapp.get('/')
@@ -119,7 +119,9 @@ def test_user_sees_error_message_if_category_is_missing(superuser, collection, t
 
 
 # noinspection PyUnusedLocal
-def test_user_sees_error_message_if_collection_already_registered(superuser, collection, testapp):
+def test_superuser_sees_error_message_if_collection_already_registered(superuser,
+                                                                       collection,
+                                                                       testapp):
     """Show error if collection already registered."""
     collection = CollectionFactory(active=True)  # A registered collection.
     collection.save()
