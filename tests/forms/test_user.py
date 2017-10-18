@@ -60,7 +60,7 @@ def test_register_form_validate_regular_user(db, user):
 
     with pytest.raises(ValidationError) as e_info:
         form.validate()
-    assert str(e_info.value) == _('You do not have sufficient privileges for this operation.')
+    assert e_info.value.args[0] == _('You do not have sufficient privileges for this operation.')
 
 
 # Administration form
@@ -103,7 +103,7 @@ def test_admin_form_as_regular_user(user):
 
     with pytest.raises(ValidationError) as e_info:
         form.validate()
-    assert str(e_info.value) == _('You do not have sufficient privileges for this operation.')
+    assert e_info.value.args[0] == _('You do not have sufficient privileges for this operation.')
 
 
 # Edit details form
@@ -129,7 +129,7 @@ def test_user_cannot_edit_other(superuser, user):
 
     with pytest.raises(ValidationError) as e_info:
         form.validate()
-    assert str(e_info.value) == _('You do not have sufficient privileges for this operation.')
+    assert e_info.value.args[0] == _('You do not have sufficient privileges for this operation.')
 
 
 # Change password form
@@ -166,7 +166,7 @@ def test_user_change_password_form_for_other_user(superuser, user):
 
     with pytest.raises(ValidationError) as e_info:
         form.validate()
-    assert str(e_info.value) == _('You do not have sufficient privileges for this operation.')
+    assert e_info.value.args[0] == _('You do not have sufficient privileges for this operation.')
 
 
 def test_superuser_change_password_form_for_other_user(superuser, user):

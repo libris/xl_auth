@@ -141,7 +141,7 @@ def test_register_form_as_user(user, collection):
 
     with pytest.raises(ValidationError) as e_info:
         form.validate()
-    assert str(e_info.value) == _('You do not have sufficient privileges for this operation.')
+    assert e_info.value.args[0] == _('You do not have sufficient privileges for this operation.')
 
 
 def test_edit_form_validate_success(superuser, permission, user, collection):
@@ -171,4 +171,4 @@ def test_edit_form_as_user(permission, user, collection):
 
     with pytest.raises(ValidationError) as e_info:
         form.validate()
-    assert str(e_info.value) == _('You do not have sufficient privileges for this operation.')
+    assert e_info.value.args[0] == _('You do not have sufficient privileges for this operation.')
