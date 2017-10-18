@@ -7,8 +7,10 @@
         <!-- Default panel contents -->
         <div class="panel-heading">
             <strong>{{ _('Existing Users') }}</strong>
-            <a class="btn btn-xs btn-primary pull-right"
-               href="{{ url_for('user.register') }}">{{ _('New User') }}</a>
+            {% if current_user.is_admin %}
+                <a class="btn btn-xs btn-primary pull-right"
+                   href="{{ url_for('user.register') }}">{{ _('New User') }}</a>
+           {% endif %}
         </div>
         <table class="table table-hover">
             <thead>
@@ -32,14 +34,16 @@
                     <td class="{{ "bool-value-{}".format(user.is_admin).lower() }}">{{ _('Yes') if user.is_admin else _('No') }}</td>
                     <td>{{ user.created_at.strftime('%y-%m-%d %H:%M:%S') }}</td>
                     <td>
-                        <a class="btn btn-default"
-                           href="{{ url_for('user.edit_details', username=user.email) }}">
-                            {{ _('Edit Details') }}
-                        </a>
-                        <a class="btn btn-default"
-                           href="{{ url_for('user.change_password', username=user.email) }}">
-                            {{ _('Change Password') }}
-                        </a>
+                        {% if current_user.is_admin %}
+                            <a class="btn btn-default"
+                               href="{{ url_for('user.administer', username=user.email) }}">
+                                {{ _('Edit Details') }}
+                            </a>
+                            <a class="btn btn-default"
+                               href="{{ url_for('user.change_password', username=user.email) }}">
+                                {{ _('Change Password') }}
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

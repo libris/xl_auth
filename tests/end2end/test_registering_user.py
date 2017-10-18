@@ -12,7 +12,7 @@ from ..factories import UserFactory
 
 
 # noinspection PyUnusedLocal
-def test_user_can_register(superuser, testapp):
+def test_superuser_can_register(superuser, testapp):
     """Register a new user."""
     old_count = len(User.query.all())
     # Goes to homepage
@@ -38,6 +38,29 @@ def test_user_can_register(superuser, testapp):
     assert res.status_code == 200
     # A new user was created
     assert len(User.query.all()) == old_count + 1
+
+
+# noinspection PyUnusedLocal
+def test_user_cant_register(user, testapp):
+    """Register a new user."""
+    # Goes to homepage
+    res = testapp.get('/')
+    # Fills out login form in navbar
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits
+    res = form.submit().follow()
+    # Navigate to Users
+    # We see no link to Users
+    assert res.lxml.xpath("//a[contains(@text,'{0}')]".format(_('Users'))) == []
+    # We go there directly
+    res = testapp.get('/users')
+    # We see no link to Create Account
+    assert res.lxml.xpath("//a[starts-with(@href,'/users/register')]") == []
+    # We try to go there directly
+    res = testapp.get('/users/register')
+    res.follow(status=403)
 
 
 # noinspection PyUnusedLocal
