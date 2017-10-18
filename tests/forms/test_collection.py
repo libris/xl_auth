@@ -5,7 +5,9 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from random import choice
 
+import pytest
 from flask_babel import gettext as _
+from wtforms.validators import ValidationError
 
 from xl_auth.collection.forms import EditForm, RegisterForm
 
@@ -109,6 +111,28 @@ def test_edit_form_validate_unsupported_category(superuser, collection):
 
     assert form.validate() is False
     assert _('Not a valid choice') in form.category.errors
+
+
+def test_user_cannot_register_collection(user):
+    """Attempt to register a collection as regular user."""
+    form = RegisterForm(user, code='ABCDE',
+                        friendly_name='National Library, section D9, shelf 2, row 1',
+                        category=choice(['bibliography', 'library', 'uncategorized']))
+
+    with pytest.raises(ValidationError) as e_info:
+        form.validate()
+    assert str(e_info.value) == _('You do not have sufficient privileges for this operation.')
+
+
+def test_user_cannot_edit_collection(user, collection):
+    """Attempt to edit a collection as regular user."""
+    form = EditForm(user, collection.code, code=collection.code,
+                    friendly_name='National Library',
+                    category=choice(['bibliography', 'library', 'uncategorized']))
+
+    with pytest.raises(ValidationError) as e_info:
+        form.validate()
+    assert str(e_info.value) == _('You do not have sufficient privileges for this operation.')
 
 
 def test_register_form_validate_success(superuser, collection):

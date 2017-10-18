@@ -37,6 +37,9 @@ class RegisterForm(CollectionForm):
         if not initial_validation:
             return False
 
+        if not self.active_user.is_admin:
+            raise ValidationError(_('You do not have sufficient privileges for this operation.'))
+
         collection = Collection.query.filter(Collection.code.ilike(self.code.data)).first()
 
         if collection:
@@ -65,6 +68,9 @@ class EditForm(CollectionForm):
 
         if not initial_validation:
             return False
+
+        if not self.active_user.is_admin:
+            raise ValidationError(_('You do not have sufficient privileges for this operation.'))
 
         collection = Collection.query.filter_by(code=self.code.data).first()
         if not collection:
