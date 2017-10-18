@@ -26,7 +26,8 @@ def home():
 @login_required
 def profile():
     """Own user profile."""
-    return render_template('users/profile.html')
+    user = User.query.filter(User.email == current_user.email).first()
+    return render_template('users/profile.html', user=user)
 
 
 @blueprint.route('/register/', methods=['GET', 'POST'])

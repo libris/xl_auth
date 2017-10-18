@@ -1,6 +1,47 @@
 <!-- user/profile.html -->
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Welcome {{ current_user.full_name }}</h1>
-    <h3>This is your personal profile page.</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1>{{ _('Welcome') }} {{ current_user.full_name }}</h1>
+        </div>
+        <div class="panel-body">
+            <h3>{{ _('This is your personal profile page.') }}</h3>
+
+            <a class="btn btn-default"
+               href="{{ url_for('user.edit_details', username=current_user.email) }}">
+                {{ _('Edit Details') }}
+            </a>
+            <a class="btn btn-default"
+               href="{{ url_for('user.change_password', username=current_user.email) }}">
+                {{ _('Change Password') }}
+            </a>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>{{ _('Permissions') }}</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-hover">
+                <thead>
+                    <th>{{ _('Code') }}</th>
+                    <th>{{ _('Friendly Name') }}</th>
+                    <th>{{ _('Registrant') }}</th>
+                    <th>{{ _('Cataloger') }}</th>
+                    <th>{{ _('Cataloguing Administrator') }}</th>
+                </thead>
+                <tbody>
+                    {% for permission in user.permissions %}
+                        <td>{{ permission.collection.code }}</td>
+                        <td>{{ permission.collection.friendly_name }}</td>
+                        <td>{{ permission.registrant }}</td>
+                        <td>{{ permission.cataloger }}</td>
+                        <td>{{ permission.cataloging_admin }}</td>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}
