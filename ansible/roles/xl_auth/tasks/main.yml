@@ -21,7 +21,7 @@
     name: xl_auth
     image: "mblomdahl/xl_auth:{{ xl_auth_docker_tag }}"
     pull: yes
-    command: run -h 0.0.0.0 -p 5000
+    command: run -h 0.0.0.0 -p 5000 --with-threads
     state: started
     links:
       - postgres

@@ -1,6 +1,6 @@
 ---
 
-xl_auth_admin_pass:
+xl_auth_admin_pass: ''
 
 xl_auth_docker_tag: latest
 
