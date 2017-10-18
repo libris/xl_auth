@@ -18,8 +18,8 @@
   when: not selinux_enabled
   tags: common, selinux
 
-- name: configure system
-  import_tasks: configure-system.yml
+- name: set timezone to europe/stockholm
+  copy: src=/usr/share/zoneinfo/Europe/Stockholm dest=/etc/localtime
   tags: common
 
 - name: update firewall
