@@ -10,6 +10,7 @@
   blockinfile:
     dest: /etc/sudoers
     marker: "# {mark} ANSIBLE MANAGED BLOCK common"
+    state: absent
     block: |
       %wheel ALL=(ALL) NOPASSWD: ALL
       Defaults!/usr/bin/docker !requiretty
