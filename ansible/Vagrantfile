@@ -74,6 +74,10 @@ Vagrant.configure("2") do |config|
   # https://www.vagrantup.com/docs/provisioning/ansible.html
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "deployment.yml"
+    ansible.extra_vars = {
+        xl_auth_docker_tag: "cd",
+        xl_auth_admin_pass: "secret"
+    }
     #ansible.tags = ["common", "docker"]
     #ansible.tags = ["xl_auth"]
     #ansible.verbose = "v"

@@ -8,8 +8,8 @@
     gpgkey: https://download.docker.com/linux/centos/gpg
   tags: docker
 
-- name: install docker-ce-17.06.1.ce
-  yum: name=docker-ce-17.06.1.ce state=present
+- name: install docker-ce-17.09.0.ce
+  yum: name=docker-ce-17.09.0.ce state=present
   tags: docker
 
 - name: install docker-compose-1.16.1
