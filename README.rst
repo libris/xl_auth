@@ -183,6 +183,22 @@ DB Models
 Changelog
 =========
 
+v. 0.4.0
+--------
+
+* Added ``flask import_data`` CLI tool for pulling data from legacy systems
+  (`#38 <https://github.com/libris/xl_auth/issues/38>`_,
+  `#43 <https://github.com/libris/xl_auth/issues/43>`_)
+* Styling and usability improvements (`#6 <https://github.com/libris/xl_auth/issues/6>`_,
+  `#22 <https://github.com/libris/xl_auth/issues/22>`_)
+* Applied restrictions on anonymous users and non-admins
+  (`#48 <https://github.com/libris/xl_auth/issues/48>`_)
+* Added new type of permission, "being the cataloging admin for a collection"
+  (`#40 <https://github.com/libris/xl_auth/issues/40>`_)
+* Support for dev deployment on login.libris.kb.se
+  (`#39 <https://github.com/libris/xl_auth/issues/39>`_)
+
+
 v. 0.3.0
 --------
 
