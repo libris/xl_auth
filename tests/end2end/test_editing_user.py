@@ -190,3 +190,34 @@ def test_user_cannot_administer_existing_user(superuser, user, testapp):
     # Try to go directly to edit
     testapp.get('/users/administer/{0}'.format(superuser.email), status=403)
     testapp.get('/users/edit_details/{0}'.format(superuser.email), status=403)
+
+
+def test_user_can_edit_own_details(user, testapp):
+    """Change details for self."""
+    # Goes to homepage.
+    res = testapp.get('/')
+    # Fills out login form in navbar.
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits.
+    res = form.submit().follow()
+
+    old_name = user.full_name
+
+    # Make sure we're on the profile page
+    assert len(res.lxml.xpath("//h1[contains(., '{0} {1}')]".format(_('Welcome'),
+                                                                    old_name))) == 1
+
+    # Click on 'Edit' button
+    res = res.click(_('Edit'))
+
+    # Change name
+    form = res.forms['editDetailsForm']
+    form['full_name'] = 'New Name'
+    res = form.submit().follow()
+
+    # Make sure name has been updated
+    assert len(res.lxml.xpath("//h1[contains(., '{0} {1}')]".format(_('Welcome'),
+                                                                    old_name))) == 0
+    assert len(res.lxml.xpath("//h1[contains(., '{0} New Name')]".format(_('Welcome')))) == 1
