@@ -282,7 +282,7 @@ def import_data(verbose):
 
     def _get_bibdb_cataloging_admins():
         raw_bibdb_sigels_and_cataloging_admins = requests.get(
-            'https://libris.kb.se/libinfo/library_konreg.jsp').content.decode().splitlines()
+            'https://libris.kb.se/libinfo/library_konreg.jsp').content.decode('utf-8').splitlines()
 
         registering_bibdb_sigels, bibdb_cataloging_admins = set(), set()
         bibdb_sigels_and_cataloging_admins = dict()
