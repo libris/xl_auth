@@ -47,15 +47,29 @@ In general, before running flask shell commands, set the ``FLASK_APP`` and
 Deployment
 ==========
 
-To deploy ::
+Local dev deployment ::
 
     export FLASK_DEBUG=0
+    export SQLALCHEMY_DATABASE_URI=postgresql://localhost/db')
     npm run build    # build assets with webpack
     flask translate  # compile translations
     flask run        # start the flask server
 
-In your production environment, make sure the ``FLASK_DEBUG`` environment variable is
-unset or is set to ``0``, so that ``ProdConfig`` is used.
+In your production environment, make sure the ``FLASK_DEBUG`` environment variable is set to ``0``,
+so that ``ProdConfig`` is used.
+
+Staging dev deployment ::
+
+    cd ansible/
+    vagrant up --provision
+
+Rolling out latest Docker on login.libris.kb.se dev server ::
+
+    cd ansible/
+    ansible-playbook deployment.yml -u <my-exchange-username> --ask-pass --ask-become-pass
+
+For creating an initial admin account during provisioning, with username libris@kb.se,
+append ``-e xl_auth_admin_pass=my-secret-password`` to the Ansible invocation.
 
 
 Shell
@@ -133,8 +147,9 @@ your ``settings.py`` ::
 Docker
 ======
 
-The latest application build can be deployed using Docker for testing purposes ::
+The latest application build can be built and run using Docker for testing purposes ::
 
+    docker build -t mblomdahl/xl_auth .
     docker run -it -p 5000:5000 mblomdahl/xl_auth
 
 
