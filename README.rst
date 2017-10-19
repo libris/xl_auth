@@ -183,6 +183,16 @@ DB Models
 Changelog
 =========
 
+v. 0.4.1
+--------
+
+* Event stricter restrictions on non-admin users
+  (`#48 <https://github.com/libris/xl_auth/issues/48>`_)
+* Improved Ansible deployment logic for login.libris.kb.se
+  (`#39 <https://github.com/libris/xl_auth/issues/39>`_)
+* UI and help text improvements
+
+
 v. 0.4.0
 --------
 
