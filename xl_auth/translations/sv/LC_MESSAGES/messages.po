@@ -440,7 +440,7 @@ msgstr "Registrera ny behörighet"
 
 #: xl_auth/templates/public/home.html:9
 msgid "Welcome to xl_auth"
-msgstr "Välkommen till xl_auth"
+msgstr "Välkommen till Libris Login"
 
 #: xl_auth/templates/public/home.html:38 xl_auth/templates/public/home.html:46
 msgid "Log in"

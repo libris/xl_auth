@@ -5,13 +5,7 @@
         <div class="row">
             {% if current_user and current_user.is_authenticated %}
                 <div class="jumbotron">
-
                     <h1>{{ _('Welcome to xl_auth') }}</h1>
-
-                    <p>This is a starter Flask template. It includes Bootstrap 3, jQuery 2, Flask-SQLAlchemy,
-                        WTForms, and various testing utilities out of the box.</p>
-                    <p><a href="https://github.com/sloria/cookiecutter-flask"
-                          class="btn btn-default btn-large">Learn more &raquo;</a></p>
                 </div><!-- /.jumbotron -->
             {% elif login_form %}
                 <div class="col-md-12 login-panel panel panel-default">
@@ -49,17 +43,12 @@
                     </div>
                 </div>
             {% endif %}
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6">
                 <h2><i class="fa fa-rss"></i> {{ _('The Libris blog') }}</h2>
                 <p>{{ _('Read the latest news about the Libris collaboration.') }}</p>
                 <p><a class="btn btn-default" href="http://librisbloggen.kb.se/">{{ _('Go to the blog') }}</a></p>
             </div>
-            <div class="col-md-6 col-lg-4">
-                <h2><i class="fa fa-envelope"></i> {{ _('Libris customer service') }}</h2>
-                <p>{{ _('For questions about login or emergencies, send a mail to libris@kb.se') }}</p>
-                <p><a href="mailto:libris@kb.se" class="btn btn-default">{{ _('Send e-mail') }}</a></p>
-            </div>
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6">
                 <h2><i class="fa fa-comment"></i> {{ _('Support forum') }}</h2>
                 <p>{{ _('Get help, ask questions and report errors.') }}</p>
                 <p><a href="https://kundo.se/org/librisxl/" class="btn btn-default">{{ _('Go to kundo') }}</a></p>
