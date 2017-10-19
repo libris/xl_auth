@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2017-10-18 17:59+0200\n"
+"POT-Creation-Date: 2017-10-19 15:20+0200\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -23,7 +23,7 @@ msgstr ""
 #: tests/end2end/test_editing_permission.py:91 tests/end2end/test_editing_user.py:181
 #: tests/end2end/test_registering_permission.py:25 tests/end2end/test_registering_permission.py:58
 #: tests/end2end/test_registering_permission.py:85 xl_auth/templates/nav.html:28
-#: xl_auth/templates/permissions/home.html:4 xl_auth/templates/users/profile.html:35
+#: xl_auth/templates/permissions/home.html:4 xl_auth/templates/users/profile.html:34
 msgid "Permissions"
 msgstr "Behörigheter"
 
@@ -54,14 +54,15 @@ msgstr "Samlingar"
 msgid "category"
 msgstr "kategori"
 
-#: tests/end2end/test_editing_collection.py:49 xl_auth/templates/collections/home.html:35
-#: xl_auth/templates/collections/home.html:77
-msgid "None"
-msgstr ""
+#: tests/end2end/test_editing_collection.py:49 tests/end2end/test_registering_collection.py:50
+#: xl_auth/collection/forms.py:21 xl_auth/templates/collections/home.html:37
+#: xl_auth/templates/collections/home.html:79
+msgid "No category"
+msgstr "Kategori saknas"
 
 #: tests/end2end/test_editing_collection.py:72 tests/end2end/test_registering_collection.py:73
 #: xl_auth/collection/forms.py:17 xl_auth/templates/collections/home.html:21
-#: xl_auth/templates/collections/home.html:63 xl_auth/templates/users/profile.html:40
+#: xl_auth/templates/collections/home.html:65 xl_auth/templates/users/profile.html:40
 msgid "Code"
 msgstr "Kod"
 
@@ -85,7 +86,7 @@ msgstr "Det här fältet är obligatoriskt."
 
 #: tests/end2end/test_editing_collection.py:116 tests/end2end/test_registering_collection.py:119
 #: xl_auth/collection/forms.py:19 xl_auth/templates/collections/home.html:23
-#: xl_auth/templates/collections/home.html:66
+#: xl_auth/templates/collections/home.html:68
 msgid "Category"
 msgstr "Kategori"
 
@@ -113,30 +114,32 @@ msgstr "En behörighet för användare \"%(username)s\" på samling \"%(code)s\"
 
 #: tests/end2end/test_editing_user.py:23 tests/end2end/test_editing_user.py:60
 #: tests/end2end/test_registering_user.py:27 tests/end2end/test_registering_user.py:56
-#: xl_auth/templates/collections/home.html:24 xl_auth/templates/collections/home.html:67
+#: xl_auth/templates/collections/home.html:24 xl_auth/templates/collections/home.html:69
 #: xl_auth/templates/nav.html:27 xl_auth/templates/users/home.html:4
 msgid "Users"
 msgstr "Användare"
 
-#: tests/end2end/test_editing_user.py:25 xl_auth/templates/users/home.html:40
+#: tests/end2end/test_editing_user.py:25 xl_auth/templates/users/home.html:42
 #: xl_auth/templates/users/profile.html:13
 msgid "Edit Details"
 msgstr "Ändra profil"
 
 #: tests/end2end/test_editing_user.py:45 xl_auth/templates/permissions/home.html:30
 #: xl_auth/templates/permissions/home.html:31 xl_auth/templates/permissions/home.html:32
-#: xl_auth/templates/users/home.html:34
+#: xl_auth/templates/users/home.html:36 xl_auth/templates/users/profile.html:53
+#: xl_auth/templates/users/profile.html:56 xl_auth/templates/users/profile.html:59
 msgid "Yes"
 msgstr "Ja"
 
 #: tests/end2end/test_editing_user.py:45 xl_auth/templates/permissions/home.html:30
 #: xl_auth/templates/permissions/home.html:31 xl_auth/templates/permissions/home.html:32
-#: xl_auth/templates/users/home.html:34
+#: xl_auth/templates/users/home.html:36 xl_auth/templates/users/profile.html:53
+#: xl_auth/templates/users/profile.html:56 xl_auth/templates/users/profile.html:59
 msgid "No"
 msgstr "Nej"
 
 #: tests/end2end/test_editing_user.py:62 tests/end2end/test_editing_user.py:188
-#: xl_auth/templates/users/home.html:44 xl_auth/templates/users/profile.html:17
+#: xl_auth/templates/users/home.html:46 xl_auth/templates/users/profile.html:17
 msgid "Change Password"
 msgstr "Byt lösenord"
 
@@ -183,10 +186,6 @@ msgstr "Okänd epost/användarnamn"
 msgid "New Collection"
 msgstr "Ny samling"
 
-#: tests/end2end/test_registering_collection.py:50 xl_auth/collection/forms.py:21
-msgid "No category"
-msgstr "Kategori saknas"
-
 #: tests/end2end/test_registering_collection.py:147 tests/forms/test_collection.py:47
 #: tests/forms/test_collection.py:59 xl_auth/collection/forms.py:46
 #, python-format
@@ -207,11 +206,11 @@ msgstr "Behörighet tillagd för användare \"%(username)s\" på samling \"%(cod
 msgid "New User"
 msgstr "Ny användare"
 
-#: tests/end2end/test_registering_user.py:88 xl_auth/user/forms.py:17
+#: tests/end2end/test_registering_user.py:87 xl_auth/user/forms.py:17
 msgid "Passwords must match"
 msgstr "Lösenorden måste stämma överens"
 
-#: tests/end2end/test_registering_user.py:115 tests/forms/test_user.py:42 tests/forms/test_user.py:53
+#: tests/end2end/test_registering_user.py:114 tests/forms/test_user.py:42 tests/forms/test_user.py:53
 #: xl_auth/user/forms.py:47
 msgid "Email already registered"
 msgstr "Epost-adressen är redan registrerad"
@@ -324,11 +323,11 @@ msgstr "Katalogiseringsadmin"
 msgid "Permission"
 msgstr "Behörighet"
 
-#: xl_auth/public/forms.py:17 xl_auth/templates/public/home.html:42
+#: xl_auth/public/forms.py:17 xl_auth/templates/public/home.html:32
 msgid "Username"
 msgstr "Användarnamn"
 
-#: xl_auth/public/forms.py:18 xl_auth/templates/public/home.html:44 xl_auth/user/forms.py:15
+#: xl_auth/public/forms.py:18 xl_auth/templates/public/home.html:34 xl_auth/user/forms.py:15
 msgid "Password"
 msgstr "Lösenord"
 
@@ -364,7 +363,7 @@ msgstr "Om webbplatsen"
 msgid "Contact"
 msgstr "Kontakt"
 
-#: xl_auth/templates/layout.html:13 xl_auth/templates/nav.html:19 xl_auth/templates/public/home.html:23
+#: xl_auth/templates/layout.html:13 xl_auth/templates/nav.html:19 xl_auth/templates/public/home.html:17
 msgid "xl_auth"
 msgstr "Libris Login (alpha)"
 
@@ -383,36 +382,41 @@ msgstr "Ändra befintlig samling"
 msgid "Save"
 msgstr "Spara"
 
-#: xl_auth/templates/collections/home.html:6 xl_auth/templates/collections/home.html:52
-#: xl_auth/templates/collections/home.html:86
+#: xl_auth/templates/collections/home.html:6 xl_auth/templates/collections/home.html:54
+#: xl_auth/templates/collections/home.html:88
 msgid "Go to"
 msgstr "Gå till"
 
-#: xl_auth/templates/collections/home.html:6 xl_auth/templates/collections/home.html:58
+#: xl_auth/templates/collections/home.html:6 xl_auth/templates/collections/home.html:60
 msgid "Inactive Collections"
-msgstr "Inaktiva Samlingar"
+msgstr "Inaktiva samlingar"
 
 #: xl_auth/templates/collections/home.html:12
-msgid "Existing Collections"
-msgstr "Befintliga samlingar"
+msgid "Active Collections"
+msgstr "Aktiva samlingar"
 
-#: xl_auth/templates/collections/home.html:22 xl_auth/templates/collections/home.html:64
+#: xl_auth/templates/collections/home.html:22 xl_auth/templates/collections/home.html:66
 #: xl_auth/templates/users/profile.html:41
 msgid "Friendly Name"
 msgstr "Namn"
 
-#: xl_auth/templates/collections/home.html:25 xl_auth/templates/collections/home.html:68
+#: xl_auth/templates/collections/home.html:25 xl_auth/templates/collections/home.html:70
 #: xl_auth/templates/permissions/home.html:21 xl_auth/templates/users/home.html:23
 msgid "Created At"
 msgstr "Skapad"
 
-#: xl_auth/templates/collections/home.html:52 xl_auth/templates/collections/home.html:86
-msgid "Top of page"
-msgstr ""
+#: xl_auth/templates/collections/home.html:27 xl_auth/templates/permissions/home.html:22
+#: xl_auth/templates/users/home.html:25
+msgid "Actions"
+msgstr "Åtgärder"
 
-#: xl_auth/templates/collections/home.html:65
+#: xl_auth/templates/collections/home.html:54 xl_auth/templates/collections/home.html:88
+msgid "Top of page"
+msgstr "Sidtopp"
+
+#: xl_auth/templates/collections/home.html:67
 msgid "Replaced By"
-msgstr ""
+msgstr "Ersatt av"
 
 #: xl_auth/templates/collections/register.html:5
 msgid "Register New Collection"
@@ -430,55 +434,47 @@ msgstr "Ändra behörighet"
 msgid "Existing Permissions"
 msgstr "Befintliga behörigheter"
 
-#: xl_auth/templates/permissions/home.html:22 xl_auth/templates/users/home.html:24
-msgid "Actions"
-msgstr "Åtgärder"
-
 #: xl_auth/templates/permissions/register.html:5
 msgid "Register New Permission"
 msgstr "Registrera ny behörighet"
 
-#: xl_auth/templates/public/home.html:9
+#: xl_auth/templates/public/home.html:8
 msgid "Welcome to xl_auth"
 msgstr "Välkommen till Libris Login"
 
-#: xl_auth/templates/public/home.html:38 xl_auth/templates/public/home.html:46
+#: xl_auth/templates/public/home.html:21
+msgid "This is an early alpha release of Libris authorization service."
+msgstr "Det här är en tidig alfa-version av Libris inloggningstjänst."
+
+#: xl_auth/templates/public/home.html:24
+msgid "See email from customer service for instructions."
+msgstr "​Se mail från kundservice för instruktioner."
+
+#: xl_auth/templates/public/home.html:28 xl_auth/templates/public/home.html:36
 msgid "Log in"
 msgstr "Logga in"
 
-#: xl_auth/templates/public/home.html:53
+#: xl_auth/templates/public/home.html:43
 msgid "The Libris blog"
 msgstr "Librisbloggen"
 
-#: xl_auth/templates/public/home.html:54
+#: xl_auth/templates/public/home.html:44
 msgid "Read the latest news about the Libris collaboration."
 msgstr "Läs senaste nytt om Libris-samarbetet."
 
-#: xl_auth/templates/public/home.html:55
+#: xl_auth/templates/public/home.html:45
 msgid "Go to the blog"
 msgstr "Gå till bloggen"
 
-#: xl_auth/templates/public/home.html:58 xl_auth/templates/users/profile.html:29
-msgid "Libris customer service"
-msgstr "Libris kundservice"
-
-#: xl_auth/templates/public/home.html:59
-msgid "For questions about login or emergencies, send a mail to libris@kb.se"
-msgstr "För frågor om inlogg eller akuta problem, maila till libris@kb.se"
-
-#: xl_auth/templates/public/home.html:60
-msgid "Send e-mail"
-msgstr "Skicka e-post"
-
-#: xl_auth/templates/public/home.html:63
+#: xl_auth/templates/public/home.html:48
 msgid "Support forum"
 msgstr "Supportforum"
 
-#: xl_auth/templates/public/home.html:64
+#: xl_auth/templates/public/home.html:49
 msgid "Get help, ask questions and report errors."
 msgstr "Få hjälp, ställ frågor och rapportera fel."
 
-#: xl_auth/templates/public/home.html:65
+#: xl_auth/templates/public/home.html:50
 msgid "Go to kundo"
 msgstr "Gå till kundo"
 
@@ -511,8 +507,12 @@ msgid "Important"
 msgstr "Viktigt"
 
 #: xl_auth/templates/users/profile.html:27
-msgid "Contact customer service if there is any mistake in the information below."
-msgstr "Kontakta kundservice om det finns några fel i informationen nedan."
+msgid ""
+"Contact customer service at <a href=\"mailto:libris@kb.se\">libris@kb.se</a> if your permissions "
+"are not correctly listed below."
+msgstr ""
+"Kontakta omgående kundservice på <a href=\"mailto:libris@kb.se\">libris@kb.se</a> för rättning "
+"ifall dina behörigheter inte är 100 %% korrekt listade."
 
 #: xl_auth/templates/users/register.html:5
 msgid "Register New User"
