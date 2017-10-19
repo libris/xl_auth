@@ -22,7 +22,7 @@ def test_user_can_edit_details_for_existing_user(user, testapp):
     # Clicks Users button.
     res = res.click(_('Users'))
     # Clicks Edit Details button.
-    res = res.click(_('Edit Details'))
+    res = res.click(href='/users/edit_details/' + user.email.replace('@', '%40'))
     # Fills out the form.
     form = res.forms['editDetailsForm']
     form['username'] = user.email
@@ -40,7 +40,6 @@ def test_user_can_edit_details_for_existing_user(user, testapp):
     # The edited user is listed under existing users.
     assert '<td>{}</td>'.format(form['username'].value) in res
     assert '<td>{}</td>'.format(form['full_name'].value) in res
-    assert '<td>{}</td>'.format(form['active'].checked) in res
     assert '<td class="bool-value-{}">{}</td>'.format(
         format(form['is_admin'].checked).lower(),
         _('Yes') if form['is_admin'].checked else _('No')
@@ -60,7 +59,7 @@ def test_user_can_change_password_for_existing_user(user, testapp):
     # Clicks Users button.
     res = res.click(_('Users'))
     # Clicks Change Password button.
-    res = res.click(_('Change Password'))
+    res = res.click(href='/users/change_password/' + user.email.replace('@', '%40'))
     # Fills out the form.
     form = res.forms['changePasswordForm']
     form['username'] = user.email

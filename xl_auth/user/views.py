@@ -18,8 +18,11 @@ blueprint = Blueprint('user', __name__, url_prefix='/users', static_folder='../s
 @login_required
 def home():
     """Users landing page."""
-    users_list = User.query.all()
-    return render_template('users/home.html', users_list=users_list)
+    users_list_active = User.query.filter_by(active=True)
+    users_list_inactive = User.query.filter_by(active=False)
+
+    return render_template('users/home.html', users_list_active=users_list_active,
+                           users_list_inactive=users_list_inactive)
 
 
 @blueprint.route('/profile/')
