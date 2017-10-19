@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-19 15:13+0200\n"
+"POT-Creation-Date: 2017-10-19 15:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: tests/end2end/test_editing_permission.py:91 tests/end2end/test_editing_user.py:181
 #: tests/end2end/test_registering_permission.py:25 tests/end2end/test_registering_permission.py:58
 #: tests/end2end/test_registering_permission.py:85 xl_auth/templates/nav.html:28
-#: xl_auth/templates/permissions/home.html:4 xl_auth/templates/users/profile.html:33
+#: xl_auth/templates/permissions/home.html:4 xl_auth/templates/users/profile.html:34
 msgid "Permissions"
 msgstr ""
 
@@ -61,7 +61,7 @@ msgstr ""
 
 #: tests/end2end/test_editing_collection.py:72 tests/end2end/test_registering_collection.py:73
 #: xl_auth/collection/forms.py:17 xl_auth/templates/collections/home.html:21
-#: xl_auth/templates/collections/home.html:65 xl_auth/templates/users/profile.html:39
+#: xl_auth/templates/collections/home.html:65 xl_auth/templates/users/profile.html:40
 msgid "Code"
 msgstr ""
 
@@ -125,15 +125,15 @@ msgstr ""
 
 #: tests/end2end/test_editing_user.py:45 xl_auth/templates/permissions/home.html:30
 #: xl_auth/templates/permissions/home.html:31 xl_auth/templates/permissions/home.html:32
-#: xl_auth/templates/users/home.html:36 xl_auth/templates/users/profile.html:52
-#: xl_auth/templates/users/profile.html:55 xl_auth/templates/users/profile.html:58
+#: xl_auth/templates/users/home.html:36 xl_auth/templates/users/profile.html:53
+#: xl_auth/templates/users/profile.html:56 xl_auth/templates/users/profile.html:59
 msgid "Yes"
 msgstr ""
 
 #: tests/end2end/test_editing_user.py:45 xl_auth/templates/permissions/home.html:30
 #: xl_auth/templates/permissions/home.html:31 xl_auth/templates/permissions/home.html:32
-#: xl_auth/templates/users/home.html:36 xl_auth/templates/users/profile.html:52
-#: xl_auth/templates/users/profile.html:55 xl_auth/templates/users/profile.html:58
+#: xl_auth/templates/users/home.html:36 xl_auth/templates/users/profile.html:53
+#: xl_auth/templates/users/profile.html:56 xl_auth/templates/users/profile.html:59
 msgid "No"
 msgstr ""
 
@@ -304,17 +304,17 @@ msgid "Collection"
 msgstr ""
 
 #: xl_auth/permission/forms.py:22 xl_auth/templates/permissions/home.html:18
-#: xl_auth/templates/users/profile.html:41
+#: xl_auth/templates/users/profile.html:42
 msgid "Registrant"
 msgstr ""
 
 #: xl_auth/permission/forms.py:23 xl_auth/templates/permissions/home.html:19
-#: xl_auth/templates/users/profile.html:42
+#: xl_auth/templates/users/profile.html:43
 msgid "Cataloger"
 msgstr ""
 
 #: xl_auth/permission/forms.py:24 xl_auth/templates/permissions/home.html:20
-#: xl_auth/templates/users/profile.html:43
+#: xl_auth/templates/users/profile.html:44
 msgid "Cataloguing Administrator"
 msgstr ""
 
@@ -322,11 +322,11 @@ msgstr ""
 msgid "Permission"
 msgstr ""
 
-#: xl_auth/public/forms.py:17 xl_auth/templates/public/home.html:36
+#: xl_auth/public/forms.py:17 xl_auth/templates/public/home.html:32
 msgid "Username"
 msgstr ""
 
-#: xl_auth/public/forms.py:18 xl_auth/templates/public/home.html:38 xl_auth/user/forms.py:15
+#: xl_auth/public/forms.py:18 xl_auth/templates/public/home.html:34 xl_auth/user/forms.py:15
 msgid "Password"
 msgstr ""
 
@@ -395,7 +395,7 @@ msgid "Active Collections"
 msgstr ""
 
 #: xl_auth/templates/collections/home.html:22 xl_auth/templates/collections/home.html:66
-#: xl_auth/templates/users/profile.html:40
+#: xl_auth/templates/users/profile.html:41
 msgid "Friendly Name"
 msgstr ""
 
@@ -441,31 +441,39 @@ msgstr ""
 msgid "Welcome to xl_auth"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:32 xl_auth/templates/public/home.html:40
+#: xl_auth/templates/public/home.html:21
+msgid "This is an early alpha release of Libris authorization service."
+msgstr ""
+
+#: xl_auth/templates/public/home.html:24
+msgid "See email from customer service for instructions."
+msgstr ""
+
+#: xl_auth/templates/public/home.html:28 xl_auth/templates/public/home.html:36
 msgid "Log in"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:47
+#: xl_auth/templates/public/home.html:43
 msgid "The Libris blog"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:48
+#: xl_auth/templates/public/home.html:44
 msgid "Read the latest news about the Libris collaboration."
 msgstr ""
 
-#: xl_auth/templates/public/home.html:49
+#: xl_auth/templates/public/home.html:45
 msgid "Go to the blog"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:52
+#: xl_auth/templates/public/home.html:48
 msgid "Support forum"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:53
+#: xl_auth/templates/public/home.html:49
 msgid "Get help, ask questions and report errors."
 msgstr ""
 
-#: xl_auth/templates/public/home.html:54
+#: xl_auth/templates/public/home.html:50
 msgid "Go to kundo"
 msgstr ""
 
