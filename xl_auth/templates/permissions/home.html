@@ -30,7 +30,7 @@
                     <td class="{{ "bool-value-{}".format(item.registrant).lower() }}">{{ _('Yes') if item.registrant else _('No') }}</td>
                     <td class="{{ "bool-value-{}".format(item.cataloger).lower() }}">{{ _('Yes') if item.cataloger else _('No') }}</td>
                     <td class="{{ "bool-value-{}".format(item.cataloging_admin).lower() }}">{{ _('Yes') if item.cataloging_admin else _('No') }}</td>
-                    <td>{{ item.created_at.strftime('%y-%m-%d %H:%M:%S') }}</td>
+                    <td>{{ item.created_at.strftime('%y-%m-%d') }}</td>
                     <td>
                         <a class="btn btn-default"
                            href="{{ url_for('permission.edit', permission_id=item.id) }}">
