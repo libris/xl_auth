@@ -18,8 +18,11 @@ blueprint = Blueprint('collection', __name__, url_prefix='/collections', static_
 @login_required
 def home():
     """Collections landing page."""
-    collections_list = Collection.query.all()
-    return render_template('collections/home.html', collections_list=collections_list)
+    collections_list_active = Collection.query.filter_by(active=True)
+    collections_list_inactive = Collection.query.filter_by(active=False)
+
+    return render_template('collections/home.html', collections_list_active=collections_list_active,
+                           collections_list_inactive=collections_list_inactive)
 
 
 @blueprint.route('/register/', methods=['GET', 'POST'])

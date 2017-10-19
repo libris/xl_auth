@@ -41,7 +41,8 @@ def test_superuser_can_register_new_collection(superuser, collection, testapp):
     # A new collection was created
     assert len(Collection.query.all()) == old_count + 1
     # The new collection is listed under existing collections
-    assert '<td>{}</td>'.format(form['code'].value) in res
+    assert '<td><a class="anchor" id="collection-{}"></a>{}</td>'.format(form['code'].value,
+                                                                         form['code'].value) in res
     assert '<td>{}</td>'.format(form['friendly_name'].value) in res
     if form['category'].value in {'bibliography', 'library'}:
         assert '<td>{}</td>'.format(_(form['category'].value.capitalize())) in res
