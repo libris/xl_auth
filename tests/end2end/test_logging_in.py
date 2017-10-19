@@ -11,7 +11,7 @@ def test_can_log_in_returns_200(user, testapp):
     """Login successful (irrespective of casing)."""
     # Goes to homepage.
     res = testapp.get('/')
-    # Fills out login form in navbar.
+    # Fills out login form.
     username_with_different_casing = user.email.upper()  # Default would be userN@example.com.
     form = res.forms['loginForm']
     form['username'] = username_with_different_casing
@@ -24,7 +24,7 @@ def test_can_log_in_returns_200(user, testapp):
 def test_sees_alert_on_log_out(user, testapp):
     """Show alert on logout."""
     res = testapp.get('/')
-    # Fills out login form in navbar.
+    # Fills out login form.
     form = res.forms['loginForm']
     form['username'] = user.email
     form['password'] = 'myPrecious'

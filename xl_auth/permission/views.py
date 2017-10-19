@@ -3,9 +3,9 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import Blueprint, abort, flash, redirect, render_template, request, url_for
 from flask_babel import lazy_gettext as _
-from flask_login import login_required
+from flask_login import current_user, login_required
 
 from ..utils import flash_errors
 from .forms import EditForm, RegisterForm
@@ -18,6 +18,9 @@ blueprint = Blueprint('permission', __name__, url_prefix='/permissions', static_
 @login_required
 def home():
     """Permissions landing page."""
+    if not current_user.is_admin:
+        abort(403)
+
     permissions_list = Permission.query.all()
     return render_template('permissions/home.html', permissions_list=permissions_list)
 
@@ -26,7 +29,10 @@ def home():
 @login_required
 def register():
     """Register new permission."""
-    register_permission_form = RegisterForm(request.form)
+    if not current_user.is_admin:
+        abort(403)
+
+    register_permission_form = RegisterForm(current_user, request.form)
     if register_permission_form.validate_on_submit():
         permission = Permission.create(
             user_id=register_permission_form.user_id.data,
@@ -47,13 +53,16 @@ def register():
 @login_required
 def edit(permission_id):
     """Edit existing permission."""
+    if not current_user.is_admin:
+        abort(403)
+
     permission = Permission.get_by_id(permission_id)
     if not permission:
         flash(_('Permission ID "%(permission_id)s" does not exist', permission_id=permission_id),
               'danger')
         return redirect(url_for('permission.home'))
 
-    edit_permission_form = EditForm(permission_id, request.form)
+    edit_permission_form = EditForm(current_user, permission_id, request.form)
     if edit_permission_form.validate_on_submit():
         permission.update(**edit_permission_form.data).save()
         flash(_('Updated permissions for "%(username)s" on collection "%(code)s".',
@@ -70,6 +79,9 @@ def edit(permission_id):
 @login_required
 def delete(permission_id):
     """Delete existing permission."""
+    if not current_user.is_admin:
+        abort(403)
+
     permission = Permission.get_by_id(permission_id)
     if not permission:
         flash(_('Permission ID "%(permission_id)s" does not exist', permission_id=permission_id),

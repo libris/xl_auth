@@ -41,7 +41,7 @@ class UserFactory(BaseFactory):
 class SuperUserFactory(BaseFactory):
     """Super user factory."""
 
-    email = Sequence(lambda _: 'user{0}@example.com'.format(_))
+    email = Sequence(lambda _: 'admin{0}@example.com'.format(_))
     full_name = Sequence(lambda _: 'full_name{0}'.format(_))
     password = PostGenerationMethodCall('set_password', 'example')
     active = True
