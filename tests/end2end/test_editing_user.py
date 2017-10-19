@@ -36,14 +36,17 @@ def test_superuser_can_administer_existing_user(superuser, testapp):
     assert edited_user.full_name == form['full_name'].value
     assert edited_user.active == form['active'].checked
     assert edited_user.is_admin == form['is_admin'].checked
+
     # The edited user is listed under existing users.
-    assert '<td>{}</td>'.format(form['username'].value) in res
-    assert '<td>{}</td>'.format(form['full_name'].value) in res
-    assert '<td>{}</td>'.format(form['active'].checked) in res
-    assert '<td class="bool-value-{}">{}</td>'.format(
-        format(form['is_admin'].checked).lower(),
-        _('Yes') if form['is_admin'].checked else _('No')
-    ) in res
+    assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(form['username'].value))) == 1
+    assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(form['full_name'].value))) == 1
+    assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(form['active'].checked))) == 1
+
+    is_admin_value = format(form['is_admin'].checked).lower()
+    is_admin_string = _('Yes') if form['is_admin'].checked else _('No')
+    admin_xpath = "//td[@class='bool-value-{0}' and contains(., '{1}')]".format(is_admin_value,
+                                                                                is_admin_string)
+    assert len(res.lxml.xpath(admin_xpath)) == 1
 
 
 def test_superuser_can_change_password_for_existing_user(superuser, testapp):

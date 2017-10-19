@@ -41,13 +41,20 @@ def test_superuser_can_register_new_collection(superuser, collection, testapp):
     # A new collection was created
     assert len(Collection.query.all()) == old_count + 1
     # The new collection is listed under existing collections
-    assert '<td><a class="anchor" id="collection-{}"></a>{}</td>'.format(form['code'].value,
-                                                                         form['code'].value) in res
-    assert '<td>{}</td>'.format(form['friendly_name'].value) in res
+    collection_id = 'collection-{0}'.format(form['code'].value)
+    collection_anchor_xpath = "//a[@class='anchor' and @id='{0}']".format(collection_id)
+    assert len(res.lxml.xpath(collection_anchor_xpath)) == 1
+
+    assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(form['code'].value))) == 1
+    assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(form['friendly_name'].value))) == 1
+
     if form['category'].value in {'bibliography', 'library'}:
-        assert '<td>{}</td>'.format(_(form['category'].value.capitalize())) in res
+        assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(
+            _(form['category'].value.capitalize())))) == 1
     else:
-        assert '<td>{}</td>'.format(_('No category')) in res
+        assert len(res.lxml.xpath("//td[contains(., '{0}')]/ancestor::tr/td[contains(., '{1}')]"
+                                  .format(form['code'].value,
+                                          _('No category')))) == 1
 
 
 # noinspection PyUnusedLocal

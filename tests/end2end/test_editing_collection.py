@@ -40,13 +40,21 @@ def test_superuser_can_edit_existing_collection(superuser, collection, testapp):
     assert edited_collection.friendly_name == form['friendly_name'].value
     assert edited_collection.category == form['category'].value
     # The edited collection is listed under existing collections
-    assert '<td><a class="anchor" id="collection-{}"></a>{}</td>'.format(form['code'].value,
-                                                                         form['code'].value) in res
-    assert '<td>{}</td>'.format(form['friendly_name'].value) in res
+    collection_id = 'collection-{0}'.format(form['code'].value)
+    collection_anchor_xpath = "//a[@class='anchor' and @id='{0}']".format(collection_id)
+    assert len(res.lxml.xpath(collection_anchor_xpath)) == 1
+
+    # Two elements, because we have both the anchor and the actual text
+    assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(form['code'].value))) == 2
+    assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(form['friendly_name'].value))) == 1
+
     if form['category'].value in {'bibliography', 'library'}:
-        assert '<td>{}</td>'.format(_(form['category'].value.capitalize())) in res
+        assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(
+            _(form['category'].value.capitalize())))) == 1
     else:
-        assert '<td>{}</td>'.format(_('No category')) in res
+        assert len(res.lxml.xpath("//td[contains(., '{0}')]/ancestor::tr/td[contains(., '{1}')]"
+                                  .format(form['code'].value,
+                                          _('No category')))) == 1
 
 
 def test_superuser_sees_error_message_if_code_is_changed(superuser, collection, testapp):

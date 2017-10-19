@@ -41,8 +41,8 @@ def test_superuser_can_edit_existing_permission(superuser, permission, testapp):
              username=permission.user.email, code=other_collection.code) in res
     assert len(Permission.query.all()) == old_count
     # The edited permission is listed under existing collections
-    assert '<td>{}</td>'.format(permission.user.email) in res
-    assert '<td>{}</td>'.format(other_collection.code) in res
+    assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(permission.user.email))) == 1
+    assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(other_collection.code))) == 1
 
 
 # noinspection PyUnusedLocal

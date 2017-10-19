@@ -37,8 +37,8 @@ def test_superuser_can_register_new_permission(superuser, collection, testapp):
              username=superuser.email, code=collection.code) in res
     assert len(Permission.query.all()) == old_count + 1
     # The new permission is listed under existing collections
-    assert '<td>{}</td>'.format(superuser.email) in res
-    assert '<td>{}</td>'.format(collection.code) in res
+    assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(superuser.email))) == 1
+    assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(collection.code))) == 1
 
 
 # noinspection PyUnusedLocal
