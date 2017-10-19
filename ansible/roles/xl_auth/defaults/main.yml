@@ -1,0 +1,7 @@
+---
+
+xl_auth_admin_pass: ""
+
+xl_auth_docker: "mblomdahl/xl_auth:latest"
+
+...

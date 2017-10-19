@@ -20,9 +20,10 @@ class CollectionForm(FlaskForm):
                                                   ('library', _('Library')),
                                                   ('uncategorized', _('No category'))])
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, active_user, *args, **kwargs):
         """Create instance."""
         super(CollectionForm, self).__init__(*args, **kwargs)
+        self.active_user = active_user
         self.collection = None
 
 
@@ -36,6 +37,9 @@ class RegisterForm(CollectionForm):
         if not initial_validation:
             return False
 
+        if not self.active_user.is_admin:
+            raise ValidationError(_('You do not have sufficient privileges for this operation.'))
+
         collection = Collection.query.filter(Collection.code.ilike(self.code.data)).first()
 
         if collection:
@@ -48,9 +52,9 @@ class RegisterForm(CollectionForm):
 class EditForm(CollectionForm):
     """Collection edit form."""
 
-    def __init__(self, target_collection_code, *args, **kwargs):
+    def __init__(self, active_user, target_collection_code, *args, **kwargs):
         """Create instance."""
-        super(EditForm, self).__init__(*args, **kwargs)
+        super(EditForm, self).__init__(active_user, *args, **kwargs)
         self.target_collection_code = target_collection_code
 
     def validate_code(self, field):
@@ -64,6 +68,9 @@ class EditForm(CollectionForm):
 
         if not initial_validation:
             return False
+
+        if not self.active_user.is_admin:
+            raise ValidationError(_('You do not have sufficient privileges for this operation.'))
 
         collection = Collection.query.filter_by(code=self.code.data).first()
         if not collection:

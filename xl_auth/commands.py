@@ -100,18 +100,29 @@ def clean():
 
 
 @click.command()
-@click.option('--email', required=True, default=None, help='Email for user')
-@click.option('--full-name', default=None, help='Full name for user (default: None)')
-@click.option('--password', default='password', help='Password for user (default: password)')
+@click.option('-e', '--email', required=True, default=None, help='Email for user')
+@click.option('-n', '--full-name', default=None, help='Full name for user (default: None)')
+@click.option('-p', '--password', default='password',
+              help='Password for user (default: "password")')
 @click.option('--active', default=True, is_flag=True, help='Activate account (default: True)')
 @click.option('--is-admin', default=False, is_flag=True, help='Create admin user (default: False)')
+@click.option('-f', '--force', default=False, is_flag=True,
+              help='Force overwrite existing account (default: False)')
 @with_appcontext
-def create_user(email, full_name, password, active, is_admin):
-    """Create user account."""
-    full_name = full_name or email
-    user = User.create(email=email, full_name=full_name, password=password,
-                       active=active, is_admin=is_admin)
-    click.echo('Created account with login {0}:{1}'.format(user.email, password))
+def create_user(email, full_name, password, active, is_admin, force):
+    """Create or overwrite user account."""
+    user = User.query.filter(User.email.ilike(email)).first()
+    if force and user:
+        if full_name:
+            user.full_name = full_name
+        user.set_password(password)
+        user.update(active=active, is_admin=is_admin)
+        user.save()
+        click.echo('Overwritten account with login {0}:{1}'.format(user.email, password))
+    else:
+        user = User.create(email=email, full_name=full_name or email, password=password,
+                           active=active, is_admin=is_admin)
+        click.echo('Created account with login {0}:{1}'.format(user.email, password))
 
 
 @click.command()
@@ -175,8 +186,10 @@ def urls(url, order):
 
 
 @click.command()
+@click.option('--admin-email', required=True, default=None, help='Email for admin')
+@click.option('-v', '--verbose', default=False, is_flag=True, help='Increase verbosity.')
 @with_appcontext
-def import_data():
+def import_data(admin_email, verbose):
     """Read data from Voyager dump and BibDB API to create DB entities.
 
     Creates:
@@ -195,11 +208,16 @@ def import_data():
 
     def _get_collection_details_from_bibdb(code):
         raw_bibdb_api_data = json.loads(requests.get(
-            'https://bibdb.libris.kb.se/api/lib?level=brief&sigel={}'.format(code)).content)
+            'https://bibdb.libris.kb.se/api/lib?level=brief&sigel={}'
+            .format(code)).content.decode('utf-8'))
         if raw_bibdb_api_data['query']['operation'] == 'sigel {}'.format(code):
-            print('.', end='')
+            if verbose:
+                print('Fetched details for sigel %r' % code)
+            else:
+                click.echo('.', nl=False)
         else:
-            print('x', end='')
+            if not verbose:
+                click.echo('x', nl=False)
             raise AssertionError('Lookup failed for sigel %r' % code)
 
         bibdb_api_data = None
@@ -334,8 +352,10 @@ def import_data():
                             # Fetch details if necessary.
                             xl_auth_collections[voyager_collection] = \
                                 _get_collection_details_from_bibdb(voyager_collection)
-                        except AssertionError:
+                        except AssertionError as err:
                             voyager_sigels_unknown_in_bibdb.add(voyager_collection)
+                            if verbose:
+                                print(err)
                             continue
                     xl_auth_cataloging_admins[cataloging_admin].add(voyager_collection)
 
@@ -355,8 +375,9 @@ def import_data():
                             xl_auth_collections[details[old_new_ref]] = \
                                 _get_collection_details_from_bibdb(details[old_new_ref])
                             resolved_bibdb_refs.add(details[old_new_ref])
-                        except AssertionError:
+                        except AssertionError as err:
                             unresolved_bibdb_refs.add(details[old_new_ref])
+                            print(err)
         print('after-replaces-lookups:', len(xl_auth_collections))
 
         print('resolved_bibdb_refs:', resolved_bibdb_refs)
@@ -366,6 +387,9 @@ def import_data():
             'collections': xl_auth_collections,
             'cataloging_admins': xl_auth_cataloging_admins
         }
+
+    # Get admin user
+    admin = User.query.filter_by(email=admin_email).first()
 
     # Gather data.
     voyager = _get_voyager_data()
@@ -382,7 +406,7 @@ def import_data():
     # Store collections.
     for collection, details in deepcopy(xl_auth['collections']).items():
         with current_app.test_request_context():
-            collection_form = CollectionRegisterForm(code=details['code'],
+            collection_form = CollectionRegisterForm(admin, code=details['code'],
                                                      friendly_name=details['friendly_name'])
             collection_form.validate()
         if collection_form.code.errors or collection_form.friendly_name.errors:
