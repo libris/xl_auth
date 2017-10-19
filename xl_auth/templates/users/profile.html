@@ -24,7 +24,7 @@
             <h3>{{ _('Important') }}</h3>
         </div>
         <div class="panel-body">
-            <p>{{ _('Contact customer service if there is any mistake in the information below.')}}</p>
+            <p>{{ _('Contact customer service if there is any mistake in the information below.') }}</p>
 
             <a href="http://www.kb.se/libris/kontakta/">{{ _('Libris customer service') }}</a>
         </div>
@@ -37,20 +37,30 @@
         <div class="panel-body">
             <table class="table table-hover">
                 <thead>
+                <tr>
                     <th>{{ _('Code') }}</th>
                     <th>{{ _('Friendly Name') }}</th>
                     <th>{{ _('Registrant') }}</th>
                     <th>{{ _('Cataloger') }}</th>
                     <th>{{ _('Cataloguing Administrator') }}</th>
+                </tr>
                 </thead>
                 <tbody>
-                    {% for permission in user.permissions %}
+                {% for permission in user.permissions %}
+                    <tr>
                         <td>{{ permission.collection.code }}</td>
                         <td>{{ permission.collection.friendly_name }}</td>
-                        <td>{{ permission.registrant }}</td>
-                        <td>{{ permission.cataloger }}</td>
-                        <td>{{ permission.cataloging_admin }}</td>
-                    {% endfor %}
+                        <td class="{{ "bool-value-{}".format(permission.registrant).lower() }}">
+                            {{ _('Yes') if permission.registrant else _('No') }}
+                        </td>
+                        <td class="{{ "bool-value-{}".format(permission.cataloger).lower() }}">
+                            {{ _('Yes') if permission.cataloger else _('No') }}
+                        </td>
+                        <td class="{{ "bool-value-{}".format(permission.cataloging_admin).lower() }}">
+                            {{ _('Yes') if permission.cataloging_admin else _('No') }}
+                        </td>
+                    </tr>
+                {% endfor %}
                 </tbody>
             </table>
         </div>
