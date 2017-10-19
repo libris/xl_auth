@@ -45,3 +45,6 @@ six==1.10.0
 Flask-Babel==0.11.2
 Babel==2.5.1
 pytz==2017.2
+
+# CLI commands
+requests==2.18.4

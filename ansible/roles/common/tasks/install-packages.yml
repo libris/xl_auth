@@ -1,0 +1,50 @@
+---
+
+- name: install wget, man, man-pages, et cetera
+  yum: name={{ item }} state=present
+  with_items:
+    - wget
+    - git
+    - man
+    - man-pages
+    - vim-enhanced
+    - tree
+    - gcc
+    - python-devel
+
+- name: install emacs
+  yum: name=emacs state=present
+  notify: emacs config
+
+- name: install mlocate
+  yum: name=mlocate state=present
+  notify: run updatedb
+
+- name: epel repo
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    baseurl: http://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+    gpgkey: http://download.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$releasever
+
+- name: install epel-release
+  yum: name=epel-release state=present
+
+- name: install htop, tmux, jq, bash-completion, et cetera
+  yum: name={{ item }} state=present
+  with_items:
+    - htop
+    - tmux
+    - jq
+    - bash-completion
+    - bash-argsparse
+    - multitail
+    - python-pip
+
+- name: install pip 9.0.1
+  pip: name=pip version=9.0.1 state=present
+
+- name: install bash-completion-extras
+  yum: name=bash-completion-extras state=present
+
+...

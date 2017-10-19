@@ -49,3 +49,6 @@ xl_auth/webpack/manifest.json
 
 # Localization
 *.mo
+
+# Continuous Integration/Delivery
+.vagrant/

@@ -9,7 +9,7 @@
     <div class="panel panel-default active-collections">
         <a class="anchor" id="existing-collections"></a>
         <div class="panel-heading">
-            <strong>{{ _('Existing Collections') }}</strong>
+            <strong>{{ _('Active Collections') }}</strong>
             {% if current_user.is_admin %}
             <a class="btn btn-xs btn-primary pull-right"
                href="{{ url_for('collection.register') }}">{{ _('New Collection') }}</a>
@@ -34,7 +34,7 @@
                     title="{{ item.get_replaces_and_replaced_by_str() }}">
                     <td><a class="anchor" id="collection-{{ item.code }}"></a>{{ item.code }}</td>
                     <td>{{ item.friendly_name | truncate(80) }}</td>
-                    <td>{{ _(item.category.capitalize()) if item.category in ['bibliography', 'library'] else _('None') }}</td>
+                    <td>{{ _(item.category.capitalize()) if item.category in ['bibliography', 'library'] else _('No category') }}</td>
                     <td>{{ item.permissions | length }}</td>
                     <td>{{ item.created_at.strftime('%Y-%m-%d') }}</td>
                     {% if current_user.is_admin %}
@@ -76,7 +76,7 @@
                     <td>{{ item.code }}</td>
                     <td>{{ item.friendly_name | truncate(80) }}</td>
                     <td><a href="#collection-{{ item.replaced_by }}">{{ item.replaced_by }}</a></td>
-                    <td>{{ _(item.category.capitalize()) if item.category in ['bibliography', 'library'] else _('None') }}</td>
+                    <td>{{ _(item.category.capitalize()) if item.category in ['bibliography', 'library'] else _('No category') }}</td>
                     <td>{{ item.permissions | length }}</td>
                     <td>{{ item.created_at.strftime('%Y-%m-%d') }}</td>
                 </tr>
