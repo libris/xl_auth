@@ -3,44 +3,88 @@
 {% block content %}
     <h1>{{ _('Collections') }}</h1>
     <br/>
-    <div class="panel panel-default">
-        <!-- Default panel contents -->
+    {{ _('Go to') }}: <a href="#inactive-collections">{{ _('Inactive Collections') }}</a>
+    <br/>
+    <hr>
+    <div class="panel panel-default active-collections">
+        <a class="anchor" id="existing-collections"></a>
         <div class="panel-heading">
-            <strong>{{ _('Existing Collections') }}</strong>
+            <strong>{{ _('Active Collections') }}</strong>
+            {% if current_user.is_admin %}
             <a class="btn btn-xs btn-primary pull-right"
                href="{{ url_for('collection.register') }}">{{ _('New Collection') }}</a>
+           {% endif %}
         </div>
-        <table class="table table-hover">
+        <table class="table table-hover collections-table">
             <thead>
             <tr>
-                <th>{{ _('Code') }}</th>
-                <th>{{ _('Friendly Name') }}</th>
-                <th>{{ _('Category') }}</th>
-                <th>{{ _('Users') }}</th>
-                <th>{{ _('Active') }}</th>
+                <th class="col-md-1">{{ _('Code') }}</th>
+                <th class="col-md-7">{{ _('Friendly Name') }}</th>
+                <th class="col-md-1">{{ _('Category') }}</th>
+                <th class="col-md-1">{{ _('Users') }}</th>
                 <th>{{ _('Created At') }}</th>
+                {% if current_user.is_admin %}
                 <th>{{ _('Actions') }}</th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
-            {% for item in collections_list %}
+            {% for item in collections_list_active %}
                 <tr class="{{ 'collection-row-tooltip' if (item.replaces or item.replaced_by) }}"
                     title="{{ item.get_replaces_and_replaced_by_str() }}">
-                    <td>{{ item.code }}</td>
-                    <td>{{ item.friendly_name }}</td>
+                    <td><a class="anchor" id="collection-{{ item.code }}"></a>{{ item.code }}</td>
+                    <td>{{ item.friendly_name | truncate(80) }}</td>
                     <td>{{ _(item.category.capitalize()) if item.category in ['bibliography', 'library'] else _('No category') }}</td>
                     <td>{{ item.permissions | length }}</td>
-                    <td>{{ item.active }}</td>
                     <td>{{ item.created_at.strftime('%Y-%m-%d') }}</td>
-                    <td>
-                        <a class="btn btn-default"
+                    {% if current_user.is_admin %}
+                    <td class="actions">
+                        <a class=""
                            href="{{ url_for('collection.edit', collection_code=item.code) }}">
-                            {{ _('Edit') }}
+                            <i class="edit-button fa fa-pencil"></i>
                         </a>
                     </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
+    <br/>
+    {{ _('Go to') }}: <a href="#">{{ _('Top of page') }}</a>
+    <br/>
+    <hr>
+    <div class="panel panel-default inactive-collections">
+        <a class="anchor" id="inactive-collections"></a>
+        <div class="panel-heading">
+            <strong>{{ _('Inactive Collections') }}</strong>
+        </div>
+        <table class="table table-hover collections-table">
+            <thead>
+            <tr>
+                <th class="col-md-1">{{ _('Code') }}</th>
+                <th class="col-md-6">{{ _('Friendly Name') }}</th>
+                <th class="col-md-1">{{ _('Replaced By') }}</th>
+                <th class="col-md-1">{{ _('Category') }}</th>
+                <th class="col-md-1">{{ _('Users') }}</th>
+                <th>{{ _('Created At') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in collections_list_inactive %}
+                <tr>
+                    <td>{{ item.code }}</td>
+                    <td>{{ item.friendly_name | truncate(80) }}</td>
+                    <td><a href="#collection-{{ item.replaced_by }}">{{ item.replaced_by }}</a></td>
+                    <td>{{ _(item.category.capitalize()) if item.category in ['bibliography', 'library'] else _('No category') }}</td>
+                    <td>{{ item.permissions | length }}</td>
+                    <td>{{ item.created_at.strftime('%Y-%m-%d') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <hr>
+    {{ _('Go to') }}: <a href="#">{{ _('Top of page') }}</a>
+    <br/>
 {% endblock %}
