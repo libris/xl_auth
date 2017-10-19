@@ -14,8 +14,7 @@ from xl_auth.collection.models import Collection
 from ..factories import CollectionFactory
 
 
-# noinspection PyUnusedLocal
-def test_superuser_can_register_new_collection(superuser, collection, testapp):
+def test_superuser_can_register_new_collection(superuser, testapp):
     """Register a new collection."""
     old_count = len(Collection.query.all())
     # Goes to homepage
