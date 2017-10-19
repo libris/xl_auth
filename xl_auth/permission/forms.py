@@ -23,9 +23,10 @@ class PermissionForm(FlaskForm):
     cataloger = BooleanField(_('Cataloger'))
     cataloging_admin = BooleanField(_('Cataloguing Administrator'))
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, active_user, *args, **kwargs):
         """Create instance."""
         super(PermissionForm, self).__init__(*args, **kwargs)
+        self.active_user = active_user
         self.user_id.choices = [(user.id, user.email) for user in User.query.all()]
         self.collection_id.choices = [(collection.id, collection.code)
                                       for collection in Collection.query.all()]
@@ -54,6 +55,9 @@ class RegisterForm(PermissionForm):
         if not initial_validation:
             return False
 
+        if not self.active_user.is_admin:
+            raise ValidationError(_('You do not have sufficient privileges for this operation.'))
+
         permission = Permission.query.filter_by(user_id=self.user_id.data,
                                                 collection_id=self.collection_id.data).first()
         if permission:
@@ -70,9 +74,10 @@ class EditForm(PermissionForm):
 
     permission_id = IntegerField(_('Permission'), validators=[DataRequired()])
 
-    def __init__(self, target_permission_id, *args, **kwargs):
+    def __init__(self, active_user, target_permission_id, *args, **kwargs):
         """Create instance."""
-        super(EditForm, self).__init__(*args, permission_id=target_permission_id, **kwargs)
+        super(EditForm, self).__init__(active_user, *args, permission_id=target_permission_id,
+                                       **kwargs)
         self.target_permission_id = target_permission_id
 
     def set_defaults(self, permission):
@@ -90,6 +95,9 @@ class EditForm(PermissionForm):
 
         if not initial_validation:
             return False
+
+        if not self.active_user.is_admin:
+            raise ValidationError(_('You do not have sufficient privileges for this operation.'))
 
         target_permission = Permission.get_by_id(self.target_permission_id)
         if not target_permission:

@@ -9,14 +9,14 @@ from xl_auth.permission.models import Permission
 
 
 # noinspection PyUnusedLocal
-def test_user_can_delete_existing_permission(user, permission, testapp):
+def test_superuser_can_delete_existing_permission(superuser, permission, testapp):
     """Delete existing permission."""
     old_count = len(Permission.query.all())
     # Goes to homepage
     res = testapp.get('/')
     # Fills out login form
     form = res.forms['loginForm']
-    form['username'] = user.email
+    form['username'] = superuser.email
     form['password'] = 'myPrecious'
     # Submits
     res = form.submit().follow()
@@ -33,3 +33,28 @@ def test_user_can_delete_existing_permission(user, permission, testapp):
     assert _('Successfully deleted permissions for "%(username)s" on collection "%(code)s".',
              username=permission_user_email, code=permission_collection_code) in res
     assert len(Permission.query.all()) == old_count - 1
+
+
+def test_user_cannot_delete_permission(user, permission, testapp):
+    """Attempt to delete a permission."""
+    old_count = len(Permission.query.all())
+    # Goes to homepage
+    res = testapp.get('/')
+    # Fills out login form
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits
+    res = form.submit().follow()
+
+    # We see no Permissions button
+    assert res.lxml.xpath("//a[contains(@text,'{0}')]".format(_('Permissions'))) == []
+
+    # Try to go there directly
+    testapp.get('/permissions/', status=403)
+
+    # Try to delete
+    testapp.delete('/permissions/delete/1', status=403)
+
+    # Nothing was deleted
+    assert len(Permission.query.all()) == old_count

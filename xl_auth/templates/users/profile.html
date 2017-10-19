@@ -1,6 +1,67 @@
 <!-- user/profile.html -->
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Welcome {{ current_user.full_name }}</h1>
-    <h3>This is your personal profile page.</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1>{{ _('Welcome') }} {{ current_user.full_name }}</h1>
+        </div>
+        <div class="panel-body">
+            <h3>{{ _('This is your personal profile page.') }}</h3>
+
+            <a class="btn btn-default"
+               href="{{ url_for('user.edit_details', username=current_user.email) }}">
+                {{ _('Edit Details') }}
+            </a>
+            <a class="btn btn-default"
+               href="{{ url_for('user.change_password', username=current_user.email) }}">
+                {{ _('Change Password') }}
+            </a>
+        </div>
+    </div>
+
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            <h3>{{ _('Important') }}!</h3>
+        </div>
+        <div class="panel-body">
+            <p>{{ _('Contact customer service at <a href="mailto:libris@kb.se">libris@kb.se</a> \
+if your permissions are not correctly listed below.') }}</p>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>{{ _('Permissions') }}</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>{{ _('Code') }}</th>
+                    <th>{{ _('Friendly Name') }}</th>
+                    <th>{{ _('Registrant') }}</th>
+                    <th>{{ _('Cataloger') }}</th>
+                    <th>{{ _('Cataloguing Administrator') }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for permission in user.permissions %}
+                    <tr>
+                        <td>{{ permission.collection.code }}</td>
+                        <td>{{ permission.collection.friendly_name }}</td>
+                        <td class="{{ "bool-value-{}".format(permission.registrant).lower() }}">
+                            {{ _('Yes') if permission.registrant else _('No') }}
+                        </td>
+                        <td class="{{ "bool-value-{}".format(permission.cataloger).lower() }}">
+                            {{ _('Yes') if permission.cataloger else _('No') }}
+                        </td>
+                        <td class="{{ "bool-value-{}".format(permission.cataloging_admin).lower() }}">
+                            {{ _('Yes') if permission.cataloging_admin else _('No') }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}
