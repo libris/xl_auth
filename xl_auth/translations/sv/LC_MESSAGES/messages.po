@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2017-10-17 11:27+0200\n"
+"POT-Creation-Date: 2017-10-18 17:41+0200\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -292,11 +292,11 @@ msgstr "Katalogiseringsadmin"
 msgid "Permission"
 msgstr "Behörighet"
 
-#: xl_auth/public/forms.py:17 xl_auth/templates/public/home.html:42
+#: xl_auth/public/forms.py:17 xl_auth/templates/public/home.html:32
 msgid "Username"
 msgstr "Användarnamn"
 
-#: xl_auth/public/forms.py:18 xl_auth/templates/public/home.html:44 xl_auth/user/forms.py:15
+#: xl_auth/public/forms.py:18 xl_auth/templates/public/home.html:34 xl_auth/user/forms.py:15
 msgid "Password"
 msgstr "Lösenord"
 
@@ -328,7 +328,7 @@ msgstr "Om webbplatsen"
 msgid "Contact"
 msgstr "Kontakt"
 
-#: xl_auth/templates/layout.html:13 xl_auth/templates/nav.html:19 xl_auth/templates/public/home.html:23
+#: xl_auth/templates/layout.html:13 xl_auth/templates/nav.html:19 xl_auth/templates/public/home.html:17
 msgid "xl_auth"
 msgstr "Libris Login (alpha)"
 
@@ -389,47 +389,43 @@ msgstr "Befintliga behörigheter"
 msgid "Register New Permission"
 msgstr "Registrera ny behörighet"
 
-#: xl_auth/templates/public/home.html:9
+#: xl_auth/templates/public/about.html:8 xl_auth/templates/public/home.html:20
+msgid "about_the_service"
+msgstr "På Libris Login kan du se och hantera användare, samlingar och rättigheter."
+
+#: xl_auth/templates/public/home.html:8
 msgid "Welcome to xl_auth"
 msgstr "Välkommen till Libris Login"
 
-#: xl_auth/templates/public/home.html:38 xl_auth/templates/public/home.html:46
+#: xl_auth/templates/public/home.html:24
+msgid "login_text"
+msgstr "Logga in för att se och hantera användare, samlingar och rättigheter."
+
+#: xl_auth/templates/public/home.html:28 xl_auth/templates/public/home.html:36
 msgid "Log in"
 msgstr "Logga in"
 
-#: xl_auth/templates/public/home.html:53
+#: xl_auth/templates/public/home.html:43
 msgid "The Libris blog"
 msgstr "Librisbloggen"
 
-#: xl_auth/templates/public/home.html:54
+#: xl_auth/templates/public/home.html:44
 msgid "Read the latest news about the Libris collaboration."
 msgstr "Läs senaste nytt om Libris-samarbetet."
 
-#: xl_auth/templates/public/home.html:55
+#: xl_auth/templates/public/home.html:45
 msgid "Go to the blog"
 msgstr "Gå till bloggen"
 
-#: xl_auth/templates/public/home.html:58
-msgid "Libris customer service"
-msgstr "Libris kundservice"
-
-#: xl_auth/templates/public/home.html:59
-msgid "For questions about login or emergencies, send a mail to libris@kb.se"
-msgstr "För frågor om inlogg eller akuta problem, maila till libris@kb.se"
-
-#: xl_auth/templates/public/home.html:60
-msgid "Send e-mail"
-msgstr "Skicka e-post"
-
-#: xl_auth/templates/public/home.html:63
+#: xl_auth/templates/public/home.html:48
 msgid "Support forum"
 msgstr "Supportforum"
 
-#: xl_auth/templates/public/home.html:64
+#: xl_auth/templates/public/home.html:49
 msgid "Get help, ask questions and report errors."
 msgstr "Få hjälp, ställ frågor och rapportera fel."
 
-#: xl_auth/templates/public/home.html:65
+#: xl_auth/templates/public/home.html:50
 msgid "Go to kundo"
 msgstr "Gå till kundo"
 
@@ -474,3 +470,13 @@ msgstr "Användarinställningar uppdaterade för \"%(username)s\"."
 #, python-format
 msgid "Thank you for changing password for \"%(username)s\"."
 msgstr "Lösenord för \"%(username)s\" har ändrats."
+
+#~ msgid "Libris customer service"
+#~ msgstr "Libris kundservice"
+
+#~ msgid "For questions about login or emergencies, send a mail to libris@kb.se"
+#~ msgstr "För frågor om inlogg eller akuta problem, maila till libris@kb.se"
+
+#~ msgid "Send e-mail"
+#~ msgstr "Skicka e-post"
+

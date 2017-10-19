@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-17 11:27+0200\n"
+"POT-Creation-Date: 2017-10-18 17:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -291,11 +291,11 @@ msgstr ""
 msgid "Permission"
 msgstr ""
 
-#: xl_auth/public/forms.py:17 xl_auth/templates/public/home.html:42
+#: xl_auth/public/forms.py:17 xl_auth/templates/public/home.html:32
 msgid "Username"
 msgstr ""
 
-#: xl_auth/public/forms.py:18 xl_auth/templates/public/home.html:44 xl_auth/user/forms.py:15
+#: xl_auth/public/forms.py:18 xl_auth/templates/public/home.html:34 xl_auth/user/forms.py:15
 msgid "Password"
 msgstr ""
 
@@ -327,7 +327,7 @@ msgstr ""
 msgid "Contact"
 msgstr ""
 
-#: xl_auth/templates/layout.html:13 xl_auth/templates/nav.html:19 xl_auth/templates/public/home.html:23
+#: xl_auth/templates/layout.html:13 xl_auth/templates/nav.html:19 xl_auth/templates/public/home.html:17
 msgid "xl_auth"
 msgstr ""
 
@@ -388,47 +388,43 @@ msgstr ""
 msgid "Register New Permission"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:9
+#: xl_auth/templates/public/about.html:8 xl_auth/templates/public/home.html:20
+msgid "about_the_service"
+msgstr ""
+
+#: xl_auth/templates/public/home.html:8
 msgid "Welcome to xl_auth"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:38 xl_auth/templates/public/home.html:46
+#: xl_auth/templates/public/home.html:24
+msgid "login_text"
+msgstr ""
+
+#: xl_auth/templates/public/home.html:28 xl_auth/templates/public/home.html:36
 msgid "Log in"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:53
+#: xl_auth/templates/public/home.html:43
 msgid "The Libris blog"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:54
+#: xl_auth/templates/public/home.html:44
 msgid "Read the latest news about the Libris collaboration."
 msgstr ""
 
-#: xl_auth/templates/public/home.html:55
+#: xl_auth/templates/public/home.html:45
 msgid "Go to the blog"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:58
-msgid "Libris customer service"
-msgstr ""
-
-#: xl_auth/templates/public/home.html:59
-msgid "For questions about login or emergencies, send a mail to libris@kb.se"
-msgstr ""
-
-#: xl_auth/templates/public/home.html:60
-msgid "Send e-mail"
-msgstr ""
-
-#: xl_auth/templates/public/home.html:63
+#: xl_auth/templates/public/home.html:48
 msgid "Support forum"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:64
+#: xl_auth/templates/public/home.html:49
 msgid "Get help, ask questions and report errors."
 msgstr ""
 
-#: xl_auth/templates/public/home.html:65
+#: xl_auth/templates/public/home.html:50
 msgid "Go to kundo"
 msgstr ""
 

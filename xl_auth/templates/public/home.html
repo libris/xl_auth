@@ -4,9 +4,12 @@
     <div class="body-content">
         <div class="row">
             {% if current_user and current_user.is_authenticated %}
-                <div class="jumbotron">
+                <div class="col-md-12">
                     <h1>{{ _('Welcome to xl_auth') }}</h1>
-                </div><!-- /.jumbotron -->
+                    <p>
+                      {{ _('about_the_service') }}
+                    </p>
+                </div>
             {% elif login_form %}
                 <div class="col-md-12 login-panel panel panel-default">
                     <div class="col-md-8">
@@ -18,14 +21,7 @@
                             </h2>
                         </div>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta quis dolor sed
-                            hendrerit. Maecenas varius augue vitae quam molestie condimentum. Pellentesque nec magna
-                            accumsan, placerat dui ut, tristique nulla.
-                        </p>
-                        <p>
-                            Nam commodo velit libero, ac lacinia tellus ornare a. Pellentesque magna arcu, consectetur
-                            eu orci eu, maximus ullamcorper turpis. Vivamus lobortis tellus non nibh vulputate, at
-                            rhoncus est vehicula.
+                            {{ _('login_text') }}
                         </p>
                     </div>
                     <div class="col-md-4">
