@@ -19,7 +19,7 @@
 - name: template docker daemon.json
   lineinfile:
     dest: /etc/docker/daemon.json
-    state: present
+    state: absent
     create: yes
     line: '{"experimental": true}'
   tags: docker
