@@ -175,8 +175,9 @@ def urls(url, order):
 
 
 @click.command()
+@click.option('--admin-email', required=True, default=None, help='Email for admin')
 @with_appcontext
-def import_data():
+def import_data(admin_email):
     """Read data from Voyager dump and BibDB API to create DB entities.
 
     Creates:
@@ -195,7 +196,8 @@ def import_data():
 
     def _get_collection_details_from_bibdb(code):
         raw_bibdb_api_data = json.loads(requests.get(
-            'https://bibdb.libris.kb.se/api/lib?level=brief&sigel={}'.format(code)).content)
+            'https://bibdb.libris.kb.se/api/lib?level=brief&sigel={}'
+            .format(code)).content.decode('utf-8'))
         if raw_bibdb_api_data['query']['operation'] == 'sigel {}'.format(code):
             print('.', end='')
         else:
@@ -367,6 +369,9 @@ def import_data():
             'cataloging_admins': xl_auth_cataloging_admins
         }
 
+    # Get admin user
+    admin = User.query.filter_by(email=admin_email).first()
+
     # Gather data.
     voyager = _get_voyager_data()
     bibdb = _get_bibdb_cataloging_admins()
@@ -382,7 +387,7 @@ def import_data():
     # Store collections.
     for collection, details in deepcopy(xl_auth['collections']).items():
         with current_app.test_request_context():
-            collection_form = CollectionRegisterForm(code=details['code'],
+            collection_form = CollectionRegisterForm(admin, code=details['code'],
                                                      friendly_name=details['friendly_name'])
             collection_form.validate()
         if collection_form.code.errors or collection_form.friendly_name.errors:

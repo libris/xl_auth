@@ -13,7 +13,7 @@ def test_superuser_can_administer_existing_user(superuser, testapp):
     """Administer user details for an existing user."""
     # Goes to homepage.
     res = testapp.get('/')
-    # Fills out login form in navbar.
+    # Fills out login form.
     form = res.forms['loginForm']
     form['username'] = superuser.email
     form['password'] = 'myPrecious'
@@ -50,7 +50,7 @@ def test_superuser_can_change_password_for_existing_user(superuser, testapp):
     """Change password for an existing user."""
     # Goes to homepage.
     res = testapp.get('/')
-    # Fills out login form in navbar.
+    # Fills out login form.
     form = res.forms['loginForm']
     form['username'] = superuser.email
     form['password'] = 'myPrecious'
@@ -79,7 +79,7 @@ def test_superuser_sees_error_message_if_username_is_changed_from_administer(sup
     """Show error if Edit Details form modifies user username/email."""
     # Goes to homepage.
     res = testapp.get('/')
-    # Fills out login form in navbar.
+    # Fills out login form.
     form = res.forms['loginForm']
     form['username'] = superuser.email
     form['password'] = 'myPrecious'
@@ -104,7 +104,7 @@ def test_superuser_sees_error_message_if_username_is_changed_from_change_passwor
     """Show error if Change Password form modifies user username/email."""
     # Goes to homepage.
     res = testapp.get('/')
-    # Fills out login form in navbar.
+    # Fills out login form.
     form = res.forms['loginForm']
     form['username'] = superuser.email
     form['password'] = 'myPrecious'
@@ -127,7 +127,7 @@ def test_superuser_sees_error_message_if_full_name_is_missing_in_administer(supe
     """Show error if Edit Details form does not include name."""
     # Goes to homepage.
     res = testapp.get('/')
-    # Fills out login form in navbar.
+    # Fills out login form.
     form = res.forms['loginForm']
     form['username'] = superuser.email
     form['password'] = 'myPrecious'
@@ -148,7 +148,7 @@ def test_superuser_sees_error_message_if_username_does_not_exist(superuser, test
     """Show error when attempting Edit Details / Change Password on user that does not exist."""
     # Goes to homepage.
     res = testapp.get('/')
-    # Fills out login form in navbar.
+    # Fills out login form.
     form = res.forms['loginForm']
     form['username'] = superuser.email
     form['password'] = 'myPrecious'
@@ -170,7 +170,7 @@ def test_user_cannot_administer_existing_user(superuser, user, testapp):
     """Attempt to administer user details for an existing user."""
     # Goes to homepage.
     res = testapp.get('/')
-    # Fills out login form in navbar.
+    # Fills out login form.
     form = res.forms['loginForm']
     form['username'] = user.email
     form['password'] = 'myPrecious'
@@ -196,7 +196,7 @@ def test_user_can_edit_own_details(user, testapp):
     """Change details for self."""
     # Goes to homepage.
     res = testapp.get('/')
-    # Fills out login form in navbar.
+    # Fills out login form.
     form = res.forms['loginForm']
     form['username'] = user.email
     form['password'] = 'myPrecious'

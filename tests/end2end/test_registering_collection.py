@@ -20,7 +20,7 @@ def test_superuser_can_register_new_collection(superuser, collection, testapp):
     old_count = len(Collection.query.all())
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form in navbar
+    # Fills out login form
     form = res.forms['loginForm']
     form['username'] = superuser.email
     form['password'] = 'myPrecious'
@@ -55,7 +55,7 @@ def test_superuser_sees_error_message_if_code_is_missing(superuser, collection, 
     """Show error if form does not include collection code."""
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form in navbar
+    # Fills out login form
     form = res.forms['loginForm']
     form['username'] = superuser.email
     form['password'] = 'myPrecious'
@@ -78,7 +78,7 @@ def test_superuser_sees_error_message_if_friendly_name_is_missing(superuser, col
     """Show error if form does not include Name."""
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form in navbar
+    # Fills out login form
     form = res.forms['loginForm']
     form['username'] = superuser.email
     form['password'] = 'myPrecious'
@@ -101,7 +101,7 @@ def test_superuser_sees_error_message_if_category_is_missing(superuser, collecti
     """Show error if form does not include a valid category."""
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form in navbar
+    # Fills out login form
     form = res.forms['loginForm']
     form['username'] = superuser.email
     form['password'] = 'myPrecious'
@@ -128,7 +128,7 @@ def test_superuser_sees_error_message_if_collection_already_registered(superuser
     collection.save()
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form in navbar
+    # Fills out login form
     form = res.forms['loginForm']
     form['username'] = superuser.email
     form['password'] = 'myPrecious'
@@ -151,7 +151,7 @@ def test_user_cannot_register_collection(user, collection, testapp):
     """Attempt to register a collection."""
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form in navbar
+    # Fills out login form
     form = res.forms['loginForm']
     form['username'] = user.email
     form['password'] = 'myPrecious'

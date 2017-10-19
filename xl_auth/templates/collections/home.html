@@ -23,7 +23,9 @@
                 <th class="col-md-1">{{ _('Category') }}</th>
                 <th class="col-md-1">{{ _('Users') }}</th>
                 <th>{{ _('Created At') }}</th>
-                <th></th>
+                {% if current_user.is_admin %}
+                <th>{{ _('Actions') }}</th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
@@ -35,14 +37,14 @@
                     <td>{{ _(item.category.capitalize()) if item.category in ['bibliography', 'library'] else _('None') }}</td>
                     <td>{{ item.permissions | length }}</td>
                     <td>{{ item.created_at.strftime('%Y-%m-%d') }}</td>
+                    {% if current_user.is_admin %}
                     <td class="actions">
-                        {% if current_user.is_admin %}
                         <a class=""
                            href="{{ url_for('collection.edit', collection_code=item.code) }}">
                             <i class="edit-button fa fa-pencil"></i>
                         </a>
-                        {% endif %}
                     </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>

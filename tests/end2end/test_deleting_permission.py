@@ -40,7 +40,7 @@ def test_user_cannot_delete_permission(user, permission, testapp):
     old_count = len(Permission.query.all())
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form in navbar
+    # Fills out login form
     form = res.forms['loginForm']
     form['username'] = user.email
     form['password'] = 'myPrecious'
