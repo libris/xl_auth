@@ -1,6 +1,6 @@
 {
   "name": "xl_auth",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "author": "National Library of Sweden",
   "license": "Apache-2.0",
   "description": "OAuth2 authorization for LibrisXL, replacing BibDB counterpart",
@@ -42,6 +42,7 @@
     "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^0.11.2",
     "font-awesome-webpack": "0.0.5-beta.2",
+    "kungbib-styles": "^1.2.0",
     "less": "^2.7.2",
     "less-loader": "^4.0.4",
     "manifest-revision-webpack-plugin": "^0.4.0",

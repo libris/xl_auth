@@ -25,7 +25,7 @@ class RegisterForm(FlaskForm):
     password = password
     confirm = confirm
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, active_user, *args, **kwargs):
         """Create instance."""
         super(RegisterForm, self).__init__(*args, **kwargs)
         self.user = None
@@ -51,7 +51,7 @@ class _EditForm(FlaskForm):
 
     username = username
 
-    def __init__(self, target_username, *args, **kwargs):
+    def __init__(self, active_user, target_username, *args, **kwargs):
         """Create instance."""
         super(_EditForm, self).__init__(*args, **kwargs)
         self.target_username = target_username

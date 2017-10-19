@@ -27,8 +27,12 @@ Run the following commands to bootstrap your environment ::
     cd xl_auth
     virtualenv venv && source venv/bin/activate
     pip install -r requirements/dev.txt
-    FLASK_APP=$(PWD)/autoapp.py FLASK_DEBUG=1 flask db upgrade
     npm install
+    npm build
+    export FLASK_APP=$(PWD)/autoapp.py
+    export FLASK_DEBUG=1
+    flask db upgrade
+    flask create_user --email me@example.com --is-admin
     npm start  # run webpack dev server and flask server using concurrently
 
 You will see a pretty welcome screen.
@@ -43,15 +47,29 @@ In general, before running flask shell commands, set the ``FLASK_APP`` and
 Deployment
 ==========
 
-To deploy ::
+Local dev deployment ::
 
     export FLASK_DEBUG=0
+    export SQLALCHEMY_DATABASE_URI=postgresql://localhost/db')
     npm run build    # build assets with webpack
     flask translate  # compile translations
     flask run        # start the flask server
 
-In your production environment, make sure the ``FLASK_DEBUG`` environment variable is
-unset or is set to ``0``, so that ``ProdConfig`` is used.
+In your production environment, make sure the ``FLASK_DEBUG`` environment variable is set to ``0``,
+so that ``ProdConfig`` is used.
+
+Staging dev deployment ::
+
+    cd ansible/
+    vagrant up --provision
+
+Rolling out latest Docker on login.libris.kb.se dev server ::
+
+    cd ansible/
+    ansible-playbook deployment.yml -u <my-exchange-username> --ask-pass --ask-become-pass
+
+For creating an initial admin account during provisioning, with username libris@kb.se,
+append ``-e xl_auth_admin_pass=my-secret-password`` to the Ansible invocation.
 
 
 Shell
@@ -129,8 +147,9 @@ your ``settings.py`` ::
 Docker
 ======
 
-The latest application build can be deployed using Docker for testing purposes ::
+The latest application build can be built and run using Docker for testing purposes ::
 
+    docker build -t mblomdahl/xl_auth .
     docker run -it -p 5000:5000 mblomdahl/xl_auth
 
 
@@ -163,6 +182,22 @@ DB Models
 
 Changelog
 =========
+
+v. 0.4.0
+--------
+
+* Added ``flask import_data`` CLI tool for pulling data from legacy systems
+  (`#38 <https://github.com/libris/xl_auth/issues/38>`_,
+  `#43 <https://github.com/libris/xl_auth/issues/43>`_)
+* Styling and usability improvements (`#6 <https://github.com/libris/xl_auth/issues/6>`_,
+  `#22 <https://github.com/libris/xl_auth/issues/22>`_)
+* Applied restrictions on anonymous users and non-admins
+  (`#48 <https://github.com/libris/xl_auth/issues/48>`_)
+* Added new type of permission, "being the cataloging admin for a collection"
+  (`#40 <https://github.com/libris/xl_auth/issues/40>`_)
+* Support for dev deployment on login.libris.kb.se
+  (`#39 <https://github.com/libris/xl_auth/issues/39>`_)
+
 
 v. 0.3.0
 --------
@@ -200,4 +235,3 @@ v. 0.1.0
 --------
 
 * Establishing initial project requirements, with none of the intended functionality in place
-

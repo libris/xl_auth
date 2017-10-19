@@ -9,7 +9,6 @@ from flask_login import login_required, login_user, logout_user
 
 from ..extensions import login_manager
 from ..public.forms import LoginForm
-from ..user.forms import RegisterForm
 from ..user.models import User
 from ..utils import flash_errors
 
@@ -45,22 +44,6 @@ def logout():
     logout_user()
     flash(_('You are logged out.'), 'info')
     return redirect(url_for('public.home'))
-
-
-@blueprint.route('/register/', methods=['GET', 'POST'])
-def register():
-    """Register new user."""
-    register_user_form = RegisterForm(request.form)
-    if register_user_form.validate_on_submit():
-        User.create(email=register_user_form.username.data,
-                    full_name=register_user_form.full_name.data,
-                    password=register_user_form.password.data,
-                    active=True)
-        flash(_('Thank you for registering. You can now log in.'), 'success')
-        return redirect(url_for('public.home'))
-    else:
-        flash_errors(register_user_form)
-    return render_template('public/register.html', register_user_form=register_user_form)
 
 
 @blueprint.route('/about/')

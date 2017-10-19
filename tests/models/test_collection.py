@@ -6,6 +6,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import datetime as dt
 
 import pytest
+from flask_babel import gettext as _
 from six import string_types
 
 from xl_auth.collection.models import Collection
@@ -43,6 +44,8 @@ def test_factory(db):
     assert isinstance(collection.friendly_name, string_types)
     assert collection.category in {'bibliography', 'library', 'uncategorized'}
     assert collection.active is True
+    assert collection.replaces is None
+    assert collection.replaced_by is None
     assert isinstance(collection.permissions, list)
     assert bool(collection.created_at)
 
@@ -68,6 +71,21 @@ def test_removing_permissions(user):
     permission.delete()
 
     assert permission not in collection.permissions
+
+
+@pytest.mark.usefixtures('db')
+def test_get_replaces_and_replaced_by_str():
+    """Check get_replaces_and_replaced_by_str output."""
+    collection = CollectionFactory(replaces='A', replaced_by='B')
+    assert collection.get_replaces_and_replaced_by_str() == \
+        _('Replaces %(replaces_code)s, then replaced by %(replaced_by_code)s',
+          replaces_code='A', replaced_by_code='B')
+    collection = CollectionFactory(replaces='A')
+    assert collection.get_replaces_and_replaced_by_str() == _('Replaces %(replaces_code)s',
+                                                              replaces_code='A')
+    collection = CollectionFactory(replaced_by='X')
+    assert collection.get_replaces_and_replaced_by_str() == _('Replaced by %(replaced_by_code)s',
+                                                              replaced_by_code='X')
 
 
 @pytest.mark.usefixtures('db')

@@ -14,12 +14,12 @@ def test_user_can_delete_existing_permission(user, permission, testapp):
     old_count = len(Permission.query.all())
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form in navbar
+    # Fills out login form
     form = res.forms['loginForm']
     form['username'] = user.email
     form['password'] = 'myPrecious'
     # Submits
-    form.submit().follow()
+    res = form.submit().follow()
     # Clicks Permissions button
     res = res.click(_('Permissions'))
     # Clicks Edit button on a permission
