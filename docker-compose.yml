@@ -1,0 +1,41 @@
+---
+
+version: '3.1'
+services:
+  postgres:
+    image: postgres:9.4-alpine
+    container_name: postgres
+    restart: always
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - xl_auth
+    environment:
+      POSTGRES_DB: prod
+      POSTGRES_USER: xl_auth
+      POSTGRES_PASSWORD: xl_auth
+
+  xl_auth:
+    image: mblomdahl/xl_auth:latest
+    container_name: xl_auth
+    restart: always
+    environment:
+      FLASK_DEBUG: 0
+      SQLALCHEMY_DATABASE_URI: 'postgresql://xl_auth:xl_auth@postgres/prod'
+    ports:
+      - 5000:5000
+    networks:
+      - xl_auth
+    depends_on:
+      - postgres
+
+volumes:
+  postgres:
+    driver: local
+
+networks:
+  xl_auth:
+
+...

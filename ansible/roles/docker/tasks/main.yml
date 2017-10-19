@@ -1,0 +1,31 @@
+---
+
+- name: docker-ce repo
+  yum_repository:
+    name: docker-ce-stable
+    description: Docker CE Stable - $basearch
+    baseurl: https://download.docker.com/linux/centos/7/$basearch/stable
+    gpgkey: https://download.docker.com/linux/centos/gpg
+  tags: docker
+
+- name: install docker-ce-17.09.0.ce
+  yum: name=docker-ce-17.09.0.ce state=present
+  tags: docker
+
+- name: install docker-compose-1.16.1
+  pip: name=docker-compose version=1.16.1 state=present
+  tags: docker
+
+- name: template docker daemon.json
+  lineinfile:
+    dest: /etc/docker/daemon.json
+    state: present
+    create: yes
+    line: '{"experimental": true}'
+  tags: docker
+
+- name: docker running and enabled
+  service: name=docker state=started enabled=yes
+  tags: docker
+
+...
