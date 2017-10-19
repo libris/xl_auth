@@ -15,7 +15,7 @@ def test_superuser_can_register_new_permission(superuser, collection, testapp):
     old_count = len(Permission.query.all())
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form in navbar
+    # Fills out login form
     form = res.forms['loginForm']
     form['username'] = superuser.email
     form['password'] = 'myPrecious'
@@ -48,7 +48,7 @@ def test_superuser_sees_error_message_if_permission_is_already_registered(superu
     """Show error if permission is already registered."""
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form in navbar
+    # Fills out login form
     form = res.forms['loginForm']
     form['username'] = superuser.email
     form['password'] = 'myPrecious'
@@ -74,7 +74,7 @@ def test_user_cannot_register_permission(user, permission, testapp):
     """Attempt to register a permission."""
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form in navbar
+    # Fills out login form
     form = res.forms['loginForm']
     form['username'] = user.email
     form['password'] = 'myPrecious'

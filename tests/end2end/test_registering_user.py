@@ -17,7 +17,7 @@ def test_superuser_can_register(superuser, testapp):
     old_count = len(User.query.all())
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form in navbar
+    # Fills out login form
     form = res.forms['loginForm']
     form['username'] = superuser.email
     form['password'] = 'myPrecious'
@@ -45,7 +45,7 @@ def test_user_cant_register(user, testapp):
     """Register a new user."""
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form in navbar
+    # Fills out login form
     form = res.forms['loginForm']
     form['username'] = user.email
     form['password'] = 'myPrecious'
@@ -59,8 +59,7 @@ def test_user_cant_register(user, testapp):
     # We see no link to Create Account
     assert res.lxml.xpath("//a[starts-with(@href,'/users/register')]") == []
     # We try to go there directly
-    res = testapp.get('/users/register')
-    res.follow(status=403)
+    res = testapp.get('/users/register/', status=403)
 
 
 # noinspection PyUnusedLocal
@@ -68,7 +67,7 @@ def test_user_sees_error_message_if_passwords_dont_match(superuser, user, testap
     """Show error if passwords don't match."""
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form in navbar
+    # Fills out login form
     form = res.forms['loginForm']
     form['username'] = superuser.email
     form['password'] = 'myPrecious'
@@ -95,7 +94,7 @@ def test_user_sees_error_message_if_user_already_registered(superuser, user, tes
     user.save()
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form in navbar
+    # Fills out login form
     form = res.forms['loginForm']
     form['username'] = superuser.email
     form['password'] = 'myPrecious'

@@ -21,7 +21,9 @@
                 <th>{{ _('Active') }}</th>
                 <th>{{ _('Admin') }}</th>
                 <th>{{ _('Created At') }}</th>
+                {% if current_user.is_admin %}
                 <th>{{ _('Actions') }}</th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
@@ -33,18 +35,18 @@
                     <td>{{ user.active }}</td>
                     <td class="{{ "bool-value-{}".format(user.is_admin).lower() }}">{{ _('Yes') if user.is_admin else _('No') }}</td>
                     <td>{{ user.created_at.strftime('%y-%m-%d %H:%M:%S') }}</td>
+                    {% if current_user.is_admin %}
                     <td>
-                        {% if current_user.is_admin %}
-                            <a class="btn btn-default"
-                               href="{{ url_for('user.administer', username=user.email) }}">
-                                {{ _('Edit Details') }}
-                            </a>
-                            <a class="btn btn-default"
-                               href="{{ url_for('user.change_password', username=user.email) }}">
-                                {{ _('Change Password') }}
-                            </a>
-                        {% endif %}
+                        <a class="btn btn-default"
+                           href="{{ url_for('user.administer', username=user.email) }}">
+                            {{ _('Edit Details') }}
+                        </a>
+                        <a class="btn btn-default"
+                           href="{{ url_for('user.change_password', username=user.email) }}">
+                            {{ _('Change Password') }}
+                        </a>
                     </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>

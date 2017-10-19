@@ -16,7 +16,7 @@ def test_superuser_can_edit_existing_collection(superuser, collection, testapp):
     """Edit an existing collection."""
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form in navbar
+    # Fills out login form
     form = res.forms['loginForm']
     form['username'] = superuser.email
     form['password'] = 'myPrecious'
@@ -52,7 +52,7 @@ def test_superuser_sees_error_message_if_code_is_changed(superuser, collection, 
     """Show error if form modifies collection code."""
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form in navbar
+    # Fills out login form
     form = res.forms['loginForm']
     form['username'] = superuser.email
     form['password'] = 'myPrecious'
@@ -75,7 +75,7 @@ def test_superuser_sees_error_message_if_friendly_name_is_missing(superuser, col
     """Show error if form does not include Name."""
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form in navbar
+    # Fills out login form
     form = res.forms['loginForm']
     form['username'] = superuser.email
     form['password'] = 'myPrecious'
@@ -97,7 +97,7 @@ def test_superuser_sees_error_message_if_category_is_missing(superuser, collecti
     """Show error if form does not include a valid category."""
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form in navbar
+    # Fills out login form
     form = res.forms['loginForm']
     form['username'] = superuser.email
     form['password'] = 'myPrecious'
@@ -119,7 +119,7 @@ def test_superuser_sees_error_message_if_collection_does_not_exist(superuser, co
     """Show error if collection already registered."""
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form in navbar
+    # Fills out login form
     form = res.forms['loginForm']
     form['username'] = superuser.email
     form['password'] = 'myPrecious'
@@ -135,7 +135,7 @@ def test_user_cannot_edit_collection(user, collection, testapp):
     """Attempt to edit a collection."""
     # Goes to homepage
     res = testapp.get('/')
-    # Fills out login form in navbar
+    # Fills out login form
     form = res.forms['loginForm']
     form['username'] = user.email
     form['password'] = 'myPrecious'

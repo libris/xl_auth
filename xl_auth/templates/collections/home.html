@@ -21,7 +21,9 @@
                 <th>{{ _('Users') }}</th>
                 <th>{{ _('Active') }}</th>
                 <th>{{ _('Created At') }}</th>
+                {% if current_user.is_admin %}
                 <th>{{ _('Actions') }}</th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
@@ -34,14 +36,14 @@
                     <td>{{ item.permissions | length }}</td>
                     <td>{{ item.active }}</td>
                     <td>{{ item.created_at.strftime('%Y-%m-%d') }}</td>
+                    {% if current_user.is_admin %}
                     <td>
-                        {% if current_user.is_admin %}
                         <a class="btn btn-default"
                            href="{{ url_for('collection.edit', collection_code=item.code) }}">
                             {{ _('Edit') }}
                         </a>
-                        {% endif %}
                     </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>

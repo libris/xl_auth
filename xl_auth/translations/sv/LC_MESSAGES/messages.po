@@ -520,6 +520,3 @@ msgstr "Användarinställningar uppdaterade för \"%(username)s\"."
 msgid "Thank you for changing password for \"%(username)s\"."
 msgstr "Lösenord för \"%(username)s\" har ändrats."
 
-#~ msgid "Viktigt"
-#~ msgstr ""
-
