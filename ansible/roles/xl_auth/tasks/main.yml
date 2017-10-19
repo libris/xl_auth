@@ -19,7 +19,7 @@
 - name: start xl_auth
   docker_container:
     name: xl_auth
-    image: "mblomdahl/xl_auth:{{ xl_auth_docker_tag }}"
+    image: "{{ xl_auth_docker }}"
     pull: yes
     command: run -h 0.0.0.0 -p 5000 --with-threads
     state: started
@@ -33,42 +33,26 @@
   tags: xl_auth
   register: start_xl_auth
 
-- block:
-  - name: run 'flask db upgrade'
-    docker_container:
-      name: xl_auth_db_upgrade
-      image: "mblomdahl/xl_auth:{{ xl_auth_docker_tag }}"
-      interactive: yes
-      tty: yes
-      detach: no
-      command: db upgrade
-      links:
-        - postgres
-      env:
-        FLASK_DEBUG: 0
-        SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
-
-  - name: run 'flask import_data'
-    docker_container:
-      name: xl_auth_import_data
-      image: "mblomdahl/xl_auth:{{ xl_auth_docker_tag }}"
-      interactive: yes
-      tty: yes
-      auto_remove: yes
-      command: import_data --verbose
-      links:
-        - postgres
-      env:
-        FLASK_DEBUG: 0
-        SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
-
+- name: run 'flask db upgrade'
+  docker_container:
+    name: xl_auth_db_upgrade
+    image: "{{ xl_auth_docker }}"
+    interactive: yes
+    tty: yes
+    detach: no
+    command: db upgrade
+    links:
+      - postgres
+    env:
+      FLASK_DEBUG: 0
+      SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
   when: start_xl_auth.changed
   tags: xl_auth
 
 - name: run 'flask create_user -e libris@kb.se -p <something-secret> --is-admin --force'
   docker_container:
     name: xl_auth_create_user
-    image: "mblomdahl/xl_auth:{{ xl_auth_docker_tag }}"
+    image: "{{ xl_auth_docker }}"
     interactive: yes
     tty: yes
     detach: no
@@ -79,6 +63,22 @@
       FLASK_DEBUG: 0
       SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
   when: xl_auth_admin_pass | length
+  tags: xl_auth
+
+- name: run 'flask import_data'
+  docker_container:
+    name: xl_auth_import_data
+    image: "{{ xl_auth_docker }}"
+    interactive: yes
+    tty: yes
+    auto_remove: yes
+    command: import_data --verbose --admin-email libris@kb.se
+    links:
+      - postgres
+    env:
+      FLASK_DEBUG: 0
+      SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
+  when: start_xl_auth.changed
   tags: xl_auth
 
 ...
