@@ -76,7 +76,7 @@
                         <a title="{{ _('Edit Details') }}" href="{{ url_for('user.edit_details', username=user.email) }}"><i class="fa fa-pencil"></i></a>
                         <a title="{{ _('Change Password') }}" href="{{ url_for('user.change_password', username=user.email) }}"><i class="fa fa-key"></i></a>
                     </td>
-                    {% endif %} }
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
