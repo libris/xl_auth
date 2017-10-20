@@ -4,7 +4,6 @@
     <h1>{{ _('Users') }}</h1>
     <br/>
     <div class="panel panel-default">
-        <!-- Default panel contents -->
         <div class="panel-heading">
             <strong>{{ _('Existing Users') }}</strong>
             {% if current_user.is_admin %}
@@ -35,7 +34,7 @@
                     <td>{{ user.created_at.strftime('%y-%m-%d') }}</td>
                     {% if current_user.is_admin %}
                     <td class="actions">
-                        <a title="{{ _('Edit Details') }}" href="{{ url_for('user.edit_details', username=user.email) }}"><i class="fa fa-pencil"></i></a>
+                        <a title="{{ _('Edit Details') }}" href="{{ url_for('user.administer', username=user.email) }}"><i class="fa fa-pencil"></i></a>
                         <a title="{{ _('Change Password') }}" href="{{ url_for('user.change_password', username=user.email) }}"><i class="fa fa-key"></i></a>
                     </td>
                     {% endif %}
@@ -46,7 +45,6 @@
     </div>
     <br/>
     <div class="panel panel-default">
-        <!-- Default panel contents -->
         <div class="panel-heading">
             <strong>{{ _('Inactive Users') }}</strong>
         </div>
@@ -73,7 +71,7 @@
                     <td>{{ user.created_at.strftime('%y-%m-%d') }}</td>
                     {% if current_user.is_admin %}
                     <td class="actions">
-                        <a title="{{ _('Edit Details') }}" href="{{ url_for('user.edit_details', username=user.email) }}"><i class="fa fa-pencil"></i></a>
+                        <a title="{{ _('Edit Details') }}" href="{{ url_for('user.administer', username=user.email) }}"><i class="fa fa-pencil"></i></a>
                         <a title="{{ _('Change Password') }}" href="{{ url_for('user.change_password', username=user.email) }}"><i class="fa fa-key"></i></a>
                     </td>
                     {% endif %}
