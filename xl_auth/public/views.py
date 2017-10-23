@@ -18,8 +18,7 @@ blueprint = Blueprint('public', __name__, static_folder='../static')
 @login_manager.user_loader
 def load_user(user_id):
     """Load user by ID."""
-    user = User.get_by_id(int(user_id))
-    return user
+    return User.get_by_id(int(user_id))
 
 
 @blueprint.route('/', methods=['GET', 'POST'])
