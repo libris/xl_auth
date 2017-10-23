@@ -17,7 +17,7 @@ def flash_errors(form, category='warning'):
 
 def get_gravatar_url(user_email, size):
     """Get gravatar url from user email."""
-    clean_email = str(user_email).lower()
+    clean_email = str(user_email).lower().encode()
     hash = hashlib.md5(clean_email)
     url = 'https://www.gravatar.com/avatar/' + hash.hexdigest() + '?d=mm&s=' + str(size)
     return url
