@@ -27,7 +27,7 @@
             <tbody>
             {% for user in users_list_active %}
                 <tr>
-                    <td>{{ user.email }}</td>
+                    <td class="word-break-all">{{ user.email }}</td>
                     <td>{{ user.full_name }}</td>
                     <td>{{ user.permissions | length }}</td>
                     <td class="{{ "bool-value-{}".format(user.is_admin).lower() }}">{{ _('Yes') if user.is_admin else _('No') }}</td>
@@ -70,7 +70,7 @@
             <tbody>
             {% for user in users_list_inactive %}
                 <tr>
-                    <td>{{ user.email }}</td>
+                    <td class="word-break-all">{{ user.email }}</td>
                     <td>{{ user.full_name }}</td>
                     <td>{{ user.permissions | length }}</td>
                     <td class="{{ "bool-value-{}".format(user.is_admin).lower() }}">{{ _('Yes') if user.is_admin else _('No') }}</td>
