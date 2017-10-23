@@ -31,7 +31,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a class="navbar-link" href="{{ url_for('user.profile') }}">
-                        <img class="navbar-user-gravatar" src="{{ current_user.gravatar }}" />
+                        <img class="navbar-user-gravatar" src="{{ current_user.get_gravatar_url(32) }}" />
                         {{ current_user.full_name }}
                     </a>
                 </li>

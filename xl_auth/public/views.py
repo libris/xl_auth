@@ -10,7 +10,7 @@ from flask_login import login_required, login_user, logout_user
 from ..extensions import login_manager
 from ..public.forms import LoginForm
 from ..user.models import User
-from ..utils import flash_errors, get_gravatar_url
+from ..utils import flash_errors
 
 blueprint = Blueprint('public', __name__, static_folder='../static')
 
@@ -19,7 +19,6 @@ blueprint = Blueprint('public', __name__, static_folder='../static')
 def load_user(user_id):
     """Load user by ID."""
     user = User.get_by_id(int(user_id))
-    user.gravatar = get_gravatar_url(user.email, 32)
     return user
 
 
