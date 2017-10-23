@@ -4,7 +4,6 @@
     <h1>{{ _('Users') }}</h1>
     <br/>
     <div class="panel panel-default">
-        <!-- Default panel contents -->
         <div class="panel-heading">
             <strong>{{ _('Existing Users') }}</strong>
             {% if current_user.is_admin %}
@@ -15,36 +14,65 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th>{{ _('Email') }}</th>
-                <th>{{ _('Name') }}</th>
-                <th>{{ _('Collections') }}</th>
-                <th>{{ _('Active') }}</th>
-                <th>{{ _('Admin') }}</th>
+                <th class="col-md-5">{{ _('Email') }}</th>
+                <th class="col-md-3">{{ _('Name') }}</th>
+                <th class="col-md-1">{{ _('Collections') }}</th>
+                <th class="col-md-1">{{ _('Admin') }}</th>
                 <th>{{ _('Created At') }}</th>
                 {% if current_user.is_admin %}
-                <th>{{ _('Actions') }}</th>
+                <th class="col-md-1"></th>
                 {% endif %}
             </tr>
             </thead>
             <tbody>
-            {% for user in users_list %}
+            {% for user in users_list_active %}
                 <tr>
                     <td>{{ user.email }}</td>
                     <td>{{ user.full_name }}</td>
                     <td>{{ user.permissions | length }}</td>
-                    <td>{{ user.active }}</td>
                     <td class="{{ "bool-value-{}".format(user.is_admin).lower() }}">{{ _('Yes') if user.is_admin else _('No') }}</td>
-                    <td>{{ user.created_at.strftime('%y-%m-%d %H:%M:%S') }}</td>
+                    <td>{{ user.created_at.strftime('%y-%m-%d') }}</td>
                     {% if current_user.is_admin %}
-                    <td>
-                        <a class="btn btn-default"
-                           href="{{ url_for('user.administer', username=user.email) }}">
-                            {{ _('Edit Details') }}
-                        </a>
-                        <a class="btn btn-default"
-                           href="{{ url_for('user.change_password', username=user.email) }}">
-                            {{ _('Change Password') }}
-                        </a>
+                    <td class="actions">
+                        <a title="{{ _('Edit Details') }}" href="{{ url_for('user.administer', username=user.email) }}"><i class="fa fa-pencil"></i></a>
+                        <a title="{{ _('Change Password') }}" href="{{ url_for('user.change_password', username=user.email) }}"><i class="fa fa-key"></i></a>
+                    </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <br/>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong>{{ _('Inactive Users') }}</strong>
+        </div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th class="col-md-5">{{ _('Email') }}</th>
+                <th class="col-md-3">{{ _('Name') }}</th>
+                <th class="col-md-1">{{ _('Collections') }}</th>
+                <th class="col-md-1">{{ _('Admin') }}</th>
+                <th>{{ _('Created At') }}</th>
+                {% if current_user.is_admin %}
+                <th class="col-md-1"></th>
+                {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users_list_inactive %}
+                <tr>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.full_name }}</td>
+                    <td>{{ user.permissions | length }}</td>
+                    <td class="{{ "bool-value-{}".format(user.is_admin).lower() }}">{{ _('Yes') if user.is_admin else _('No') }}</td>
+                    <td>{{ user.created_at.strftime('%y-%m-%d') }}</td>
+                    {% if current_user.is_admin %}
+                    <td class="actions">
+                        <a title="{{ _('Edit Details') }}" href="{{ url_for('user.administer', username=user.email) }}"><i class="fa fa-pencil"></i></a>
+                        <a title="{{ _('Change Password') }}" href="{{ url_for('user.change_password', username=user.email) }}"><i class="fa fa-key"></i></a>
                     </td>
                     {% endif %}
                 </tr>

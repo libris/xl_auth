@@ -36,7 +36,7 @@
                     <td>{{ item.friendly_name | truncate(80) }}</td>
                     <td>{{ _(item.category.capitalize()) if item.category in ['bibliography', 'library'] else _('No category') }}</td>
                     <td>{{ item.permissions | length }}</td>
-                    <td>{{ item.created_at.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ item.created_at.strftime('%y-%m-%d') }}</td>
                     {% if current_user.is_admin %}
                     <td class="actions">
                         <a class=""
@@ -78,7 +78,7 @@
                     <td><a href="#collection-{{ item.replaced_by }}">{{ item.replaced_by }}</a></td>
                     <td>{{ _(item.category.capitalize()) if item.category in ['bibliography', 'library'] else _('No category') }}</td>
                     <td>{{ item.permissions | length }}</td>
-                    <td>{{ item.created_at.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ item.created_at.strftime('%y-%m-%d') }}</td>
                 </tr>
             {% endfor %}
             </tbody>
