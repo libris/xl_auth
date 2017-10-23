@@ -6,11 +6,11 @@
             <h1>{{ _('Welcome') }} {{ current_user.full_name }}</h1>
         </div>
         <div class="panel-body">
-            <h3>{{ _('This is your personal profile page.') }}</h3>
+            <p><strong>{{ _('This is your personal profile page.') }}</strong></p>
 
             <a class="btn btn-default"
                href="{{ url_for('user.edit_details', username=current_user.email) }}">
-                {{ _('Edit Details') }}
+                {{ _('Edit Display Name') }}
             </a>
             <a class="btn btn-default"
                href="{{ url_for('user.change_password', username=current_user.email) }}">

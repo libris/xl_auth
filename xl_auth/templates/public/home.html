@@ -4,9 +4,15 @@
     <div class="body-content">
         <div class="row">
             {% if current_user and current_user.is_authenticated %}
-                <div class="jumbotron">
+                <div class="col-md-12">
                     <h1>{{ _('Welcome to xl_auth') }}</h1>
-                </div><!-- /.jumbotron -->
+                    <p>
+                        {{ _('This is an early alpha release of Libris authorization service.') }}
+                    </p>
+                    <p>
+                        {{ _('See email from customer service for instructions.') }}
+                    </p>
+                </div>
             {% elif login_form %}
                 <div class="col-md-12 login-panel panel panel-default">
                     <div class="col-md-8">
