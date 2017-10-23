@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 0.4.2\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-23 12:41+0200\n"
+"POT-Creation-Date: 2017-10-23 15:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -159,7 +159,7 @@ msgstr ""
 msgid "Welcome"
 msgstr ""
 
-#: tests/end2end/test_logging_in.py:35 xl_auth/public/views.py:45
+#: tests/end2end/test_logging_in.py:35 xl_auth/public/views.py:46
 msgid "You are logged out."
 msgstr ""
 
@@ -321,7 +321,7 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: xl_auth/public/views.py:32
+#: xl_auth/public/views.py:33
 msgid "You are logged in."
 msgstr ""
 
@@ -362,9 +362,8 @@ msgstr ""
 msgid "Collections"
 msgstr ""
 
-#: xl_auth/templates/nav.html:35
-#, python-format
-msgid "Logged in as %(user)s"
+#: xl_auth/templates/nav.html:39
+msgid "Log out"
 msgstr ""
 
 #: xl_auth/templates/collections/edit.html:5
