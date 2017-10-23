@@ -26,7 +26,7 @@ def test_superuser_can_register_new_collection(superuser, testapp):
     # Submits
     res = form.submit().follow()
     # Clicks Collections button
-    res = res.click(_('Collections'))
+    res = res.click(href=url_for('collection.home'))
     # Clicks Register New Collection button
     res = res.click(_('New Collection'))
     # Fills out the form
@@ -165,7 +165,7 @@ def test_user_cannot_register_collection(user, collection, testapp):
     res = form.submit().follow()
 
     # We click the Collections button
-    res = res.click(_('Collections'))
+    res = res.click(href=url_for('collection.home'))
 
     # No New Collection button for regular users
     assert res.lxml.xpath("//a[contains(@text,'{0}')]".format(_('New Collection'))) == []
