@@ -60,7 +60,7 @@ class User(UserMixin, SurrogatePK, Model):
 
     def get_gravatar_url(self, size=32):
         """Get Gravatar URL."""
-        hashed_email = hashlib.md5(str(self.email).lower()).hexdigest()
+        hashed_email = hashlib.md5(str(self.email).lower().encode()).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=mm&s={}'.format(hashed_email, size)
 
     def __repr__(self):
