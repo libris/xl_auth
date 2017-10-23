@@ -11,9 +11,9 @@
         <div class="panel-heading">
             <strong>{{ _('Active Collections') }}</strong>
             {% if current_user.is_admin %}
-            <a class="btn btn-xs btn-primary pull-right"
-               href="{{ url_for('collection.register') }}">{{ _('New Collection') }}</a>
-           {% endif %}
+                <a class="btn btn-xs btn-primary pull-right"
+                   href="{{ url_for('collection.register') }}">{{ _('New Collection') }}</a>
+            {% endif %}
         </div>
         <table class="table table-hover collections-table">
             <thead>
@@ -22,9 +22,9 @@
                 <th class="col-md-7">{{ _('Friendly Name') }}</th>
                 <th class="col-md-1">{{ _('Category') }}</th>
                 <th class="col-md-1">{{ _('Users') }}</th>
-                <th>{{ _('Created At') }}</th>
+                <th class="min-width-100px">{{ _('Created At') }}</th>
                 {% if current_user.is_admin %}
-                <th>{{ _('Actions') }}</th>
+                    <th></th>
                 {% endif %}
             </tr>
             </thead>
@@ -33,17 +33,17 @@
                 <tr class="{{ 'collection-row-tooltip' if (item.replaces or item.replaced_by) }}"
                     title="{{ item.get_replaces_and_replaced_by_str() }}">
                     <td><a class="anchor" id="collection-{{ item.code }}"></a>{{ item.code }}</td>
-                    <td>{{ item.friendly_name | truncate(80) }}</td>
+                    <td>{{ item.friendly_name }}</td>
                     <td>{{ _(item.category.capitalize()) if item.category in ['bibliography', 'library'] else _('No category') }}</td>
                     <td>{{ item.permissions | length }}</td>
                     <td>{{ item.created_at.strftime('%y-%m-%d') }}</td>
                     {% if current_user.is_admin %}
-                    <td class="actions">
-                        <a class=""
-                           href="{{ url_for('collection.edit', collection_code=item.code) }}">
-                            <i class="edit-button fa fa-pencil"></i>
-                        </a>
-                    </td>
+                        <td class="actions">
+                            <a title="{{ _('Edit') }}"
+                               href="{{ url_for('collection.edit', collection_code=item.code) }}">
+                                <i class="edit-button fa fa-pencil"></i>
+                            </a>
+                        </td>
                     {% endif %}
                 </tr>
             {% endfor %}
@@ -63,18 +63,18 @@
             <thead>
             <tr>
                 <th class="col-md-1">{{ _('Code') }}</th>
-                <th class="col-md-6">{{ _('Friendly Name') }}</th>
-                <th class="col-md-1">{{ _('Replaced By') }}</th>
+                <th class="col-md-7">{{ _('Friendly Name') }}</th>
+                <th class="min-width-100px">{{ _('Replaced By') }}</th>
                 <th class="col-md-1">{{ _('Category') }}</th>
                 <th class="col-md-1">{{ _('Users') }}</th>
-                <th>{{ _('Created At') }}</th>
+                <th class="min-width-100px">{{ _('Created At') }}</th>
             </tr>
             </thead>
             <tbody>
             {% for item in collections_list_inactive %}
                 <tr>
                     <td>{{ item.code }}</td>
-                    <td>{{ item.friendly_name | truncate(80) }}</td>
+                    <td>{{ item.friendly_name }}</td>
                     <td><a href="#collection-{{ item.replaced_by }}">{{ item.replaced_by }}</a></td>
                     <td>{{ _(item.category.capitalize()) if item.category in ['bibliography', 'library'] else _('No category') }}</td>
                     <td>{{ item.permissions | length }}</td>

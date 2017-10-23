@@ -183,6 +183,13 @@ DB Models
 Changelog
 =========
 
+v. 0.4.2
+--------
+
+* UI improvements (`#61 <https://github.com/libris/xl_auth/issues/61>`_)
+* Updated data import (`#38 <https://github.com/libris/xl_auth/issues/38>`_)
+
+
 v. 0.4.1
 --------
 

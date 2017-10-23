@@ -9,7 +9,7 @@
             {% if current_user.is_admin %}
                 <a class="btn btn-xs btn-primary pull-right"
                    href="{{ url_for('user.register') }}">{{ _('New User') }}</a>
-           {% endif %}
+            {% endif %}
         </div>
         <table class="table table-hover">
             <thead>
@@ -18,25 +18,31 @@
                 <th class="col-md-3">{{ _('Name') }}</th>
                 <th class="col-md-1">{{ _('Collections') }}</th>
                 <th class="col-md-1">{{ _('Admin') }}</th>
-                <th>{{ _('Created At') }}</th>
+                <th class="min-width-100px">{{ _('Created At') }}</th>
                 {% if current_user.is_admin %}
-                <th class="col-md-1"></th>
+                    <th class="min-width-50px"></th>
                 {% endif %}
             </tr>
             </thead>
             <tbody>
             {% for user in users_list_active %}
                 <tr>
-                    <td>{{ user.email }}</td>
+                    <td class="word-break-all">{{ user.email }}</td>
                     <td>{{ user.full_name }}</td>
                     <td>{{ user.permissions | length }}</td>
                     <td class="{{ "bool-value-{}".format(user.is_admin).lower() }}">{{ _('Yes') if user.is_admin else _('No') }}</td>
                     <td>{{ user.created_at.strftime('%y-%m-%d') }}</td>
                     {% if current_user.is_admin %}
-                    <td class="actions">
-                        <a title="{{ _('Edit Details') }}" href="{{ url_for('user.administer', username=user.email) }}"><i class="fa fa-pencil"></i></a>
-                        <a title="{{ _('Change Password') }}" href="{{ url_for('user.change_password', username=user.email) }}"><i class="fa fa-key"></i></a>
-                    </td>
+                        <td class="actions">
+                            <a title="{{ _('Edit Details') }}"
+                               href="{{ url_for('user.administer', username=user.email) }}">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            <a title="{{ _('Change Password') }}"
+                               href="{{ url_for('user.change_password', username=user.email) }}">
+                                <i class="fa fa-key"></i>
+                            </a>
+                        </td>
                     {% endif %}
                 </tr>
             {% endfor %}
@@ -55,25 +61,31 @@
                 <th class="col-md-3">{{ _('Name') }}</th>
                 <th class="col-md-1">{{ _('Collections') }}</th>
                 <th class="col-md-1">{{ _('Admin') }}</th>
-                <th>{{ _('Created At') }}</th>
+                <th class="min-width-100px">{{ _('Created At') }}</th>
                 {% if current_user.is_admin %}
-                <th class="col-md-1"></th>
+                    <th class="min-width-50px"></th>
                 {% endif %}
             </tr>
             </thead>
             <tbody>
             {% for user in users_list_inactive %}
                 <tr>
-                    <td>{{ user.email }}</td>
+                    <td class="word-break-all">{{ user.email }}</td>
                     <td>{{ user.full_name }}</td>
                     <td>{{ user.permissions | length }}</td>
                     <td class="{{ "bool-value-{}".format(user.is_admin).lower() }}">{{ _('Yes') if user.is_admin else _('No') }}</td>
                     <td>{{ user.created_at.strftime('%y-%m-%d') }}</td>
                     {% if current_user.is_admin %}
-                    <td class="actions">
-                        <a title="{{ _('Edit Details') }}" href="{{ url_for('user.administer', username=user.email) }}"><i class="fa fa-pencil"></i></a>
-                        <a title="{{ _('Change Password') }}" href="{{ url_for('user.change_password', username=user.email) }}"><i class="fa fa-key"></i></a>
-                    </td>
+                        <td class="actions">
+                            <a title="{{ _('Edit Details') }}"
+                               href="{{ url_for('user.administer', username=user.email) }}">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            <a title="{{ _('Change Password') }}"
+                               href="{{ url_for('user.change_password', username=user.email) }}">
+                                <i class="fa fa-key"></i>
+                            </a>
+                        </td>
                     {% endif %}
                 </tr>
             {% endfor %}
