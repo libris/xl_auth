@@ -22,7 +22,7 @@ def test_superuser_can_administer_existing_user(superuser, testapp):
     # Clicks Users button.
     res = res.click(_('Users'))
     # Clicks Edit Details button.
-    res = res.click(_('Edit Details'))
+    res = res.click(href='/users/administer/' + superuser.email.replace('@', '%40'))
     # Fills out the form.
     form = res.forms['administerForm']
     form['username'] = superuser.email
@@ -40,7 +40,6 @@ def test_superuser_can_administer_existing_user(superuser, testapp):
     # The edited user is listed under existing users.
     assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(form['username'].value))) == 1
     assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(form['full_name'].value))) == 1
-    assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(form['active'].checked))) == 1
 
     is_admin_value = format(form['is_admin'].checked).lower()
     is_admin_string = _('Yes') if form['is_admin'].checked else _('No')
@@ -62,7 +61,7 @@ def test_superuser_can_change_password_for_existing_user(superuser, testapp):
     # Clicks Users button.
     res = res.click(_('Users'))
     # Clicks Change Password button.
-    res = res.click(_('Change Password'))
+    res = res.click(href='/users/change_password/' + superuser.email.replace('@', '%40'))
     # Fills out the form.
     form = res.forms['changePasswordForm']
     form['username'] = superuser.email

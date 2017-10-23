@@ -1,94 +1,106 @@
 /* =============================================================================
    App specific CSS file.
    ========================================================================== */
-
 /* Imports */
 @import '~bootstrap/less/bootstrap.less';
 @import '~kungbib-styles/dist/less/kb-style.less';
 
 @brand-primary: @happy-muted-teal;
-/* universal */
+
+/* Universal */
 
 html {
-  overflow-y: scroll;
+    overflow-y: scroll;
 }
 
 body {
-  padding-top: 60px;
+    padding-top: 60px;
 }
 
 section {
-  overflow: auto;
+    overflow: auto;
 }
 
 textarea {
-  resize: vertical;
+    resize: vertical;
 }
 
-.container-narrow{
-  margin: 0 auto;
-  max-width: 700px;
+.container-narrow {
+    margin: 0 auto;
+    max-width: 700px;
 }
 
 /* Forms */
 .navbar {
-  .navbar-logo {
-    display: inline-block;
-    width: 50px;
-    padding: 0.1em;
-    .logotype {
+    .navbar-logo {
+        display: inline-block;
+        width: 50px;
+        padding: 0.1em;
+        .logotype {
+        }
     }
-  }
 }
 
 .login-panel {
-  padding: 1em;
-  .header {
-    display: flex;
-    align-items: center;
-    margin: 0px 0px 1em 0px;
-    > * {
-      display: inline-block;
+    padding: 1em;
+    .header {
+        display: flex;
+        align-items: center;
+        margin: 0px 0px 1em 0px;
+        > * {
+            display: inline-block;
+        }
+        .logotype {
+            width: 50px;
+            margin: 0px 1em 0px 0px;
+        }
+        h2 {
+            margin: 0;
+        }
     }
-    .logotype {
-      width: 50px;
-      margin: 0px 1em 0px 0px;
+    .login-form {
+        input[type="text"], input[type="password"] {
+            display: block;
+            margin: 0px 0px 1em 0px;
+        }
     }
-    h2 {
-      margin: 0;
-    }
-  }
-  .login-form {
-    input[type="text"], input[type="password"] {
-      display: block;
-      margin: 0px 0px 1em 0px;
-    }
-  }
 }
 
-
 .form-register, .form-edit {
-  width: 50%;
+    width: 50%;
 }
 
 .form-register .form-control {
-  position: relative;
-  font-size: 16px;
-  height: auto;
-  padding: 10px;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 /* Table */
+
 tr {
     &.collection-row-tooltip {
         cursor: help;
     }
 }
 
+th {
+    &.min-width-100px {
+        min-width: 100px;
+    }
+    &.min-width-50px {
+        min-width: 50px;
+    }
+}
+
 td {
+    &.word-break-all {
+        word-break: break-all;
+    }
     &.bool-value-true {
         color: #009600;
     }
@@ -100,42 +112,42 @@ td {
     }
 }
 
-/* footer */
+/* Footer */
 
 footer {
-  margin-top: 45px;
-  padding-top: 5px;
-  border-top: 1px solid #eaeaea;
-  color: #999999;
+    margin-top: 45px;
+    padding-top: 5px;
+    border-top: 1px solid #eaeaea;
+    color: #999999;
 }
 
 footer a {
-  color: #999999;
+    color: #999999;
 }
 
 footer p {
-  float: right;
-  margin-right: 25px;
+    float: right;
+    margin-right: 25px;
 }
 
 footer ul {
-  list-style: none;
+    list-style: none;
 }
 
 footer ul li {
-  float: left;
-  margin-left: 10px;
+    float: left;
+    margin-left: 10px;
 }
 
 footer .company {
-  float: left;
-  margin-left: 25px;
+    float: left;
+    margin-left: 25px;
 }
 
 footer .footer-nav {
-  float: right;
-  margin-right: 25px;
-  list-style: none;
+    float: right;
+    margin-right: 25px;
+    list-style: none;
 }
 
 /* Util classes */
