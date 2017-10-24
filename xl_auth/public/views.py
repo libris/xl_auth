@@ -3,7 +3,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import Blueprint, current_app, flash, redirect, render_template, request, url_for
 from flask_babel import lazy_gettext as _
 from flask_login import login_required, login_user, logout_user
 
@@ -49,5 +49,4 @@ def logout():
 @blueprint.route('/about/')
 def about():
     """About page."""
-    login_form = LoginForm(request.form)
-    return render_template('public/about.html', login_form=login_form)
+    return render_template('public/about.html', version=current_app.config['APP_VERSION'])

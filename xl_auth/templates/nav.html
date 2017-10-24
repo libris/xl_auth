@@ -22,22 +22,21 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="{{ url_for('collection.home') }}">{{ _('Collections') }}</a></li>
+                <li><a class="navbar-link" href="{{ url_for('collection.home') }}">{{ _('Collections') }}</a></li>
                 {% if current_user.is_admin %}
-                <li><a href="{{ url_for('user.home') }}">{{ _('Users') }}</a></li>
-                <li><a href="{{ url_for('permission.home') }}">{{ _('Permissions') }}</a></li>
+                <li><a class="navbar-link" href="{{ url_for('user.home') }}">{{ _('Users') }}</a></li>
+                <li><a class="navbar-link" href="{{ url_for('permission.home') }}">{{ _('Permissions') }}</a></li>
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <p class="navbar-text">
-                        <a class="navbar-link" href="{{ url_for('user.profile') }}">
-                            {{ _('Logged in as %(user)s', user=current_user.full_name) }}
-                        </a>
-                    </p>
+                    <a class="navbar-link" href="{{ url_for('user.profile') }}">
+                        <img class="navbar-user-gravatar" src="{{ current_user.get_gravatar_url(32) }}" />
+                        {{ current_user.full_name }}
+                    </a>
                 </li>
                 <li>
-                    <a class="navbar-link" href="{{ url_for('public.logout') }}">
+                    <a class="navbar-link" title="{{ _('Log out') }}" href="{{ url_for('public.logout') }}">
                         <i class="fa fa-sign-out"></i>
                     </a>
                 </li>

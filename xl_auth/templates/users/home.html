@@ -5,7 +5,7 @@
     <br/>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <strong>{{ _('Existing Users') }}</strong>
+            <strong>{{ _('Active Users') }}</strong>
             {% if current_user.is_admin %}
                 <a class="btn btn-xs btn-primary pull-right"
                    href="{{ url_for('user.register') }}">{{ _('New User') }}</a>
