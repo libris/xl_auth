@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 0.4.3\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-24 06:34+0200\n"
+"POT-Creation-Date: 2017-10-24 06:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,7 +54,7 @@ msgstr ""
 
 #: tests/end2end/test_editing_collection.py:80 tests/end2end/test_registering_collection.py:79
 #: xl_auth/collection/forms.py:17 xl_auth/templates/collections/home.html:21
-#: xl_auth/templates/collections/home.html:65 xl_auth/templates/users/profile.html:40
+#: xl_auth/templates/collections/home.html:65 xl_auth/templates/users/profile.html:42
 msgid "Code"
 msgstr ""
 
@@ -115,16 +115,16 @@ msgstr ""
 #: tests/end2end/test_editing_user.py:45 xl_auth/templates/permissions/home.html:30
 #: xl_auth/templates/permissions/home.html:31 xl_auth/templates/permissions/home.html:32
 #: xl_auth/templates/users/home.html:33 xl_auth/templates/users/home.html:76
-#: xl_auth/templates/users/profile.html:53 xl_auth/templates/users/profile.html:56
-#: xl_auth/templates/users/profile.html:59
+#: xl_auth/templates/users/profile.html:55 xl_auth/templates/users/profile.html:58
+#: xl_auth/templates/users/profile.html:61
 msgid "Yes"
 msgstr ""
 
 #: tests/end2end/test_editing_user.py:45 xl_auth/templates/permissions/home.html:30
 #: xl_auth/templates/permissions/home.html:31 xl_auth/templates/permissions/home.html:32
 #: xl_auth/templates/users/home.html:33 xl_auth/templates/users/home.html:76
-#: xl_auth/templates/users/profile.html:53 xl_auth/templates/users/profile.html:56
-#: xl_auth/templates/users/profile.html:59
+#: xl_auth/templates/users/profile.html:55 xl_auth/templates/users/profile.html:58
+#: xl_auth/templates/users/profile.html:61
 msgid "No"
 msgstr ""
 
@@ -295,17 +295,17 @@ msgid "Collection"
 msgstr ""
 
 #: xl_auth/permission/forms.py:22 xl_auth/templates/permissions/home.html:18
-#: xl_auth/templates/users/profile.html:42
+#: xl_auth/templates/users/profile.html:44
 msgid "Registrant"
 msgstr ""
 
 #: xl_auth/permission/forms.py:23 xl_auth/templates/permissions/home.html:19
-#: xl_auth/templates/users/profile.html:43
+#: xl_auth/templates/users/profile.html:45
 msgid "Cataloger"
 msgstr ""
 
 #: xl_auth/permission/forms.py:24 xl_auth/templates/permissions/home.html:20
-#: xl_auth/templates/users/profile.html:44
+#: xl_auth/templates/users/profile.html:46
 msgid "Cataloguing Administrator"
 msgstr ""
 
@@ -390,7 +390,7 @@ msgid "Active Collections"
 msgstr ""
 
 #: xl_auth/templates/collections/home.html:22 xl_auth/templates/collections/home.html:66
-#: xl_auth/templates/users/profile.html:41
+#: xl_auth/templates/users/profile.html:43
 msgid "Friendly Name"
 msgstr ""
 
@@ -530,6 +530,12 @@ msgstr ""
 
 #: xl_auth/templates/users/profile.html:34
 msgid "Permissions (Active Collections Only)"
+msgstr ""
+
+#: xl_auth/templates/users/profile.html:35
+msgid ""
+"Note: <em>Cataloguing Admin</em> is a new privilege that, in the tear future, will allow you to "
+"create new user accounts and grant registrant/cataloger privileges to others. "
 msgstr ""
 
 #: xl_auth/templates/users/register.html:5
