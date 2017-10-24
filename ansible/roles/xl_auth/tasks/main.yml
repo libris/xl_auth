@@ -26,7 +26,7 @@
     links:
       - postgres
     ports:
-      - 80:5000
+      - 5000:5000
     env:
       FLASK_DEBUG: 0
       SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
