@@ -4,6 +4,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import datetime as dt
+import hashlib
 
 from flask_login import UserMixin
 
@@ -56,6 +57,11 @@ class User(UserMixin, SurrogatePK, Model):
     def check_password(self, value):
         """Check password."""
         return bcrypt.check_password_hash(self.password, value)
+
+    def get_gravatar_url(self, size=32):
+        """Get Gravatar URL."""
+        hashed_email = hashlib.md5(str(self.email).lower().encode()).hexdigest()
+        return 'https://www.gravatar.com/avatar/{}?d=mm&s={}'.format(hashed_email, size)
 
     def __repr__(self):
         """Represent instance as a unique string."""

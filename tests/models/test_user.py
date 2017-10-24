@@ -94,6 +94,15 @@ def test_removing_permissions(collection):
 
 
 @pytest.mark.usefixtures('db')
+def test_get_gravatar_url():
+    """Check get_gravatar_url output."""
+    user = UserFactory(email='foo@example.com')
+
+    assert user.get_gravatar_url(64) == 'https://www.gravatar.com/avatar/' \
+                                        'b48def645758b95537d4424c84d1a9ff?d=mm&s=64'
+
+
+@pytest.mark.usefixtures('db')
 def test_roles():
     """Add a role to a user."""
     role = Role(name='admin')
