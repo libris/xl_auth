@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 0.4.3\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-24 06:02+0200\n"
+"POT-Creation-Date: 2017-10-24 06:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -436,6 +436,14 @@ msgstr ""
 msgid ""
 "Under construction. Please refer to our <a "
 "href=\"https://github.com/libris/xl_auth/issues\">GitHub repo</a> for ongoing progress."
+msgstr ""
+
+#: xl_auth/templates/public/about.html:13
+#, python-format
+msgid ""
+"Current release version is <code>%(version)s</code>. Please check out the <a "
+"href=\"https://github.com/libris/xl_auth/releases\">releases overview</a> page for recent "
+"changes."
 msgstr ""
 
 #: xl_auth/templates/public/home.html:8

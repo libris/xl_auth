@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2017-10-24 06:02+0200\n"
+"POT-Creation-Date: 2017-10-24 06:34+0200\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -440,6 +440,17 @@ msgid ""
 msgstr ""
 "Tjänsten är under konstruktion. Vänligen se vårt <a "
 "href=\"https://github.com/libris/xl_auth/issues\">GitHub-repo</a> för löpande utveckling."
+
+#: xl_auth/templates/public/about.html:13
+#, python-format
+msgid ""
+"Current release version is <code>%(version)s</code>. Please check out the <a "
+"href=\"https://github.com/libris/xl_auth/releases\">releases overview</a> page for recent "
+"changes."
+msgstr ""
+"Detta är version <code>%(version)s</code>. Se <a "
+"href=\"https://github.com/libris/xl_auth/releases\">release-översikten</a> på GitHub för info om "
+"ändringar mellan olika versioner."
 
 #: xl_auth/templates/public/home.html:8
 msgid "Welcome to xl_auth"
