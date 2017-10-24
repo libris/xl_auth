@@ -1,0 +1,9 @@
+---
+
+- name: allow incoming http traffic (firewalld)
+  firewalld: service=http permanent=True state=enabled immediate=yes
+
+- name: allow incoming https traffic (firewalld)
+  firewalld: service=https permanent=True state=enabled immediate=yes
+
+...
