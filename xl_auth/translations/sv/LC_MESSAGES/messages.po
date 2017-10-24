@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2017-10-23 18:16+0200\n"
+"POT-Creation-Date: 2017-10-24 05:43+0200\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -490,8 +490,8 @@ msgid "Change User Password"
 msgstr "Byt användarlösenord"
 
 #: xl_auth/templates/users/home.html:8
-msgid "Existing Users"
-msgstr "Befintliga användare"
+msgid "Active Users"
+msgstr "Aktiva användare"
 
 #: xl_auth/templates/users/home.html:20 xl_auth/templates/users/home.html:63
 msgid "Admin"
