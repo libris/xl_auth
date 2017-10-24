@@ -10,7 +10,8 @@ from xl_auth.app import create_app
 from xl_auth.database import db as _db
 from xl_auth.settings import TestConfig
 
-from .factories import CollectionFactory, PermissionFactory, SuperUserFactory, UserFactory
+from .factories import (ClientFactory, CollectionFactory, PermissionFactory, SuperUserFactory,
+                        UserFactory)
 
 
 @pytest.yield_fixture(scope='function')
@@ -81,3 +82,12 @@ def permission(db):
     permission = PermissionFactory()
     db.session.commit()
     return permission
+
+
+# noinspection PyShadowingNames
+@pytest.fixture
+def client(db):
+    """A client for the tests."""
+    client = ClientFactory()
+    db.session.commit()
+    return client

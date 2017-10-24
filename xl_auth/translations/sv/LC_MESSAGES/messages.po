@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2017-10-25 13:18+0200\n"
+"POT-Creation-Date: 2017-10-25 14:02+0200\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -30,7 +30,8 @@ msgstr "Behörigheter"
 #: tests/end2end/test_deleting_permission.py:26 tests/end2end/test_editing_collection.py:158
 #: tests/end2end/test_editing_permission.py:31 tests/end2end/test_editing_permission.py:66
 #: tests/end2end/test_editing_user.py:189 tests/end2end/test_editing_user.py:215
-#: xl_auth/templates/collections/home.html:42 xl_auth/templates/permissions/home.html:37
+#: xl_auth/templates/clients/home.html:35 xl_auth/templates/collections/home.html:42
+#: xl_auth/templates/permissions/home.html:37
 msgid "Edit"
 msgstr "Ändra"
 
@@ -42,6 +43,49 @@ msgstr "🙀 Ta bort behörighet"
 #, python-format
 msgid "Successfully deleted permissions for \"%(username)s\" on collection \"%(code)s\"."
 msgstr "Behörighet borttagen för \"%(username)s\" på samling \"%(code)s\"."
+
+#: tests/end2end/test_editing_client.py:82 tests/end2end/test_editing_client.py:115
+#: tests/end2end/test_editing_collection.py:102 tests/end2end/test_registering_collection.py:102
+#: xl_auth/client/forms.py:14 xl_auth/collection/forms.py:18 xl_auth/templates/clients/home.html:17
+#: xl_auth/templates/users/home.html:18 xl_auth/templates/users/home.html:61
+msgid "Name"
+msgstr "Namn"
+
+#: tests/end2end/test_editing_client.py:82 tests/end2end/test_editing_client.py:148
+#: tests/end2end/test_editing_client.py:215 tests/end2end/test_editing_client.py:248
+#: tests/end2end/test_editing_collection.py:102 tests/end2end/test_editing_user.py:146
+#: tests/end2end/test_registering_collection.py:79 tests/end2end/test_registering_collection.py:102
+#: tests/forms/test_client.py:48 tests/forms/test_client.py:71 tests/forms/test_client.py:94
+#: tests/forms/test_client.py:105 tests/forms/test_client.py:141 tests/forms/test_client.py:164
+#: tests/forms/test_client.py:187 tests/forms/test_client.py:198 tests/forms/test_collection.py:21
+#: tests/forms/test_collection.py:38 tests/forms/test_permission.py:31
+#: tests/forms/test_permission.py:39 tests/forms/test_permission.py:47
+#: tests/forms/test_permission.py:55
+msgid "This field is required."
+msgstr "Det här fältet är obligatoriskt."
+
+#: tests/end2end/test_editing_client.py:115 tests/forms/test_client.py:60
+#: tests/forms/test_client.py:153
+msgid "Field must be between 3 and 64 characters long."
+msgstr "Fältet måste vara mellan 3 och 64 tecken långt."
+
+#: tests/end2end/test_editing_client.py:148 tests/end2end/test_editing_client.py:181
+#: xl_auth/client/forms.py:15 xl_auth/templates/clients/home.html:18
+msgid "Description"
+msgstr "Beskrivning"
+
+#: tests/end2end/test_editing_client.py:182 tests/forms/test_client.py:83
+#: tests/forms/test_client.py:176
+msgid "Field must be between 3 and 350 characters long."
+msgstr "Fältet måste vara mellan 3 och 350 tecken långt."
+
+#: tests/end2end/test_editing_client.py:215 xl_auth/client/forms.py:11
+msgid "Redirect URIs"
+msgstr "Redirect URIs"
+
+#: tests/end2end/test_editing_client.py:248 xl_auth/client/forms.py:12
+msgid "Default scopes"
+msgstr "Default scopes"
 
 #: tests/end2end/test_editing_collection.py:53 tests/end2end/test_registering_collection.py:52
 msgid "category"
@@ -63,20 +107,6 @@ msgstr "Sigel"
 #: xl_auth/collection/forms.py:63
 msgid "Code cannot be modified"
 msgstr "Koden kan inte ändras"
-
-#: tests/end2end/test_editing_collection.py:102 tests/end2end/test_registering_collection.py:102
-#: xl_auth/collection/forms.py:18 xl_auth/templates/users/home.html:18
-#: xl_auth/templates/users/home.html:61
-msgid "Name"
-msgstr "Namn"
-
-#: tests/end2end/test_editing_collection.py:102 tests/end2end/test_editing_user.py:146
-#: tests/end2end/test_registering_collection.py:79 tests/end2end/test_registering_collection.py:102
-#: tests/forms/test_collection.py:21 tests/forms/test_collection.py:38
-#: tests/forms/test_permission.py:31 tests/forms/test_permission.py:39
-#: tests/forms/test_permission.py:47 tests/forms/test_permission.py:55
-msgid "This field is required."
-msgstr "Det här fältet är obligatoriskt."
 
 #: tests/end2end/test_editing_collection.py:124 tests/end2end/test_registering_collection.py:125
 #: xl_auth/collection/forms.py:19 xl_auth/templates/collections/home.html:23
@@ -113,19 +143,19 @@ msgstr "En behörighet för användare \"%(username)s\" på samling \"%(code)s\"
 msgid "Users"
 msgstr "Användare"
 
-#: tests/end2end/test_editing_user.py:45 xl_auth/templates/permissions/home.html:30
-#: xl_auth/templates/permissions/home.html:31 xl_auth/templates/permissions/home.html:32
-#: xl_auth/templates/users/home.html:33 xl_auth/templates/users/home.html:76
-#: xl_auth/templates/users/profile.html:58 xl_auth/templates/users/profile.html:61
-#: xl_auth/templates/users/profile.html:65
+#: tests/end2end/test_editing_user.py:45 xl_auth/templates/clients/home.html:29
+#: xl_auth/templates/permissions/home.html:30 xl_auth/templates/permissions/home.html:31
+#: xl_auth/templates/permissions/home.html:32 xl_auth/templates/users/home.html:33
+#: xl_auth/templates/users/home.html:76 xl_auth/templates/users/profile.html:58
+#: xl_auth/templates/users/profile.html:61 xl_auth/templates/users/profile.html:65
 msgid "Yes"
 msgstr "Ja"
 
-#: tests/end2end/test_editing_user.py:45 xl_auth/templates/permissions/home.html:30
-#: xl_auth/templates/permissions/home.html:31 xl_auth/templates/permissions/home.html:32
-#: xl_auth/templates/users/home.html:33 xl_auth/templates/users/home.html:76
-#: xl_auth/templates/users/profile.html:58 xl_auth/templates/users/profile.html:61
-#: xl_auth/templates/users/profile.html:65
+#: tests/end2end/test_editing_user.py:45 xl_auth/templates/clients/home.html:31
+#: xl_auth/templates/permissions/home.html:30 xl_auth/templates/permissions/home.html:31
+#: xl_auth/templates/permissions/home.html:32 xl_auth/templates/users/home.html:33
+#: xl_auth/templates/users/home.html:76 xl_auth/templates/users/profile.html:58
+#: xl_auth/templates/users/profile.html:61 xl_auth/templates/users/profile.html:65
 msgid "No"
 msgstr "Nej"
 
@@ -172,6 +202,10 @@ msgstr "Felaktigt lösenord"
 msgid "Unknown username/email"
 msgstr "Okänd epost/användarnamn"
 
+#: tests/end2end/test_registering_client.py:31 xl_auth/templates/clients/home.html:11
+msgid "New Client"
+msgstr "Ny klient"
+
 #: tests/end2end/test_registering_collection.py:31 tests/end2end/test_registering_collection.py:171
 #: xl_auth/templates/collections/home.html:15
 msgid "New Collection"
@@ -206,6 +240,16 @@ msgstr "Lösenorden måste stämma överens"
 msgid "Email already registered"
 msgstr "Epost-adressen är redan registrerad"
 
+#: tests/forms/test_client.py:25 tests/forms/test_client.py:118 tests/forms/test_collection.py:124
+#: tests/forms/test_collection.py:135 tests/forms/test_permission.py:144
+#: tests/forms/test_permission.py:174 tests/forms/test_user.py:63 tests/forms/test_user.py:106
+#: tests/forms/test_user.py:132 tests/forms/test_user.py:169 xl_auth/client/forms.py:41
+#: xl_auth/client/forms.py:68 xl_auth/collection/forms.py:41 xl_auth/collection/forms.py:73
+#: xl_auth/permission/forms.py:59 xl_auth/permission/forms.py:100 xl_auth/user/forms.py:44
+#: xl_auth/user/forms.py:97 xl_auth/user/forms.py:123 xl_auth/user/forms.py:150
+msgid "You do not have sufficient privileges for this operation."
+msgstr "Du har inte tillräcklig behörighet för att utföra denna operation."
+
 #: tests/forms/test_collection.py:30
 msgid "Field must be between 1 and 5 characters long."
 msgstr "Fältet måste vara mellan 1 och 5 tecken långt."
@@ -217,15 +261,6 @@ msgstr "Koden existerar ej"
 #: tests/forms/test_collection.py:86 tests/forms/test_collection.py:95
 msgid "Field must be between 2 and 255 characters long."
 msgstr "Fältet måste vara mellan 2 och 255 tecken långt."
-
-#: tests/forms/test_collection.py:124 tests/forms/test_collection.py:135
-#: tests/forms/test_permission.py:144 tests/forms/test_permission.py:174 tests/forms/test_user.py:63
-#: tests/forms/test_user.py:106 tests/forms/test_user.py:132 tests/forms/test_user.py:169
-#: xl_auth/collection/forms.py:41 xl_auth/collection/forms.py:73 xl_auth/permission/forms.py:59
-#: xl_auth/permission/forms.py:100 xl_auth/user/forms.py:44 xl_auth/user/forms.py:97
-#: xl_auth/user/forms.py:123 xl_auth/user/forms.py:150
-msgid "You do not have sufficient privileges for this operation."
-msgstr "Du har inte tillräcklig behörighet för att utföra denna operation."
 
 #: tests/forms/test_permission.py:22 xl_auth/permission/forms.py:104 xl_auth/permission/views.py:61
 #: xl_auth/permission/views.py:87
@@ -269,6 +304,20 @@ msgstr "Ersätter samling %(replaces_code)s"
 #, python-format
 msgid "Replaced by %(replaced_by_code)s"
 msgstr "Ersatt av samling %(replaced_by_code)s"
+
+#: xl_auth/client/forms.py:13 xl_auth/templates/clients/home.html:19
+msgid "Confidential"
+msgstr "Konfidentiell"
+
+#: xl_auth/client/views.py:44
+#, python-format
+msgid "Client \"%(name)s\" created."
+msgstr "Klient \"%(name)s\" skapad."
+
+#: xl_auth/client/views.py:68
+#, python-format
+msgid "Thank you for updating client details for \"%(id)s\"."
+msgstr "Tack för att du uppdaterade detaljer för klient \"%(id)s\"."
 
 #: xl_auth/collection/forms.py:19
 msgid "Bibliography"
@@ -367,15 +416,32 @@ msgstr "Samlingar/sigler"
 msgid "Log out"
 msgstr "Logga ut"
 
+#: xl_auth/templates/clients/edit.html:5
+msgid "Edit OAuth2 Client"
+msgstr "Redigera OAuth2-klient"
+
+#: xl_auth/templates/clients/edit.html:31 xl_auth/templates/collections/edit.html:29
+#: xl_auth/templates/permissions/edit.html:35 xl_auth/templates/users/administer.html:25
+#: xl_auth/templates/users/change_password.html:21 xl_auth/templates/users/edit_details.html:17
+msgid "Save"
+msgstr "Spara"
+
+#: xl_auth/templates/clients/home.html:4 xl_auth/templates/clients/home.html:8
+msgid "OAuth2 Clients"
+msgstr "OAuth2-klienter"
+
+#: xl_auth/templates/clients/home.html:20 xl_auth/templates/users/home.html:20
+#: xl_auth/templates/users/home.html:63
+msgid "Admin"
+msgstr "Admin"
+
+#: xl_auth/templates/clients/register.html:5
+msgid "Register New OAuth2 Client"
+msgstr "Registrera ny OAuth2-klient"
+
 #: xl_auth/templates/collections/edit.html:5
 msgid "Edit Existing Collection"
 msgstr "Ändra befintlig samling"
-
-#: xl_auth/templates/collections/edit.html:29 xl_auth/templates/permissions/edit.html:35
-#: xl_auth/templates/users/administer.html:25 xl_auth/templates/users/change_password.html:21
-#: xl_auth/templates/users/edit_details.html:17
-msgid "Save"
-msgstr "Spara"
 
 #: xl_auth/templates/collections/home.html:6 xl_auth/templates/collections/home.html:54
 #: xl_auth/templates/collections/home.html:88
@@ -503,10 +569,6 @@ msgstr "Byt användarlösenord"
 #: xl_auth/templates/users/home.html:8
 msgid "Active Users"
 msgstr "Aktiva användare"
-
-#: xl_auth/templates/users/home.html:20 xl_auth/templates/users/home.html:63
-msgid "Admin"
-msgstr "Admin"
 
 #: xl_auth/templates/users/home.html:37 xl_auth/templates/users/home.html:80
 msgid "Edit Details"
