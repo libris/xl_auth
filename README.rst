@@ -183,6 +183,12 @@ DB Models
 Changelog
 =========
 
+v. 0.4.3
+--------
+
+* Personalized user icons (Gravatar)
+
+
 v. 0.4.2
 --------
 
