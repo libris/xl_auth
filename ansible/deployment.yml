@@ -6,6 +6,7 @@
   roles:
     - common
     - docker
+    - nginx
     - xl_auth
 
 ...
