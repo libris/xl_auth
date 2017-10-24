@@ -71,7 +71,7 @@
     image: "{{ xl_auth_docker }}"
     interactive: yes
     tty: yes
-    auto_remove: yes
+    detach: no
     command: import_data --verbose --admin-email libris@kb.se
     links:
       - postgres
