@@ -187,8 +187,9 @@ v. 0.4.3
 --------
 
 * Personalized user icons (Gravatar, `#70 <https://github.com/libris/xl_auth/issues/70>`_)
-* Updated `/about/` page with current version number + links
+* Updated ``/about/`` page with current version number + links
   (`#71 <https://github.com/libris/xl_auth/issues/71>`_)
+* Only list permissions on active collections on ``/users/profile/`` page
 
 
 v. 0.4.2
