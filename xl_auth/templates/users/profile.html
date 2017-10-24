@@ -31,7 +31,7 @@ if your permissions are not correctly listed below.') }}</p>
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3>{{ _('Permissions') }}</h3>
+            <h3>{{ _('Permissions (Active Collections Only)') }}</h3>
         </div>
         <div class="panel-body">
             <table class="table table-hover">
@@ -45,7 +45,7 @@ if your permissions are not correctly listed below.') }}</p>
                 </tr>
                 </thead>
                 <tbody>
-                {% for permission in user.permissions %}
+                {% for permission in user.permissions if permission.collection.active %}
                     <tr>
                         <td>{{ permission.collection.code }}</td>
                         <td>{{ permission.collection.friendly_name }}</td>

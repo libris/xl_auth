@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 0.4.3\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-24 05:43+0200\n"
+"POT-Creation-Date: 2017-10-24 06:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: tests/end2end/test_editing_permission.py:91 tests/end2end/test_editing_user.py:183
 #: tests/end2end/test_registering_permission.py:25 tests/end2end/test_registering_permission.py:58
 #: tests/end2end/test_registering_permission.py:85 xl_auth/templates/nav.html:28
-#: xl_auth/templates/permissions/home.html:4 xl_auth/templates/users/profile.html:34
+#: xl_auth/templates/permissions/home.html:4
 msgid "Permissions"
 msgstr ""
 
@@ -518,6 +518,10 @@ msgstr ""
 msgid ""
 "Contact customer service at <a href=\"mailto:libris@kb.se\">libris@kb.se</a> if your permissions "
 "are not correctly listed below."
+msgstr ""
+
+#: xl_auth/templates/users/profile.html:34
+msgid "Permissions (Active Collections Only)"
 msgstr ""
 
 #: xl_auth/templates/users/register.html:5
