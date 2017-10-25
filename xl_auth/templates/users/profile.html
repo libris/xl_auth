@@ -41,8 +41,10 @@ will allow you to create new user accounts and grant registrant/cataloger privil
                 <tr>
                     <th>{{ _('Code') }}</th>
                     <th>{{ _('Friendly Name') }}</th>
-                    <th>{{ _('Registrant') }}</th>
-                    <th>{{ _('Cataloger') }}</th>
+                    {% if user.is_admin %}
+                        <th>{{ _('Registrant') }}</th>
+                        <th>{{ _('Cataloger') }}</th>
+                    {% endif %}
                     <th>{{ _('Cataloguing Administrator') }}</th>
                 </tr>
                 </thead>
@@ -51,12 +53,14 @@ will allow you to create new user accounts and grant registrant/cataloger privil
                     <tr>
                         <td>{{ permission.collection.code }}</td>
                         <td>{{ permission.collection.friendly_name }}</td>
-                        <td class="{{ "bool-value-{}".format(permission.registrant).lower() }}">
-                            {{ _('Yes') if permission.registrant else _('No') }}
-                        </td>
-                        <td class="{{ "bool-value-{}".format(permission.cataloger).lower() }}">
-                            {{ _('Yes') if permission.cataloger else _('No') }}
-                        </td>
+                        {% if user.is_admin %}
+                            <td class="{{ "bool-value-{}".format(permission.registrant).lower() }}">
+                                {{ _('Yes') if permission.registrant else _('No') }}
+                            </td>
+                            <td class="{{ "bool-value-{}".format(permission.cataloger).lower() }}">
+                                {{ _('Yes') if permission.cataloger else _('No') }}
+                            </td>
+                        {% endif %}
                         <td class="{{ "bool-value-{}".format(permission.cataloging_admin).lower() }}">
                             {{ _('Yes') if permission.cataloging_admin else _('No') }}
                         </td>
