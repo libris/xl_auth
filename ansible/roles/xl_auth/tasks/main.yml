@@ -26,7 +26,7 @@
     links:
       - postgres
     ports:
-      - 80:5000
+      - 5000:5000
     env:
       FLASK_DEBUG: 0
       SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
@@ -71,8 +71,8 @@
     image: "{{ xl_auth_docker }}"
     interactive: yes
     tty: yes
-    auto_remove: yes
-    command: import_data --verbose --admin-email libris@kb.se
+    detach: no
+    command: import_data --verbose --admin-email libris@kb.se --wipe-permissions
     links:
       - postgres
     env:

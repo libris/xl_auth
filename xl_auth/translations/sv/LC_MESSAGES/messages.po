@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2017-10-24 08:23+0200\n"
+"POT-Creation-Date: 2017-10-25 13:18+0200\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -57,7 +57,7 @@ msgstr "Kategori saknas"
 #: xl_auth/collection/forms.py:17 xl_auth/templates/collections/home.html:21
 #: xl_auth/templates/collections/home.html:65 xl_auth/templates/users/profile.html:42
 msgid "Code"
-msgstr "Kod"
+msgstr "Sigel"
 
 #: tests/end2end/test_editing_collection.py:80 tests/forms/test_collection.py:77
 #: xl_auth/collection/forms.py:63
@@ -116,16 +116,16 @@ msgstr "Användare"
 #: tests/end2end/test_editing_user.py:45 xl_auth/templates/permissions/home.html:30
 #: xl_auth/templates/permissions/home.html:31 xl_auth/templates/permissions/home.html:32
 #: xl_auth/templates/users/home.html:33 xl_auth/templates/users/home.html:76
-#: xl_auth/templates/users/profile.html:55 xl_auth/templates/users/profile.html:58
-#: xl_auth/templates/users/profile.html:61
+#: xl_auth/templates/users/profile.html:58 xl_auth/templates/users/profile.html:61
+#: xl_auth/templates/users/profile.html:65
 msgid "Yes"
 msgstr "Ja"
 
 #: tests/end2end/test_editing_user.py:45 xl_auth/templates/permissions/home.html:30
 #: xl_auth/templates/permissions/home.html:31 xl_auth/templates/permissions/home.html:32
 #: xl_auth/templates/users/home.html:33 xl_auth/templates/users/home.html:76
-#: xl_auth/templates/users/profile.html:55 xl_auth/templates/users/profile.html:58
-#: xl_auth/templates/users/profile.html:61
+#: xl_auth/templates/users/profile.html:58 xl_auth/templates/users/profile.html:61
+#: xl_auth/templates/users/profile.html:65
 msgid "No"
 msgstr "Nej"
 
@@ -296,17 +296,17 @@ msgid "Collection"
 msgstr "Samling"
 
 #: xl_auth/permission/forms.py:22 xl_auth/templates/permissions/home.html:18
-#: xl_auth/templates/users/profile.html:44
+#: xl_auth/templates/users/profile.html:45
 msgid "Registrant"
 msgstr "Beståndsregistrerare"
 
 #: xl_auth/permission/forms.py:23 xl_auth/templates/permissions/home.html:19
-#: xl_auth/templates/users/profile.html:45
+#: xl_auth/templates/users/profile.html:46
 msgid "Cataloger"
 msgstr "Katalogisatör"
 
 #: xl_auth/permission/forms.py:24 xl_auth/templates/permissions/home.html:20
-#: xl_auth/templates/users/profile.html:46
+#: xl_auth/templates/users/profile.html:48
 msgid "Cataloguing Administrator"
 msgstr "Katalogiseringsadmin"
 
@@ -538,7 +538,7 @@ msgstr ""
 
 #: xl_auth/templates/users/profile.html:34
 msgid "Permissions (Active Collections Only)"
-msgstr "Behörigheter på aktiva samlingar/sigler"
+msgstr "Behörigheter på aktiva sigel"
 
 #: xl_auth/templates/users/profile.html:35
 msgid ""
