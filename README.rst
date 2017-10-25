@@ -183,6 +183,14 @@ DB Models
 Changelog
 =========
 
+v. 0.4.4
+--------
+
+* Data import updates (`#44 <https://github.com/libris/xl_auth/issues/44>`_)
+* UI adjustments; irrelevant permissions no longer shown to cataloging admins, using
+  term "sigel" instead of "kod"
+
+
 v. 0.4.3
 --------
 
