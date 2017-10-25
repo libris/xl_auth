@@ -72,7 +72,7 @@
     interactive: yes
     tty: yes
     detach: no
-    command: import_data --verbose --admin-email libris@kb.se
+    command: import_data --verbose --admin-email libris@kb.se --wipe-permissions
     links:
       - postgres
     env:
