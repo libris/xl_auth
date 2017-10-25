@@ -186,10 +186,11 @@ def urls(url, order):
 
 
 @click.command()
+@click.option('-v', '--verbose', default=False, is_flag=True, help='Increase verbosity')
 @click.option('--admin-email', required=True, default=None, help='Email for admin')
-@click.option('-v', '--verbose', default=False, is_flag=True, help='Increase verbosity.')
+@click.option('--wipe-permissions', default=False, is_flag=True, help='Wipe outdated permissions')
 @with_appcontext
-def import_data(admin_email, verbose):
+def import_data(verbose, admin_email, wipe_permissions):
     """Read data from Voyager dump and BibDB API to create DB entities.
 
     Creates:
@@ -388,6 +389,32 @@ def import_data(admin_email, verbose):
             'cataloging_admins': xl_auth_cataloging_admins
         }
 
+    def _get_manually_added_permissions():
+        emails_and_collection_codes = requests.get(
+            'https://docs.google.com/spreadsheets/d/e/2PACX-1vT2TjS_L9_J5LJztfKWo0UxQD-RCZo3bheFIH'
+            'Ouz2Gu-aGcd7IrlDzHDmQ2yL726z0BnSc47vasL0l3/pub?gid=0&single=true&output=tsv'
+        ).content.decode('utf-8').splitlines()
+
+        manual_additions = []
+        for add_row in emails_and_collection_codes[1:]:
+            add_email, add_code, _ = add_row.split('\t')
+            manual_additions.append((add_email.strip(), add_code.strip()))
+
+        return manual_additions
+
+    def _get_manually_deleted_permissions():
+        emails_and_collection_codes = requests.get(
+            'https://docs.google.com/spreadsheets/d/e/2PACX-1vT2TjS_L9_J5LJztfKWo0UxQD-RCZo3bheFIH'
+            'Ouz2Gu-aGcd7IrlDzHDmQ2yL726z0BnSc47vasL0l3/pub?gid=518641812&single=true&output=tsv'
+        ).content.decode('utf-8').splitlines()
+
+        manual_deletions = []
+        for del_row in emails_and_collection_codes[1:]:
+            del_email, del_code, _ = del_row.split('\t')
+            manual_deletions.append((del_email.strip(), del_code.strip()))
+
+        return manual_deletions
+
     # Get admin user
     admin = User.query.filter_by(email=admin_email).first()
 
@@ -445,6 +472,9 @@ def import_data(admin_email, verbose):
             user = User.create(email=email, full_name=full_name, active=False)
             user.save()
 
+    old_permissions = Permission.query.all()
+    current_permissions, new_permissions, removed_permissions = [], [], []
+
     # Store permissions.
     for email, collections in xl_auth['cataloging_admins'].items():
         user = User.query.filter_by(email=email).first()
@@ -458,7 +488,71 @@ def import_data(admin_email, verbose):
                 continue
             permission = Permission.query.filter_by(user_id=user.id,
                                                     collection_id=collection.id).first()
-            if not permission:
+            if permission:
+                current_permissions.append(permission)
+            else:
                 permission = Permission.create(user=user, collection=collection, registrant=True,
                                                cataloger=True, cataloging_admin=True)
                 permission.save()
+                new_permissions.append(permission)
+
+    # Apply manual additions.
+    for email, code in _get_manually_added_permissions():
+        user = User.query.filter(User.email.ilike(email)).first()
+        if not user:
+            print('Cannot add permission manually; user %r does not exist' % email)
+            continue
+
+        collection = Collection.query.filter_by(code=code).first()
+        if not collection:
+            print('Cannot add permission manually, collection %r does not exist' % code)
+            continue
+
+        permission = Permission.query.filter_by(user_id=user.id,
+                                                collection_id=collection.id).first()
+        if permission:
+            current_permissions.append(permission)
+            if verbose:
+                print('Manual permission for %r on %r already exists.' % (email, code))
+        else:
+            permission = Permission.create(user=user, collection=collection, registrant=True,
+                                           cataloger=True, cataloging_admin=True)
+            permission.save()
+            new_permissions.append(permission)
+            if verbose:
+                print('Manually added permissions for %r on %r.' % (email, code))
+
+    # Apply manual deletions.
+    for email, code in _get_manually_deleted_permissions():
+        user = User.query.filter(User.email.ilike(email)).first()
+        if not user:
+            print('Cannot delete permission manually; user %r does not exist' % email)
+            continue
+
+        collection = Collection.query.filter_by(code=code).first()
+        if not collection:
+            print('Cannot delete permission manually, collection %r does not exist' % code)
+            continue
+
+        permission = Permission.query.filter_by(user_id=user.id,
+                                                collection_id=collection.id).first()
+        if permission:
+            permission.delete()
+            removed_permissions.append(permission)
+            if verbose:
+                print('Manually deleted permissions for %r on %r.' % (email, code))
+        else:
+            current_permissions.append(permission)
+            if verbose:
+                print('Cannot manually deleted permissions for %r on %r; does not exist.'
+                      % (email, code))
+
+    # Optionally wipe stray permissions.
+    for permission in old_permissions:
+        if permission in current_permissions and permission not in removed_permissions:
+            continue
+        else:
+            print('Permission for %r on %r not found during import (deleting=%s).'
+                  % (permission.user.email, permission.collection.code, wipe_permissions))
+            if wipe_permissions:
+                permission.delete()
