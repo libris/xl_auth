@@ -183,6 +183,13 @@ DB Models
 Changelog
 =========
 
+v. 0.4.5
+--------
+
+* Bug fixes (`#75 <https://github.com/libris/xl_auth/issues/75>`_,
+  `#76 <https://github.com/libris/xl_auth/issues/76>`_)
+
+
 v. 0.4.4
 --------
 
