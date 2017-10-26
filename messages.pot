@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 0.4.4\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-25 13:18+0200\n"
+"POT-Creation-Date: 2017-10-25 14:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,8 @@ msgstr ""
 #: tests/end2end/test_deleting_permission.py:26 tests/end2end/test_editing_collection.py:158
 #: tests/end2end/test_editing_permission.py:31 tests/end2end/test_editing_permission.py:66
 #: tests/end2end/test_editing_user.py:189 tests/end2end/test_editing_user.py:215
-#: xl_auth/templates/collections/home.html:42 xl_auth/templates/permissions/home.html:37
+#: xl_auth/templates/clients/home.html:35 xl_auth/templates/collections/home.html:42
+#: xl_auth/templates/permissions/home.html:37
 msgid "Edit"
 msgstr ""
 
@@ -40,6 +41,49 @@ msgstr ""
 #: tests/end2end/test_deleting_permission.py:33 xl_auth/permission/views.py:92
 #, python-format
 msgid "Successfully deleted permissions for \"%(username)s\" on collection \"%(code)s\"."
+msgstr ""
+
+#: tests/end2end/test_editing_client.py:82 tests/end2end/test_editing_client.py:115
+#: tests/end2end/test_editing_collection.py:102 tests/end2end/test_registering_collection.py:102
+#: xl_auth/client/forms.py:14 xl_auth/collection/forms.py:18 xl_auth/templates/clients/home.html:17
+#: xl_auth/templates/users/home.html:18 xl_auth/templates/users/home.html:61
+msgid "Name"
+msgstr ""
+
+#: tests/end2end/test_editing_client.py:82 tests/end2end/test_editing_client.py:148
+#: tests/end2end/test_editing_client.py:215 tests/end2end/test_editing_client.py:248
+#: tests/end2end/test_editing_collection.py:102 tests/end2end/test_editing_user.py:146
+#: tests/end2end/test_registering_collection.py:79 tests/end2end/test_registering_collection.py:102
+#: tests/forms/test_client.py:48 tests/forms/test_client.py:71 tests/forms/test_client.py:94
+#: tests/forms/test_client.py:105 tests/forms/test_client.py:141 tests/forms/test_client.py:164
+#: tests/forms/test_client.py:187 tests/forms/test_client.py:198 tests/forms/test_collection.py:21
+#: tests/forms/test_collection.py:38 tests/forms/test_permission.py:31
+#: tests/forms/test_permission.py:39 tests/forms/test_permission.py:47
+#: tests/forms/test_permission.py:55
+msgid "This field is required."
+msgstr ""
+
+#: tests/end2end/test_editing_client.py:115 tests/forms/test_client.py:60
+#: tests/forms/test_client.py:153
+msgid "Field must be between 3 and 64 characters long."
+msgstr ""
+
+#: tests/end2end/test_editing_client.py:148 tests/end2end/test_editing_client.py:181
+#: xl_auth/client/forms.py:15 xl_auth/templates/clients/home.html:18
+msgid "Description"
+msgstr ""
+
+#: tests/end2end/test_editing_client.py:182 tests/forms/test_client.py:83
+#: tests/forms/test_client.py:176
+msgid "Field must be between 3 and 350 characters long."
+msgstr ""
+
+#: tests/end2end/test_editing_client.py:215 xl_auth/client/forms.py:11
+msgid "Redirect URIs"
+msgstr ""
+
+#: tests/end2end/test_editing_client.py:248 xl_auth/client/forms.py:12
+msgid "Default scopes"
 msgstr ""
 
 #: tests/end2end/test_editing_collection.py:53 tests/end2end/test_registering_collection.py:52
@@ -61,20 +105,6 @@ msgstr ""
 #: tests/end2end/test_editing_collection.py:80 tests/forms/test_collection.py:77
 #: xl_auth/collection/forms.py:63
 msgid "Code cannot be modified"
-msgstr ""
-
-#: tests/end2end/test_editing_collection.py:102 tests/end2end/test_registering_collection.py:102
-#: xl_auth/collection/forms.py:18 xl_auth/templates/users/home.html:18
-#: xl_auth/templates/users/home.html:61
-msgid "Name"
-msgstr ""
-
-#: tests/end2end/test_editing_collection.py:102 tests/end2end/test_editing_user.py:146
-#: tests/end2end/test_registering_collection.py:79 tests/end2end/test_registering_collection.py:102
-#: tests/forms/test_collection.py:21 tests/forms/test_collection.py:38
-#: tests/forms/test_permission.py:31 tests/forms/test_permission.py:39
-#: tests/forms/test_permission.py:47 tests/forms/test_permission.py:55
-msgid "This field is required."
 msgstr ""
 
 #: tests/end2end/test_editing_collection.py:124 tests/end2end/test_registering_collection.py:125
@@ -112,19 +142,19 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
-#: tests/end2end/test_editing_user.py:45 xl_auth/templates/permissions/home.html:30
-#: xl_auth/templates/permissions/home.html:31 xl_auth/templates/permissions/home.html:32
-#: xl_auth/templates/users/home.html:33 xl_auth/templates/users/home.html:76
-#: xl_auth/templates/users/profile.html:58 xl_auth/templates/users/profile.html:61
-#: xl_auth/templates/users/profile.html:65
+#: tests/end2end/test_editing_user.py:45 xl_auth/templates/clients/home.html:29
+#: xl_auth/templates/permissions/home.html:30 xl_auth/templates/permissions/home.html:31
+#: xl_auth/templates/permissions/home.html:32 xl_auth/templates/users/home.html:33
+#: xl_auth/templates/users/home.html:76 xl_auth/templates/users/profile.html:58
+#: xl_auth/templates/users/profile.html:61 xl_auth/templates/users/profile.html:65
 msgid "Yes"
 msgstr ""
 
-#: tests/end2end/test_editing_user.py:45 xl_auth/templates/permissions/home.html:30
-#: xl_auth/templates/permissions/home.html:31 xl_auth/templates/permissions/home.html:32
-#: xl_auth/templates/users/home.html:33 xl_auth/templates/users/home.html:76
-#: xl_auth/templates/users/profile.html:58 xl_auth/templates/users/profile.html:61
-#: xl_auth/templates/users/profile.html:65
+#: tests/end2end/test_editing_user.py:45 xl_auth/templates/clients/home.html:31
+#: xl_auth/templates/permissions/home.html:30 xl_auth/templates/permissions/home.html:31
+#: xl_auth/templates/permissions/home.html:32 xl_auth/templates/users/home.html:33
+#: xl_auth/templates/users/home.html:76 xl_auth/templates/users/profile.html:58
+#: xl_auth/templates/users/profile.html:61 xl_auth/templates/users/profile.html:65
 msgid "No"
 msgstr ""
 
@@ -171,6 +201,10 @@ msgstr ""
 msgid "Unknown username/email"
 msgstr ""
 
+#: tests/end2end/test_registering_client.py:31 xl_auth/templates/clients/home.html:11
+msgid "New Client"
+msgstr ""
+
 #: tests/end2end/test_registering_collection.py:31 tests/end2end/test_registering_collection.py:171
 #: xl_auth/templates/collections/home.html:15
 msgid "New Collection"
@@ -205,6 +239,16 @@ msgstr ""
 msgid "Email already registered"
 msgstr ""
 
+#: tests/forms/test_client.py:25 tests/forms/test_client.py:118 tests/forms/test_collection.py:124
+#: tests/forms/test_collection.py:135 tests/forms/test_permission.py:144
+#: tests/forms/test_permission.py:174 tests/forms/test_user.py:63 tests/forms/test_user.py:106
+#: tests/forms/test_user.py:132 tests/forms/test_user.py:169 xl_auth/client/forms.py:41
+#: xl_auth/client/forms.py:68 xl_auth/collection/forms.py:41 xl_auth/collection/forms.py:73
+#: xl_auth/permission/forms.py:59 xl_auth/permission/forms.py:100 xl_auth/user/forms.py:44
+#: xl_auth/user/forms.py:97 xl_auth/user/forms.py:123 xl_auth/user/forms.py:150
+msgid "You do not have sufficient privileges for this operation."
+msgstr ""
+
 #: tests/forms/test_collection.py:30
 msgid "Field must be between 1 and 5 characters long."
 msgstr ""
@@ -215,15 +259,6 @@ msgstr ""
 
 #: tests/forms/test_collection.py:86 tests/forms/test_collection.py:95
 msgid "Field must be between 2 and 255 characters long."
-msgstr ""
-
-#: tests/forms/test_collection.py:124 tests/forms/test_collection.py:135
-#: tests/forms/test_permission.py:144 tests/forms/test_permission.py:174 tests/forms/test_user.py:63
-#: tests/forms/test_user.py:106 tests/forms/test_user.py:132 tests/forms/test_user.py:169
-#: xl_auth/collection/forms.py:41 xl_auth/collection/forms.py:73 xl_auth/permission/forms.py:59
-#: xl_auth/permission/forms.py:100 xl_auth/user/forms.py:44 xl_auth/user/forms.py:97
-#: xl_auth/user/forms.py:123 xl_auth/user/forms.py:150
-msgid "You do not have sufficient privileges for this operation."
 msgstr ""
 
 #: tests/forms/test_permission.py:22 xl_auth/permission/forms.py:104 xl_auth/permission/views.py:61
@@ -267,6 +302,20 @@ msgstr ""
 #: tests/models/test_collection.py:87 xl_auth/collection/models.py:43
 #, python-format
 msgid "Replaced by %(replaced_by_code)s"
+msgstr ""
+
+#: xl_auth/client/forms.py:13 xl_auth/templates/clients/home.html:19
+msgid "Confidential"
+msgstr ""
+
+#: xl_auth/client/views.py:44
+#, python-format
+msgid "Client \"%(name)s\" created."
+msgstr ""
+
+#: xl_auth/client/views.py:68
+#, python-format
+msgid "Thank you for updating client details for \"%(id)s\"."
 msgstr ""
 
 #: xl_auth/collection/forms.py:19
@@ -366,14 +415,31 @@ msgstr ""
 msgid "Log out"
 msgstr ""
 
-#: xl_auth/templates/collections/edit.html:5
-msgid "Edit Existing Collection"
+#: xl_auth/templates/clients/edit.html:5
+msgid "Edit OAuth2 Client"
 msgstr ""
 
-#: xl_auth/templates/collections/edit.html:29 xl_auth/templates/permissions/edit.html:35
-#: xl_auth/templates/users/administer.html:25 xl_auth/templates/users/change_password.html:21
-#: xl_auth/templates/users/edit_details.html:17
+#: xl_auth/templates/clients/edit.html:31 xl_auth/templates/collections/edit.html:29
+#: xl_auth/templates/permissions/edit.html:35 xl_auth/templates/users/administer.html:25
+#: xl_auth/templates/users/change_password.html:21 xl_auth/templates/users/edit_details.html:17
 msgid "Save"
+msgstr ""
+
+#: xl_auth/templates/clients/home.html:4 xl_auth/templates/clients/home.html:8
+msgid "OAuth2 Clients"
+msgstr ""
+
+#: xl_auth/templates/clients/home.html:20 xl_auth/templates/users/home.html:20
+#: xl_auth/templates/users/home.html:63
+msgid "Admin"
+msgstr ""
+
+#: xl_auth/templates/clients/register.html:5
+msgid "Register New OAuth2 Client"
+msgstr ""
+
+#: xl_auth/templates/collections/edit.html:5
+msgid "Edit Existing Collection"
 msgstr ""
 
 #: xl_auth/templates/collections/home.html:6 xl_auth/templates/collections/home.html:54
@@ -496,10 +562,6 @@ msgstr ""
 
 #: xl_auth/templates/users/home.html:8
 msgid "Active Users"
-msgstr ""
-
-#: xl_auth/templates/users/home.html:20 xl_auth/templates/users/home.html:63
-msgid "Admin"
 msgstr ""
 
 #: xl_auth/templates/users/home.html:37 xl_auth/templates/users/home.html:80

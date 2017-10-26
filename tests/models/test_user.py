@@ -33,11 +33,11 @@ def test_created_at_defaults_to_datetime():
 
 
 @pytest.mark.usefixtures('db')
-def test_password_is_nullable():
-    """Test null password."""
+def test_password_defaults_to_a_random_one():
+    """Test empty password field is assigned some random password, instead of being set to tull."""
     user = User(email='foo@bar.com', full_name='Mr. Foo Bar')
     user.save()
-    assert user.password is None
+    assert user.password is not None
 
 
 @pytest.mark.usefixtures('db')
