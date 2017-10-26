@@ -5,6 +5,8 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import datetime as dt
 import hashlib
+from binascii import hexlify
+from os import urandom
 
 from flask_login import UserMixin
 
@@ -35,12 +37,12 @@ class User(UserMixin, SurrogatePK, Model):
     __tablename__ = 'users'
     email = Column(db.String(255), unique=True, nullable=False)
     full_name = Column(db.String(255), unique=False, nullable=False)
-    password = Column(db.Binary(128), nullable=True)
-    active = Column(db.Boolean(), default=False)
-    is_admin = Column(db.Boolean(), default=False)
+    password = Column(db.Binary(128), nullable=False)
+    active = Column(db.Boolean(), default=False, nullable=False)
+    is_admin = Column(db.Boolean(), default=False, nullable=False)
     permissions = relationship('Permission', back_populates='user')
     roles = relationship('Role', back_populates='user')
-    created_at = Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
+    created_at = Column(db.DateTime, default=dt.datetime.utcnow, nullable=False)
 
     def __init__(self, email, full_name, password=None, **kwargs):
         """Create instance."""
@@ -48,7 +50,7 @@ class User(UserMixin, SurrogatePK, Model):
         if password:
             self.set_password(password)
         else:
-            self.password = None
+            self.set_password(hexlify(urandom(16)))
 
     def set_password(self, password):
         """Set password."""
