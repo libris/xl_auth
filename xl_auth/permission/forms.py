@@ -106,8 +106,10 @@ class EditForm(PermissionForm):
             return False
 
         other_permission = Permission.query.filter(
-            Permission.id.isnot(target_permission.id)).filter_by(
-                user_id=self.user_id.data, collection_id=self.collection_id.data).first()
+            Permission.id != target_permission.id,
+            Permission.user_id == self.user_id.data,
+            Permission.collection_id == self.collection_id.data
+        ).first()
         if other_permission:
             self.user_id.errors.append(_(
                 'Permissions for user "%(username)s" on collection "%(code)s" already registered',
