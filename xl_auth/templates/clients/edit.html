@@ -1,0 +1,42 @@
+<!-- client/edit.html -->
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container-narrow">
+        <h1>{{ _('Edit OAuth2 Client') }}</h1>
+        <br/>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>{{ _('OAuth2 Client Credentials') }}</h3>
+            </div>
+
+            <p>{{ _('Client ID') }}: <input type="text" value="{{ client.client_id }}" disabled="true" /></p>
+            <p>{{ _('Client Secret') }}: <input type="text" value="{{ client.client_secret }}" disabled="true" /></p>
+        </div>
+        <form id="editForm" class="form form-edit" method="POST" action="" role="form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <div class="form-group">
+                {{ edit_form.name.label }}
+                {{ edit_form.name(placeholder="Client name", class_="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ edit_form.description.label }}
+                {{ edit_form.description(placeholder="Client description", class_="form-control") }}
+            </div>
+            <div class="form-group">
+                <label class="checkbox">
+                    {{ edit_form.is_confidential() }}
+                    {{ edit_form.is_confidential.label }}
+                </label>
+            </div>
+            <div class="form-group">
+                {{ edit_form.redirect_uris.label }}
+                {{ edit_form.redirect_uris(placeholder="Redirect URIs", class_="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ edit_form.default_scopes.label }}
+                {{ edit_form.default_scopes(placeholder="read write", class_="form-control") }}
+            </div>
+            <p><input class="btn btn-primary btn-submit" type="submit" value="{{ _('Save') }}"></p>
+        </form>
+    </div>
+{% endblock %}

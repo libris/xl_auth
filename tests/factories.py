@@ -8,6 +8,7 @@ from random import choice
 from factory import LazyFunction, PostGenerationMethodCall, Sequence
 from factory.alchemy import SQLAlchemyModelFactory
 
+from xl_auth.client.models import Client
 from xl_auth.collection.models import Collection
 from xl_auth.database import db
 from xl_auth.permission.models import Permission
@@ -77,3 +78,19 @@ class PermissionFactory(BaseFactory):
         """Factory configuration."""
 
         model = Permission
+
+
+class ClientFactory(BaseFactory):
+    """Client factory."""
+
+    name = Sequence(lambda _: 'name{0}'.format(_))
+    description = Sequence(lambda _: 'description{0}'.format(_))
+    is_confidential = True
+    redirect_uris = 'http://example.com'
+    default_scopes = 'read write'
+    created_by = '1'
+
+    class Meta:
+        """Factory configuration."""
+
+        model = Client
