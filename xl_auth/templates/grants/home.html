@@ -1,0 +1,38 @@
+<!-- grants/home.html -->
+{% extends "layout.html" %}
+{% block content %}
+    <h1>{{ _('OAuth2 Grant tokens') }}</h1>
+    <br/>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong>{{ _('OAuth2 Grant tokens') }}</strong>
+        </div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th class="col-md-3">{{ _('ID') }}</th>
+                <th class="col-md-3">{{ _('User') }}</th>
+                <th class="col-md-3">{{ _('Client') }}</th>
+                <th class="col-md-1">{{ _('Actions') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for grant in grants %}
+                <tr>
+                    <td>{{ grant.id }}</td>
+                    <td class="word-break-all">{{ grant.user.email }}</td>
+                    <td>{{ grant.client.name }}</td>
+                    {% if current_user.is_admin %}
+                        <td class="actions">
+                            <a class="btn btn-xs btn-danger pull-right" title="{{ _('Delete') }}"
+                               href="{{ url_for('grant.delete', id=grant.id) }}">
+                               {{ _('Delete grant') }}
+                            </a>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
