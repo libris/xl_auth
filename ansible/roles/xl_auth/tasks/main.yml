@@ -78,7 +78,7 @@
     env:
       FLASK_DEBUG: 0
       SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
-  when: start_xl_auth.changed
+  when: xl_auth_force_import or start_xl_auth.changed
   tags: xl_auth
 
 ...
