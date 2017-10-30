@@ -63,6 +63,12 @@ class User(UserMixin, SurrogatePK, Model):
         """Check password."""
         return bcrypt.check_password_hash(self.password, value)
 
+    def update_last_login(self, commit=True):
+        """Set 'last_login_at' to current datetime."""
+        self.last_login_at = dt.datetime.utcnow()
+        if commit:
+            self.save()
+
     def get_gravatar_url(self, size=32):
         """Get Gravatar URL."""
         hashed_email = hashlib.md5(str(self.email).lower().encode()).hexdigest()
