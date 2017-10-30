@@ -31,7 +31,7 @@ class Client(SurrogatePK, Model):
         """Create instance."""
         client_id = Client._generate_client_id()
         client_secret = Client._generate_client_secret()
-        Model.__init__(self, client_id=client_id, client_secret=client_secret, **kwargs)
+        db.Model.__init__(self, client_id=client_id, client_secret=client_secret, **kwargs)
 
     @staticmethod
     def _generate_client_id():
@@ -52,10 +52,7 @@ class Client(SurrogatePK, Model):
     @property
     def default_redirect_uri(self):
         """Return default redirect URI."""
-        if self.redirect_uris:
-            return self.redirect_uris.split()[0]
-        else:
-            return None
+        return self.redirect_uris.split()[0]
 
     def __repr__(self):
         """Represent instance as a unique string."""

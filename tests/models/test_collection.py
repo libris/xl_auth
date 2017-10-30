@@ -36,6 +36,21 @@ def test_created_at_defaults_to_datetime():
 
 
 @pytest.mark.usefixtures('db')
+def test_modified_at_defaults_to_current_datetime():
+    """Test modified date."""
+    collection = Collection('KBU', 'Outdated name', 'library')
+    collection.save()
+    first_modified_at = collection.modified_at
+
+    assert abs((first_modified_at - collection.created_at).total_seconds()) < 10
+
+    collection.friendly_name = 'Not outdated name!'
+    collection.save()
+
+    assert first_modified_at != collection.modified_at
+
+
+@pytest.mark.usefixtures('db')
 def test_factory(db):
     """Test collection factory."""
     collection = CollectionFactory()
@@ -47,6 +62,7 @@ def test_factory(db):
     assert collection.replaces is None
     assert collection.replaced_by is None
     assert isinstance(collection.permissions, list)
+    assert bool(collection.modified_at)
     assert bool(collection.created_at)
 
 

@@ -39,9 +39,12 @@ class User(UserMixin, SurrogatePK, Model):
     full_name = Column(db.String(255), unique=False, nullable=False)
     password = Column(db.Binary(128), nullable=False)
     active = Column(db.Boolean(), default=False, nullable=False)
+    last_login_at = Column(db.DateTime, default=None)
     is_admin = Column(db.Boolean(), default=False, nullable=False)
     permissions = relationship('Permission', back_populates='user')
     roles = relationship('Role', back_populates='user')
+
+    modified_at = Column(db.DateTime, default=dt.datetime.utcnow, onupdate=dt.datetime.utcnow)
     created_at = Column(db.DateTime, default=dt.datetime.utcnow, nullable=False)
 
     def __init__(self, email, full_name, password=None, **kwargs):
@@ -59,6 +62,12 @@ class User(UserMixin, SurrogatePK, Model):
     def check_password(self, value):
         """Check password."""
         return bcrypt.check_password_hash(self.password, value)
+
+    def update_last_login(self, commit=True):
+        """Set 'last_login_at' to current datetime."""
+        self.last_login_at = dt.datetime.utcnow()
+        if commit:
+            self.save()
 
     def get_gravatar_url(self, size=32):
         """Get Gravatar URL."""

@@ -183,6 +183,12 @@ DB Models
 Changelog
 =========
 
+v. 0.4.6
+--------
+
+* Minor traceability improvements (`#78 <https://github.com/libris/xl_auth/issues/78>`_)
+
+
 v. 0.4.5
 --------
 

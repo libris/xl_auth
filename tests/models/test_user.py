@@ -33,6 +33,22 @@ def test_created_at_defaults_to_datetime():
 
 
 @pytest.mark.usefixtures('db')
+def test_modified_at_defaults_to_current_datetime():
+    """Test modified date."""
+    user = User('foo@kb.se', 'Wrong Name')
+    user.save()
+    first_modified_at = user.modified_at
+
+    assert abs((first_modified_at - user.created_at).total_seconds()) < 10
+
+    user.full_name = 'Correct Name'
+    user.save()
+
+    # Initial 'modified_at' has been overwritten.
+    assert first_modified_at != user.modified_at
+
+
+@pytest.mark.usefixtures('db')
 def test_password_defaults_to_a_random_one():
     """Test empty password field is assigned some random password, instead of being set to tull."""
     user = User(email='foo@bar.com', full_name='Mr. Foo Bar')
@@ -47,12 +63,14 @@ def test_factory(db):
     db.session.commit()
     assert bool(user.email)
     assert bool(user.full_name)
+    assert bool(user.modified_at)
     assert bool(user.created_at)
     assert isinstance(user.permissions, list)
     assert isinstance(user.roles, list)
     assert user.is_admin is False
     assert user.active is True
     assert user.check_password('myPrecious')
+    assert user.last_login_at is None
 
 
 @pytest.mark.usefixtures('db')
@@ -103,10 +121,18 @@ def test_get_gravatar_url():
 
 
 @pytest.mark.usefixtures('db')
+def test_repr():
+    """Check repr output."""
+    user = UserFactory(email='foo@example.com')
+    assert repr(user) == '<User({!r})>'.format(user.email)
+
+
+@pytest.mark.usefixtures('db')
 def test_roles():
     """Add a role to a user."""
     role = Role(name='admin')
     role.save()
+    assert repr(role) == '<Role({})>'.format(role.name)
     user = UserFactory()
     user.roles.append(role)
     user.save()
