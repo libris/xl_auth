@@ -37,16 +37,15 @@ def test_modified_at_defaults_to_current_datetime():
     """Test modified date."""
     user = User('foo@kb.se', 'Wrong Name')
     user.save()
-    first_modified_at = user.modified_at.isoformat()
+    first_modified_at = user.modified_at
 
-    # Initial 'modified_at' matches 'created_at' (at least at the minute level).
-    assert first_modified_at[:16] == user.created_at.isoformat()[:16]
+    assert abs((first_modified_at - user.created_at).total_seconds()) < 10
 
     user.full_name = 'Correct Name'
     user.save()
 
     # Initial 'modified_at' has been overwritten.
-    assert first_modified_at != user.modified_at.isoformat()
+    assert first_modified_at != user.modified_at
 
 
 @pytest.mark.usefixtures('db')

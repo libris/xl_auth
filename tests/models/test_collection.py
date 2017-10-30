@@ -40,16 +40,14 @@ def test_modified_at_defaults_to_current_datetime():
     """Test modified date."""
     collection = Collection('KBU', 'Outdated name', 'library')
     collection.save()
-    first_modified_at = collection.modified_at.isoformat()
+    first_modified_at = collection.modified_at
 
-    # Initial 'modified_at' matches 'created_at' (at least at the minute level).
-    assert first_modified_at[:16] == collection.created_at.isoformat()[:16]
+    assert abs((first_modified_at - collection.created_at).total_seconds()) < 10
 
     collection.friendly_name = 'Not outdated name!'
     collection.save()
 
-    # Initial 'modified_at' has been overwritten.
-    assert first_modified_at != collection.modified_at.isoformat()
+    assert first_modified_at != collection.modified_at
 
 
 @pytest.mark.usefixtures('db')

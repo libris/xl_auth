@@ -40,16 +40,14 @@ def test_modified_at_defaults_to_current_datetime(user, collection):
     """Test modified date."""
     permission = Permission(user=user, collection=collection)
     permission.save()
-    first_modified_at = permission.modified_at.isoformat()
+    first_modified_at = permission.modified_at
 
-    # Initial 'modified_at' matches 'created_at' (at least at the minute level).
-    assert first_modified_at[:16] == permission.created_at.isoformat()[:16]
+    assert abs((first_modified_at - permission.created_at).total_seconds()) < 10
 
     permission.registrant = not permission.registrant
     permission.save()
 
-    # Initial 'modified_at' has been overwritten.
-    assert first_modified_at != permission.modified_at.isoformat()
+    assert first_modified_at != permission.modified_at
 
 
 @pytest.mark.usefixtures('db')
