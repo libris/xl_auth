@@ -3,8 +3,12 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+from datetime import datetime
+
 from flask import url_for
 from flask_babel import gettext as _
+
+from xl_auth.user.models import User
 
 
 def test_can_log_in_returns_200(user, testapp):
@@ -19,6 +23,26 @@ def test_can_log_in_returns_200(user, testapp):
     # Submits.
     res = form.submit().follow()
     assert res.status_code == 200
+
+
+def test_successful_login_updates_last_login_at(user, testapp):
+    """Successful login sets 'last_login_at' to current UTC datetime."""
+    assert user.last_login_at is None
+
+    # Goes to homepage.
+    res = testapp.get('/')
+    # Fills out login form.
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits.
+    res = form.submit().follow()
+    assert res.status_code == 200
+
+    # Fetch user from database, now with login timestamp.
+    updated_user = User.get_by_id(user.id)
+    assert isinstance(updated_user.last_login_at, datetime)
+    assert (datetime.utcnow() - updated_user.last_login_at).total_seconds() < 10
 
 
 def test_sees_alert_on_log_out(user, testapp):

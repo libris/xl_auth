@@ -71,6 +71,7 @@ def test_factory(db):
     assert user.is_admin is False
     assert user.active is True
     assert user.check_password('myPrecious')
+    assert user.last_login_at is None
 
 
 @pytest.mark.usefixtures('db')
