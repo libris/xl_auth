@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from flask import Blueprint, current_app, flash, redirect, render_template, request, url_for
 from flask_babel import lazy_gettext as _
-from flask_login import login_required, login_user, logout_user
+from flask_login import current_user, login_required, login_user, logout_user
 
 from ..extensions import login_manager
 from ..public.forms import LoginForm
@@ -31,6 +31,7 @@ def home():
             login_user(login_form.user)
             flash(_('You are logged in.'), 'success')
             redirect_url = request.args.get('next') or url_for('user.profile')
+            current_user.update_last_login()
             return redirect(redirect_url)
         else:
             flash_errors(login_form)

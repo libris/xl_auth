@@ -36,6 +36,21 @@ def test_created_at_defaults_to_datetime(user, collection):
 
 
 @pytest.mark.usefixtures('db')
+def test_modified_at_defaults_to_current_datetime(user, collection):
+    """Test modified date."""
+    permission = Permission(user=user, collection=collection)
+    permission.save()
+    first_modified_at = permission.modified_at
+
+    assert abs((first_modified_at - permission.created_at).total_seconds()) < 10
+
+    permission.registrant = not permission.registrant
+    permission.save()
+
+    assert first_modified_at != permission.modified_at
+
+
+@pytest.mark.usefixtures('db')
 def test_factory(db):
     """Test permission factory."""
     permission = PermissionFactory()
@@ -46,6 +61,7 @@ def test_factory(db):
     assert permission.registrant is False
     assert permission.cataloger is False
     assert permission.cataloging_admin is False
+    assert bool(permission.modified_at)
     assert bool(permission.created_at)
 
 

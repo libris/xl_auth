@@ -24,6 +24,7 @@ class Permission(SurrogatePK, Model):
     cataloger = Column(db.Boolean(), default=False, nullable=False)
     cataloging_admin = Column(db.Boolean(), default=False, nullable=False)
 
+    modified_at = Column(db.DateTime, default=dt.datetime.utcnow, onupdate=dt.datetime.utcnow)
     created_at = Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
 
     def __init__(self, **kwargs):
