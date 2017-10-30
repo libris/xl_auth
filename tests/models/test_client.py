@@ -13,7 +13,7 @@ from ..factories import ClientFactory
 @pytest.mark.usefixtures('db', 'user')
 def test_get_by_id(user):
     """Get client by ID."""
-    client = ClientFactory(created_by=user.id)
+    client = Client(created_by=user.id, redirect_uris='http://example.com', default_scopes='fake')
     client.save()
 
     retrieved = Client.get_by_id(client.id)
