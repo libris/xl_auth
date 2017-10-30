@@ -42,6 +42,8 @@ class User(UserMixin, SurrogatePK, Model):
     is_admin = Column(db.Boolean(), default=False, nullable=False)
     permissions = relationship('Permission', back_populates='user')
     roles = relationship('Role', back_populates='user')
+
+    modified_at = Column(db.DateTime, default=dt.datetime.utcnow, onupdate=dt.datetime.utcnow)
     created_at = Column(db.DateTime, default=dt.datetime.utcnow, nullable=False)
 
     def __init__(self, email, full_name, password=None, **kwargs):
