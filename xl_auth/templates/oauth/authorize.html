@@ -1,0 +1,15 @@
+<!-- oauth/authorize.html -->
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="body-content">
+        <div class="row">
+            <h1>{{ _('Authorize') }}</h1>
+            <p>client_id: {{ client_id }}</p>
+            <p>scopes: {{ scopes }}</p>
+            <p>state: {{ state }}</p>
+            <p>redirect_uri: {{ redirect_uri }}</p>
+            <p>response_type: {{ response_type }}</p>
+        </div>
+    </div>
+{% endblock %}
