@@ -6,6 +6,32 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from flask import url_for
 
 
+def test_oauth_authorize_success(user, client, testapp):
+    """Go to authorize page and confirm grant."""
+    # Goes to authorize endpoint
+    res = testapp.get('/oauth/authorize',
+                      params={'client_id': client.client_id,
+                              'response_type': 'code',
+                              'redirect_uri': client.default_redirect_uri,
+                              'scopes': client.default_scopes})
+    # Redirected to homepage
+    res = res.follow()
+    # Fills out login form
+    login_form = res.forms['loginForm']
+    login_form['username'] = user.email
+    login_form['password'] = 'myPrecious'
+    # Submits
+    res = login_form.submit().follow()
+    # Sees authorization confirm form
+    authorize_form = res.forms['authorizeForm']
+    #assert authorize_form['client_id'] == client.client_id
+    #assert authorize_form['response_type'] == 'code'  # TODO: Review us.
+    #assert authorize_form['redirect_uri'] == client.default_redirect_uri
+    assert authorize_form['confirm'].value == 'y'
+    res = authorize_form.submit().follow()
+    assert res.status_code == 200
+
+
 def test_oauth_authorize_missing_client_id(user, testapp):
     """Go to authorize page without 'client_id'."""
     # Goes to authorize endpoint

@@ -13,6 +13,8 @@ from ..extensions import oauth_provider
 from ..grant.models import Grant
 from ..token.models import Token
 
+from .forms import AuthorizeForm
+
 blueprint = Blueprint('oauth', __name__, url_prefix='/oauth', static_folder='../static')
 
 
@@ -80,14 +82,15 @@ def get_token(access_token_=None, refresh_token=None):
 @oauth_provider.authorize_handler
 def authorize(*_, **kwargs):
     """OAuth2'orize."""
+    authorize_form = AuthorizeForm(request.form)
     if request.method == 'GET':
         client_id = kwargs.get('client_id')
         client = Client.query.filter_by(client_id=client_id).first()
         kwargs['client'] = client
-        return render_template('oauth/authorize.html', **kwargs)
+        return render_template('oauth/authorize.html', authorize_form=authorize_form, **kwargs)
 
-    confirm = request.form.get('confirm', 'no')
-    return confirm == 'yes'
+    confirm = authorize_form['confirm'].data
+    return confirm
 
 
 @blueprint.route('/token', methods=['POST', 'GET'])
