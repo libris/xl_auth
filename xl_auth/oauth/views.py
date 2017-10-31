@@ -107,7 +107,6 @@ def revoke_token():
 
 
 @blueprint.route('/errors', methods=['GET'])
-@login_required
 def errors():
     """Render OAuth2 errors."""
     return render_template('oauth/errors.html', **request.args)

@@ -25,7 +25,7 @@ def test_can_log_in_returns_200(user, testapp):
     assert res.status_code == 200
 
 
-def test_unauthorized_leads_to_login_which_follows_next_param_on_success(user, testapp):
+def test_unauthorized_leads_to_login_which_follows_next_redirect_param_on_success(user, testapp):
     """Redirect using 'next' query param if set."""
     # Goes to pages that requires authentication.
     res = testapp.get('/oauth/authorize?param1=value1&param2=value2').follow()

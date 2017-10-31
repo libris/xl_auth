@@ -35,11 +35,11 @@ class Client(SurrogatePK, Model):
 
     @staticmethod
     def _generate_client_id():
-        return getencoder('hex')(urandom(64))[0].decode('utf-8')
+        return getencoder('hex')(urandom(64))[0].decode('utf-8')[:8]
 
     @staticmethod
     def _generate_client_secret():
-        return getencoder('hex')(urandom(256))[0].decode('utf-8')
+        return getencoder('hex')(urandom(256))[0].decode('utf-8')[:16]
 
     @property
     def client_type(self):
@@ -53,6 +53,11 @@ class Client(SurrogatePK, Model):
     def default_redirect_uri(self):
         """Return default redirect URI."""
         return self.redirect_uris.split()[0]
+
+    def validate_scopes(self, scopes):
+        """Validate scopes."""
+        client_scopes = set(self.default_scopes.split())
+        return client_scopes.issuperset(set(scopes))
 
     def __repr__(self):
         """Represent instance as a unique string."""

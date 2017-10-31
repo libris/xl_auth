@@ -49,4 +49,3 @@ def test_oauth_authorize_invalid_client_id(user, client, testapp):
 # TODO: Add tests for response_type missing/invalid.
 
 # TODO: Add tests for redirect_uri missing/invalid.
-
