@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from flask_babel import lazy_gettext as _
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField
+from wtforms import PasswordField, StringField, HiddenField
 from wtforms.validators import DataRequired
 
 from ..user.models import User
@@ -16,6 +16,7 @@ class LoginForm(FlaskForm):
 
     username = StringField(_('Username'), validators=[DataRequired()])
     password = PasswordField(_('Password'), validators=[DataRequired()])
+    next_ = HiddenField()
 
     def __init__(self, *args, **kwargs):
         """Create instance."""
