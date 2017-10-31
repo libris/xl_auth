@@ -119,6 +119,10 @@ class TokenFactory(BaseFactory):
     user = LazyFunction(UserFactory)
     client = LazyFunction(ClientFactory)
 
+    token_type = 'Bearer'
+    access_token = Sequence(lambda _: 'accessToken{0}'.format(_))
+    refresh_token = Sequence(lambda _: 'refreshToken{0}'.format(_))
+
     scopes = 'read write'
 
     class Meta:

@@ -13,7 +13,7 @@ from ..factories import TokenFactory
 @pytest.mark.usefixtures('db', 'user', 'client')
 def test_get_by_id(user, client):
     """Get token by ID."""
-    token = Token(user=user, client=client, scopes='read')
+    token = Token(user=user, client=client, access_token='abc', refresh_token='def', scopes='read')
     token.save()
 
     retrieved = token.get_by_id(token.id)
@@ -29,7 +29,7 @@ def test_factory(db):
     assert bool(token.client_id)
     assert bool(token.access_token)
     assert bool(token.refresh_token)
-    assert token.token_type == 'bearer'
+    assert token.token_type == 'Bearer'
     assert bool(token.expires_at)
     assert bool(token.scopes)
 

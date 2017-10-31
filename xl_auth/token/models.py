@@ -3,9 +3,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from codecs import getencoder
 from datetime import datetime, timedelta
-from os import urandom
 
 from ..database import Column, Model, SurrogatePK, db, reference_col, relationship
 
@@ -20,7 +18,7 @@ class Token(SurrogatePK, Model):
     client_id = reference_col('clients', nullable=False, ondelete='CASCADE')
     client = relationship('Client')
 
-    token_type = Column(db.String(40), nullable=False)
+    token_type = Column(db.String(40), nullable=False, default='Bearer')
 
     access_token = Column(db.String(256), nullable=False, unique=True)
     refresh_token = Column(db.String(256), nullable=False, unique=True)
@@ -32,15 +30,7 @@ class Token(SurrogatePK, Model):
 
     def __init__(self, **kwargs):
         """Create instance."""
-        access_token = Token._generate_token()
-        refresh_token = Token._generate_token()
-        token_type = 'bearer'
-        db.Model.__init__(self, access_token=access_token, refresh_token=refresh_token,
-                          token_type=token_type, **kwargs)
-
-    @staticmethod
-    def _generate_token():
-        return getencoder('hex')(urandom(256))[0].decode('utf-8')
+        db.Model.__init__(self, **kwargs)
 
     def __repr__(self):
         """Represent instance as a unique string."""
