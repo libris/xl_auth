@@ -32,7 +32,7 @@ def set_grant(client_id, code, request_, **_):
         client_id=client_id,
         # code=code['code'],
         redirect_uri=request_.redirect_uri,
-        scopes=request_.scopes,
+        scopes=' '.join(request_.scopes),
         user_id=current_user.id,
         expires_at=expires_at
     ).save()
