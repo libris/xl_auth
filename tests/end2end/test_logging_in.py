@@ -25,6 +25,19 @@ def test_can_log_in_returns_200(user, testapp):
     assert res.status_code == 200
 
 
+def test_unauthorized_leads_to_login_which_follows_next_param_on_success(user, testapp):
+    """Redirect using 'next' query param if set."""
+    # Goes to pages that requires authentication.
+    res = testapp.get('/oauth/authorize?param1=value1').follow()
+    # Fills out login form.
+    form = res.forms['loginForm']
+    form['username'] = user.email,
+    form['password'] = 'myPrecious'
+    # Submits.
+    res = form.submit()
+    assert '/oauth/authorize?param1=value1' in res.location
+
+
 def test_successful_login_updates_last_login_at(user, testapp):
     """Successful login sets 'last_login_at' to current UTC datetime."""
     assert user.last_login_at is None
