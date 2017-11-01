@@ -40,11 +40,11 @@ class Client(SurrogatePK, Model):
 
     @staticmethod
     def _generate_client_id():
-        return getencoder('hex')(urandom(64))[0].decode('utf-8')[:8]
+        return getencoder('hex')(urandom(32))[0].decode('utf-8')
 
     @staticmethod
     def _generate_client_secret():
-        return getencoder('hex')(urandom(256))[0].decode('utf-8')[:16]
+        return getencoder('hex')(urandom(128))[0].decode('utf-8')
 
     @hybrid_property
     def client_type(self):
