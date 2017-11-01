@@ -95,7 +95,7 @@ def authorize(*_, **kwargs):
 @blueprint.route('/token', methods=['POST', 'GET'])
 @oauth_provider.token_handler
 def access_token():
-    """Verify token?! Or what.."""
+    """Generate access token."""
     return {'version': current_app.config['APP_VERSION']}
 
 

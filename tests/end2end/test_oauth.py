@@ -95,12 +95,11 @@ def test_get_access_token(grant, testapp):
     res = testapp.get(url_for('oauth.access_token'),
                       params={'grant_type': 'authorization_code',
                               'code': grant.code,
-                              'redirect_uri': grant.redirect_uri,
-                              'scope': 'read'},
+                              'redirect_uri': grant.redirect_uri},
                       headers={'Authorization': str('Basic ' + auth_code)})
 
     token = Token.query.filter_by(user_id=grant.user_id, client_id=grant.client.client_id).first()
-    assert res.json_body['scope'] == 'read write'
+    assert res.json_body['scope'] == ' '.join(grant.scopes)
     assert res.json_body['token_type'] == 'Bearer'
     assert res.json_body['expires_in'] == 3600
     assert res.json_body['access_token'] == token.access_token
