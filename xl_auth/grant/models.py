@@ -30,12 +30,7 @@ class Grant(SurrogatePK, Model):
 
     def __init__(self, **kwargs):
         """Create instance."""
-        code = Grant._generate_code()
-        db.Model.__init__(self, code=code, **kwargs)
-
-    @staticmethod
-    def _generate_code():
-        return getencoder('hex')(urandom(256))[0].decode('utf-8')
+        db.Model.__init__(self, **kwargs)
 
     def __repr__(self):
         """Represent instance as a unique string."""

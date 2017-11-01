@@ -30,7 +30,7 @@ def set_grant(client_id, code, request_, **_):
     expires_at = None
     return Grant(
         client_id=client_id,
-        # code=code['code'],
+        code=code['code'],
         redirect_uri=request_.redirect_uri,
         scopes=' '.join(request_.scopes),
         user_id=current_user.id,

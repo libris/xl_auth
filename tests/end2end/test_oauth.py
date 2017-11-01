@@ -5,6 +5,8 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from flask import url_for
 
+from xl_auth.grant.models import Grant
+
 
 def test_oauth_authorize_success(user, client, testapp):
     """Go to authorize page and confirm grant."""
@@ -22,14 +24,21 @@ def test_oauth_authorize_success(user, client, testapp):
     login_form['password'] = 'myPrecious'
     # Submits
     res = login_form.submit().follow()
+
     # Sees authorization confirm form
     authorize_form = res.forms['authorizeForm']
     #assert authorize_form['client_id'] == client.client_id
     #assert authorize_form['response_type'] == 'code'  # TODO: Review us.
     #assert authorize_form['redirect_uri'] == client.default_redirect_uri
     assert authorize_form['confirm'].value == 'y'
+
+    # Submits confirmation and is redirected to '<redirect_uri>/?code=<grant.code>'.
     res = authorize_form.submit().follow()
-    assert res.status_code == 200
+    grant = Grant.query.filter_by(client_id=client.client_id, user_id=user.id).first()
+    assert grant is not None
+    assert res.status_code == 301
+    assert res.location == client.default_redirect_uri + '/?code={}'.format(grant.code)
+
 
 
 def test_oauth_authorize_missing_client_id(user, testapp):
