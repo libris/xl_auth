@@ -14,7 +14,7 @@ class AuthorizeForm(FlaskForm):
 
     #redirect_uris = StringField(_('Redirect URIs'), validators=[DataRequired()])
     #redirect_uris = HiddenField(_('Redirect URIs'), validators=[DataRequired()])
-    scopes = StringField(_('Scopes'))
+    scope = StringField(_('Scope'))
     confirm = BooleanField(_('Confirm'), default=True)
 
     def __init__(self, *args, **kwargs):

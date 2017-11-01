@@ -14,7 +14,7 @@
             <form id="authorizeForm" class="form form-edit" method="POST" action="" role="form">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <div class="form-group">
-                    {{ authorize_form.scopes(value=' '.join(scopes)) }}
+                    {{ authorize_form.scope(value=' '.join(scopes)) }}
                     {{ authorize_form.confirm(class_="form-control") }}
                 </div>
                 <p><input class="btn btn-primary btn-submit" type="submit" value="{{ _('Authorize') }}"></p>
