@@ -183,6 +183,14 @@ DB Models
 Changelog
 =========
 
+v. 0.5.0
+--------
+
+* Introduced buggy and limited OAuth2 provider
+  (`#68 <https://github.com/libris/xl_auth/issues/68>`_)
+* Updated Voyager/SysAdmin data import (`#38 <https://github.com/libris/xl_auth/issues/38>`_)
+
+
 v. 0.4.6
 --------
 

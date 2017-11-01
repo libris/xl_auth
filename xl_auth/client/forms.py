@@ -70,8 +70,8 @@ class EditForm(FlaskForm):
 
     def set_defaults(self, client):
         """Apply 'client' attributes as field defaults."""
-        self.redirect_uris.default = client.redirect_uris
-        self.default_scopes.default = client.default_scopes
+        self.redirect_uris.default = ' '.join(client.redirect_uris)
+        self.default_scopes.default = ' '.join(client.default_scopes)
         self.is_confidential.default = client.is_confidential
         self.name.default = client.name
         self.description.default = client.description

@@ -5,9 +5,9 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from flask import Flask, render_template
 
-from . import client, collection, commands, permission, public, user
+from . import client, collection, commands, grant, oauth, permission, public, token, user
 from .extensions import (babel, bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager,
-                         migrate, webpack)
+                         migrate, oauth_provider, webpack)
 from .settings import ProdConfig
 
 
@@ -36,6 +36,7 @@ def register_extensions(app):
     login_manager.init_app(app)
     debug_toolbar.init_app(app)
     migrate.init_app(app, db)
+    oauth_provider.init_app(app)
     webpack.init_app(app)
     return None
 
@@ -47,6 +48,9 @@ def register_blueprints(app):
     app.register_blueprint(collection.views.blueprint)
     app.register_blueprint(permission.views.blueprint)
     app.register_blueprint(client.views.blueprint)
+    app.register_blueprint(grant.views.blueprint)
+    app.register_blueprint(token.views.blueprint)
+    app.register_blueprint(oauth.views.blueprint)
     return None
 
 

@@ -31,6 +31,8 @@ def test_factory(db, user):
     assert bool(client.is_confidential)
     assert bool(client.name)
     assert bool(client.description)
+    assert client.default_scopes == ['read', 'write']
+    assert client.redirect_uris == ['https://libris.kb.se', 'http://example.com']
 
 
 @pytest.mark.usefixtures('db')
@@ -47,8 +49,22 @@ def test_client_type():
 def test_default_redirect_uri():
     """Test default_redirect_uri."""
     client = ClientFactory(redirect_uris='http://example.com/foo http://example.com/bar')
-    expected = 'http://example.com/foo'
-    assert client.default_redirect_uri == expected
+    expected_from_str = 'http://example.com/foo'
+    assert client.default_redirect_uri == expected_from_str
+
+    client.redirect_uris = ['http://localhost:80/', '///dev/null']
+    expected_from_list = 'http://localhost:80/'
+    assert client.default_redirect_uri == expected_from_list
+
+
+@pytest.mark.usefixtures('db')
+def test_default_scopes():
+    """Test default_scopes."""
+    client = ClientFactory(default_scopes='readWrite readOnly')
+    assert client.default_scopes == ['readWrite', 'readOnly']
+
+    client.default_scopes = ['read', 'write']
+    assert client.default_scopes == ['read', 'write']
 
 
 @pytest.mark.usefixtures('db')

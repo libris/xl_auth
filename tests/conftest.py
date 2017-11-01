@@ -10,8 +10,8 @@ from xl_auth.app import create_app
 from xl_auth.database import db as _db
 from xl_auth.settings import TestConfig
 
-from .factories import (ClientFactory, CollectionFactory, PermissionFactory, SuperUserFactory,
-                        UserFactory)
+from .factories import (ClientFactory, CollectionFactory, GrantFactory, PermissionFactory,
+                        SuperUserFactory, TokenFactory, UserFactory)
 
 
 @pytest.yield_fixture(scope='function')
@@ -91,3 +91,21 @@ def client(db):
     client = ClientFactory()
     db.session.commit()
     return client
+
+
+# noinspection PyShadowingNames
+@pytest.fixture
+def grant(db):
+    """A grant for the tests."""
+    grant = GrantFactory()
+    db.session.commit()
+    return grant
+
+
+# noinspection PyShadowingNames
+@pytest.fixture
+def token(db):
+    """A token for the tests."""
+    token = TokenFactory()
+    db.session.commit()
+    return token
