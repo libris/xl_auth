@@ -13,7 +13,8 @@ from ..factories import GrantFactory
 @pytest.mark.usefixtures('db', 'user', 'client')
 def test_get_by_id(user, client):
     """Get grant by ID."""
-    grant = Grant(user=user, client=client, redirect_uri='http://example.com', scopes='read')
+    grant = Grant(user=user, client=client, code='temp-secret', redirect_uri='http://example.com',
+                  scopes='read write')
     grant.save()
 
     retrieved = grant.get_by_id(grant.id)
@@ -31,6 +32,17 @@ def test_factory(db):
     assert bool(grant.redirect_uri)
     assert bool(grant.expires_at)
     assert bool(grant.scopes)
+    assert grant.scopes == ['read', 'write']
+
+
+@pytest.mark.usefixtures('db')
+def test_scopes():
+    """Test scopes."""
+    grant = GrantFactory(scopes='readWrite readOnly')
+    assert grant.scopes == ['readWrite', 'readOnly']
+
+    grant.scopes = ['read', 'write']
+    assert grant.scopes == ['read', 'write']
 
 
 @pytest.mark.usefixtures('db')

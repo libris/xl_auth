@@ -32,6 +32,17 @@ def test_factory(db):
     assert token.token_type == 'Bearer'
     assert bool(token.expires_at)
     assert bool(token.scopes)
+    assert token.scopes == ['write', 'read']
+
+
+@pytest.mark.usefixtures('db')
+def test_scopes():
+    """Test scopes."""
+    token = TokenFactory(scopes='readWrite readOnly')
+    assert token.scopes == ['readWrite', 'readOnly']
+
+    token.scopes = ['read', 'write']
+    assert token.scopes == ['read', 'write']
 
 
 @pytest.mark.usefixtures('db')

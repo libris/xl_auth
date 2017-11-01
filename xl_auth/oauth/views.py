@@ -12,7 +12,6 @@ from ..client.models import Client
 from ..extensions import oauth_provider
 from ..grant.models import Grant
 from ..token.models import Token
-
 from .forms import AuthorizeForm
 
 blueprint = Blueprint('oauth', __name__, url_prefix='/oauth', static_folder='../static')
@@ -32,7 +31,7 @@ def set_grant(client_id, code, request_, **_):
         client_id=client_id,
         code=code['code'],
         redirect_uri=request_.redirect_uri,
-        scopes=' '.join(request_.scopes),
+        scopes=request_.scopes,
         user_id=current_user.id,
         expires_at=expires_at
     ).save()
@@ -41,7 +40,7 @@ def set_grant(client_id, code, request_, **_):
 @oauth_provider.grantgetter
 def get_grant(client_id, code):
     """Return Grant object."""
-    return Grant.query.filter_by(client_id=client_id, code=code).first()
+    return Grant.query.filter(Grant.client.has(client_id=client_id), Grant.code == code).first()
 
 
 @oauth_provider.tokensetter
@@ -94,7 +93,6 @@ def authorize(*_, **kwargs):
 
 
 @blueprint.route('/token', methods=['POST', 'GET'])
-@login_required
 @oauth_provider.token_handler
 def access_token():
     """Verify token?! Or what.."""

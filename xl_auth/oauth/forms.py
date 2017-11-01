@@ -5,15 +5,12 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from flask_babel import lazy_gettext as _
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, StringField, HiddenField
-from wtforms.validators import DataRequired, Length, ValidationError
+from wtforms import BooleanField, StringField
 
 
 class AuthorizeForm(FlaskForm):
     """OAuth2'orize form."""
 
-    #redirect_uris = StringField(_('Redirect URIs'), validators=[DataRequired()])
-    #redirect_uris = HiddenField(_('Redirect URIs'), validators=[DataRequired()])
     scope = StringField(_('Scope'))
     confirm = BooleanField(_('Confirm'), default=True)
 
