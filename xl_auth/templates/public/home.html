@@ -34,6 +34,7 @@
                         <h2>{{ _('Log in') }}</h2>
                         <form id="loginForm" method="POST" class="" action="/" role="login">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            {{ login_form.next_redirect(value=next_redirect_url or "") }}
                             <div class="form-group login-form">
                                 <label for="username">{{ _('Username') }}</label>
                                 {{ login_form.username(placeholder="user@example.com", class_="form-control") }}

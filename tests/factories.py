@@ -88,7 +88,7 @@ class ClientFactory(BaseFactory):
     name = Sequence(lambda _: 'name{0}'.format(_))
     description = Sequence(lambda _: 'description{0}'.format(_))
     is_confidential = True
-    redirect_uris = 'http://example.com'
+    redirect_uris = 'https://libris.kb.se http://example.com'
     default_scopes = 'read write'
     created_by = '1'
 
@@ -103,6 +103,7 @@ class GrantFactory(BaseFactory):
 
     user = LazyFunction(UserFactory)
     client = LazyFunction(ClientFactory)
+    code = Sequence(lambda _: 'grantCode{0}'.format(_))
 
     redirect_uri = 'http://example.com'
     scopes = 'read write'
@@ -119,7 +120,11 @@ class TokenFactory(BaseFactory):
     user = LazyFunction(UserFactory)
     client = LazyFunction(ClientFactory)
 
-    scopes = 'read write'
+    token_type = 'Bearer'
+    access_token = Sequence(lambda _: 'accessToken{0}'.format(_))
+    refresh_token = Sequence(lambda _: 'refreshToken{0}'.format(_))
+
+    scopes = 'write read'
 
     class Meta:
         """Factory configuration."""

@@ -1,0 +1,12 @@
+<!-- oauth/authorize.html -->
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="body-content">
+        <div class="row">
+            <h1>{{ _('OAuth Error') }}</h1>
+            <p>errors: {{ error }}</p>
+            <p>error_descriptions: {{ error_description }}</p>
+        </div>
+    </div>
+{% endblock %}
