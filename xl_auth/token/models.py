@@ -37,6 +37,11 @@ class Token(SurrogatePK, Model):
         self.scopes = scopes
 
     @hybrid_property
+    def expires(self):
+        """Return 'expires_at'."""
+        return self.expires_at
+
+    @hybrid_property
     def scopes(self):
         """Return scopes list."""
         return self._scopes.split(' ')

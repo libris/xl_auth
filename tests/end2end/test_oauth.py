@@ -92,7 +92,7 @@ def test_get_access_token(grant, testapp):
     """Get access token using grant code."""
     credentials = '%s:%s' % (grant.client.client_id, grant.client.client_secret)
     auth_code = str(b64encode(credentials.encode()).decode())
-    res = testapp.get(url_for('oauth.access_token'),
+    res = testapp.get(url_for('oauth.create_access_token'),
                       params={'grant_type': 'authorization_code',
                               'code': grant.code,
                               'redirect_uri': grant.redirect_uri},

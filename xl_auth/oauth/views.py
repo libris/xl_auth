@@ -4,14 +4,16 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 from datetime import datetime, timedelta
+from time import time
 
-from flask import Blueprint, current_app, render_template, request
+from flask import Blueprint, current_app, jsonify, render_template, request
 from flask_login import current_user, login_required
 
 from ..client.models import Client
 from ..extensions import oauth_provider
 from ..grant.models import Grant
 from ..token.models import Token
+from ..user.models import User
 from .forms import AuthorizeForm
 
 blueprint = Blueprint('oauth', __name__, url_prefix='/oauth', static_folder='../static')
@@ -67,10 +69,10 @@ def set_token(new_token, request_, **_):
 
 
 @oauth_provider.tokengetter
-def get_token(access_token_=None, refresh_token=None):
+def get_token(access_token=None, refresh_token=None):
     """Return Token object."""
-    if access_token_:
-        return Token.query.filter_by(access_token=access_token_).first()
+    if access_token:
+        return Token.query.filter_by(access_token=access_token).first()
     if refresh_token:
         return Token.query.filter_by(refresh_token=refresh_token).first()
     return None
@@ -94,9 +96,36 @@ def authorize(*_, **kwargs):
 
 @blueprint.route('/token', methods=['POST', 'GET'])
 @oauth_provider.token_handler
-def access_token():
+def create_access_token():
     """Generate access token."""
     return {'version': current_app.config['APP_VERSION']}
+
+
+@blueprint.route('/verify', methods=['GET'])
+@oauth_provider.require_oauth('read', 'write')
+def verify():
+    """Verify access token is valid and return a bunch of user details."""
+    oauth = request.oauth
+    user = oauth.user
+    assert isinstance(user, User)
+
+    return jsonify(
+        exp=(time() + 3600) * 1000,
+        expires_at=oauth.expires_at.isoformat(),
+        qsh='mumbojumbo',
+        user={
+            'username': user.email,
+            'email': user.email,
+            'authorization': [{'sigel': permission.collection.code,
+                               'code': permission.collection.code,
+                               'cataloger': permission.cataloger,
+                               'registrant': permission.registrant,
+                               'cataloging_admin': permission.cataloging_admin,
+                               'kat': permission.cataloging_admin,
+                               'xlreg': permission.cataloging_admin}
+                              for permission in user.permissions]
+        }
+    )
 
 
 @blueprint.route('/revoke', methods=['POST'])
