@@ -28,7 +28,7 @@ def set_grant(client_id, code, request_, **_):
     """Create Grant object."""
     expires_at = None
     return Grant(
-        client_id=client_id,
+        client_id=Client.query.filter_by(client_id=client_id).first().id,
         code=code['code'],
         redirect_uri=request_.redirect_uri,
         scopes=request_.scopes,
@@ -46,7 +46,7 @@ def get_grant(client_id, code):
 @oauth_provider.tokensetter
 def set_token(new_token, request_, **_):
     """Create Token object."""
-    old_tokens = Token.query.filter_by(client_id=request_.client.client_id,
+    old_tokens = Token.query.filter_by(client_id=request_.client.id,
                                        user_id=request_.user.id)
     # Make sure that every client has only one token connected to a user.
     for token in old_tokens:
@@ -61,7 +61,7 @@ def set_token(new_token, request_, **_):
         token_type=new_token['token_type'],
         scopes=new_token['scope'],
         expires_at=expires_at,
-        client_id=request_.client.client_id,
+        client_id=request_.client.id,
         user_id=request_.user.id
     ).save()
 

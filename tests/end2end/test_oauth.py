@@ -38,7 +38,7 @@ def test_oauth_authorize_success(user, client, testapp):
 
     # Submits confirmation and is redirected to '<redirect_uri>/?code=<grant.code>'.
     res = authorize_form.submit().follow()
-    grant = Grant.query.filter_by(client_id=client.client_id, user_id=user.id).first()
+    grant = Grant.query.filter_by(client_id=client.id, user_id=user.id).first()
     assert grant is not None
     assert res.status_code == 301
     assert res.location == client.default_redirect_uri + '/?code={}'.format(grant.code)
@@ -98,7 +98,7 @@ def test_get_access_token(grant, testapp):
                               'redirect_uri': grant.redirect_uri},
                       headers={'Authorization': str('Basic ' + auth_code)})
 
-    token = Token.query.filter_by(user_id=grant.user_id, client_id=grant.client.client_id).first()
+    token = Token.query.filter_by(user_id=grant.user_id, client_id=grant.client_id).first()
     assert res.json_body['scope'] == ' '.join(grant.scopes)
     assert res.json_body['token_type'] == 'Bearer'
     assert res.json_body['expires_in'] == 3600
