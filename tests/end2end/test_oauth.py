@@ -154,9 +154,11 @@ def test_verify_success_response(token, testapp):
         if permission['code'] == permission1.collection.code:
             assert permission['registrant'] is True
             assert permission['cataloger'] is False
+            assert permission['friendly_name'] == permission1.collection.friendly_name
         if permission['code'] == permission2.collection.code:
             assert permission['registrant'] is False
             assert permission['cataloger'] is True
+            assert permission['friendly_name'] == permission2.collection.friendly_name
 
 
 def test_verify_without_bearer(testapp):
