@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: xl_auth 0.4.6\n"
+"Project-Id-Version: xl_auth 0.5.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-30 15:05+0100\n"
+"POT-Creation-Date: 2017-11-02 10:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -172,15 +172,15 @@ msgstr ""
 msgid "Welcome"
 msgstr ""
 
-#: tests/end2end/test_logging_in.py:59 xl_auth/public/views.py:46
+#: tests/end2end/test_logging_in.py:72 xl_auth/public/views.py:55
 msgid "You are logged out."
 msgstr ""
 
-#: tests/end2end/test_logging_in.py:73 tests/forms/test_public.py:45 xl_auth/public/forms.py:37
+#: tests/end2end/test_logging_in.py:86 tests/forms/test_public.py:45 xl_auth/public/forms.py:38
 msgid "Invalid password"
 msgstr ""
 
-#: tests/end2end/test_logging_in.py:88 tests/forms/test_public.py:35 xl_auth/public/forms.py:33
+#: tests/end2end/test_logging_in.py:101 tests/forms/test_public.py:35 xl_auth/public/forms.py:34
 msgid "Unknown username/email"
 msgstr ""
 
@@ -268,7 +268,7 @@ msgstr ""
 msgid "Collection ID \"%(collection_id)s\" does not exist"
 msgstr ""
 
-#: tests/forms/test_public.py:56 xl_auth/public/forms.py:41
+#: tests/forms/test_public.py:56 xl_auth/public/forms.py:42
 msgid "User not activated"
 msgstr ""
 
@@ -343,6 +343,14 @@ msgstr ""
 msgid "Successfully deleted OAuth2 Grant token \"%(grant_id)s\"."
 msgstr ""
 
+#: xl_auth/oauth/forms.py:14
+msgid "Scope"
+msgstr ""
+
+#: xl_auth/oauth/forms.py:15
+msgid "Confirm"
+msgstr ""
+
 #: xl_auth/permission/forms.py:19 xl_auth/templates/grants/home.html:14
 #: xl_auth/templates/permissions/home.html:16 xl_auth/templates/tokens/home.html:14
 msgid "User"
@@ -371,15 +379,15 @@ msgstr ""
 msgid "Permission"
 msgstr ""
 
-#: xl_auth/public/forms.py:17 xl_auth/templates/public/home.html:38
+#: xl_auth/public/forms.py:17 xl_auth/templates/public/home.html:39
 msgid "Username"
 msgstr ""
 
-#: xl_auth/public/forms.py:18 xl_auth/templates/public/home.html:40 xl_auth/user/forms.py:15
+#: xl_auth/public/forms.py:18 xl_auth/templates/public/home.html:41 xl_auth/user/forms.py:15
 msgid "Password"
 msgstr ""
 
-#: xl_auth/public/views.py:32
+#: xl_auth/public/views.py:40
 msgid "You are logged in."
 msgstr ""
 
@@ -533,6 +541,14 @@ msgstr ""
 msgid "Delete grant"
 msgstr ""
 
+#: xl_auth/templates/oauth/authorize.html:7 xl_auth/templates/oauth/authorize.html:20
+msgid "Authorize"
+msgstr ""
+
+#: xl_auth/templates/oauth/errors.html:7
+msgid "OAuth Error"
+msgstr ""
+
 #: xl_auth/templates/permissions/edit.html:8
 msgid "Edit Existing Permission"
 msgstr ""
@@ -564,38 +580,38 @@ msgid "Welcome to xl_auth"
 msgstr ""
 
 #: xl_auth/templates/public/home.html:10 xl_auth/templates/public/home.html:27
-msgid "This is an early alpha release of Libris authorization service."
+msgid "This is an early beta release of Libris authorization service."
 msgstr ""
 
 #: xl_auth/templates/public/home.html:13 xl_auth/templates/public/home.html:30
 msgid "See email from customer service for instructions."
 msgstr ""
 
-#: xl_auth/templates/public/home.html:34 xl_auth/templates/public/home.html:42
+#: xl_auth/templates/public/home.html:34 xl_auth/templates/public/home.html:43
 msgid "Log in"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:49
+#: xl_auth/templates/public/home.html:50
 msgid "The Libris blog"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:50
+#: xl_auth/templates/public/home.html:51
 msgid "Read the latest news about the Libris collaboration."
 msgstr ""
 
-#: xl_auth/templates/public/home.html:51
+#: xl_auth/templates/public/home.html:52
 msgid "Go to the blog"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:54
+#: xl_auth/templates/public/home.html:55
 msgid "Support forum"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:55
+#: xl_auth/templates/public/home.html:56
 msgid "Get help, ask questions and report errors."
 msgstr ""
 
-#: xl_auth/templates/public/home.html:56
+#: xl_auth/templates/public/home.html:57
 msgid "Go to kundo"
 msgstr ""
 
