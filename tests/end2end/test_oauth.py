@@ -11,6 +11,8 @@ from xl_auth import __version__
 from xl_auth.grant.models import Grant
 from xl_auth.token.models import Token
 
+from ..factories import PermissionFactory
+
 
 def test_oauth_authorize_success(user, client, testapp):
     """Go to authorize page and confirm grant."""
@@ -109,6 +111,12 @@ def test_get_access_token(grant, testapp):
 
 def test_verify_response(token, testapp):
     """Get user details and token expiry."""
+    permission1 = PermissionFactory(user=token.user, registrant=True, cataloger=False)
+    permission1.save()
+
+    permission2 = PermissionFactory(user=token.user, registrant=False, cataloger=True)
+    permission2.save()
+
     res = testapp.get(url_for('oauth.verify'),
                       headers={'Authorization': str('Bearer ' + token.access_token)})
 
@@ -117,3 +125,11 @@ def test_verify_response(token, testapp):
     assert res.json_body['user']['email'] == token.user.email
 
     assert len(res.json_body['user']['permissions']) == len(token.user.permissions)
+    for permission in res.json_body['user']['permissions']:
+        assert permission['code'] in {permission1.collection.code, permission2.collection.code}
+        if permission['code'] == permission1.collection.code:
+            assert permission['registrant'] == True
+            assert permission['cataloger'] == False
+        if permission['code'] == permission2.collection.code:
+            assert permission['registrant'] == False
+            assert permission['cataloger'] == True
