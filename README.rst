@@ -189,6 +189,7 @@ v. 0.5.2
 * Add ``app_version`` property to response from OAuth2 API endpoints
 * Bug fixes for OAuth2 data model; fully re-created on ``flask db upgrade``
   (`#68 <https://github.com/libris/xl_auth/issues/68>`_)
+* Updated Voyager/SysAdmin data import (`#38 <https://github.com/libris/xl_auth/issues/38>`_)
 
 
 v. 0.5.1
