@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: xl_auth 0.4.5\n"
+"Project-Id-Version: xl_auth 0.4.6\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-30 14:10+0100\n"
+"POT-Creation-Date: 2017-10-30 15:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -280,17 +280,17 @@ msgstr ""
 msgid "User does not exist"
 msgstr ""
 
-#: tests/models/test_collection.py:99 xl_auth/collection/models.py:40
+#: tests/models/test_collection.py:97 xl_auth/collection/models.py:40
 #, python-format
 msgid "Replaces %(replaces_code)s, then replaced by %(replaced_by_code)s"
 msgstr ""
 
-#: tests/models/test_collection.py:102 xl_auth/collection/models.py:43
+#: tests/models/test_collection.py:100 xl_auth/collection/models.py:43
 #, python-format
 msgid "Replaces %(replaces_code)s"
 msgstr ""
 
-#: tests/models/test_collection.py:105 xl_auth/collection/models.py:45
+#: tests/models/test_collection.py:103 xl_auth/collection/models.py:45
 #, python-format
 msgid "Replaced by %(replaced_by_code)s"
 msgstr ""
@@ -338,7 +338,13 @@ msgstr ""
 msgid "Thank you for editing collection \"%(code)s\"."
 msgstr ""
 
-#: xl_auth/permission/forms.py:19 xl_auth/templates/permissions/home.html:16
+#: xl_auth/grant/views.py:40
+#, python-format
+msgid "Successfully deleted OAuth2 Grant token \"%(grant_id)s\"."
+msgstr ""
+
+#: xl_auth/permission/forms.py:19 xl_auth/templates/grants/home.html:14
+#: xl_auth/templates/permissions/home.html:16 xl_auth/templates/tokens/home.html:14
 msgid "User"
 msgstr ""
 
@@ -449,7 +455,8 @@ msgstr ""
 msgid "Admin"
 msgstr ""
 
-#: xl_auth/templates/clients/home.html:40
+#: xl_auth/templates/clients/home.html:40 xl_auth/templates/grants/home.html:27
+#: xl_auth/templates/tokens/home.html:27
 msgid "Delete"
 msgstr ""
 
@@ -505,16 +512,33 @@ msgstr ""
 msgid "Register"
 msgstr ""
 
+#: xl_auth/templates/grants/home.html:4 xl_auth/templates/grants/home.html:8
+msgid "OAuth2 Grant tokens"
+msgstr ""
+
+#: xl_auth/templates/grants/home.html:13 xl_auth/templates/tokens/home.html:13
+msgid "ID"
+msgstr ""
+
+#: xl_auth/templates/grants/home.html:15 xl_auth/templates/tokens/home.html:15
+msgid "Client"
+msgstr ""
+
+#: xl_auth/templates/grants/home.html:16 xl_auth/templates/permissions/home.html:22
+#: xl_auth/templates/tokens/home.html:16
+msgid "Actions"
+msgstr ""
+
+#: xl_auth/templates/grants/home.html:29
+msgid "Delete grant"
+msgstr ""
+
 #: xl_auth/templates/permissions/edit.html:8
 msgid "Edit Existing Permission"
 msgstr ""
 
 #: xl_auth/templates/permissions/home.html:9
 msgid "Existing Permissions"
-msgstr ""
-
-#: xl_auth/templates/permissions/home.html:22
-msgid "Actions"
 msgstr ""
 
 #: xl_auth/templates/permissions/register.html:5
@@ -575,6 +599,14 @@ msgstr ""
 msgid "Go to kundo"
 msgstr ""
 
+#: xl_auth/templates/tokens/home.html:4 xl_auth/templates/tokens/home.html:8
+msgid "OAuth2 Bearer tokens"
+msgstr ""
+
+#: xl_auth/templates/tokens/home.html:29
+msgid "Delete token"
+msgstr ""
+
 #: xl_auth/templates/users/administer.html:5 xl_auth/templates/users/edit_details.html:5
 msgid "Edit User Details"
 msgstr ""
@@ -629,6 +661,11 @@ msgstr ""
 
 #: xl_auth/templates/users/register.html:5
 msgid "Register New User"
+msgstr ""
+
+#: xl_auth/token/views.py:40
+#, python-format
+msgid "Successfully deleted OAuth2 Bearer token \"%(token_id)s\"."
 msgstr ""
 
 #: xl_auth/user/forms.py:16

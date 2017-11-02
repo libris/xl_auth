@@ -246,7 +246,7 @@ def import_data(verbose, admin_email, wipe_permissions):
             'friendly_name': friendly_name,
             'code': bibdb_api_data['sigel'],
             'category': category,
-            'active': not bool(bibdb_api_data['sigel_new']),
+            'active': bibdb_api_data['alive'],
             'replaces': bibdb_api_data['sigel_old'],
             'replaced_by': bibdb_api_data['sigel_new']
         }
@@ -259,7 +259,7 @@ def import_data(verbose, admin_email, wipe_permissions):
 
     def _get_voyager_data():
         raw_voyager_sigels_and_locations = requests.get(
-            'https://github.com/libris/xl_auth/files/1414385/171025_KB--sigel_locations.txt'
+            'https://github.com/libris/xl_auth/files/1434512/171101_KB--sigel_locations.txt'
         ).content.decode('latin-1').splitlines()
         voyager_sigels_and_collections = dict()
         voyager_main_sigels, voyager_location_sigels = set(), set()
@@ -445,7 +445,12 @@ def import_data(verbose, admin_email, wipe_permissions):
             continue
 
         collection = Collection.query.filter_by(code=details['code']).first()
-        if not collection:
+        if collection:
+            if collection.active != details['active']:
+                collection.active = details['active']
+                collection.save()
+                print('corrected collection %r: active=%s' % (collection.code, collection.active))
+        else:
             collection = Collection.create(**details)
             collection.save()
 

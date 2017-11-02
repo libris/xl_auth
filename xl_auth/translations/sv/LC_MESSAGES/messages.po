@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2017-10-30 14:10+0100\n"
+"POT-Creation-Date: 2017-10-30 15:05+0100\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -281,17 +281,17 @@ msgstr "Fältet måste vara mellan 3 och 255 tecken långt."
 msgid "User does not exist"
 msgstr "Användaren existerar inte"
 
-#: tests/models/test_collection.py:99 xl_auth/collection/models.py:40
+#: tests/models/test_collection.py:97 xl_auth/collection/models.py:40
 #, python-format
 msgid "Replaces %(replaces_code)s, then replaced by %(replaced_by_code)s"
 msgstr "Ersätter %(replaces_code)s, därefter ersatt av samling %(replaced_by_code)s"
 
-#: tests/models/test_collection.py:102 xl_auth/collection/models.py:43
+#: tests/models/test_collection.py:100 xl_auth/collection/models.py:43
 #, python-format
 msgid "Replaces %(replaces_code)s"
 msgstr "Ersätter samling %(replaces_code)s"
 
-#: tests/models/test_collection.py:105 xl_auth/collection/models.py:45
+#: tests/models/test_collection.py:103 xl_auth/collection/models.py:45
 #, python-format
 msgid "Replaced by %(replaced_by_code)s"
 msgstr "Ersatt av samling %(replaced_by_code)s"
@@ -339,7 +339,13 @@ msgstr "Ny samling registrerad."
 msgid "Thank you for editing collection \"%(code)s\"."
 msgstr "Samlingen \"%(code)s\" har uppdaterats."
 
-#: xl_auth/permission/forms.py:19 xl_auth/templates/permissions/home.html:16
+#: xl_auth/grant/views.py:40
+#, python-format
+msgid "Successfully deleted OAuth2 Grant token \"%(grant_id)s\"."
+msgstr "OAuth2 Grant token \"%(grant_id)s\" har raderats."
+
+#: xl_auth/permission/forms.py:19 xl_auth/templates/grants/home.html:14
+#: xl_auth/templates/permissions/home.html:16 xl_auth/templates/tokens/home.html:14
 msgid "User"
 msgstr "Användare"
 
@@ -450,7 +456,8 @@ msgstr "OAuth2-klienter"
 msgid "Admin"
 msgstr "Admin"
 
-#: xl_auth/templates/clients/home.html:40
+#: xl_auth/templates/clients/home.html:40 xl_auth/templates/grants/home.html:27
+#: xl_auth/templates/tokens/home.html:27
 msgid "Delete"
 msgstr "Ta bort"
 
@@ -506,6 +513,27 @@ msgstr "Registrera ny samling"
 msgid "Register"
 msgstr "Registrera"
 
+#: xl_auth/templates/grants/home.html:4 xl_auth/templates/grants/home.html:8
+msgid "OAuth2 Grant tokens"
+msgstr "OAuth2 Grant tokens"
+
+#: xl_auth/templates/grants/home.html:13 xl_auth/templates/tokens/home.html:13
+msgid "ID"
+msgstr "ID"
+
+#: xl_auth/templates/grants/home.html:15 xl_auth/templates/tokens/home.html:15
+msgid "Client"
+msgstr "Klient"
+
+#: xl_auth/templates/grants/home.html:16 xl_auth/templates/permissions/home.html:22
+#: xl_auth/templates/tokens/home.html:16
+msgid "Actions"
+msgstr "Åtgärder"
+
+#: xl_auth/templates/grants/home.html:29
+msgid "Delete grant"
+msgstr "Radera grant"
+
 #: xl_auth/templates/permissions/edit.html:8
 msgid "Edit Existing Permission"
 msgstr "Ändra behörighet"
@@ -513,10 +541,6 @@ msgstr "Ändra behörighet"
 #: xl_auth/templates/permissions/home.html:9
 msgid "Existing Permissions"
 msgstr "Befintliga behörigheter"
-
-#: xl_auth/templates/permissions/home.html:22
-msgid "Actions"
-msgstr "Åtgärder"
 
 #: xl_auth/templates/permissions/register.html:5
 msgid "Register New Permission"
@@ -581,6 +605,14 @@ msgstr "Få hjälp, ställ frågor och rapportera fel."
 msgid "Go to kundo"
 msgstr "Gå till kundo"
 
+#: xl_auth/templates/tokens/home.html:4 xl_auth/templates/tokens/home.html:8
+msgid "OAuth2 Bearer tokens"
+msgstr "OAuth2 Bearer tokens"
+
+#: xl_auth/templates/tokens/home.html:29
+msgid "Delete token"
+msgstr "Radera token"
+
 #: xl_auth/templates/users/administer.html:5 xl_auth/templates/users/edit_details.html:5
 msgid "Edit User Details"
 msgstr "Ändra användarinställningar"
@@ -641,6 +673,11 @@ msgstr ""
 #: xl_auth/templates/users/register.html:5
 msgid "Register New User"
 msgstr "Registrera ny användare"
+
+#: xl_auth/token/views.py:40
+#, python-format
+msgid "Successfully deleted OAuth2 Bearer token \"%(token_id)s\"."
+msgstr "OAuth2 Bearer token \"%(token_id)s\" har raderats."
 
 #: xl_auth/user/forms.py:16
 msgid "Verify password"

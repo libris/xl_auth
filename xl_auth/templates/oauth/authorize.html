@@ -1,0 +1,24 @@
+<!-- oauth/authorize.html -->
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="body-content">
+        <div class="row">
+            <h1>{{ _('Authorize') }}</h1>
+            <p>client_id: {{ client_id }}</p>
+            <p>scopes: {{ scopes }}</p>
+            <p>state: {{ state }}</p>
+            <p>redirect_uri: {{ redirect_uri }}</p>
+            <p>response_type: {{ response_type }}</p>
+
+            <form id="authorizeForm" class="form form-edit" method="POST" action="" role="form">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <div class="form-group">
+                    {{ authorize_form.scope(value=' '.join(scopes)) }}
+                    {{ authorize_form.confirm(class_="form-control") }}
+                </div>
+                <p><input class="btn btn-primary btn-submit" type="submit" value="{{ _('Authorize') }}"></p>
+            </form>
+        </div>
+    </div>
+{% endblock %}
