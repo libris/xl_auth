@@ -77,6 +77,12 @@ def get_token(access_token=None, refresh_token=None):
     return None
 
 
+@oauth_provider.invalid_response
+def require_oauth_invalid(req):
+    """OAuth2 errors JSONified."""
+    return jsonify(app_version=current_app.config['APP_VERSION'], message=req.error_message), 401
+
+
 @blueprint.route('/authorize', methods=['GET', 'POST'])
 @login_required
 @oauth_provider.authorize_handler
@@ -97,7 +103,7 @@ def authorize(*_, **kwargs):
 @oauth_provider.token_handler
 def create_access_token():
     """Generate access token."""
-    return {'version': current_app.config['APP_VERSION']}
+    return {'app_version': current_app.config['APP_VERSION']}
 
 
 @blueprint.route('/verify', methods=['GET'])
@@ -109,6 +115,7 @@ def verify():
     assert isinstance(user, User)
 
     return jsonify(
+        app_version=current_app.config['APP_VERSION'],
         expires_at=oauth.access_token.expires_at.isoformat(),
         user={
             'full_name': user.full_name,
