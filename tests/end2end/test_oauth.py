@@ -4,12 +4,15 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 from base64 import b64encode
+from datetime import datetime, timedelta
 
 from flask import url_for
 
 from xl_auth import __version__
 from xl_auth.grant.models import Grant
 from xl_auth.token.models import Token
+
+from ..factories import PermissionFactory
 
 
 def test_oauth_authorize_success(user, client, testapp):
@@ -38,7 +41,7 @@ def test_oauth_authorize_success(user, client, testapp):
 
     # Submits confirmation and is redirected to '<redirect_uri>/?code=<grant.code>'.
     res = authorize_form.submit().follow()
-    grant = Grant.query.filter_by(client_id=client.id, user_id=user.id).first()
+    grant = Grant.query.filter_by(client_id=client.client_id, user_id=user.id).first()
     assert grant is not None
     assert res.status_code == 301
     assert res.location == client.default_redirect_uri + '/?code={}'.format(grant.code)
@@ -104,16 +107,85 @@ def test_get_access_token(grant, testapp):
     assert res.json_body['expires_in'] == 3600
     assert res.json_body['access_token'] == token.access_token
     assert res.json_body['refresh_token'] == token.refresh_token
-    assert res.json_body['version'] == __version__
+    assert res.json_body['app_version'] == __version__
 
 
-def test_verify_response(token, testapp):
+def test_refresh_access_token(token, testapp):
+    """Get new access token using 'refresh_token'."""
+    token.expires_at = datetime.utcnow() - timedelta(seconds=1)
+    token.save()
+    res = testapp.get(url_for('oauth.create_access_token'),
+                      params={'grant_type': 'refresh_token',
+                              'refresh_token': token.refresh_token,
+                              'client_id': token.client.client_id,
+                              'client_secret': token.client.client_secret}, expect_errors=True)
+
+    updated_token = Token.query.filter_by(user_id=token.user_id, client_id=token.client_id).first()
+    assert updated_token.id == token.id
+    assert res.json_body['scope'] == ' '.join(updated_token.scopes)
+    assert res.json_body['token_type'] == 'Bearer'
+    assert res.json_body['expires_in'] == 3600
+    assert res.json_body['access_token'] == updated_token.access_token
+    assert res.json_body['access_token'] != token.access_token
+    assert res.json_body['refresh_token'] == updated_token.refresh_token
+    assert res.json_body['refresh_token'] != token.refresh_token
+    assert res.json_body['app_version'] == __version__
+
+
+def test_verify_success_response(token, testapp):
     """Get user details and token expiry."""
+    permission1 = PermissionFactory(user=token.user, registrant=True, cataloger=False)
+    permission1.save()
+
+    permission2 = PermissionFactory(user=token.user, registrant=False, cataloger=True)
+    permission2.save()
+
     res = testapp.get(url_for('oauth.verify'),
                       headers={'Authorization': str('Bearer ' + token.access_token)})
 
-    assert res.json_body['expires_at'] == token.expires_at.isoformat()
+    assert res.json_body['app_version'] == __version__
+    assert res.json_body['expires_at'] == token.expires_at.isoformat() + 'Z'
     assert res.json_body['user']['full_name'] == token.user.full_name
     assert res.json_body['user']['email'] == token.user.email
 
     assert len(res.json_body['user']['permissions']) == len(token.user.permissions)
+    for permission in res.json_body['user']['permissions']:
+        assert permission['code'] in {permission1.collection.code, permission2.collection.code}
+        if permission['code'] == permission1.collection.code:
+            assert permission['registrant'] is True
+            assert permission['cataloger'] is False
+        if permission['code'] == permission2.collection.code:
+            assert permission['registrant'] is False
+            assert permission['cataloger'] is True
+
+
+def test_verify_without_bearer(testapp):
+    """Attempt getting expiry and user details without 'Bearer' header."""
+    res = testapp.get(url_for('oauth.verify'), expect_errors=True)
+
+    assert res.status_code == 401
+    assert res.json_body['app_version'] == __version__
+    assert res.json_body['message'] == 'Bearer token not found.'
+
+
+# noinspection PyUnusedLocal
+def test_verify_with_invalid_bearer(db, testapp):
+    """Attempt getting expiry and user details with invalid 'Bearer'."""
+    res = testapp.get(url_for('oauth.verify'), expect_errors=True,
+                      headers={'Authorization': str('Bearer IncorrectOne')})
+
+    assert res.status_code == 401
+    assert res.json_body['app_version'] == __version__
+    assert res.json_body['message'] == 'Bearer token not found.'
+
+
+def test_verify_with_expired_token(token, testapp):
+    """Attempt getting expiry and user details with expired 'Bearer' token."""
+    token.expires_at = datetime.utcnow() - timedelta(seconds=1)
+    token.save()
+    res = testapp.get(url_for('oauth.verify'), expect_errors=True,
+                      headers={'Authorization': str('Bearer ' + token.access_token)})
+
+    assert res.status_code == 401
+    assert res.json_body['app_version'] == __version__
+    assert res.json_body['message'] == 'Bearer token is expired.'

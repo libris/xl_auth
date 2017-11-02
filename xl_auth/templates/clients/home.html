@@ -33,12 +33,12 @@
                     {% if current_user.is_admin %}
                         <td class="actions">
                             <a title="{{ _('Edit') }}"
-                               href="{{ url_for('client.edit', id=client.id) }}">
+                               href="{{ url_for('client.edit', client_id=client.client_id) }}">
                                 <i class="fa fa-pencil"></i>
                             </a>
 
                             <a class="btn btn-xs btn-danger pull-right" title="{{ _('Delete') }}"
-                               href="{{ url_for('client.delete', id=client.id) }}">
+                               href="{{ url_for('client.delete', client_id=client.client_id) }}">
                                {{ _('Delete client') }}
                             </a>
                         </td>

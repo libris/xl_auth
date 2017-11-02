@@ -8,26 +8,30 @@
         <div class="panel-body">
             <p><strong>{{ _('This is your personal profile page.') }}</strong></p>
 
-            <a class="btn btn-default"
-               href="{{ url_for('user.edit_details', username=current_user.email) }}">
-                {{ _('Edit Display Name') }}
-            </a>
-            <a class="btn btn-default"
-               href="{{ url_for('user.change_password', username=current_user.email) }}">
-                {{ _('Change Password') }}
-            </a>
+            {% if current_user.email != 'test@kb.se' %}
+                <a class="btn btn-default"
+                   href="{{ url_for('user.edit_details', username=current_user.email) }}">
+                    {{ _('Edit Display Name') }}
+                </a>
+                <a class="btn btn-default"
+                   href="{{ url_for('user.change_password', username=current_user.email) }}">
+                    {{ _('Change Password') }}
+                </a>
+            {% endif %}
         </div>
     </div>
 
-    <div class="panel panel-danger">
-        <div class="panel-heading">
-            <h3>{{ _('Important') }}!</h3>
-        </div>
-        <div class="panel-body">
-            <p>{{ _('Contact customer service at <a href="mailto:libris@kb.se">libris@kb.se</a> \
+    {% if current_user.email != 'test@kb.se' %}
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h3>{{ _('Important') }}!</h3>
+            </div>
+            <div class="panel-body">
+                <p>{{ _('Contact customer service at <a href="mailto:libris@kb.se">libris@kb.se</a> \
 if your permissions are not correctly listed below.') }}</p>
+            </div>
         </div>
-    </div>
+    {% endif %}
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -41,7 +45,7 @@ will allow you to create new user accounts and grant registrant/cataloger privil
                 <tr>
                     <th>{{ _('Code') }}</th>
                     <th>{{ _('Friendly Name') }}</th>
-                    {% if user.is_admin %}
+                    {% if user.is_admin or user.email == 'test@kb.se' %}
                         <th>{{ _('Registrant') }}</th>
                         <th>{{ _('Cataloger') }}</th>
                     {% endif %}
@@ -53,7 +57,7 @@ will allow you to create new user accounts and grant registrant/cataloger privil
                     <tr>
                         <td>{{ permission.collection.code }}</td>
                         <td>{{ permission.collection.friendly_name }}</td>
-                        {% if user.is_admin %}
+                        {% if user.is_admin or user.email == 'test@kb.se' %}
                             <td class="{{ "bool-value-{}".format(permission.registrant).lower() }}">
                                 {{ _('Yes') if permission.registrant else _('No') }}
                             </td>

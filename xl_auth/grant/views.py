@@ -24,7 +24,7 @@ def home():
     return render_template('grants/home.html', grants=grants)
 
 
-@blueprint.route('/delete/<int:id>', methods=['GET', 'DELETE'])
+@blueprint.route('/delete/<int:grant_id>', methods=['GET', 'DELETE'])
 @login_required
 def delete(grant_id):
     """Delete grant."""
