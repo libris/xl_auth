@@ -4,7 +4,6 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 from datetime import datetime, timedelta
-from time import time
 
 from flask import Blueprint, current_app, jsonify, render_template, request
 from flask_login import current_user, login_required
