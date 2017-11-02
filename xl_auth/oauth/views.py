@@ -85,7 +85,6 @@ def require_oauth_invalid(req):
 
 @blueprint.route('/authorize', methods=['GET', 'POST'])
 @login_required
-@oauth_provider.authorize_handler
 def authorize(*_, **kwargs):
     """OAuth2'orize."""
     authorize_form = AuthorizeForm(request.form)

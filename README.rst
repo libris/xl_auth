@@ -183,6 +183,13 @@ DB Models
 Changelog
 =========
 
+v. 0.5.3
+--------
+
+* Add collection name to ``/oauth/verify`` response
+* Fix broken database migration (`#68 <https://github.com/libris/xl_auth/issues/68>`_)
+
+
 v. 0.5.2
 --------
 
