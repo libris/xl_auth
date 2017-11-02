@@ -25,7 +25,7 @@
                     {% if current_user.is_admin %}
                         <td class="actions">
                             <a class="btn btn-xs btn-danger pull-right" title="{{ _('Delete') }}"
-                               href="{{ url_for('token.delete', id=token.id) }}">
+                               href="{{ url_for('token.delete', token_id=token.id) }}">
                                {{ _('Delete token') }}
                             </a>
                         </td>

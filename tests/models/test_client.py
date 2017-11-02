@@ -16,7 +16,7 @@ def test_get_by_id(user):
     client = Client(created_by=user.id, redirect_uris='http://example.com', default_scopes='fake')
     client.save()
 
-    retrieved = Client.get_by_id(client.id)
+    retrieved = Client.get_by_id(client.client_id)
     assert retrieved == client
 
 

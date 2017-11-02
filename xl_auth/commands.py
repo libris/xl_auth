@@ -259,7 +259,7 @@ def import_data(verbose, admin_email, wipe_permissions):
 
     def _get_voyager_data():
         raw_voyager_sigels_and_locations = requests.get(
-            'https://github.com/libris/xl_auth/files/1434512/171101_KB--sigel_locations.txt'
+            'https://github.com/libris/xl_auth/files/1437869/171102_KB--sigel_locations.txt'
         ).content.decode('latin-1').splitlines()
         voyager_sigels_and_collections = dict()
         voyager_main_sigels, voyager_location_sigels = set(), set()
@@ -292,7 +292,11 @@ def import_data(verbose, admin_email, wipe_permissions):
         bibdb_cataloging_admins_and_sigels = dict()
         bibdb_cataloging_admin_emails_and_names = dict()
         for bibdb_row in raw_bibdb_sigels_and_cataloging_admins:
-            bibdb_sigel, cataloging_admin_name, cataloging_admin_email = bibdb_row.split(',')
+            try:
+                bibdb_sigel, cataloging_admin_name, cataloging_admin_email = bibdb_row.split(',')
+            except ValueError as err:
+                print('ValueError: %s / bibdb_row: %r' % (err, bibdb_row))
+                continue
             cataloging_admin_email = cataloging_admin_email.lower()
             bibdb_cataloging_admin_emails_and_names[cataloging_admin_email] = cataloging_admin_name
             assert bibdb_sigel != ''
@@ -496,8 +500,15 @@ def import_data(verbose, admin_email, wipe_permissions):
             if permission:
                 current_permissions.append(permission)
             else:
-                permission = Permission.create(user=user, collection=collection, registrant=True,
-                                               cataloger=True, cataloging_admin=True)
+                if user.email == 'test@kb.se':
+                    permission = Permission.create(user=user, collection=collection,
+                                                   registrant=collection.code == 'Utb1',
+                                                   cataloger=collection.code == 'Utb2',
+                                                   cataloging_admin=collection.code == 'Utb2')
+                else:
+                    permission = Permission.create(user=user, collection=collection,
+                                                   registrant=True, cataloger=True,
+                                                   cataloging_admin=True)
                 permission.save()
                 new_permissions.append(permission)
 

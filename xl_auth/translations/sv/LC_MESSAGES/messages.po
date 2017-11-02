@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2017-10-30 15:05+0100\n"
+"POT-Creation-Date: 2017-11-02 10:58+0100\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -51,7 +51,7 @@ msgstr "🙀 Ta bort behörighet"
 #: tests/end2end/test_deleting_permission.py:33 xl_auth/permission/views.py:92
 #, python-format
 msgid "Successfully deleted permissions for \"%(username)s\" on collection \"%(code)s\"."
-msgstr "Behörighet borttagen för \"%(username)s\" på samling \"%(code)s\"."
+msgstr "Behörighet borttagen för \"%(username)s\" på sigel \"%(code)s\"."
 
 #: tests/end2end/test_editing_collection.py:53 tests/end2end/test_registering_collection.py:52
 msgid "category"
@@ -105,19 +105,19 @@ msgstr "Inte ett giltigt val"
 #: tests/end2end/test_editing_collection.py:140 xl_auth/collection/views.py:58
 #, python-format
 msgid "Collection code \"%(code)s\" does not exist"
-msgstr "Samlingskod \"%(code)s\" existerar inte"
+msgstr "Sigel \"%(code)s\" existerar inte"
 
 #: tests/end2end/test_editing_permission.py:40 xl_auth/permission/views.py:68
 #, python-format
 msgid "Updated permissions for \"%(username)s\" on collection \"%(code)s\"."
-msgstr "Behörighet uppdaterad för \"%(username)s\" på samling \"%(code)s\"."
+msgstr "Behörighet uppdaterad för \"%(username)s\" på sigel \"%(code)s\"."
 
 #: tests/end2end/test_editing_permission.py:75 tests/end2end/test_registering_permission.py:69
 #: tests/forms/test_permission.py:64 tests/forms/test_permission.py:77 xl_auth/permission/forms.py:64
 #: xl_auth/permission/forms.py:114
 #, python-format
 msgid "Permissions for user \"%(username)s\" on collection \"%(code)s\" already registered"
-msgstr "En behörighet för användare \"%(username)s\" på samling \"%(code)s\" finns redan registrerad"
+msgstr "En behörighet för användare \"%(username)s\" på sigel \"%(code)s\" finns redan registrerad"
 
 #: tests/end2end/test_editing_user.py:23 tests/end2end/test_editing_user.py:62
 #: tests/end2end/test_registering_user.py:27 tests/end2end/test_registering_user.py:56
@@ -173,15 +173,15 @@ msgstr "Byt lösenord"
 msgid "Welcome"
 msgstr "Välkommen"
 
-#: tests/end2end/test_logging_in.py:59 xl_auth/public/views.py:46
+#: tests/end2end/test_logging_in.py:72 xl_auth/public/views.py:55
 msgid "You are logged out."
 msgstr "Du är utloggad."
 
-#: tests/end2end/test_logging_in.py:73 tests/forms/test_public.py:45 xl_auth/public/forms.py:37
+#: tests/end2end/test_logging_in.py:86 tests/forms/test_public.py:45 xl_auth/public/forms.py:38
 msgid "Invalid password"
 msgstr "Felaktigt lösenord"
 
-#: tests/end2end/test_logging_in.py:88 tests/forms/test_public.py:35 xl_auth/public/forms.py:33
+#: tests/end2end/test_logging_in.py:101 tests/forms/test_public.py:35 xl_auth/public/forms.py:34
 msgid "Unknown username/email"
 msgstr "Okänd epost/användarnamn"
 
@@ -192,7 +192,7 @@ msgstr "Ny klient"
 #: tests/end2end/test_registering_collection.py:31 tests/end2end/test_registering_collection.py:171
 #: xl_auth/templates/collections/home.html:15
 msgid "New Collection"
-msgstr "Ny samling"
+msgstr "Ny sigel"
 
 #: tests/end2end/test_registering_collection.py:153 tests/forms/test_collection.py:47
 #: tests/forms/test_collection.py:59 xl_auth/collection/forms.py:46
@@ -208,7 +208,7 @@ msgstr "Lägg till behörighet"
 #: tests/end2end/test_registering_permission.py:36 xl_auth/permission/views.py:43
 #, python-format
 msgid "Added permissions for \"%(username)s\" on collection \"%(code)s\"."
-msgstr "Behörighet tillagd för användare \"%(username)s\" på samling \"%(code)s\"."
+msgstr "Behörighet tillagd för användare \"%(username)s\" på sigel \"%(code)s\"."
 
 #: tests/end2end/test_registering_user.py:29 xl_auth/templates/users/home.html:11
 msgid "New User"
@@ -267,9 +267,9 @@ msgstr "Användare med databas-ID \"%(user_id)s\" existerar inte"
 #: tests/forms/test_permission.py:109 tests/forms/test_permission.py:120 xl_auth/permission/forms.py:45
 #, python-format
 msgid "Collection ID \"%(collection_id)s\" does not exist"
-msgstr "Samling med databas-ID \"%(collection_id)s\" existerar inte"
+msgstr "Sigel med databas-ID \"%(collection_id)s\" existerar inte"
 
-#: tests/forms/test_public.py:56 xl_auth/public/forms.py:41
+#: tests/forms/test_public.py:56 xl_auth/public/forms.py:42
 msgid "User not activated"
 msgstr "Användarkontot ej aktiverat"
 
@@ -284,17 +284,17 @@ msgstr "Användaren existerar inte"
 #: tests/models/test_collection.py:97 xl_auth/collection/models.py:40
 #, python-format
 msgid "Replaces %(replaces_code)s, then replaced by %(replaced_by_code)s"
-msgstr "Ersätter %(replaces_code)s, därefter ersatt av samling %(replaced_by_code)s"
+msgstr "Ersätter %(replaces_code)s, därefter ersatt av sigel %(replaced_by_code)s"
 
 #: tests/models/test_collection.py:100 xl_auth/collection/models.py:43
 #, python-format
 msgid "Replaces %(replaces_code)s"
-msgstr "Ersätter samling %(replaces_code)s"
+msgstr "Ersätter sigel %(replaces_code)s"
 
 #: tests/models/test_collection.py:103 xl_auth/collection/models.py:45
 #, python-format
 msgid "Replaced by %(replaced_by_code)s"
-msgstr "Ersatt av samling %(replaced_by_code)s"
+msgstr "Ersatt av sigel %(replaced_by_code)s"
 
 #: xl_auth/client/forms.py:11
 msgid "Redirect URIs"
@@ -332,17 +332,25 @@ msgstr "Bibliotek"
 
 #: xl_auth/collection/views.py:41
 msgid "Thank you for registering a new collection."
-msgstr "Ny samling registrerad."
+msgstr "Ny sigel registrerad."
 
 #: xl_auth/collection/views.py:65
 #, python-format
 msgid "Thank you for editing collection \"%(code)s\"."
-msgstr "Samlingen \"%(code)s\" har uppdaterats."
+msgstr "Sigel \"%(code)s\" har uppdaterats."
 
 #: xl_auth/grant/views.py:40
 #, python-format
 msgid "Successfully deleted OAuth2 Grant token \"%(grant_id)s\"."
 msgstr "OAuth2 Grant token \"%(grant_id)s\" har raderats."
+
+#: xl_auth/oauth/forms.py:14
+msgid "Scope"
+msgstr "Scope"
+
+#: xl_auth/oauth/forms.py:15
+msgid "Confirm"
+msgstr "Bekräfta"
 
 #: xl_auth/permission/forms.py:19 xl_auth/templates/grants/home.html:14
 #: xl_auth/templates/permissions/home.html:16 xl_auth/templates/tokens/home.html:14
@@ -351,7 +359,7 @@ msgstr "Användare"
 
 #: xl_auth/permission/forms.py:20 xl_auth/templates/permissions/home.html:17
 msgid "Collection"
-msgstr "Samling"
+msgstr "Sigel"
 
 #: xl_auth/permission/forms.py:22 xl_auth/templates/permissions/home.html:18
 #: xl_auth/templates/users/profile.html:45
@@ -372,15 +380,15 @@ msgstr "Katalogiseringsadmin"
 msgid "Permission"
 msgstr "Behörighet"
 
-#: xl_auth/public/forms.py:17 xl_auth/templates/public/home.html:38
+#: xl_auth/public/forms.py:17 xl_auth/templates/public/home.html:39
 msgid "Username"
 msgstr "Användarnamn"
 
-#: xl_auth/public/forms.py:18 xl_auth/templates/public/home.html:40 xl_auth/user/forms.py:15
+#: xl_auth/public/forms.py:18 xl_auth/templates/public/home.html:41 xl_auth/user/forms.py:15
 msgid "Password"
 msgstr "Lösenord"
 
-#: xl_auth/public/views.py:32
+#: xl_auth/public/views.py:40
 msgid "You are logged in."
 msgstr "Du har loggat in."
 
@@ -414,12 +422,12 @@ msgstr "Kontakt"
 
 #: xl_auth/templates/layout.html:13 xl_auth/templates/nav.html:19 xl_auth/templates/public/home.html:23
 msgid "xl_auth"
-msgstr "Libris Login <sup>alpha</sup>"
+msgstr "Libris Login<sup>beta</sup>"
 
 #: xl_auth/templates/collections/home.html:4 xl_auth/templates/nav.html:25
 #: xl_auth/templates/users/home.html:19 xl_auth/templates/users/home.html:64
 msgid "Collections"
-msgstr "Samlingar/sigler"
+msgstr "Sigler"
 
 #: xl_auth/templates/nav.html:39
 msgid "Log out"
@@ -471,7 +479,7 @@ msgstr "Registrera ny OAuth2-klient"
 
 #: xl_auth/templates/collections/edit.html:5
 msgid "Edit Existing Collection"
-msgstr "Ändra befintlig samling"
+msgstr "Ändra befintlig sigel"
 
 #: xl_auth/templates/collections/home.html:6 xl_auth/templates/collections/home.html:54
 #: xl_auth/templates/collections/home.html:88
@@ -480,11 +488,11 @@ msgstr "Gå till"
 
 #: xl_auth/templates/collections/home.html:6 xl_auth/templates/collections/home.html:60
 msgid "Inactive Collections"
-msgstr "Inaktiva samlingar"
+msgstr "Inaktiva sigler"
 
 #: xl_auth/templates/collections/home.html:12
 msgid "Active Collections"
-msgstr "Aktiva samlingar"
+msgstr "Aktiva sigler"
 
 #: xl_auth/templates/collections/home.html:22 xl_auth/templates/collections/home.html:66
 #: xl_auth/templates/users/profile.html:43
@@ -507,7 +515,7 @@ msgstr "Ersatt av"
 
 #: xl_auth/templates/collections/register.html:5
 msgid "Register New Collection"
-msgstr "Registrera ny samling"
+msgstr "Registrera ny sigel"
 
 #: xl_auth/templates/collections/register.html:26 xl_auth/templates/permissions/register.html:32
 msgid "Register"
@@ -533,6 +541,14 @@ msgstr "Åtgärder"
 #: xl_auth/templates/grants/home.html:29
 msgid "Delete grant"
 msgstr "Radera grant"
+
+#: xl_auth/templates/oauth/authorize.html:7 xl_auth/templates/oauth/authorize.html:20
+msgid "Authorize"
+msgstr "Auktorisera"
+
+#: xl_auth/templates/oauth/errors.html:7
+msgid "OAuth Error"
+msgstr "OAuth2-fel"
 
 #: xl_auth/templates/permissions/edit.html:8
 msgid "Edit Existing Permission"
@@ -570,38 +586,38 @@ msgid "Welcome to xl_auth"
 msgstr "Välkommen till Libris Login"
 
 #: xl_auth/templates/public/home.html:10 xl_auth/templates/public/home.html:27
-msgid "This is an early alpha release of Libris authorization service."
-msgstr "Det här är en tidig alfa-version av Libris inloggningstjänst."
+msgid "This is an early beta release of Libris authorization service."
+msgstr "Det här är en tidig beta-version av Libris inloggningstjänst."
 
 #: xl_auth/templates/public/home.html:13 xl_auth/templates/public/home.html:30
 msgid "See email from customer service for instructions."
 msgstr "​Se mail från kundservice för instruktioner."
 
-#: xl_auth/templates/public/home.html:34 xl_auth/templates/public/home.html:42
+#: xl_auth/templates/public/home.html:34 xl_auth/templates/public/home.html:43
 msgid "Log in"
 msgstr "Logga in"
 
-#: xl_auth/templates/public/home.html:49
+#: xl_auth/templates/public/home.html:50
 msgid "The Libris blog"
 msgstr "Librisbloggen"
 
-#: xl_auth/templates/public/home.html:50
+#: xl_auth/templates/public/home.html:51
 msgid "Read the latest news about the Libris collaboration."
 msgstr "Läs senaste nytt om Libris-samarbetet."
 
-#: xl_auth/templates/public/home.html:51
+#: xl_auth/templates/public/home.html:52
 msgid "Go to the blog"
 msgstr "Gå till bloggen"
 
-#: xl_auth/templates/public/home.html:54
+#: xl_auth/templates/public/home.html:55
 msgid "Support forum"
 msgstr "Supportforum"
 
-#: xl_auth/templates/public/home.html:55
+#: xl_auth/templates/public/home.html:56
 msgid "Get help, ask questions and report errors."
 msgstr "Få hjälp, ställ frågor och rapportera fel."
 
-#: xl_auth/templates/public/home.html:56
+#: xl_auth/templates/public/home.html:57
 msgid "Go to kundo"
 msgstr "Gå till kundo"
 
@@ -667,8 +683,8 @@ msgid ""
 "create new user accounts and grant registrant/cataloger privileges to others. "
 msgstr ""
 "Obs: <em>Katalogiseringsadmin</em> är en behörighet som (inom en snar framtid) kommer ge dig "
-"rättigheter för att skapa nya användare. På dina samlingar/sigler kommer du kunna tilldela "
-"behörigheter till andra som beståndregistrerare/katalogisatörer."
+"rättigheter för att skapa nya användare. På dina sigler kommer du kunna tilldela behörigheter "
+"till andra som beståndregistrerare/katalogisatörer."
 
 #: xl_auth/templates/users/register.html:5
 msgid "Register New User"

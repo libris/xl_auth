@@ -21,7 +21,7 @@ blueprint = Blueprint('oauth', __name__, url_prefix='/oauth', static_folder='../
 @oauth_provider.clientgetter
 def get_client(client_id):
     """Return Client object."""
-    return Client.query.filter_by(client_id=client_id).first()
+    return Client.get_by_id(client_id)
 
 
 @oauth_provider.grantsetter
@@ -29,7 +29,7 @@ def set_grant(client_id, code, request_, **_):
     """Create Grant object."""
     expires_at = None
     return Grant(
-        client_id=Client.query.filter_by(client_id=client_id).first().id,
+        client_id=client_id,
         code=code['code'],
         redirect_uri=request_.redirect_uri,
         scopes=request_.scopes,
@@ -41,13 +41,13 @@ def set_grant(client_id, code, request_, **_):
 @oauth_provider.grantgetter
 def get_grant(client_id, code):
     """Return Grant object."""
-    return Grant.query.filter(Grant.client.has(client_id=client_id), Grant.code == code).first()
+    return Grant.query.filter_by(client_id=client_id, code=code).first()
 
 
 @oauth_provider.tokensetter
 def set_token(new_token, request_, **_):
     """Create Token object."""
-    old_tokens = Token.query.filter_by(client_id=request_.client.id,
+    old_tokens = Token.query.filter_by(client_id=request_.client.client_id,
                                        user_id=request_.user.id)
     # Make sure that every client has only one token connected to a user.
     for token in old_tokens:
@@ -62,7 +62,7 @@ def set_token(new_token, request_, **_):
         token_type=new_token['token_type'],
         scopes=new_token['scope'],
         expires_at=expires_at,
-        client_id=request_.client.id,
+        client_id=request_.client.client_id,
         user_id=request_.user.id
     ).save()
 
@@ -75,6 +75,12 @@ def get_token(access_token=None, refresh_token=None):
     if refresh_token:
         return Token.query.filter_by(refresh_token=refresh_token).first()
     return None
+
+
+@oauth_provider.invalid_response
+def require_oauth_invalid(req):
+    """OAuth2 errors JSONified."""
+    return jsonify(app_version=current_app.config['APP_VERSION'], message=req.error_message), 401
 
 
 @blueprint.route('/authorize', methods=['GET', 'POST'])
@@ -97,26 +103,27 @@ def authorize(*_, **kwargs):
 @oauth_provider.token_handler
 def create_access_token():
     """Generate access token."""
-    return {'version': current_app.config['APP_VERSION']}
+    return {'app_version': current_app.config['APP_VERSION']}
 
 
 @blueprint.route('/verify', methods=['GET'])
 @oauth_provider.require_oauth('read', 'write')
 def verify():
     """Verify access token is valid and return a bunch of user details."""
+    # noinspection PyUnresolvedReferences
     oauth = request.oauth
-    user = oauth.user
-    assert isinstance(user, User)
+    assert isinstance(oauth.user, User)
 
     return jsonify(
-        expires_at=oauth.access_token.expires_at.isoformat(),
+        app_version=current_app.config['APP_VERSION'],
+        expires_at=oauth.access_token.expires_at.isoformat() + 'Z',
         user={
-            'full_name': user.full_name,
-            'email': user.email,
+            'full_name': oauth.user.full_name,
+            'email': oauth.user.email,
             'permissions': [{'code': permission.collection.code,
                              'cataloger': permission.cataloger,
                              'registrant': permission.registrant}
-                            for permission in user.permissions]
+                            for permission in oauth.user.permissions]
         }
     )
 
