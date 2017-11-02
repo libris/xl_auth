@@ -27,7 +27,7 @@ def test_superuser_can_edit_existing_client(superuser, client, testapp):
 
     res = testapp.get('/clients/')
     # Clicks Edit Client button
-    res = res.click(href=url_for('client.edit', id=client.id))
+    res = res.click(href=url_for('client.edit', client_id=client.client_id))
 
     # Fills out the form
     form = res.forms['editForm']
@@ -66,4 +66,4 @@ def test_user_cannot_edit_existing_client(user, client, testapp):
     testapp.get('/clients/', status=403)
 
     # Try to go directly to edit
-    testapp.get(url_for('client.edit', id=client.id), status=403)
+    testapp.get(url_for('client.edit', client_id=client.client_id), status=403)

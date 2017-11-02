@@ -48,14 +48,14 @@ def register():
     return render_template('clients/register.html', register_form=register_form)
 
 
-@blueprint.route('/delete/<int:id>', methods=['GET', 'DELETE'])
+@blueprint.route('/delete/<string:client_id>', methods=['GET', 'DELETE'])
 @login_required
-def delete(id):
+def delete(client_id):
     """Delete client."""
     if not current_user.is_admin:
         abort(403)
 
-    client = Client.query.get(id)
+    client = Client.get_by_id(client_id)
     if not client:
         abort(404)
     else:
@@ -65,14 +65,14 @@ def delete(id):
     return redirect(url_for('client.home'))
 
 
-@blueprint.route('/edit/<int:id>', methods=['GET', 'POST'])
+@blueprint.route('/edit/<string:client_id>', methods=['GET', 'POST'])
 @login_required
-def edit(id):
+def edit(client_id):
     """Edit client details."""
     if not current_user.is_admin:
         abort(403)
 
-    client = Client.query.get(id)
+    client = Client.get_by_id(client_id)
     if not client:
         abort(404)
 
@@ -82,11 +82,10 @@ def edit(id):
                       is_confidential=edit_form.is_confidential.data,
                       redirect_uris=edit_form.redirect_uris.data,
                       default_scopes=edit_form.default_scopes.data).save()
-        flash(_('Thank you for updating client details for "%(id)s".', id=id),
+        flash(_('Thank you for updating client details for "%(client_id)s".', client_id=client_id),
               'success')
         return redirect(url_for('client.home'))
     else:
         edit_form.set_defaults(client)
         flash_errors(edit_form)
-        return render_template(
-            'clients/edit.html', edit_form=edit_form, client=client)
+        return render_template('clients/edit.html', edit_form=edit_form, client=client)

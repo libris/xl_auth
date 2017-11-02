@@ -41,7 +41,7 @@ def test_oauth_authorize_success(user, client, testapp):
 
     # Submits confirmation and is redirected to '<redirect_uri>/?code=<grant.code>'.
     res = authorize_form.submit().follow()
-    grant = Grant.query.filter_by(client_id=client.id, user_id=user.id).first()
+    grant = Grant.query.filter_by(client_id=client.client_id, user_id=user.id).first()
     assert grant is not None
     assert res.status_code == 301
     assert res.location == client.default_redirect_uri + '/?code={}'.format(grant.code)
@@ -93,7 +93,6 @@ def test_oauth_authorize_invalid_client_id(user, client, testapp):
 
 def test_get_access_token(grant, testapp):
     """Get access token using grant code."""
-    testapp.app.config['OAUTH2_PROVIDER_TOKEN_EXPIRES_IN'] = 1337
     credentials = '%s:%s' % (grant.client.client_id, grant.client.client_secret)
     auth_code = str(b64encode(credentials.encode()).decode())
     res = testapp.get(url_for('oauth.create_access_token'),
@@ -105,9 +104,31 @@ def test_get_access_token(grant, testapp):
     token = Token.query.filter_by(user_id=grant.user_id, client_id=grant.client_id).first()
     assert res.json_body['scope'] == ' '.join(grant.scopes)
     assert res.json_body['token_type'] == 'Bearer'
-    assert res.json_body['expires_in'] == 1337
+    assert res.json_body['expires_in'] == 3600
     assert res.json_body['access_token'] == token.access_token
     assert res.json_body['refresh_token'] == token.refresh_token
+    assert res.json_body['app_version'] == __version__
+
+
+def test_refresh_access_token(token, testapp):
+    """Get new access token using 'refresh_token'."""
+    token.expires_at = datetime.utcnow() - timedelta(seconds=1)
+    token.save()
+    res = testapp.get(url_for('oauth.create_access_token'),
+                      params={'grant_type': 'refresh_token',
+                              'refresh_token': token.refresh_token,
+                              'client_id': token.client.client_id,
+                              'client_secret': token.client.client_secret}, expect_errors=True)
+
+    updated_token = Token.query.filter_by(user_id=token.user_id, client_id=token.client_id).first()
+    assert updated_token.id == token.id
+    assert res.json_body['scope'] == ' '.join(updated_token.scopes)
+    assert res.json_body['token_type'] == 'Bearer'
+    assert res.json_body['expires_in'] == 3600
+    assert res.json_body['access_token'] == updated_token.access_token
+    assert res.json_body['access_token'] != token.access_token
+    assert res.json_body['refresh_token'] == updated_token.refresh_token
+    assert res.json_body['refresh_token'] != token.refresh_token
     assert res.json_body['app_version'] == __version__
 
 

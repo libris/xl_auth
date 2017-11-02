@@ -24,14 +24,14 @@ def home():
     return render_template('tokens/home.html', tokens=tokens)
 
 
-@blueprint.route('/delete/<int:id>', methods=['GET', 'DELETE'])
+@blueprint.route('/delete/<int:token_id>', methods=['GET', 'DELETE'])
 @login_required
-def delete(id):
+def delete(token_id):
     """Delete token."""
     if not current_user.is_admin:
         abort(403)
 
-    token = Token.query.get(id)
+    token = Token.query.get(token_id)
     if not token:
         abort(404)
     else:

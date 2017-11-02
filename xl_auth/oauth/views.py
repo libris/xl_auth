@@ -21,7 +21,7 @@ blueprint = Blueprint('oauth', __name__, url_prefix='/oauth', static_folder='../
 @oauth_provider.clientgetter
 def get_client(client_id):
     """Return Client object."""
-    return Client.query.filter_by(client_id=client_id).first()
+    return Client.get_by_id(client_id)
 
 
 @oauth_provider.grantsetter
@@ -29,7 +29,7 @@ def set_grant(client_id, code, request_, **_):
     """Create Grant object."""
     expires_at = None
     return Grant(
-        client_id=Client.query.filter_by(client_id=client_id).first().id,
+        client_id=client_id,
         code=code['code'],
         redirect_uri=request_.redirect_uri,
         scopes=request_.scopes,
@@ -41,13 +41,13 @@ def set_grant(client_id, code, request_, **_):
 @oauth_provider.grantgetter
 def get_grant(client_id, code):
     """Return Grant object."""
-    return Grant.query.filter(Grant.client.has(client_id=client_id), Grant.code == code).first()
+    return Grant.query.filter_by(client_id=client_id, code=code).first()
 
 
 @oauth_provider.tokensetter
 def set_token(new_token, request_, **_):
     """Create Token object."""
-    old_tokens = Token.query.filter_by(client_id=request_.client.id,
+    old_tokens = Token.query.filter_by(client_id=request_.client.client_id,
                                        user_id=request_.user.id)
     # Make sure that every client has only one token connected to a user.
     for token in old_tokens:
@@ -62,7 +62,7 @@ def set_token(new_token, request_, **_):
         token_type=new_token['token_type'],
         scopes=new_token['scope'],
         expires_at=expires_at,
-        client_id=request_.client.id,
+        client_id=request_.client.client_id,
         user_id=request_.user.id
     ).save()
 

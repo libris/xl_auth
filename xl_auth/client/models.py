@@ -9,14 +9,14 @@ from os import urandom
 from six import string_types
 from sqlalchemy.ext.hybrid import hybrid_property
 
-from ..database import Column, Model, SurrogatePK, db
+from ..database import Column, Model, db
 
 
-class Client(SurrogatePK, Model):
+class Client(Model):
     """An OAuth2 Client."""
 
     __tablename__ = 'clients'
-    client_id = Column(db.String(64), unique=True, nullable=False)
+    client_id = Column(db.String(32), primary_key=True)
     client_secret = Column(db.String(256), unique=True, nullable=False)
 
     created_by = Column(db.ForeignKey('users.id'), nullable=False)
@@ -38,9 +38,15 @@ class Client(SurrogatePK, Model):
         self.redirect_uris = redirect_uris
         self.default_scopes = default_scopes
 
+    @classmethod
+    def get_by_id(cls, record_id):
+        """Get record by ID."""
+        # noinspection PyUnresolvedReferences
+        return cls.query.filter_by(client_id=record_id).first()
+
     @staticmethod
     def _generate_client_id():
-        return getencoder('hex')(urandom(32))[0].decode('utf-8')
+        return getencoder('hex')(urandom(16))[0].decode('utf-8')
 
     @staticmethod
     def _generate_client_secret():

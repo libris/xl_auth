@@ -18,7 +18,7 @@ class Grant(SurrogatePK, Model):
     user_id = reference_col('users', nullable=False, ondelete='CASCADE')
     user = relationship('User')
 
-    client_id = reference_col('clients', nullable=False, ondelete='CASCADE')
+    client_id = reference_col('clients', pk_name='client_id', nullable=False, ondelete='CASCADE')
     client = relationship('Client')
 
     code = Column(db.String(256), nullable=False)
