@@ -25,6 +25,8 @@ class Config(object):
     WEBPACK_MANIFEST_PATH = 'webpack/manifest.json'
     BABEL_DEFAULT_LOCALE = os.environ.get('BABEL_DEFAULT_LOCALE', 'sv')
     BABEL_DEFAULT_TIMEZONE = 'utc'
+    OAUTH2_PROVIDER_TOKEN_EXPIRES_IN = int(
+        os.environ.get('OAUTH2_PROVIDER_TOKEN_EXPIRES_IN', 3600))
 
 
 class ProdConfig(Config):

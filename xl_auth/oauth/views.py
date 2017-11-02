@@ -110,20 +110,20 @@ def create_access_token():
 @oauth_provider.require_oauth('read', 'write')
 def verify():
     """Verify access token is valid and return a bunch of user details."""
+    # noinspection PyUnresolvedReferences
     oauth = request.oauth
-    user = oauth.user
-    assert isinstance(user, User)
+    assert isinstance(oauth.user, User)
 
     return jsonify(
         app_version=current_app.config['APP_VERSION'],
         expires_at=oauth.access_token.expires_at.isoformat(),
         user={
-            'full_name': user.full_name,
-            'email': user.email,
+            'full_name': oauth.user.full_name,
+            'email': oauth.user.email,
             'permissions': [{'code': permission.collection.code,
                              'cataloger': permission.cataloger,
                              'registrant': permission.registrant}
-                            for permission in user.permissions]
+                            for permission in oauth.user.permissions]
         }
     )
 

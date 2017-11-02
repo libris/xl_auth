@@ -93,6 +93,7 @@ def test_oauth_authorize_invalid_client_id(user, client, testapp):
 
 def test_get_access_token(grant, testapp):
     """Get access token using grant code."""
+    testapp.app.config['OAUTH2_PROVIDER_TOKEN_EXPIRES_IN'] = 1337
     credentials = '%s:%s' % (grant.client.client_id, grant.client.client_secret)
     auth_code = str(b64encode(credentials.encode()).decode())
     res = testapp.get(url_for('oauth.create_access_token'),
@@ -104,7 +105,7 @@ def test_get_access_token(grant, testapp):
     token = Token.query.filter_by(user_id=grant.user_id, client_id=grant.client_id).first()
     assert res.json_body['scope'] == ' '.join(grant.scopes)
     assert res.json_body['token_type'] == 'Bearer'
-    assert res.json_body['expires_in'] == 3600
+    assert res.json_body['expires_in'] == 1337
     assert res.json_body['access_token'] == token.access_token
     assert res.json_body['refresh_token'] == token.refresh_token
     assert res.json_body['app_version'] == __version__
