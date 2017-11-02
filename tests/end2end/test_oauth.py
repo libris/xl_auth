@@ -109,7 +109,6 @@ def test_get_access_token(grant, testapp):
 
 def test_verify_response(token, testapp):
     """Get user details and token expiry."""
-
     res = testapp.get(url_for('oauth.verify'),
                       headers={'Authorization': str('Bearer ' + token.access_token)})
 
