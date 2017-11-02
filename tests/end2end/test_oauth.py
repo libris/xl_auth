@@ -105,3 +105,16 @@ def test_get_access_token(grant, testapp):
     assert res.json_body['access_token'] == token.access_token
     assert res.json_body['refresh_token'] == token.refresh_token
     assert res.json_body['version'] == __version__
+
+
+def test_verify_response(token, testapp):
+    """Get user details and token expiry."""
+
+    res = testapp.get(url_for('oauth.verify'),
+                      headers={'Authorization': str('Bearer ' + token.access_token)})
+
+    assert res.json_body['expires_at'] == token.expires_at.isoformat()
+    assert res.json_body['user']['full_name'] == token.user.full_name
+    assert res.json_body['user']['email'] == token.user.email
+
+    assert len(res.json_body['user']['permissions']) == len(token.user.permissions)
