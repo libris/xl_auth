@@ -292,7 +292,11 @@ def import_data(verbose, admin_email, wipe_permissions):
         bibdb_cataloging_admins_and_sigels = dict()
         bibdb_cataloging_admin_emails_and_names = dict()
         for bibdb_row in raw_bibdb_sigels_and_cataloging_admins:
-            bibdb_sigel, cataloging_admin_name, cataloging_admin_email = bibdb_row.split(',')
+            try:
+                bibdb_sigel, cataloging_admin_name, cataloging_admin_email = bibdb_row.split(',')
+            except ValueError as err:
+                print('ValueError: %s / bibdb_row: %r' % (err, bibdb_row))
+                continue
             cataloging_admin_email = cataloging_admin_email.lower()
             bibdb_cataloging_admin_emails_and_names[cataloging_admin_email] = cataloging_admin_name
             assert bibdb_sigel != ''
