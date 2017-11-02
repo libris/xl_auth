@@ -116,7 +116,7 @@ def verify():
 
     return jsonify(
         app_version=current_app.config['APP_VERSION'],
-        expires_at=oauth.access_token.expires_at.isoformat(),
+        expires_at=oauth.access_token.expires_at.isoformat() + 'Z',
         user={
             'full_name': oauth.user.full_name,
             'email': oauth.user.email,

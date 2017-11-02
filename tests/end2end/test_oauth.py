@@ -144,7 +144,7 @@ def test_verify_success_response(token, testapp):
                       headers={'Authorization': str('Bearer ' + token.access_token)})
 
     assert res.json_body['app_version'] == __version__
-    assert res.json_body['expires_at'] == token.expires_at.isoformat()
+    assert res.json_body['expires_at'] == token.expires_at.isoformat() + 'Z'
     assert res.json_body['user']['full_name'] == token.user.full_name
     assert res.json_body['user']['email'] == token.user.email
 
