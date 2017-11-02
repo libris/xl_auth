@@ -183,6 +183,13 @@ DB Models
 Changelog
 =========
 
+v. 0.5.1
+--------
+
+* Update `/oauth/verify` API response format (`#68 <https://github.com/libris/xl_auth/issues/68>`_)
+* Fix bug where collections would read the wrong active/inactive state from bibdb.libris.kb.se
+
+
 v. 0.5.0
 --------
 
