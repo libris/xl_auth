@@ -110,20 +110,14 @@ def verify():
     assert isinstance(user, User)
 
     return jsonify(
-        exp=(time() + 3600) * 1000,
         expires_at=oauth.expires_at.isoformat(),
-        qsh='mumbojumbo',
         user={
-            'username': user.email,
+            'full_name': user.full_name,
             'email': user.email,
-            'authorization': [{'sigel': permission.collection.code,
-                               'code': permission.collection.code,
-                               'cataloger': permission.cataloger,
-                               'registrant': permission.registrant,
-                               'cataloging_admin': permission.cataloging_admin,
-                               'kat': permission.cataloging_admin,
-                               'xlreg': permission.cataloging_admin}
-                              for permission in user.permissions]
+            'permissions': [{'code': permission.collection.code,
+                             'cataloger': permission.cataloger,
+                             'registrant': permission.registrant}
+                            for permission in user.permissions]
         }
     )
 
