@@ -110,7 +110,7 @@ def verify():
     assert isinstance(user, User)
 
     return jsonify(
-        expires_at=oauth.expires_at.isoformat(),
+        expires_at=oauth.access_token.expires_at.isoformat(),
         user={
             'full_name': user.full_name,
             'email': user.email,
