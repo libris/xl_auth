@@ -20,9 +20,9 @@ depends_on = None
 
 def upgrade():
     """Re-create tables 'clients', 'grants' and 'tokens'."""
-    op.drop_table('clients')
     op.drop_table('tokens')
     op.drop_table('grants')
+    op.drop_table('clients')
 
     op.create_table(
         'clients',

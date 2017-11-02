@@ -121,6 +121,7 @@ def verify():
             'full_name': oauth.user.full_name,
             'email': oauth.user.email,
             'permissions': [{'code': permission.collection.code,
+                             'friendly_name': permission.collection.friendly_name,
                              'cataloger': permission.cataloger,
                              'registrant': permission.registrant}
                             for permission in oauth.user.permissions]
