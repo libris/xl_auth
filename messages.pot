@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: xl_auth 0.5.1\n"
+"Project-Id-Version: xl_auth 0.5.3\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-11-02 10:58+0100\n"
+"POT-Creation-Date: 2017-11-06 15:19+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,7 +64,7 @@ msgstr ""
 
 #: tests/end2end/test_editing_collection.py:80 tests/end2end/test_registering_collection.py:79
 #: xl_auth/collection/forms.py:17 xl_auth/templates/collections/home.html:21
-#: xl_auth/templates/collections/home.html:65 xl_auth/templates/users/profile.html:42
+#: xl_auth/templates/collections/home.html:65 xl_auth/templates/users/profile.html:46
 msgid "Code"
 msgstr ""
 
@@ -128,16 +128,16 @@ msgstr ""
 #: tests/end2end/test_editing_user.py:45 xl_auth/templates/clients/home.html:29
 #: xl_auth/templates/permissions/home.html:30 xl_auth/templates/permissions/home.html:31
 #: xl_auth/templates/permissions/home.html:32 xl_auth/templates/users/home.html:34
-#: xl_auth/templates/users/home.html:79 xl_auth/templates/users/profile.html:58
-#: xl_auth/templates/users/profile.html:61 xl_auth/templates/users/profile.html:65
+#: xl_auth/templates/users/home.html:79 xl_auth/templates/users/profile.html:62
+#: xl_auth/templates/users/profile.html:65 xl_auth/templates/users/profile.html:69
 msgid "Yes"
 msgstr ""
 
 #: tests/end2end/test_editing_user.py:45 xl_auth/templates/clients/home.html:31
 #: xl_auth/templates/permissions/home.html:30 xl_auth/templates/permissions/home.html:31
 #: xl_auth/templates/permissions/home.html:32 xl_auth/templates/users/home.html:34
-#: xl_auth/templates/users/home.html:79 xl_auth/templates/users/profile.html:58
-#: xl_auth/templates/users/profile.html:61 xl_auth/templates/users/profile.html:65
+#: xl_auth/templates/users/home.html:79 xl_auth/templates/users/profile.html:62
+#: xl_auth/templates/users/profile.html:65 xl_auth/templates/users/profile.html:69
 msgid "No"
 msgstr ""
 
@@ -163,7 +163,7 @@ msgid "User \"%(username)s\" does not exist"
 msgstr ""
 
 #: tests/end2end/test_editing_user.py:190 xl_auth/templates/users/home.html:43
-#: xl_auth/templates/users/home.html:88 xl_auth/templates/users/profile.html:17
+#: xl_auth/templates/users/home.html:88 xl_auth/templates/users/profile.html:18
 msgid "Change Password"
 msgstr ""
 
@@ -318,7 +318,7 @@ msgstr ""
 
 #: xl_auth/client/views.py:85
 #, python-format
-msgid "Thank you for updating client details for \"%(id)s\"."
+msgid "Thank you for updating client details for \"%(client_id)s\"."
 msgstr ""
 
 #: xl_auth/collection/forms.py:19
@@ -361,22 +361,38 @@ msgid "Collection"
 msgstr ""
 
 #: xl_auth/permission/forms.py:22 xl_auth/templates/permissions/home.html:18
-#: xl_auth/templates/users/profile.html:45
+#: xl_auth/templates/users/profile.html:49
 msgid "Registrant"
 msgstr ""
 
 #: xl_auth/permission/forms.py:23 xl_auth/templates/permissions/home.html:19
-#: xl_auth/templates/users/profile.html:46
+#: xl_auth/templates/users/profile.html:50
 msgid "Cataloger"
 msgstr ""
 
 #: xl_auth/permission/forms.py:24 xl_auth/templates/permissions/home.html:20
-#: xl_auth/templates/users/profile.html:48
+#: xl_auth/templates/users/profile.html:52
 msgid "Cataloguing Administrator"
 msgstr ""
 
 #: xl_auth/permission/forms.py:75
 msgid "Permission"
+msgstr ""
+
+#: xl_auth/permission/models.py:44
+msgid "registrant, cataloger"
+msgstr ""
+
+#: xl_auth/permission/models.py:46
+msgid "registrant"
+msgstr ""
+
+#: xl_auth/permission/models.py:48
+msgid "cataloger"
+msgstr ""
+
+#: xl_auth/permission/models.py:50
+msgid "no permissions"
 msgstr ""
 
 #: xl_auth/public/forms.py:17 xl_auth/templates/public/home.html:39
@@ -411,7 +427,7 @@ msgstr ""
 msgid "National Library of Sweden"
 msgstr ""
 
-#: xl_auth/templates/footer.html:10 xl_auth/templates/public/about.html:7
+#: xl_auth/templates/footer.html:10 xl_auth/templates/public/about.html:5
 msgid "About"
 msgstr ""
 
@@ -494,7 +510,7 @@ msgid "Active Collections"
 msgstr ""
 
 #: xl_auth/templates/collections/home.html:22 xl_auth/templates/collections/home.html:66
-#: xl_auth/templates/users/profile.html:43
+#: xl_auth/templates/users/profile.html:47
 msgid "Friendly Name"
 msgstr ""
 
@@ -541,7 +557,20 @@ msgstr ""
 msgid "Delete grant"
 msgstr ""
 
-#: xl_auth/templates/oauth/authorize.html:7 xl_auth/templates/oauth/authorize.html:20
+#: xl_auth/templates/oauth/authorize.html:5
+msgid "Authorization Request"
+msgstr ""
+
+#: xl_auth/templates/oauth/authorize.html:6
+#, python-format
+msgid "OAuth2 client \"%(name)s (%(description)s)\" is requesting access to your account details."
+msgstr ""
+
+#: xl_auth/templates/oauth/authorize.html:8
+msgid "Press \"Authorize\" to approve and get redirected back to the service."
+msgstr ""
+
+#: xl_auth/templates/oauth/authorize.html:17
 msgid "Authorize"
 msgstr ""
 
@@ -561,13 +590,13 @@ msgstr ""
 msgid "Register New Permission"
 msgstr ""
 
-#: xl_auth/templates/public/about.html:9
+#: xl_auth/templates/public/about.html:7
 msgid ""
 "Under construction. Please refer to our <a "
 "href=\"https://github.com/libris/xl_auth/issues\">GitHub repo</a> for ongoing progress."
 msgstr ""
 
-#: xl_auth/templates/public/about.html:13
+#: xl_auth/templates/public/about.html:11
 #, python-format
 msgid ""
 "Current release version is <code>%(version)s</code>. Please check out the <a "
@@ -651,25 +680,25 @@ msgstr ""
 msgid "This is your personal profile page."
 msgstr ""
 
-#: xl_auth/templates/users/profile.html:13
+#: xl_auth/templates/users/profile.html:14
 msgid "Edit Display Name"
 msgstr ""
 
-#: xl_auth/templates/users/profile.html:24
+#: xl_auth/templates/users/profile.html:27
 msgid "Important"
 msgstr ""
 
-#: xl_auth/templates/users/profile.html:27
+#: xl_auth/templates/users/profile.html:30
 msgid ""
 "Contact customer service at <a href=\"mailto:libris@kb.se\">libris@kb.se</a> if your permissions "
 "are not correctly listed below."
 msgstr ""
 
-#: xl_auth/templates/users/profile.html:34
+#: xl_auth/templates/users/profile.html:38
 msgid "Permissions (Active Collections Only)"
 msgstr ""
 
-#: xl_auth/templates/users/profile.html:35
+#: xl_auth/templates/users/profile.html:39
 msgid ""
 "Note: <em>Cataloguing Admin</em> is a new privilege that, in the near future, will allow you to "
 "create new user accounts and grant registrant/cataloger privileges to others. "

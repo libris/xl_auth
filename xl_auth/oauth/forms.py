@@ -5,14 +5,14 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from flask_babel import lazy_gettext as _
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, StringField
+from wtforms import HiddenField
 
 
 class AuthorizeForm(FlaskForm):
     """OAuth2'orize form."""
 
-    scope = StringField(_('Scope'))
-    confirm = BooleanField(_('Confirm'), default=True)
+    scope = HiddenField(_('Scope'))
+    confirm = HiddenField(_('Confirm'), default='y')
 
     def __init__(self, *args, **kwargs):
         """Create instance."""
