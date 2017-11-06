@@ -9,7 +9,7 @@ from flask import Blueprint, current_app, jsonify, render_template, request
 from flask_login import current_user, login_required
 
 from ..client.models import Client
-from ..extensions import oauth_provider
+from ..extensions import csrf_protect, oauth_provider
 from ..grant.models import Grant
 from ..token.models import Token
 from ..user.models import User
@@ -99,6 +99,7 @@ def authorize(*_, **kwargs):
     return confirm
 
 
+@csrf_protect.exempt
 @blueprint.route('/token', methods=['POST', 'GET'])
 @oauth_provider.token_handler
 def create_access_token():
