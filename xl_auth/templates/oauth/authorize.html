@@ -1,24 +1,22 @@
 <!-- oauth/authorize.html -->
 {% extends "layout.html" %}
-
 {% block content %}
-    <div class="body-content">
+    <div class="container-narrow">
+        <h1>{{ _('Authorization Request') }}</h1>
+        <p class="lead">{{ _('OAuth2 client "%(name)s (%(description)s)" is \
+requesting access to your account details.', name=client.name, description=client.description) }}</p>
+        <p>{{ _('Press "Authorize" to approve and get redirected back to the service.') }}</p>
+        <br/>
         <div class="row">
-            <h1>{{ _('Authorize') }}</h1>
-            <p>client_id: {{ client_id }}</p>
-            <p>scopes: {{ scopes }}</p>
-            <p>state: {{ state }}</p>
-            <p>redirect_uri: {{ redirect_uri }}</p>
-            <p>response_type: {{ response_type }}</p>
-
-            <form id="authorizeForm" class="form form-edit" method="POST" action="" role="form">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                <div class="form-group">
+            <div class="col-md-12">
+                <form id="authorizeForm" class="form" method="POST" action="" role="form">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     {{ authorize_form.scope(value=' '.join(scopes)) }}
-                    {{ authorize_form.confirm(class_="form-control") }}
-                </div>
-                <p><input class="btn btn-primary btn-submit" type="submit" value="{{ _('Authorize') }}"></p>
-            </form>
+                    {{ authorize_form.confirm() }}
+                    <input class="btn btn-lg btn-primary btn-success" type="submit"
+                           value="{{ _('Authorize') }}">
+                </form>
+            </div>
         </div>
     </div>
 {% endblock %}
