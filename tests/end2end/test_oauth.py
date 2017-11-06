@@ -34,9 +34,6 @@ def test_oauth_authorize_success(user, client, testapp):
 
     # Sees authorization confirm form
     authorize_form = res.forms['authorizeForm']
-    # assert authorize_form['client_id'] == client.client_id
-    # assert authorize_form['response_type'] == 'code'  # TODO: Review us.
-    # assert authorize_form['redirect_uri'] == client.default_redirect_uri
     assert authorize_form['confirm'].value == 'y'
 
     # Submits confirmation and is redirected to '<redirect_uri>/?code=<grant.code>'.

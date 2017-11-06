@@ -1,19 +1,16 @@
 <!-- public/about.html -->
 {% extends "layout.html" %}
-
 {% block content %}
-    <div class="body-content">
-        <div class="row">
-            <h1>{{ _('About') }}</h1>
-            <p>
-                {{ _('Under construction. Please refer to our <a href="https://github.com/libris/\
+    <div class="container-narrow">
+        <h1>{{ _('About') }}</h1>
+        <p>
+            {{ _('Under construction. Please refer to our <a href="https://github.com/libris/\
 xl_auth/issues">GitHub repo</a> for ongoing progress.') }}
-            </p>
-            <p>
-                {{ _('Current release version is <code>%(version)s</code>. Please check out \
+        </p>
+        <p>
+            {{ _('Current release version is <code>%(version)s</code>. Please check out \
 the <a href="https://github.com/libris/xl_auth/releases">releases overview</a> page for \
 recent changes.', version=version) }}
-            </p>
-        </div>
+        </p>
     </div>
 {% endblock %}

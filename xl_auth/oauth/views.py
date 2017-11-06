@@ -95,7 +95,7 @@ def authorize(*_, **kwargs):
         kwargs['client'] = client
         return render_template('oauth/authorize.html', authorize_form=authorize_form, **kwargs)
 
-    confirm = authorize_form['confirm'].data
+    confirm = authorize_form['confirm'].data == 'y'
     return confirm
 
 
