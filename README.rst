@@ -183,6 +183,13 @@ DB Models
 Changelog
 =========
 
+v. 0.5.4
+--------
+
+* UI fixes for OAuth2 authorization view
+* Bug fix for ``/oauth/token`` API endpoint
+
+
 v. 0.5.3
 --------
 
