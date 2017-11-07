@@ -50,7 +50,7 @@ def set_token(new_token, request_, **_):
     expires_at = datetime.utcnow() + timedelta(seconds=new_token.get('expires_in'))
     request_params = dict((key, value) for key, value in request_.uri_query_params)
 
-    if request_params['grant_type'] == 'refresh_token':
+    if 'grant_type' in request_params and request_params['grant_type'] == 'refresh_token':
         token = Token.query.filter_by(client_id=request_.client.client_id,
                                       user_id=request_.user.id,
                                       refresh_token=request_params['refresh_token']).first()
