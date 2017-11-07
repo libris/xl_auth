@@ -56,6 +56,7 @@ def set_token(new_token, request_, **_):
                                       refresh_token=request_params['refresh_token']).first()
         token.access_token = new_token['access_token']
         token.refresh_token = new_token['refresh_token']
+        token.expires_at = expires_at
     else:  # if request_params['grant_type'] == 'code':
         token = Token(
             access_token=new_token['access_token'],
