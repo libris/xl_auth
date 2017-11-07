@@ -123,9 +123,7 @@ def test_refresh_access_token(token, testapp):
     assert res.json_body['token_type'] == 'Bearer'
     assert res.json_body['expires_in'] == 3600
     assert res.json_body['access_token'] == updated_token.access_token
-    assert res.json_body['access_token'] != token.access_token
     assert res.json_body['refresh_token'] == updated_token.refresh_token
-    assert res.json_body['refresh_token'] != token.refresh_token
     assert res.json_body['app_version'] == __version__
 
 
@@ -188,3 +186,28 @@ def test_verify_with_expired_token(token, testapp):
     assert res.status_code == 401
     assert res.json_body['app_version'] == __version__
     assert res.json_body['message'] == 'Bearer token is expired.'
+
+
+def test_superuser_can_revoke_access_token(superuser, token, testapp):
+    """Revoke an access token."""
+    # Goes to login page
+    res = testapp.get(url_for('public.home'))
+    # Fills out login form
+    login_form = res.forms['loginForm']
+    login_form['username'] = superuser.email
+    login_form['password'] = 'myPrecious'
+    # Submits
+    login_form.submit()
+
+    # Revoke using refresh token
+    res = testapp.post(url_for('oauth.revoke_access_token'),
+                       params={'token': token.access_token,
+                               'client_id': token.client.client_id})
+    assert res.status_code == 200
+
+    # Authorization fails
+    res = testapp.get(url_for('oauth.verify'), expect_errors=True,
+                      headers={'Authorization': str('Bearer ' + token.access_token)})
+    assert res.status_code == 401
+    assert res.json_body['app_version'] == __version__
+    assert res.json_body['message'] == 'Bearer token not found.'

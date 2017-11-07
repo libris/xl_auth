@@ -183,6 +183,12 @@ DB Models
 Changelog
 =========
 
+v. 0.5.5
+--------
+
+* Bug fix for OAuth2 token handling
+
+
 v. 0.5.4
 --------
 

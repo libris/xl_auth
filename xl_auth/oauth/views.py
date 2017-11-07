@@ -47,24 +47,28 @@ def get_grant(client_id, code):
 @oauth_provider.tokensetter
 def set_token(new_token, request_, **_):
     """Create Token object."""
-    old_tokens = Token.query.filter_by(client_id=request_.client.client_id,
-                                       user_id=request_.user.id)
-    # Make sure that every client has only one token connected to a user.
-    for token in old_tokens:
-        token.delete()
+    expires_at = datetime.utcnow() + timedelta(seconds=new_token.get('expires_in'))
+    request_params = dict((key, value) for key, value in request_.uri_query_params)
 
-    expires_in = new_token.get('expires_in')
-    expires_at = datetime.utcnow() + timedelta(seconds=expires_in)
+    if request_params['grant_type'] == 'refresh_token':
+        token = Token.query.filter_by(client_id=request_.client.client_id,
+                                      user_id=request_.user.id,
+                                      refresh_token=request_params['refresh_token']).first()
+        token.access_token = new_token['access_token']
+        token.refresh_token = new_token['refresh_token']
+        token.expires_at = expires_at
+    else:  # if request_params['grant_type'] == 'code':
+        token = Token(
+            access_token=new_token['access_token'],
+            refresh_token=new_token['refresh_token'],
+            token_type=new_token['token_type'],
+            scopes=new_token['scope'],
+            expires_at=expires_at,
+            client_id=request_.client.client_id,
+            user_id=request_.user.id
+        )
 
-    return Token(
-        access_token=new_token['access_token'],
-        refresh_token=new_token['refresh_token'],
-        token_type=new_token['token_type'],
-        scopes=new_token['scope'],
-        expires_at=expires_at,
-        client_id=request_.client.client_id,
-        user_id=request_.user.id
-    ).save()
+    return token.save()
 
 
 @oauth_provider.tokengetter
@@ -133,12 +137,12 @@ def verify():
 @blueprint.route('/revoke', methods=['POST'])
 @login_required
 @oauth_provider.revoke_handler
-def revoke_token():
+def revoke_access_token():
     """Revoke access token."""
     pass
 
 
 @blueprint.route('/errors', methods=['GET'])
-def errors():
+def render_errors():
     """Render OAuth2 errors."""
     return render_template('oauth/errors.html', **request.args)
