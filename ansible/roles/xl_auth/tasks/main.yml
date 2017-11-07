@@ -30,6 +30,7 @@
     env:
       FLASK_DEBUG: 0
       SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
+      OAUTH2_PROVIDER_TOKEN_EXPIRES_IN: 3600
   tags: xl_auth
   register: start_xl_auth
 
