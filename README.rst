@@ -183,6 +183,12 @@ DB Models
 Changelog
 =========
 
+v. 0.5.6
+--------
+
+* Fix broken 0.5.5 build
+
+
 v. 0.5.5
 --------
 
