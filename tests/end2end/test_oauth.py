@@ -111,11 +111,13 @@ def test_refresh_access_token(token, testapp):
     """Get new access token using 'refresh_token'."""
     token.expires_at = datetime.utcnow() - timedelta(seconds=1)
     token.save()
+
+    # Using HTTP-GET
     res = testapp.get(url_for('oauth.create_access_token'),
                       params={'grant_type': 'refresh_token',
                               'refresh_token': token.refresh_token,
                               'client_id': token.client.client_id,
-                              'client_secret': token.client.client_secret}, expect_errors=True)
+                              'client_secret': token.client.client_secret})
 
     updated_token = Token.query.filter_by(user_id=token.user_id, client_id=token.client_id).first()
     assert updated_token.id == token.id
@@ -125,6 +127,19 @@ def test_refresh_access_token(token, testapp):
     assert res.json_body['access_token'] == updated_token.access_token
     assert res.json_body['refresh_token'] == updated_token.refresh_token
     assert res.json_body['app_version'] == __version__
+
+    # Using HTTP-POST
+    res = testapp.post(url_for('oauth.create_access_token'),
+                       params={'grant_type': 'refresh_token',
+                               'refresh_token': updated_token.refresh_token,
+                               'client_id': updated_token.client.client_id,
+                               'client_secret': updated_token.client.client_secret})
+
+    second_updated_token = Token.query.filter_by(user_id=token.user_id,
+                                                 client_id=token.client_id).first()
+    assert second_updated_token.id == updated_token.id
+    assert res.json_body['access_token'] == second_updated_token.access_token
+    assert res.json_body['refresh_token'] == second_updated_token.refresh_token
 
 
 def test_verify_success_response(token, testapp):
