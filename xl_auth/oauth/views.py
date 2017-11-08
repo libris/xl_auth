@@ -49,6 +49,8 @@ def set_token(new_token, request_, **_):
     """Create Token object."""
     expires_at = datetime.utcnow() + timedelta(seconds=new_token.get('expires_in'))
     request_params = dict((key, value) for key, value in request_.uri_query_params)
+    if request_.body:
+        request_params.update(request_.body)
 
     if 'grant_type' in request_params and request_params['grant_type'] == 'refresh_token':
         token = Token.query.filter_by(client_id=request_.client.client_id,
