@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Client views."""
+"""OAuth Client views."""
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
@@ -7,11 +7,11 @@ from flask import Blueprint, abort, flash, redirect, render_template, request, u
 from flask_babel import lazy_gettext as _
 from flask_login import current_user, login_required
 
-from ..utils import flash_errors
+from ...utils import flash_errors
 from .forms import EditForm, RegisterForm
 from .models import Client
 
-blueprint = Blueprint('client', __name__, url_prefix='/clients', static_folder='../static')
+blueprint = Blueprint('client', __name__, url_prefix='/oauth/clients', static_folder='../static')
 
 
 @blueprint.route('/')
