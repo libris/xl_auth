@@ -11,7 +11,8 @@ from ...utils import flash_errors
 from .forms import EditForm, RegisterForm
 from .models import Client
 
-blueprint = Blueprint('client', __name__, url_prefix='/oauth/clients', static_folder='../static')
+blueprint = Blueprint('oauth.client', __name__, url_prefix='/oauth/clients',
+                      static_folder='../../static')
 
 
 @blueprint.route('/')
@@ -23,7 +24,7 @@ def home():
 
     clients = Client.query.all()
 
-    return render_template('clients/home.html', clients=clients)
+    return render_template('oauth/clients/home.html', clients=clients)
 
 
 @blueprint.route('/register/', methods=['GET', 'POST'])
@@ -42,10 +43,10 @@ def register():
                       default_scopes=register_form.default_scopes.data,
                       created_by=current_user.id).save()
         flash(_('Client "%(name)s" created.', name=register_form.name.data), 'success')
-        return redirect(url_for('client.home'))
+        return redirect(url_for('oauth.client.home'))
     else:
         flash_errors(register_form)
-    return render_template('clients/register.html', register_form=register_form)
+    return render_template('oauth/clients/register.html', register_form=register_form)
 
 
 @blueprint.route('/delete/<string:client_id>', methods=['GET', 'DELETE'])
@@ -62,7 +63,7 @@ def delete(client_id):
         name = client.name
         client.delete()
         flash(_('Successfully deleted OAuth2 Client "%(name)s".', name=name), 'success')
-    return redirect(url_for('client.home'))
+    return redirect(url_for('oauth.client.home'))
 
 
 @blueprint.route('/edit/<string:client_id>', methods=['GET', 'POST'])
@@ -84,8 +85,8 @@ def edit(client_id):
                       default_scopes=edit_form.default_scopes.data).save()
         flash(_('Thank you for updating client details for "%(client_id)s".', client_id=client_id),
               'success')
-        return redirect(url_for('client.home'))
+        return redirect(url_for('oauth.client.home'))
     else:
         edit_form.set_defaults(client)
         flash_errors(edit_form)
-        return render_template('clients/edit.html', edit_form=edit_form, client=client)
+        return render_template('oauth/clients/edit.html', edit_form=edit_form, client=client)

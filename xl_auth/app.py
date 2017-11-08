@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from flask import Flask, render_template
 
-from . import client, collection, commands, grant, oauth, permission, public, token, user
+from . import collection, commands, oauth, permission, public, user
 from .extensions import (babel, bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager,
                          migrate, oauth_provider, webpack)
 from .settings import ProdConfig
@@ -47,10 +47,10 @@ def register_blueprints(app):
     app.register_blueprint(user.views.blueprint)
     app.register_blueprint(collection.views.blueprint)
     app.register_blueprint(permission.views.blueprint)
-    app.register_blueprint(client.views.blueprint)
-    app.register_blueprint(grant.views.blueprint)
-    app.register_blueprint(token.views.blueprint)
     app.register_blueprint(oauth.views.blueprint)
+    app.register_blueprint(oauth.client.views.blueprint)
+    app.register_blueprint(oauth.grant.views.blueprint)
+    app.register_blueprint(oauth.token.views.blueprint)
     return None
 
 
