@@ -183,6 +183,12 @@ DB Models
 Changelog
 =========
 
+v. 0.5.7
+--------
+
+* Reuse existing OAuth2 tokens on refresh
+
+
 v. 0.5.6
 --------
 
