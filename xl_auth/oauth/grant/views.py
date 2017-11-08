@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Grant views."""
+"""OAuth Grant views."""
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
@@ -9,7 +9,7 @@ from flask_login import current_user, login_required
 
 from .models import Grant
 
-blueprint = Blueprint('grant', __name__, url_prefix='/grants', static_folder='../static')
+blueprint = Blueprint('grant', __name__, url_prefix='/oauth/grants', static_folder='../static')
 
 
 @blueprint.route('/')

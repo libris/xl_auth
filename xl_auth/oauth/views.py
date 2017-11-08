@@ -9,11 +9,11 @@ from flask import Blueprint, current_app, jsonify, render_template, request
 from flask_login import current_user, login_required
 
 from ..extensions import csrf_protect, oauth_provider
-from ..grant.models import Grant
 from ..token.models import Token
 from ..user.models import User
 from .client.models import Client
 from .forms import AuthorizeForm
+from .grant.models import Grant
 
 blueprint = Blueprint('oauth', __name__, url_prefix='/oauth', static_folder='../static')
 
