@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import pytest
 
-from xl_auth.grant.models import Grant
+from xl_auth.oauth.grant.models import Grant
 
 from ..factories import GrantFactory
 

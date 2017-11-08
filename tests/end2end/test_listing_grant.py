@@ -18,15 +18,13 @@ def test_superuser_can_list_existing_grant(superuser, grant, testapp):
     res = form.submit().follow()
 
     # Clicks Grant button
-    # res = res.click(href=url_for('grant.home'))
+    # res = res.click(href=url_for('oauth.grant.home'))
     # FIXME: No nav link yet
-    assert res.lxml.xpath("//a[contains(@href,'{0}')]".format(url_for('grant.home'))) == []
+    assert res.lxml.xpath("//a[contains(@href,'{0}')]".format(url_for('oauth.grant.home'))) == []
 
-    res = testapp.get('/grants/')
+    res = testapp.get('/oauth/grants/')
 
     # The grant is listed under existing grants
-    # grant.id shows up twice, once alone in a cell, once in a delete link
-    assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(grant.id))) == 2
     assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(grant.user.email))) == 1
     assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(grant.client.name))) == 1
 
@@ -43,7 +41,7 @@ def test_user_cannot_list_existing_grant(user, testapp):
     res = form.submit().follow()
 
     # No Grant home link for regular users
-    assert res.lxml.xpath("//a[contains(@href,'{0}')]".format(url_for('grant.home'))) == []
+    assert res.lxml.xpath("//a[contains(@href,'{0}')]".format(url_for('oauth.grant.home'))) == []
 
     # Try to go there directly
-    testapp.get(url_for('grant.home'), status=403)
+    testapp.get(url_for('oauth.grant.home'), status=403)

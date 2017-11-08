@@ -8,12 +8,12 @@ from random import choice
 from factory import LazyFunction, PostGenerationMethodCall, Sequence
 from factory.alchemy import SQLAlchemyModelFactory
 
-from xl_auth.client.models import Client
 from xl_auth.collection.models import Collection
 from xl_auth.database import db
-from xl_auth.grant.models import Grant
+from xl_auth.oauth.client.models import Client
+from xl_auth.oauth.grant.models import Grant
+from xl_auth.oauth.token.models import Token
 from xl_auth.permission.models import Permission
-from xl_auth.token.models import Token
 from xl_auth.user.models import User
 
 

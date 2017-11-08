@@ -6,7 +6,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from flask import url_for
 from flask_babel import gettext as _
 
-from xl_auth.client.models import Client
+from xl_auth.oauth.client.models import Client
 
 
 def test_superuser_can_register_new_client(superuser, testapp):
@@ -22,11 +22,11 @@ def test_superuser_can_register_new_client(superuser, testapp):
     res = form.submit().follow()
 
     # Clicks Clients button
-    # res = res.click(href=url_for('client.home'))
+    # res = res.click(href=url_for('oauth.client.home'))
     # FIXME: No nav link yet
-    assert res.lxml.xpath("//a[contains(@href,'{0}')]".format(url_for('client.home'))) == []
+    assert res.lxml.xpath("//a[contains(@href,'{0}')]".format(url_for('oauth.client.home'))) == []
 
-    res = testapp.get('/clients/')
+    res = testapp.get('/oauth/clients/')
     # Clicks Register New Client button
     res = res.click(_('New Client'))
 
@@ -61,10 +61,10 @@ def test_user_cannot_register_client(user, collection, testapp):
     res = form.submit().follow()
 
     # No Client home button for regular users
-    assert res.lxml.xpath("//a[contains(@href,'{0}')]".format(url_for('client.home'))) == []
+    assert res.lxml.xpath("//a[contains(@href,'{0}')]".format(url_for('oauth.client.home'))) == []
 
     # Try to go there directly
-    testapp.get('/clients/', status=403)
+    testapp.get('/oauth/clients/', status=403)
 
     # Try to go directly to register
-    testapp.get('/clients/register/', status=403)
+    testapp.get('/oauth/clients/register/', status=403)
