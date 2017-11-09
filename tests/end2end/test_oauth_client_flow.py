@@ -9,8 +9,8 @@ from datetime import datetime, timedelta
 from flask import url_for
 
 from xl_auth import __version__
-from xl_auth.grant.models import Grant
-from xl_auth.token.models import Token
+from xl_auth.oauth.grant.models import Grant
+from xl_auth.oauth.token.models import Token
 
 from ..factories import PermissionFactory
 

@@ -1,0 +1,44 @@
+<!-- oauth/clients/home.html -->
+{% extends "layout.html" %}
+{% block content %}
+    <h1>{{ _('OAuth2 Clients') }}</h1>
+    <br/>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong>{{ _('OAuth2 Clients') }}</strong>
+            {% if current_user.is_admin %}
+                <a class="btn btn-xs btn-primary pull-right"
+                   href="{{ url_for('oauth.client.register') }}">{{ _('New Client') }}</a>
+            {% endif %}
+        </div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th class="col-md-4">{{ _('Client ID') }}</th>
+                <th class="col-md-2">{{ _('Name') }}</th>
+                <th class="col-md-5">{{ _('Description') }}</th>
+                <th class="min-width-50px">{{ _('Actions') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for client in clients %}
+                <tr>
+                    <td class="word-break-all"><code>{{ client.client_id }}</code></td>
+                    <td>{{ client.name }}</td>
+                    <td>{{ client.description }}</td>
+                    <td class="actions">
+                        <a class="btn btn-xs btn-default" title="{{ _('Edit Client') }}"
+                           href="{{ url_for('oauth.client.edit', client_id=client.client_id) }}">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                        <a class="btn btn-xs btn-danger" title="{{ _('Delete Client') }}"
+                           href="{{ url_for('oauth.client.delete', client_id=client.client_id) }}">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

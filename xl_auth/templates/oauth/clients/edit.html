@@ -1,4 +1,4 @@
-<!-- client/edit.html -->
+<!-- oauth/client/edit.html -->
 {% extends "layout.html" %}
 {% block content %}
     <div class="container-narrow">
@@ -6,21 +6,26 @@
         <br/>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3>{{ _('OAuth2 Client Credentials') }}</h3>
+                <strong>{{ _('OAuth2 Client Credentials') }}</strong>
             </div>
-
-            <p>{{ _('Client ID') }}: <input type="text" value="{{ client.client_id }}" disabled="true" /></p>
-            <p>{{ _('Client Secret') }}: <input type="text" value="{{ client.client_secret }}" disabled="true" /></p>
+            <p>
+                {{ _('Client ID') }}:<br/>
+                <code>{{ client.client_id }}</code>
+            </p>
+            <p>
+                {{ _('Client Secret') }}:<br/>
+                <code style="word-break: break-all;">{{ client.client_secret }}</code>
+            </p>
         </div>
         <form id="editForm" class="form form-edit" method="POST" action="" role="form">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <div class="form-group">
                 {{ edit_form.name.label }}
-                {{ edit_form.name(placeholder="Client name", class_="form-control") }}
+                {{ edit_form.name(placeholder=_('Client name'), class_="form-control") }}
             </div>
             <div class="form-group">
                 {{ edit_form.description.label }}
-                {{ edit_form.description(placeholder="Client description", class_="form-control") }}
+                {{ edit_form.description(placeholder=_('Client description'), class_="form-control") }}
             </div>
             <div class="form-group">
                 <label class="checkbox">
@@ -30,7 +35,7 @@
             </div>
             <div class="form-group">
                 {{ edit_form.redirect_uris.label }}
-                {{ edit_form.redirect_uris(placeholder="Redirect URIs", class_="form-control") }}
+                {{ edit_form.redirect_uris(placeholder=_('Redirect URIs'), class_="form-control") }}
             </div>
             <div class="form-group">
                 {{ edit_form.default_scopes.label }}

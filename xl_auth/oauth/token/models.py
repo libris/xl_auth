@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Token models."""
+"""OAuth Token models."""
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from six import string_types
 from sqlalchemy.ext.hybrid import hybrid_property
 
-from ..database import Column, Model, SurrogatePK, db, reference_col, relationship
+from ...database import Column, Model, SurrogatePK, db, reference_col, relationship
 
 
 class Token(SurrogatePK, Model):
