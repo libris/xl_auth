@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Token views."""
+"""OAuth Token views."""
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
@@ -9,7 +9,8 @@ from flask_login import current_user, login_required
 
 from .models import Token
 
-blueprint = Blueprint('token', __name__, url_prefix='/tokens', static_folder='../static')
+blueprint = Blueprint('oauth.token', __name__, url_prefix='/oauth/tokens',
+                      static_folder='../../static')
 
 
 @blueprint.route('/')
@@ -21,7 +22,7 @@ def home():
 
     tokens = Token.query.all()
 
-    return render_template('tokens/home.html', tokens=tokens)
+    return render_template('oauth/tokens/home.html', tokens=tokens)
 
 
 @blueprint.route('/delete/<int:token_id>', methods=['GET', 'DELETE'])
@@ -39,4 +40,4 @@ def delete(token_id):
         token.delete()
         flash(_('Successfully deleted OAuth2 Bearer token "%(token_id)s".', token_id=token_id),
               'success')
-    return redirect(url_for('token.home'))
+    return redirect(url_for('oauth.token.home'))

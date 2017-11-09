@@ -1,0 +1,38 @@
+<!-- oauth/tokens/home.html -->
+{% extends "layout.html" %}
+{% block content %}
+    <h1>{{ _('OAuth2 Bearer Tokens') }}</h1>
+    <br/>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong>{{ _('OAuth2 Bearer Tokens') }}</strong>
+        </div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th class="col-md-1">{{ _('ID') }}</th>
+                <th class="col-md-4">{{ _('User') }}</th>
+                <th class="col-md-3">{{ _('Client') }}</th>
+                <th class="min-width-100px">{{ _('Expires At') }}</th>
+                <th class="min-width-50px">{{ _('Actions') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for token in tokens %}
+                <tr>
+                    <td>{{ token.id }}</td>
+                    <td class="word-break-all">{{ token.user.email }}</td>
+                    <td>{{ token.client.name }}</td>
+                    <td>{{ token.expires_at.strftime('%y-%m-%d %H:%M:%S') }}</td>
+                    <td class="actions">
+                        <a class="btn btn-xs btn-danger" title="{{ _('Delete Token') }}"
+                           href="{{ url_for('oauth.token.delete', token_id=token.id) }}">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

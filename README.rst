@@ -4,7 +4,7 @@
  xl_auth
 =========
 
-OAuth2 authorization for LibrisXL, replacing BibDB counterpart.
+Authorization and OAuth2 provider for LibrisXL.
 
 .. image:: http://jenkins.smithmicro.io:8080/job/xl_auth-multibranch/job/master/lastBuild/badge/icon
     :target: http://jenkins.smithmicro.io:8080/job/xl_auth-multibranch/job/master/lastBuild/
@@ -175,13 +175,20 @@ Technology choices:
 DB Models
 ---------
 
-.. image:: https://user-images.githubusercontent.com/18367829/30987221-8a1834d2-a496-11e7-8a54-27f00a24da7d.png
-    :target: https://github.com/libris/xl_auth/pull/33
-    :alt: screen shot 2017-09-28 at 9 42 42 pm
+.. image:: https://user-images.githubusercontent.com/786326/32597885-5339ba5e-c538-11e7-8462-f365c8f9cbe1.png
+   :alt: screen shot 2017-11-09 at 10 23 47 am
 
 
 Changelog
 =========
+
+v. 0.5.8
+--------
+
+* Update internal links to reference users by ID instead of email
+  (`#25 <https://github.com/libris/xl_auth/issues/25>`_)
+* Refactored OAuth2 (internal) paths
+
 
 v. 0.5.7
 --------

@@ -1,4 +1,4 @@
-<!-- client/register.html -->
+<!-- oauth/client/register.html -->
 {% extends "layout.html" %}
 {% block content %}
     <div class="container-narrow">
@@ -8,11 +8,11 @@
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <div class="form-group">
                 {{ register_form.name.label }}
-                {{ register_form.name(placeholder="Client name", class_="form-control") }}
+                {{ register_form.name(placeholder=_('Client name'), class_="form-control") }}
             </div>
             <div class="form-group">
                 {{ register_form.description.label }}
-                {{ register_form.description(placeholder="Client description", class_="form-control") }}
+                {{ register_form.description(placeholder=_('Client description'), class_="form-control") }}
             </div>
             <div class="form-group">
                 <label class="checkbox">
@@ -22,13 +22,13 @@
             </div>
             <div class="form-group">
                 {{ register_form.redirect_uris.label }}
-                {{ register_form.redirect_uris(placeholder="Redirect URIs", class_="form-control") }}
+                {{ register_form.redirect_uris(placeholder=_('Redirect URIs'), class_="form-control") }}
             </div>
             <div class="form-group">
                 {{ register_form.default_scopes.label }}
                 {{ register_form.default_scopes(placeholder="read write", class_="form-control") }}
             </div>
-            <p><input class="btn btn-default btn-submit" type="submit" value="Create"></p>
+            <p><input class="btn btn-default btn-submit" type="submit" value="{{ _('Register') }}"></p>
         </form>
     </div>
 {% endblock %}

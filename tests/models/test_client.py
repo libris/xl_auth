@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import pytest
 
-from xl_auth.client.models import Client
+from xl_auth.oauth.client.models import Client
 
 from ..factories import ClientFactory
 

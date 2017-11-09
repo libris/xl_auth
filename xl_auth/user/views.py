@@ -53,19 +53,19 @@ def register():
     return render_template('users/register.html', register_user_form=register_user_form)
 
 
-@blueprint.route('/administer/<string:username>', methods=['GET', 'POST'])
+@blueprint.route('/administer/<int:user_id>', methods=['GET', 'POST'])
 @login_required
-def administer(username):
+def administer(user_id):
     """Edit user details."""
     if not current_user.is_admin:
         abort(403)
 
-    user = User.query.filter(User.email == username).first()
+    user = User.get_by_id(user_id)
     if not user:
-        flash(_('User "%(username)s" does not exist', username=username), 'danger')
+        flash(_('User ID "%(user_id)s" does not exist', user_id=user_id), 'danger')
         return redirect(url_for('user.home'))
 
-    administer_form = AdministerForm(current_user, username, request.form)
+    administer_form = AdministerForm(current_user, user.email, request.form)
     if administer_form.validate_on_submit():
         user.update(full_name=administer_form.full_name.data,
                     active=administer_form.active.data,
@@ -76,23 +76,22 @@ def administer(username):
     else:
         administer_form.set_defaults(user)
         flash_errors(administer_form)
-        return render_template(
-            'users/administer.html', administer_form=administer_form, user=user)
+        return render_template('users/administer.html', administer_form=administer_form, user=user)
 
 
-@blueprint.route('/edit_details/<string:username>', methods=['GET', 'POST'])
+@blueprint.route('/edit_details/<int:user_id>', methods=['GET', 'POST'])
 @login_required
-def edit_details(username):
+def edit_details(user_id):
     """Edit user details."""
-    if (current_user.email != username) and not current_user.is_admin:
-            abort(403)
+    if (current_user.id != user_id) and not current_user.is_admin:
+        abort(403)
 
-    user = User.query.filter(User.email == username).first()
+    user = User.get_by_id(user_id)
     if not user:
-        flash(_('User "%(username)s" does not exist', username=username), 'danger')
+        flash(_('User ID "%(user_id)s" does not exist', user_id=user_id), 'danger')
         return redirect(url_for('user.home'))
 
-    edit_details_form = EditDetailsForm(current_user, username, request.form)
+    edit_details_form = EditDetailsForm(current_user, user.email, request.form)
     if edit_details_form.validate_on_submit():
         user.update(full_name=edit_details_form.full_name.data).save()
         flash(_('Thank you for updating user details for "%(username)s".', username=user.email),
@@ -108,16 +107,19 @@ def edit_details(username):
             'users/edit_details.html', edit_details_form=edit_details_form, user=user)
 
 
-@blueprint.route('/change_password/<string:username>', methods=['GET', 'POST'])
+@blueprint.route('/change_password/<int:user_id>', methods=['GET', 'POST'])
 @login_required
-def change_password(username):
+def change_password(user_id):
     """Change user password."""
-    user = User.query.filter(User.email == username).first()
+    if (current_user.id != user_id) and not current_user.is_admin:
+        abort(403)
+
+    user = User.get_by_id(user_id)
     if not user:
-        flash(_('User "%(username)s" does not exist', username=username), 'danger')
+        flash(_('User ID "%(user_id)s" does not exist', user_id=user_id), 'danger')
         return redirect(url_for('user.home'))
 
-    change_password_form = ChangePasswordForm(current_user, username, request.form)
+    change_password_form = ChangePasswordForm(current_user, user.email, request.form)
     if change_password_form.validate_on_submit():
         user.set_password(change_password_form.password.data)
         user.save()

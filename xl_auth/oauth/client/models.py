@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Client models."""
+"""OAuth Client models."""
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
@@ -9,7 +9,7 @@ from os import urandom
 from six import string_types
 from sqlalchemy.ext.hybrid import hybrid_property
 
-from ..database import Column, Model, db
+from ...database import Column, Model, db
 
 
 class Client(Model):

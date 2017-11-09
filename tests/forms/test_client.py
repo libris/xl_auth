@@ -9,7 +9,7 @@ import pytest
 from flask_babel import gettext as _
 from wtforms.validators import ValidationError
 
-from xl_auth.client.forms import EditForm, RegisterForm
+from xl_auth.oauth.client.forms import EditForm, RegisterForm
 
 
 def test_user_cannot_register_client(user):

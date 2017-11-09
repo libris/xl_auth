@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import pytest
 
-from xl_auth.token.models import Token
+from xl_auth.oauth.token.models import Token
 
 from ..factories import TokenFactory
 
