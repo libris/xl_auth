@@ -10,8 +10,8 @@ from xl_auth.app import create_app
 from xl_auth.database import db as _db
 from xl_auth.settings import TestConfig
 
-from .factories import (ClientFactory, CollectionFactory, GrantFactory, PermissionFactory,
-                        SuperUserFactory, TokenFactory, UserFactory)
+from .factories import (ClientFactory, CollectionFactory, GrantFactory, PasswordResetFactory,
+                        PermissionFactory, SuperUserFactory, TokenFactory, UserFactory)
 
 
 @pytest.yield_fixture(scope='function')
