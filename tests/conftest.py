@@ -68,6 +68,15 @@ def superuser(db):
 
 # noinspection PyShadowingNames
 @pytest.fixture
+def password_reset(db):
+    """A password reset for the tests."""
+    password_reset = PasswordResetFactory()
+    db.session.commit()
+    return password_reset
+
+
+# noinspection PyShadowingNames
+@pytest.fixture
 def collection(db):
     """A collection for the tests."""
     collection = CollectionFactory()
