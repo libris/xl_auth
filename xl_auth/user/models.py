@@ -55,7 +55,7 @@ class PasswordReset(SurrogatePK, Model):
         """Get by `(email, code)` pair."""
         user = User.get_by_email(email)
         if user:
-            return PasswordReset.query.filter_by(code=code, user_id=user.id).first()
+            return PasswordReset.query.filter_by(code=code, user=user).first()
 
     def __repr__(self):
         """Represent instance as a unique string."""

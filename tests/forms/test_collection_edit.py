@@ -56,8 +56,8 @@ def test_validate_unsupported_category(superuser, collection):
     assert _('Not a valid choice') in form.category.errors
 
 
-def test_user_cannot_edit_collection(user, collection):
-    """Attempt to edit a collection as regular user."""
+def test_validate_collection_edit_as_user(user, collection):
+    """Attempt to edit a collection as non-admin user."""
     form = EditForm(user, collection.code, code=collection.code,
                     friendly_name='National Library',
                     category=choice(['bibliography', 'library', 'uncategorized']))

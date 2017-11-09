@@ -39,8 +39,7 @@ def test_validate_code_already_registered(superuser, collection):
     assert _('Code "%(code)s" already registered', code=collection.code) in form.code.errors
 
 
-def test_validate_code_already_registered_with_different_casing(superuser,
-                                                                              collection):
+def test_validate_code_already_registered_with_different_casing(superuser, collection):
     """Attempt registering code that is already registered, this time with different casing."""
     collection.code = 'UPPER'
     collection.save()

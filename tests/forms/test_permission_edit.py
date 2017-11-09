@@ -74,6 +74,18 @@ def test_validate_collection_id_does_not_exist(superuser, permission):
              collection_id=invalid_collection_id) in form.collection_id.errors
 
 
+def test_validate_permission_edit_as_user(permission, user, collection):
+    """Attempt to edit entry as non-admin user."""
+    assert permission.user.id != user.id  # Existing permission maps to different user.
+    assert permission.collection.id != collection.id  # And a different collection..
+    form = EditForm(user, permission.id, user_id=user.id, collection_id=collection.id,
+                    registrant=True, cataloger=True, cataloging_admin=True)
+
+    with pytest.raises(ValidationError) as e_info:
+        form.validate()
+    assert e_info.value.args[0] == _('You do not have sufficient privileges for this operation.')
+
+
 def test_validate_success(superuser, permission, user, collection):
     """Edit entry with success."""
     assert permission.user.id != user.id  # Existing permission maps to different user.
@@ -90,15 +102,3 @@ def test_validate_success(superuser, permission, user, collection):
         'cataloger': True,
         'cataloging_admin': True
     }
-
-
-def test_as_user(permission, user, collection):
-    """Attempt to edit entry."""
-    assert permission.user.id != user.id  # Existing permission maps to different user.
-    assert permission.collection.id != collection.id  # And a different collection..
-    form = EditForm(user, permission.id, user_id=user.id, collection_id=collection.id,
-                    registrant=True, cataloger=True, cataloging_admin=True)
-
-    with pytest.raises(ValidationError) as e_info:
-        form.validate()
-    assert e_info.value.args[0] == _('You do not have sufficient privileges for this operation.')
