@@ -3,6 +3,9 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+from codecs import getencoder
+from os import urandom
+
 from .extensions import db
 
 try:
@@ -49,6 +52,11 @@ class Model(CRUDMixin, db.Model):
     """Base model class that includes CRUD convenience methods."""
 
     __abstract__ = True
+
+    @staticmethod
+    def _get_rand_hex_str(length=32):
+        """Create random hex string."""
+        return getencoder('hex')(urandom(length // 2))[0].decode('utf-8')
 
 
 # From Mike Bayer's "Building the app" talk https://speakerdeck.com/zzzeek/building-the-app
