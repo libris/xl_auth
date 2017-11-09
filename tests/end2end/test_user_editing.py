@@ -22,7 +22,7 @@ def test_superuser_can_administer_existing_user(superuser, testapp):
     # Clicks Users button.
     res = res.click(_('Users'))
     # Clicks Edit Details button.
-    res = res.click(href='/users/administer/' + superuser.email.replace('@', '%40'))
+    res = res.click(href='/users/administer/{0}'.format(superuser.id))
     # Fills out the form.
     form = res.forms['administerForm']
     form['username'] = superuser.email
@@ -61,7 +61,7 @@ def test_superuser_can_change_password_for_existing_user(superuser, testapp):
     # Clicks Users button.
     res = res.click(_('Users'))
     # Clicks Change Password button.
-    res = res.click(href='/users/change_password/' + superuser.email.replace('@', '%40'))
+    res = res.click(href='/users/change_password/{0}'.format(superuser.id))
     # Fills out the form.
     form = res.forms['changePasswordForm']
     form['username'] = superuser.email
@@ -88,7 +88,7 @@ def test_superuser_sees_error_message_if_username_is_changed_from_administer(sup
     # Submits.
     form.submit()
     # Goes to Edit Details page for current user.
-    res = testapp.get(url_for('user.administer', username=superuser.email))
+    res = testapp.get(url_for('user.administer', user_id=superuser.id))
     # Fills out form, and changes username/email.
     form = res.forms['administerForm']
     form['username'] = 'new.one@domain.com'
@@ -113,7 +113,7 @@ def test_superuser_sees_error_message_if_username_is_changed_from_change_passwor
     # Submits.
     form.submit()
     # Goes to Change Password page for current user.
-    res = testapp.get(url_for('user.change_password', username=superuser.email))
+    res = testapp.get(url_for('user.change_password', user_id=superuser.id))
     # Fills out form, and changes username/email.
     form = res.forms['changePasswordForm']
     form['username'] = 'new.one@domain.com'
@@ -136,7 +136,7 @@ def test_superuser_sees_error_message_if_full_name_is_missing_in_administer(supe
     # Submits.
     form.submit()
     # Goes to Edit Details page for current user.
-    res = testapp.get(url_for('user.administer', username=superuser.email))
+    res = testapp.get(url_for('user.administer', user_id=superuser.id))
     # Fills out form, but omits friendly_name.
     form = res.forms['administerForm']
     form['full_name'] = ''
@@ -146,7 +146,7 @@ def test_superuser_sees_error_message_if_full_name_is_missing_in_administer(supe
     assert '{} - {}'.format(_('Full name'), _('This field is required.')) in res
 
 
-def test_superuser_sees_error_message_if_username_does_not_exist(superuser, testapp):
+def test_superuser_sees_error_message_if_user_id_does_not_exist(superuser, testapp):
     """Show error when attempting Edit Details / Change Password on user that does not exist."""
     # Goes to homepage.
     res = testapp.get('/')
@@ -157,18 +157,18 @@ def test_superuser_sees_error_message_if_username_does_not_exist(superuser, test
     # Submits.
     form.submit()
     # Goes to Edit Details page for a made-up user.
-    res = testapp.get(url_for('user.administer', username='one.I.dreamt.up@gmail.com')).follow()
+    last_user = User.query.all()[-1]
+    made_up_id = last_user.id + 1
+    res = testapp.get(url_for('user.administer', user_id=made_up_id)).follow()
     # Sees error message.
-    assert _('User "%(username)s" does not exist',
-             username='one.I.dreamt.up@gmail.com') in res
+    assert _('User ID "%(user_id)s" does not exist', user_id=made_up_id) in res
     # Tries to open Change Password page for another made-up user.
-    res = testapp.get(url_for('user.administer', username='another_fake_one@gmail.com')).follow()
+    res = testapp.get(url_for('user.change_password', user_id=made_up_id)).follow()
     # Sees error message.
-    assert _('User "%(username)s" does not exist',
-             username='another_fake_one@gmail.com') in res
+    assert _('User ID "%(user_id)s" does not exist', user_id=made_up_id) in res
 
 
-def test_user_cannot_administer_existing_user(superuser, user, testapp):
+def test_user_cannot_administer_other_user(superuser, user, testapp):
     """Attempt to administer user details for an existing user."""
     # Goes to homepage.
     res = testapp.get('/')
@@ -190,8 +190,9 @@ def test_user_cannot_administer_existing_user(superuser, user, testapp):
     assert res.lxml.xpath("//a[contains(@text,'{0}')]".format(_('Change Password'))) == []
 
     # Try to go directly to edit
-    testapp.get('/users/administer/{0}'.format(superuser.email), status=403)
-    testapp.get('/users/edit_details/{0}'.format(superuser.email), status=403)
+    testapp.get('/users/administer/{0}'.format(superuser.id), status=403)
+    testapp.get('/users/edit_details/{0}'.format(superuser.id), status=403)
+    testapp.get('/users/change_password/{0}'.format(superuser.id), status=403)
 
 
 def test_user_can_edit_own_details(user, testapp):
@@ -208,8 +209,7 @@ def test_user_can_edit_own_details(user, testapp):
     old_name = user.full_name
 
     # Make sure we're on the profile page
-    assert len(res.lxml.xpath("//h1[contains(., '{0} {1}')]".format(_('Welcome'),
-                                                                    old_name))) == 1
+    assert len(res.lxml.xpath("//h1[contains(., '{0} {1}')]".format(_('Welcome'), old_name))) == 1
 
     # Click on 'Edit' button
     res = res.click(_('Edit'))
@@ -220,6 +220,5 @@ def test_user_can_edit_own_details(user, testapp):
     res = form.submit().follow()
 
     # Make sure name has been updated
-    assert len(res.lxml.xpath("//h1[contains(., '{0} {1}')]".format(_('Welcome'),
-                                                                    old_name))) == 0
+    assert len(res.lxml.xpath("//h1[contains(., '{0} {1}')]".format(_('Welcome'), old_name))) == 0
     assert len(res.lxml.xpath("//h1[contains(., '{0} New Name')]".format(_('Welcome')))) == 1
