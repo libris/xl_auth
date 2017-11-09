@@ -37,11 +37,11 @@
                     {% if current_user.is_admin %}
                         <td class="actions">
                             <a title="{{ _('Edit Details') }}"
-                               href="{{ url_for('user.administer', username=user.email) }}">
+                               href="{{ url_for('user.administer', user_id=user.id) }}">
                                 <i class="fa fa-pencil"></i>
                             </a>
                             <a title="{{ _('Change Password') }}"
-                               href="{{ url_for('user.change_password', username=user.email) }}">
+                               href="{{ url_for('user.change_password', user_id=user.id) }}">
                                 <i class="fa fa-key"></i>
                             </a>
                         </td>
@@ -82,11 +82,11 @@
                     {% if current_user.is_admin %}
                         <td class="actions">
                             <a title="{{ _('Edit Details') }}"
-                               href="{{ url_for('user.administer', username=user.email) }}">
+                               href="{{ url_for('user.administer', user_id=user.id) }}">
                                 <i class="fa fa-pencil"></i>
                             </a>
                             <a title="{{ _('Change Password') }}"
-                               href="{{ url_for('user.change_password', username=user.email) }}">
+                               href="{{ url_for('user.change_password', user_id=user.id) }}">
                                 <i class="fa fa-key"></i>
                             </a>
                         </td>
