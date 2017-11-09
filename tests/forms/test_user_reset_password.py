@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 from flask_babel import gettext as _
 
-from xl_auth.user.forms import ResetPasswordForm
+from xl_auth.public.forms import ResetPasswordForm
 
 
 def test_validate_with_incorrect_code(password_reset, user):
