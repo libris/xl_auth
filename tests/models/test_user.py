@@ -144,10 +144,16 @@ def test_adding_password_reset(collection):
     """Associate user with a password reset code."""
     user = UserFactory()
     user.save()
-    password_reset = PasswordReset(user)
+    password_reset = PasswordReset(user, is_active=False)
     password_reset.save()
 
     assert password_reset in user.password_resets
+
+    other_password_reset = PasswordReset(user)
+    other_password_reset.save()
+    assert other_password_reset in user.password_resets
+
+    assert user.password_resets == [password_reset, other_password_reset]
 
 
 @pytest.mark.usefixtures('db')
