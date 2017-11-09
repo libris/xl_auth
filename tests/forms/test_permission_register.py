@@ -9,8 +9,6 @@ from wtforms.validators import ValidationError
 
 from xl_auth.permission.forms import RegisterForm
 
-from ..factories import PermissionFactory
-
 
 def test_register_form_validate_without_user_id(superuser, collection):
     """Attempt registering entry with empty string for user ID."""
