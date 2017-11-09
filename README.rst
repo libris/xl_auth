@@ -183,6 +183,14 @@ DB Models
 Changelog
 =========
 
+v. 0.5.8
+--------
+
+* Update internal links to reference users by ID instead of email
+  (`#25 <https://github.com/libris/xl_auth/issues/25>`_)
+* Refactored OAuth2 (internal) paths
+
+
 v. 0.5.7
 --------
 
