@@ -12,7 +12,7 @@ from xl_auth.permission.forms import EditForm
 from ..factories import PermissionFactory
 
 
-def test_edit_form_validate_permission_id_does_not_exist(superuser, permission):
+def test_validate_permission_id_does_not_exist(superuser, permission):
     """Attempt editing permissions with a permission ID that does not exist."""
     invalid_permission_id = permission.id + 256
     form = EditForm(superuser, invalid_permission_id, user_id=permission.user.id,
@@ -23,7 +23,7 @@ def test_edit_form_validate_permission_id_does_not_exist(superuser, permission):
              permission_id=invalid_permission_id) in form.permission_id.errors
 
 
-def test_edit_form_validate_without_user_id(superuser, permission):
+def test_validate_without_user_id(superuser, permission):
     """Attempt editing entry with empty string for user ID."""
     form = EditForm(superuser, permission.id, user_id='', collection_id=permission.collection.id)
 
@@ -31,7 +31,7 @@ def test_edit_form_validate_without_user_id(superuser, permission):
     assert _('This field is required.') in form.user_id.errors
 
 
-def test_edit_form_validate_without_collection_id(superuser, permission):
+def test_validate_without_collection_id(superuser, permission):
     """Attempt editing entry with empty string for collection ID."""
     form = EditForm(superuser, permission.id, user_id=permission.user.id, collection_id='')
 
@@ -39,7 +39,7 @@ def test_edit_form_validate_without_collection_id(superuser, permission):
     assert _('This field is required.') in form.collection_id.errors
 
 
-def test_edit_form_validate_permission_already_registered(superuser, permission):
+def test_validate_permission_already_registered(superuser, permission):
     """Attempt editing permissions with a already registered (user_id, collection_id) pair."""
     other_permission = PermissionFactory()
     other_permission.save()
@@ -52,7 +52,7 @@ def test_edit_form_validate_permission_already_registered(superuser, permission)
              ) in form.user_id.errors
 
 
-def test_edit_form_validate_user_id_does_not_exist(superuser, permission):
+def test_validate_user_id_does_not_exist(superuser, permission):
     """Attempt editing permissions by setting a user ID that does not exist."""
     invalid_user_id = permission.user.id + 500
     form = EditForm(superuser, permission.id, user_id=invalid_user_id,
@@ -63,7 +63,7 @@ def test_edit_form_validate_user_id_does_not_exist(superuser, permission):
              user_id=invalid_user_id) in form.user_id.errors
 
 
-def test_edit_form_validate_collection_id_does_not_exist(superuser, permission):
+def test_validate_collection_id_does_not_exist(superuser, permission):
     """Attempt editing permissions by setting a collection ID that does not exist."""
     invalid_collection_id = permission.user.id + 500
     form = EditForm(superuser, permission.id, user_id=permission.user.id,
@@ -74,7 +74,7 @@ def test_edit_form_validate_collection_id_does_not_exist(superuser, permission):
              collection_id=invalid_collection_id) in form.collection_id.errors
 
 
-def test_edit_form_validate_success(superuser, permission, user, collection):
+def test_validate_success(superuser, permission, user, collection):
     """Edit entry with success."""
     assert permission.user.id != user.id  # Existing permission maps to different user.
     assert permission.collection.id != collection.id  # And a different collection..
@@ -92,7 +92,7 @@ def test_edit_form_validate_success(superuser, permission, user, collection):
     }
 
 
-def test_edit_form_as_user(permission, user, collection):
+def test_as_user(permission, user, collection):
     """Attempt to edit entry."""
     assert permission.user.id != user.id  # Existing permission maps to different user.
     assert permission.collection.id != collection.id  # And a different collection..

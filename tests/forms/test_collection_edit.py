@@ -12,7 +12,7 @@ from wtforms.validators import ValidationError
 from xl_auth.collection.forms import EditForm
 
 
-def test_edit_form_validate_without_code(superuser, collection):
+def test_validate_without_code(superuser, collection):
     """Attempt editing entry without a code."""
     form = EditForm(superuser, collection.code, friendly_name='The old books', category='library')
 
@@ -21,7 +21,7 @@ def test_edit_form_validate_without_code(superuser, collection):
 
 
 # noinspection PyUnusedLocal
-def test_edit_form_validate_code_does_not_exist(superuser, db):
+def test_validate_code_does_not_exist(superuser, db):
     """Attempt to edit entry with code that is not registered."""
     form = EditForm(superuser, 'none', code='none', friendly_name='KB wing 3', category='library')
 
@@ -29,7 +29,7 @@ def test_edit_form_validate_code_does_not_exist(superuser, db):
     assert _('Code does not exist') in form.code.errors
 
 
-def test_edit_form_validate_modifying_code(superuser, collection):
+def test_validate_modifying_code(superuser, collection):
     """Attempt to edit entry with a new code."""
     form = EditForm(superuser, collection.code, code='newOne', friendly_name='KB Lib',
                     category='library')
@@ -38,7 +38,7 @@ def test_edit_form_validate_modifying_code(superuser, collection):
     assert _('Code cannot be modified') in form.code.errors
 
 
-def test_edit_form_validate_without_friendly_name(superuser, collection):
+def test_validate_without_friendly_name(superuser, collection):
     """Attempt editing entry with friendly_name shorter than 2 chars."""
     form = EditForm(superuser, collection.code, code=collection.code, friendly_name='0',
                     category='library')
@@ -47,7 +47,7 @@ def test_edit_form_validate_without_friendly_name(superuser, collection):
     assert _('Field must be between 2 and 255 characters long.') in form.friendly_name.errors
 
 
-def test_edit_form_validate_unsupported_category(superuser, collection):
+def test_validate_unsupported_category(superuser, collection):
     """Attempt editing entry with custom/unsupported category."""
     form = EditForm(superuser, collection.code, code=collection.code, friendly_name='Secret',
                     category='Made-up by me')
@@ -67,7 +67,7 @@ def test_user_cannot_edit_collection(user, collection):
     assert e_info.value.args[0] == _('You do not have sufficient privileges for this operation.')
 
 
-def test_edit_form_validate_success(superuser, collection):
+def test_validate_success(superuser, collection):
     """Edit entry with success."""
     form = EditForm(superuser, collection.code, code=collection.code,
                     friendly_name='National Library',

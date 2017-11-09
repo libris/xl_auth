@@ -10,7 +10,7 @@ from wtforms.validators import ValidationError
 from xl_auth.user.forms import ChangePasswordForm
 
 
-def test_change_password_form_validate_modifying_username(superuser):
+def test_validate_modifying_username(superuser):
     """Attempt to change password but passing in a new username/email."""
     form = ChangePasswordForm(superuser, superuser.email, username='new.address@kb.se',
                               password='123456', confirm='123456')
@@ -19,24 +19,24 @@ def test_change_password_form_validate_modifying_username(superuser):
     assert _('Email cannot be modified') in form.username.errors
 
 
-def test_change_password_form_validate_success(superuser):
-    """Change user password with success."""
+def test_validate_success_as_superuser(superuser):
+    """Change superuser's own password with success."""
     form = ChangePasswordForm(superuser, superuser.email, username=superuser.email,
                               password='example', confirm='example')
 
     assert form.validate() is True
 
 
-def test_change_password_form_as_user_validate_success(user):
-    """Change user password with success."""
+def test_validate_success_as_user(user):
+    """Change user's own password with success."""
     form = ChangePasswordForm(user, user.email, username=user.email,
                               password='example', confirm='example')
 
     assert form.validate() is True
 
 
-def test_user_change_password_form_for_other_user(superuser, user):
-    """Change password for another user as admin."""
+def test_validate_user_change_for_other_user(superuser, user):
+    """Attempt changing password for another user as non-admin."""
     form = ChangePasswordForm(user, superuser.email, username=superuser.email,
                               password='example', confirm='example')
 
@@ -45,8 +45,8 @@ def test_user_change_password_form_for_other_user(superuser, user):
     assert e_info.value.args[0] == _('You do not have sufficient privileges for this operation.')
 
 
-def test_superuser_change_password_form_for_other_user(superuser, user):
-    """Attempt to change password for another user."""
+def test_validate_superuser_change_for_other_user(superuser, user):
+    """Change password for another user as superuser with success."""
     form = ChangePasswordForm(superuser, user.email, username=user.email,
                               password='example', confirm='example')
 

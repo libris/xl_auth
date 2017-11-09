@@ -25,7 +25,7 @@ def test_user_cannot_register_client(user):
     assert e_info.value.args[0] == _('You do not have sufficient privileges for this operation.')
 
 
-def test_register_form_validate_success(superuser):
+def test_validate_success(superuser):
     """Register client."""
     form = RegisterForm(superuser, name='Client',
                         description='OAuth2 Client',
@@ -36,7 +36,7 @@ def test_register_form_validate_success(superuser):
     assert form.validate() is True
 
 
-def test_register_form_missing_name(superuser):
+def test_missing_name(superuser):
     """Attempt to register client with missing name."""
     form = RegisterForm(superuser,
                         description='OAuth2 Client',
@@ -48,7 +48,7 @@ def test_register_form_missing_name(superuser):
     assert _('This field is required.') in form.name.errors
 
 
-def test_register_form_too_short_name(superuser):
+def test_too_short_name(superuser):
     """Attempt to register client with too short name."""
     form = RegisterForm(superuser, name='C',
                         description='OAuth2 Client',
@@ -60,7 +60,7 @@ def test_register_form_too_short_name(superuser):
     assert _('Field must be between 3 and 64 characters long.') in form.name.errors
 
 
-def test_register_form_missing_description(superuser):
+def test_missing_description(superuser):
     """Attempt to register client with missing description."""
     form = RegisterForm(superuser, name='Client',
                         is_confidential=choice([True, False]),
@@ -71,7 +71,7 @@ def test_register_form_missing_description(superuser):
     assert _('This field is required.') in form.description.errors
 
 
-def test_register_form_too_short_description(superuser):
+def test_too_short_description(superuser):
     """Attempt to register client with too short description."""
     form = RegisterForm(superuser, name='Client',
                         description='C',
@@ -83,7 +83,7 @@ def test_register_form_too_short_description(superuser):
     assert _('Field must be between 3 and 350 characters long.') in form.description.errors
 
 
-def test_register_form_missing_redirect_uris(superuser):
+def test_missing_redirect_uris(superuser):
     """Attempt to register client with missing redirect URIs."""
     form = RegisterForm(superuser, name='Client',
                         description='OAuth2 Client',
@@ -94,7 +94,7 @@ def test_register_form_missing_redirect_uris(superuser):
     assert _('This field is required.') in form.redirect_uris.errors
 
 
-def test_register_form_missing_default_scopes(superuser):
+def test_missing_default_scopes(superuser):
     """Attempt to register client with missing default scopes."""
     form = RegisterForm(superuser, name='Client',
                         description='OAuth2 Client',

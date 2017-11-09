@@ -12,7 +12,7 @@ from wtforms.validators import ValidationError
 from xl_auth.user.forms import AdministerForm
 
 
-def test_admin_form_validate_success(superuser):
+def test_validate_success(superuser):
     """Edit user details with success."""
     form = AdministerForm(superuser, superuser.email, username=superuser.email,
                           full_name='My New Name',
@@ -22,7 +22,7 @@ def test_admin_form_validate_success(superuser):
 
 
 # noinspection PyUnusedLocal
-def test_admin_form_validate_username_does_not_exist(db, superuser):
+def test_validate_username_does_not_exist(db, superuser):
     """Attempt to edit user details with a username that is not registered."""
     form = AdministerForm(superuser, 'missing@nowhere.com', username='missing@nowhere.com',
                           full_name='Mr Foo', active=choice([True, False]),
@@ -32,7 +32,7 @@ def test_admin_form_validate_username_does_not_exist(db, superuser):
     assert _('User does not exist') in form.username.errors
 
 
-def test_admin_form_validate_modifying_username(superuser):
+def test_validate_modifying_username(superuser):
     """Attempt to edit user by giving it a new username/email."""
     form = AdministerForm(superuser, superuser.email, username='new.address@kb.se',
                           full_name=superuser.full_name,
@@ -42,7 +42,7 @@ def test_admin_form_validate_modifying_username(superuser):
     assert _('Email cannot be modified') in form.username.errors
 
 
-def test_admin_form_as_regular_user(user):
+def test_as_regular_user(user):
     """Attempt to use administer form as regular user."""
     form = AdministerForm(user, user.email, username=user.email,
                           full_name=user.full_name,

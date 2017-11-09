@@ -23,7 +23,7 @@ def test_user_cannot_edit_client(user, client):
     assert e_info.value.args[0] == _('You do not have sufficient privileges for this operation.')
 
 
-def test_edit_form_validate_success(superuser, client):
+def test_validate_success(superuser, client):
     """Edit entry with success."""
     form = EditForm(superuser, name=client.name,
                     description=client.description,
@@ -34,7 +34,7 @@ def test_edit_form_validate_success(superuser, client):
     assert form.validate() is True
 
 
-def test_edit_form_missing_name(superuser, client):
+def test_missing_name(superuser, client):
     """Attempt to register client with missing name."""
     form = EditForm(superuser,
                     description=client.description,
@@ -46,7 +46,7 @@ def test_edit_form_missing_name(superuser, client):
     assert _('This field is required.') in form.name.errors
 
 
-def test_edit_form_too_short_name(superuser, client):
+def test_too_short_name(superuser, client):
     """Attempt to register client with too short name."""
     form = EditForm(superuser, name='C',
                     description=client.description,
@@ -58,7 +58,7 @@ def test_edit_form_too_short_name(superuser, client):
     assert _('Field must be between 3 and 64 characters long.') in form.name.errors
 
 
-def test_edit_form_missing_description(superuser, client):
+def test_missing_description(superuser, client):
     """Attempt to register client with missing description."""
     form = EditForm(superuser, name=client.name,
                     is_confidential=not client.is_confidential,
@@ -69,7 +69,7 @@ def test_edit_form_missing_description(superuser, client):
     assert _('This field is required.') in form.description.errors
 
 
-def test_edit_form_too_short_description(superuser, client):
+def test_too_short_description(superuser, client):
     """Attempt to register client with too short description."""
     form = EditForm(superuser, name=client.name,
                     description='C',
@@ -81,7 +81,7 @@ def test_edit_form_too_short_description(superuser, client):
     assert _('Field must be between 3 and 350 characters long.') in form.description.errors
 
 
-def test_edit_form_missing_redirect_uris(superuser, client):
+def test_missing_redirect_uris(superuser, client):
     """Attempt to register client with missing redirect URIs."""
     form = EditForm(superuser, name=client.name,
                     description=client.description,
@@ -92,7 +92,7 @@ def test_edit_form_missing_redirect_uris(superuser, client):
     assert _('This field is required.') in form.redirect_uris.errors
 
 
-def test_edit_form_missing_default_scopes(superuser, client):
+def test_missing_default_scopes(superuser, client):
     """Attempt to register client with missing default scopes."""
     form = EditForm(superuser, name=client.name,
                     description=client.description,
