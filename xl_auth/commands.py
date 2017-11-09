@@ -111,7 +111,7 @@ def clean():
 @with_appcontext
 def create_user(email, full_name, password, active, is_admin, force):
     """Create or overwrite user account."""
-    user = User.query.filter(User.email.ilike(email)).first()
+    user = User.get_by_email(email)
     if force and user:
         if full_name:
             user.full_name = full_name
@@ -514,7 +514,7 @@ def import_data(verbose, admin_email, wipe_permissions):
 
     # Apply manual additions.
     for email, code in _get_manually_added_permissions():
-        user = User.query.filter(User.email.ilike(email)).first()
+        user = User.get_by_email(email)
         if not user:
             print('Cannot add permission manually; user %r does not exist' % email)
             continue
@@ -540,7 +540,7 @@ def import_data(verbose, admin_email, wipe_permissions):
 
     # Apply manual deletions.
     for email, code in _get_manually_deleted_permissions():
-        user = User.query.filter(User.email.ilike(email)).first()
+        user = User.get_by_email(email)
         if not user:
             print('Cannot delete permission manually; user %r does not exist' % email)
             continue
