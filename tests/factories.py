@@ -14,7 +14,7 @@ from xl_auth.oauth.client.models import Client
 from xl_auth.oauth.grant.models import Grant
 from xl_auth.oauth.token.models import Token
 from xl_auth.permission.models import Permission
-from xl_auth.user.models import User
+from xl_auth.user.models import PasswordReset, User
 
 
 class BaseFactory(SQLAlchemyModelFactory):
@@ -54,6 +54,17 @@ class SuperUserFactory(BaseFactory):
         """Factory configuration."""
 
         model = User
+
+
+class PasswordResetFactory(BaseFactory):
+    """PasswordReset factory."""
+
+    user = LazyFunction(UserFactory)
+
+    class Meta:
+        """Factory configuration."""
+
+        model = PasswordReset
 
 
 class CollectionFactory(BaseFactory):
