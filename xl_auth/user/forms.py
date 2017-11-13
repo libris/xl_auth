@@ -38,7 +38,7 @@ class RegisterForm(FlaskForm):
         if not initial_validation:
             return False
 
-        user = User.query.filter(User.email.ilike(self.username.data)).first()
+        user = User.get_by_email(self.username.data)
 
         if not self.active_user.is_admin:
             raise ValidationError(_('You do not have sufficient privileges for this operation.'))
