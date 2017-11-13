@@ -27,7 +27,7 @@ def test_can_initiate_password_reset_flow(user, testapp):
 
     # New PasswordReset is added.
     password_reset = PasswordReset.query.filter_by(user=user).first()
-    assert password_reset.is_active
+    assert password_reset.is_active is True
     assert password_reset.expires_at > (datetime.utcnow() + timedelta(seconds=3600))
 
 

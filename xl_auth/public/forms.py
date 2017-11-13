@@ -87,12 +87,12 @@ class ResetPasswordForm(FlaskForm):
         password_reset = PasswordReset.get_by_email_and_code(self.username.data, self.code.data)
         if password_reset:  # Implies there was also a matching user.
             if password_reset.expires_at < datetime.utcnow():
-                self.code.errors.append(_('Reset code "%(code)s" expired at "%(isoformat)s"',
+                self.code.errors.append(_('Reset code "%(code)s" expired at %(isoformat)s',
                                           code=self.code.data,
                                           isoformat=password_reset.expires_at.isoformat() + 'Z'))
                 return False
             if not password_reset.is_active:
-                self.code.errors.append(_('Reset code "%(code)s" already used ("%(isoformat)s")',
+                self.code.errors.append(_('Reset code "%(code)s" already used (%(isoformat)s)',
                                           code=self.code.data,
                                           isoformat=password_reset.modified_at.isoformat() + 'Z'))
                 return False
