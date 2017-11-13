@@ -10,8 +10,8 @@ from flask_login import current_user, login_required, login_user, logout_user
 from six.moves.urllib_parse import quote
 
 from ..extensions import login_manager
-from ..public.forms import LoginForm
-from ..user.models import User
+from ..public.forms import ForgotPasswordForm, LoginForm
+from ..user.models import PasswordReset, User
 from ..utils import flash_errors
 
 blueprint = Blueprint('public', __name__, static_folder='../static')
@@ -43,8 +43,28 @@ def home():
             return redirect(redirect_url)
         else:
             flash_errors(login_form)
+
     return render_template('public/home.html', login_form=login_form,
                            next_redirect_url=request.args.get('next'))
+
+
+@blueprint.route('/forgot_password/', methods=['GET', 'POST'])
+def forgot_password():
+    """Forgot password?"""
+    forgot_password_form = ForgotPasswordForm(request.form)
+    if request.method == 'POST':
+        if forgot_password_form.validate_on_submit():
+            user = User.get_by_email(forgot_password_form.username.data)
+            password_reset = PasswordReset(user)
+            password_reset.save()
+            # TODO: Do stuff to send out email with code.
+            flash(_('This is your reset code %(code)s.', code=password_reset.code), 'success')
+            return redirect(url_for('public.home'))
+        else:
+            flash_errors(forgot_password_form)
+
+    return render_template(
+        'public/forgot_password.html', forgot_password_form=forgot_password_form)
 
 
 @blueprint.route('/logout/')
