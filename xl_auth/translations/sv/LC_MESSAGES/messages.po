@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2017-11-14 13:17+0100\n"
+"POT-Creation-Date: 2017-11-14 14:50+0100\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -418,7 +418,8 @@ msgid "Username"
 msgstr "Användarnamn"
 
 #: xl_auth/public/forms.py:20 xl_auth/public/forms.py:75 xl_auth/templates/public/home.html:41
-#: xl_auth/user/forms.py:15
+#: xl_auth/templates/public/reset_password.html:16 xl_auth/templates/users/change_password.html:15
+#: xl_auth/templates/users/register.html:19 xl_auth/user/forms.py:15
 msgid "Password"
 msgstr "Lösenord"
 
@@ -438,7 +439,7 @@ msgstr "Återställningslänk skickad till %(email)s."
 #: xl_auth/public/views.py:81
 #, python-format
 msgid "Password for \"%(username)s\" has been reset."
-msgstr "Lösenordet för \"%(username)s\" hår återställts."
+msgstr "Lösenordet för \"%(username)s\" har återställts."
 
 #: xl_auth/templates/401.html:4
 msgid "Unauthorized"
@@ -663,6 +664,7 @@ msgid "Request Password Reset"
 msgstr "Begär nyckel för lösenordsåterställning"
 
 #: xl_auth/templates/public/forgot_password.html:11 xl_auth/templates/public/home.html:40
+#: xl_auth/templates/users/register.html:11
 msgid "user@example.com"
 msgstr "namn@organisation.se"
 
@@ -713,6 +715,11 @@ msgstr "Gå till kundo"
 #: xl_auth/templates/public/reset_password.html:5
 msgid "Reset Password"
 msgstr "Återställ lösenord"
+
+#: xl_auth/templates/public/reset_password.html:20 xl_auth/templates/users/change_password.html:19
+#: xl_auth/templates/users/register.html:23
+msgid "Password (again)"
+msgstr "Lösenord (igen)"
 
 #: xl_auth/templates/users/administer.html:5 xl_auth/templates/users/edit_details.html:5
 msgid "Edit User Details"
@@ -778,6 +785,10 @@ msgstr ""
 #: xl_auth/templates/users/register.html:5
 msgid "Register New User"
 msgstr "Registrera ny användare"
+
+#: xl_auth/templates/users/register.html:15
+msgid "First Last"
+msgstr "Förnamn Efternamn"
 
 #: xl_auth/user/forms.py:112
 msgid "Active"

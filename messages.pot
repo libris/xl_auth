@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-11-14 13:17+0100\n"
+"POT-Creation-Date: 2017-11-14 14:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -417,7 +417,8 @@ msgid "Username"
 msgstr ""
 
 #: xl_auth/public/forms.py:20 xl_auth/public/forms.py:75 xl_auth/templates/public/home.html:41
-#: xl_auth/user/forms.py:15
+#: xl_auth/templates/public/reset_password.html:16 xl_auth/templates/users/change_password.html:15
+#: xl_auth/templates/users/register.html:19 xl_auth/user/forms.py:15
 msgid "Password"
 msgstr ""
 
@@ -657,6 +658,7 @@ msgid "Request Password Reset"
 msgstr ""
 
 #: xl_auth/templates/public/forgot_password.html:11 xl_auth/templates/public/home.html:40
+#: xl_auth/templates/users/register.html:11
 msgid "user@example.com"
 msgstr ""
 
@@ -706,6 +708,11 @@ msgstr ""
 
 #: xl_auth/templates/public/reset_password.html:5
 msgid "Reset Password"
+msgstr ""
+
+#: xl_auth/templates/public/reset_password.html:20 xl_auth/templates/users/change_password.html:19
+#: xl_auth/templates/users/register.html:23
+msgid "Password (again)"
 msgstr ""
 
 #: xl_auth/templates/users/administer.html:5 xl_auth/templates/users/edit_details.html:5
@@ -766,6 +773,10 @@ msgstr ""
 
 #: xl_auth/templates/users/register.html:5
 msgid "Register New User"
+msgstr ""
+
+#: xl_auth/templates/users/register.html:15
+msgid "First Last"
 msgstr ""
 
 #: xl_auth/user/forms.py:112
