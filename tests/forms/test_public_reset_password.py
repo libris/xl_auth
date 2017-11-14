@@ -28,7 +28,7 @@ def test_validate_with_expired_code(password_reset):
                              password='123456', confirm='123456')
 
     assert form.validate() is False
-    assert _('Reset code "%(code)s" expired at "%(isoformat)s"', code=password_reset.code,
+    assert _('Reset code "%(code)s" expired at %(isoformat)s', code=password_reset.code,
              isoformat=password_reset.expires_at.isoformat() + 'Z') in form.code.errors
 
 
@@ -40,7 +40,7 @@ def test_validate_with_inactive_code(password_reset):
                              password='123456', confirm='123456')
 
     assert form.validate() is False
-    assert _('Reset code "%(code)s" already used ("%(isoformat)s")', code=password_reset.code,
+    assert _('Reset code "%(code)s" already used (%(isoformat)s)', code=password_reset.code,
              isoformat=password_reset.modified_at.isoformat() + 'Z') == form.code.errors[0]
 
 

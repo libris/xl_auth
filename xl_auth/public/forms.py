@@ -31,7 +31,7 @@ class LoginForm(FlaskForm):
         if not initial_validation:
             return False
 
-        self.user = User.query.filter(User.email.ilike(self.username.data)).first()
+        self.user = User.get_by_email(self.username.data)
         if not self.user:
             self.username.errors.append(_('Unknown username/email'))
             return False
@@ -45,6 +45,26 @@ class LoginForm(FlaskForm):
             return False
 
         return True
+
+
+class ForgotPasswordForm(FlaskForm):
+    """Reset password form."""
+
+    username = StringField(_('Email'), validators=[DataRequired()])
+
+    def validate(self):
+        """Validate the form."""
+        initial_validation = super(ForgotPasswordForm, self).validate()
+
+        if not initial_validation:
+            return False
+
+        user = User.get_by_email(self.username.data)
+        if user:
+            return True
+        else:
+            self.username.errors.append(_('Unknown username/email'))
+            return False
 
 
 class ResetPasswordForm(FlaskForm):
@@ -67,12 +87,12 @@ class ResetPasswordForm(FlaskForm):
         password_reset = PasswordReset.get_by_email_and_code(self.username.data, self.code.data)
         if password_reset:  # Implies there was also a matching user.
             if password_reset.expires_at < datetime.utcnow():
-                self.code.errors.append(_('Reset code "%(code)s" expired at "%(isoformat)s"',
+                self.code.errors.append(_('Reset code "%(code)s" expired at %(isoformat)s',
                                           code=self.code.data,
                                           isoformat=password_reset.expires_at.isoformat() + 'Z'))
                 return False
             if not password_reset.is_active:
-                self.code.errors.append(_('Reset code "%(code)s" already used ("%(isoformat)s")',
+                self.code.errors.append(_('Reset code "%(code)s" already used (%(isoformat)s)',
                                           code=self.code.data,
                                           isoformat=password_reset.modified_at.isoformat() + 'Z'))
                 return False
