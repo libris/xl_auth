@@ -104,24 +104,24 @@ def clean():
 @click.option('-n', '--full-name', default=None, help='Full name for user (default: None)')
 @click.option('-p', '--password', default='password',
               help='Password for user (default: "password")')
-@click.option('--active', default=True, is_flag=True, help='Activate account (default: True)')
+@click.option('--is_active', default=True, is_flag=True, help='Activate account (default: True)')
 @click.option('--is-admin', default=False, is_flag=True, help='Create admin user (default: False)')
 @click.option('-f', '--force', default=False, is_flag=True,
               help='Force overwrite existing account (default: False)')
 @with_appcontext
-def create_user(email, full_name, password, active, is_admin, force):
+def create_user(email, full_name, password, is_active, is_admin, force):
     """Create or overwrite user account."""
     user = User.get_by_email(email)
     if force and user:
         if full_name:
             user.full_name = full_name
         user.set_password(password)
-        user.update(active=active, is_admin=is_admin)
+        user.update(is_active=is_active, is_admin=is_admin)
         user.save()
         click.echo('Overwritten account with login {0}:{1}'.format(user.email, password))
     else:
         user = User.create(email=email, full_name=full_name or email, password=password,
-                           active=active, is_admin=is_admin)
+                           is_active=is_active, is_admin=is_admin)
         click.echo('Created account with login {0}:{1}'.format(user.email, password))
 
 
@@ -246,7 +246,7 @@ def import_data(verbose, admin_email, wipe_permissions):
             'friendly_name': friendly_name,
             'code': bibdb_api_data['sigel'],
             'category': category,
-            'active': bibdb_api_data['alive'],
+            'is_active': bibdb_api_data['alive'],
             'replaces': bibdb_api_data['sigel_old'],
             'replaced_by': bibdb_api_data['sigel_new']
         }
@@ -450,10 +450,10 @@ def import_data(verbose, admin_email, wipe_permissions):
 
         collection = Collection.query.filter_by(code=details['code']).first()
         if collection:
-            if collection.active != details['active']:
-                collection.active = details['active']
+            if collection.is_active != details['is_active']:
+                collection.is_active = details['is_active']
                 collection.save()
-                print('corrected collection %r: active=%s' % (collection.code, collection.active))
+                print('corrected collection %r: is_active=%s' % (collection.code, collection.is_active))
         else:
             collection = Collection.create(**details)
             collection.save()
@@ -478,7 +478,7 @@ def import_data(verbose, admin_email, wipe_permissions):
 
         user = User.query.filter_by(email=email).first()
         if not user:
-            user = User.create(email=email, full_name=full_name, active=False)
+            user = User.create(email=email, full_name=full_name, is_active=False)
             user.save()
 
     old_permissions = Permission.query.all()

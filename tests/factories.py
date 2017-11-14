@@ -73,7 +73,7 @@ class CollectionFactory(BaseFactory):
     code = Sequence(lambda _: 'c{0}'.format(_))
     friendly_name = Sequence(lambda _: 'friendly_name{0}'.format(_))
     category = choice(['bibliography', 'library', 'uncategorized'])
-    active = True
+    is_active = True
 
     class Meta:
         """Factory configuration."""
