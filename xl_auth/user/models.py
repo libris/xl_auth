@@ -10,11 +10,11 @@ from os import urandom
 
 from flask import current_app, url_for
 from flask_babel import lazy_gettext as _
+from flask_emails import Message
 from flask_login import UserMixin
-from flask_mail import Message
 
 from ..database import Column, Model, SurrogatePK, db, reference_col, relationship
-from ..extensions import bcrypt, mail
+from ..extensions import bcrypt
 
 
 class Role(SurrogatePK, Model):
@@ -60,14 +60,16 @@ class PasswordReset(SurrogatePK, Model):
             return PasswordReset.query.filter_by(code=code, user=user).first()
 
     def send_email(self):
+        """Email password reset link to the user."""
         password_reset_url = url_for('public.reset_password', email=self.user.email,
                                      code=self.code, _external=True)
-        mail.send(Message(
-            _('Password reset for %(username)s at %(server_name)s', username=self.user.email,
-              server_name=current_app.config['SERVER_NAME']),
-            recipients=[self.user.email],
-            reply_to='libris@kb.se',
-            body=_(
+        service_name = current_app.config['SERVER_NAME'] or current_app.config['APP_NAME']
+        result = Message(
+            subject=_('Password reset for %(username)s at %(server_name)s',
+                      username=self.user.email, server_name=service_name),
+            mail_to=(self.user.full_name, self.user.email),
+            mail_from=(service_name, 'noreply@kb.se'),
+            text=_(
                 'Hello %(full_name)s,'
                 '\n\n'
                 'Here is the secret link for resetting your personal account password:'
@@ -92,7 +94,12 @@ at libris@kb.se!'
                 'at <a href="mailto:libris@kb.se">libris@kb.se</a>!'
                 '</small></p>',
                 full_name=self.user.full_name, password_reset_url=password_reset_url)
-        ))
+        ).send()
+
+        if not hasattr(result, 'status_code'):
+            result = result[0]
+
+        assert result.status_code == 250
 
     def __repr__(self):
         """Represent instance as a unique string."""

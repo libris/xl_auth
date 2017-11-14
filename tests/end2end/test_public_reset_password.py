@@ -9,7 +9,6 @@ from flask import url_for
 from flask_babel import gettext as _
 from jinja2 import escape
 
-from xl_auth.extensions import mail
 from xl_auth.user.models import PasswordReset
 
 
@@ -24,11 +23,8 @@ def test_can_complete_password_reset_flow(user, testapp):
     form = res.forms['forgotPasswordForm']
     form['username'] = username_with_different_casing
     # Submits.
-    with mail.record_messages() as outbox:
-        res = form.submit().follow()
-        assert res.status_code == 200
-        assert len(outbox) == 1
-        reset_password_email = outbox[0]
+    res = form.submit().follow()
+    assert res.status_code == 200
 
     # New PasswordReset is added to DB.
     password_reset = PasswordReset.query.filter_by(user=user).first()
@@ -38,13 +34,6 @@ def test_can_complete_password_reset_flow(user, testapp):
     # URL sent to user email.
     reset_password_url = url_for('public.reset_password', email=password_reset.user.email,
                                  code=password_reset.code, _external=True)
-    assert reset_password_email.recipients == [user.email]
-    assert reset_password_email.sender == 'noreply@kb.se'
-    assert reset_password_email.reply_to == 'libris@kb.se'
-    assert reset_password_email.subject == _('Password reset for %(username)s at %(server_name)s',
-                                             username=user.email, server_name='localhost')
-    assert reset_password_url in reset_password_email.body
-    assert reset_password_url in reset_password_email.html
 
     # Goes to reset password link.
     res = testapp.get(reset_password_url)
