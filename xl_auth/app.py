@@ -7,7 +7,7 @@ from flask import Flask, render_template
 
 from . import collection, commands, oauth, permission, public, user
 from .extensions import (babel, bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager,
-                         migrate, oauth_provider, webpack)
+                         mail, migrate, oauth_provider, webpack)
 from .settings import ProdConfig
 
 
@@ -35,6 +35,7 @@ def register_extensions(app):
     csrf_protect.init_app(app)
     login_manager.init_app(app)
     debug_toolbar.init_app(app)
+    mail.init_app(app)
     migrate.init_app(app, db)
     oauth_provider.init_app(app)
     webpack.init_app(app)
