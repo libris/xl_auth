@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: xl_auth 0.5.8\n"
+"Project-Id-Version: xl_auth 0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-11-13 09:16+0100\n"
+"POT-Creation-Date: 2017-11-14 13:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -144,17 +144,7 @@ msgstr ""
 msgid "Added permissions for \"%(username)s\" on collection \"%(code)s\"."
 msgstr ""
 
-#: tests/end2end/test_public_forgot_password.py:19 xl_auth/templates/public/home.html:45
-msgid "Forgot password?"
-msgstr ""
-
-#: tests/end2end/test_public_forgot_password.py:45 tests/end2end/test_public_logging_in.py:101
-#: tests/forms/test_public_forgot_password.py:17 tests/forms/test_public_login.py:35
-#: xl_auth/public/forms.py:36 xl_auth/public/forms.py:66
-msgid "Unknown username/email"
-msgstr ""
-
-#: tests/end2end/test_public_logging_in.py:72 xl_auth/public/views.py:99
+#: tests/end2end/test_public_logging_in.py:72 xl_auth/public/views.py:96
 msgid "You are logged out."
 msgstr ""
 
@@ -163,19 +153,29 @@ msgstr ""
 msgid "Invalid password"
 msgstr ""
 
-#: tests/end2end/test_public_reset_password.py:47 tests/forms/test_public_reset_password.py:20
+#: tests/end2end/test_public_logging_in.py:101 tests/end2end/test_public_reset_password.py:64
+#: tests/forms/test_public_forgot_password.py:17 tests/forms/test_public_login.py:35
+#: xl_auth/public/forms.py:36 xl_auth/public/forms.py:66
+msgid "Unknown username/email"
+msgstr ""
+
+#: tests/end2end/test_public_reset_password.py:20 xl_auth/templates/public/home.html:45
+msgid "Forgot password?"
+msgstr ""
+
+#: tests/end2end/test_public_reset_password.py:85 tests/forms/test_public_reset_password.py:20
 #: xl_auth/public/forms.py:101
 #, python-format
 msgid "Reset code \"%(code)s\" does not exit"
 msgstr ""
 
-#: tests/end2end/test_public_reset_password.py:65 tests/forms/test_public_reset_password.py:32
+#: tests/end2end/test_public_reset_password.py:103 tests/forms/test_public_reset_password.py:32
 #: xl_auth/public/forms.py:92
 #, python-format
 msgid "Reset code \"%(code)s\" expired at %(isoformat)s"
 msgstr ""
 
-#: tests/end2end/test_public_reset_password.py:89 tests/forms/test_public_reset_password.py:44
+#: tests/end2end/test_public_reset_password.py:127 tests/forms/test_public_reset_password.py:44
 #: xl_auth/public/forms.py:97
 #, python-format
 msgid "Reset code \"%(code)s\" already used (%(isoformat)s)"
@@ -431,10 +431,10 @@ msgstr ""
 
 #: xl_auth/public/views.py:61
 #, python-format
-msgid "This is your reset code %(code)s."
+msgid "Password reset link sent to %(email)s."
 msgstr ""
 
-#: xl_auth/public/views.py:84
+#: xl_auth/public/views.py:81
 #, python-format
 msgid "Password for \"%(username)s\" has been reset."
 msgstr ""
@@ -774,6 +774,36 @@ msgstr ""
 
 #: xl_auth/user/forms.py:113
 msgid "Administrator"
+msgstr ""
+
+#: xl_auth/user/models.py:68
+#, python-format
+msgid "Password reset for %(username)s at %(server_name)s"
+msgstr ""
+
+#: xl_auth/user/models.py:72
+#, python-format
+msgid ""
+"Hello %(full_name)s,\n"
+"\n"
+"Here is the secret link for resetting your personal account password:\n"
+"\n"
+"%(password_reset_url)s\n"
+"\n"
+"\n"
+"\n"
+"P.S. If you received this mail for no obvious reason, please inform us about it at libris@kb.se!\n"
+"\n"
+msgstr ""
+
+#: xl_auth/user/models.py:83
+#, python-format
+msgid ""
+"<p>Hello %(full_name)s,<br/><br/>Here is the secret link for resetting your personal account "
+"password:<br/><br/><a "
+"href=\"%(password_reset_url)s\">%(password_reset_url)s</a><br/><br/></p><p><small>P.S. If you "
+"received this mail for no obvious reason, please inform us about it at <a "
+"href=\"mailto:libris@kb.se\">libris@kb.se</a>!</small></p>"
 msgstr ""
 
 #: xl_auth/user/views.py:48

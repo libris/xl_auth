@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2017-11-13 09:16+0100\n"
+"POT-Creation-Date: 2017-11-14 13:17+0100\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -145,17 +145,7 @@ msgstr "Lägg till behörighet"
 msgid "Added permissions for \"%(username)s\" on collection \"%(code)s\"."
 msgstr "Behörighet tillagd för användare \"%(username)s\" på sigel \"%(code)s\"."
 
-#: tests/end2end/test_public_forgot_password.py:19 xl_auth/templates/public/home.html:45
-msgid "Forgot password?"
-msgstr "Glömt ditt lösenord?"
-
-#: tests/end2end/test_public_forgot_password.py:45 tests/end2end/test_public_logging_in.py:101
-#: tests/forms/test_public_forgot_password.py:17 tests/forms/test_public_login.py:35
-#: xl_auth/public/forms.py:36 xl_auth/public/forms.py:66
-msgid "Unknown username/email"
-msgstr "Okänd epost/användarnamn"
-
-#: tests/end2end/test_public_logging_in.py:72 xl_auth/public/views.py:99
+#: tests/end2end/test_public_logging_in.py:72 xl_auth/public/views.py:96
 msgid "You are logged out."
 msgstr "Du är utloggad."
 
@@ -164,19 +154,29 @@ msgstr "Du är utloggad."
 msgid "Invalid password"
 msgstr "Felaktigt lösenord"
 
-#: tests/end2end/test_public_reset_password.py:47 tests/forms/test_public_reset_password.py:20
+#: tests/end2end/test_public_logging_in.py:101 tests/end2end/test_public_reset_password.py:64
+#: tests/forms/test_public_forgot_password.py:17 tests/forms/test_public_login.py:35
+#: xl_auth/public/forms.py:36 xl_auth/public/forms.py:66
+msgid "Unknown username/email"
+msgstr "Okänd epost/användarnamn"
+
+#: tests/end2end/test_public_reset_password.py:20 xl_auth/templates/public/home.html:45
+msgid "Forgot password?"
+msgstr "Glömt ditt lösenord?"
+
+#: tests/end2end/test_public_reset_password.py:85 tests/forms/test_public_reset_password.py:20
 #: xl_auth/public/forms.py:101
 #, python-format
 msgid "Reset code \"%(code)s\" does not exit"
 msgstr "Återställningsnyckel \"%(code)s\" finns inte"
 
-#: tests/end2end/test_public_reset_password.py:65 tests/forms/test_public_reset_password.py:32
+#: tests/end2end/test_public_reset_password.py:103 tests/forms/test_public_reset_password.py:32
 #: xl_auth/public/forms.py:92
 #, python-format
 msgid "Reset code \"%(code)s\" expired at %(isoformat)s"
 msgstr "Giltighetstiden för återställningsnyckel \"%(code)s\" har gått ut (%(isoformat)s)"
 
-#: tests/end2end/test_public_reset_password.py:89 tests/forms/test_public_reset_password.py:44
+#: tests/end2end/test_public_reset_password.py:127 tests/forms/test_public_reset_password.py:44
 #: xl_auth/public/forms.py:97
 #, python-format
 msgid "Reset code \"%(code)s\" already used (%(isoformat)s)"
@@ -432,10 +432,10 @@ msgstr "Du har loggat in."
 
 #: xl_auth/public/views.py:61
 #, python-format
-msgid "This is your reset code %(code)s."
-msgstr "Det här är din nyckel för lösenordsåterställning: %(code)s"
+msgid "Password reset link sent to %(email)s."
+msgstr "Återställningslänk skickad till %(email)s."
 
-#: xl_auth/public/views.py:84
+#: xl_auth/public/views.py:81
 #, python-format
 msgid "Password for \"%(username)s\" has been reset."
 msgstr "Lösenordet för \"%(username)s\" hår återställts."
@@ -786,6 +786,51 @@ msgstr "Aktiv"
 #: xl_auth/user/forms.py:113
 msgid "Administrator"
 msgstr "Administratör"
+
+#: xl_auth/user/models.py:68
+#, python-format
+msgid "Password reset for %(username)s at %(server_name)s"
+msgstr "Lösenordsåterställning för %(username)s (%(server_name)s)"
+
+#: xl_auth/user/models.py:72
+#, python-format
+msgid ""
+"Hello %(full_name)s,\n"
+"\n"
+"Here is the secret link for resetting your personal account password:\n"
+"\n"
+"%(password_reset_url)s\n"
+"\n"
+"\n"
+"\n"
+"P.S. If you received this mail for no obvious reason, please inform us about it at libris@kb.se!\n"
+"\n"
+msgstr ""
+"Hej %(full_name)s,\n"
+"\n"
+"Klicka på länken nedan för att återställa ditt personliga lösenord:\n"
+"\n"
+"%(password_reset_url)s\n"
+"\n"
+"\n"
+"\n"
+"P.S. Om du inte vet varför du mottagit detta mail, vänligen kontakta kundtjänst på libris@kb.se!\n"
+"\n"
+
+#: xl_auth/user/models.py:83
+#, python-format
+msgid ""
+"<p>Hello %(full_name)s,<br/><br/>Here is the secret link for resetting your personal account "
+"password:<br/><br/><a "
+"href=\"%(password_reset_url)s\">%(password_reset_url)s</a><br/><br/></p><p><small>P.S. If you "
+"received this mail for no obvious reason, please inform us about it at <a "
+"href=\"mailto:libris@kb.se\">libris@kb.se</a>!</small></p>"
+msgstr ""
+"<p>Hej %(full_name)s,<br/><br/>Klicka på länken nedan för att återställa ditt personliga "
+"lösenord:<br/><br/><a "
+"href=\"%(password_reset_url)s\">%(password_reset_url)s</a><br/><br/></p><p><small>P.S. Om du inte"
+" vet varför du mottagit detta mail, vänligen kontakta <a href=\"mailto:libris@kb.se\">Libris "
+"kundtjänst</a>!</small></p>"
 
 #: xl_auth/user/views.py:48
 msgid "Thank you for registering. You can now log in."
