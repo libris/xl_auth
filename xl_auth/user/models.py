@@ -8,10 +8,13 @@ from binascii import hexlify
 from datetime import datetime, timedelta
 from os import urandom
 
+from flask import current_app, url_for
+from flask_babel import lazy_gettext as _
 from flask_login import UserMixin
+from flask_mail import Message
 
 from ..database import Column, Model, SurrogatePK, db, reference_col, relationship
-from ..extensions import bcrypt
+from ..extensions import bcrypt, mail
 
 
 class Role(SurrogatePK, Model):
@@ -37,8 +40,7 @@ class PasswordReset(SurrogatePK, Model):
     __tablename__ = 'password_resets'
     user_id = reference_col('users', nullable=True)
     user = relationship('User', back_populates='password_resets', uselist=False)
-    code = Column(db.String(32), unique=True, nullable=False,
-                  default=lambda: PasswordReset._get_rand_hex_str(32))
+    code = Column(db.String(32), unique=True, nullable=False)
     is_active = Column(db.Boolean(), default=True, nullable=False)
     expires_at = Column(db.DateTime, nullable=False,
                         default=lambda: datetime.utcnow() + timedelta(hours=7 * 24))
@@ -48,7 +50,7 @@ class PasswordReset(SurrogatePK, Model):
 
     def __init__(self, user, **kwargs):
         """Create instance."""
-        db.Model.__init__(self, user=user, **kwargs)
+        db.Model.__init__(self, user=user, code=self._get_rand_hex_str(32), **kwargs)
 
     @staticmethod
     def get_by_email_and_code(email, code):
@@ -56,6 +58,41 @@ class PasswordReset(SurrogatePK, Model):
         user = User.get_by_email(email)
         if user:
             return PasswordReset.query.filter_by(code=code, user=user).first()
+
+    def send_email(self):
+        password_reset_url = url_for('public.reset_password', email=self.user.email,
+                                     code=self.code, _external=True)
+        mail.send(Message(
+            _('Password reset for %(username)s at %(server_name)s', username=self.user.email,
+              server_name=current_app.config['SERVER_NAME']),
+            recipients=[self.user.email],
+            reply_to='libris@kb.se',
+            body=_(
+                'Hello %(full_name)s,'
+                '\n\n'
+                'Here is the secret link for resetting your personal account password:'
+                '\n\n'
+                '%(password_reset_url)s'
+                '\n\n\n\n'
+                'P.S. If you received this mail for no obvious reason, please inform us about it \
+at libris@kb.se!'
+                '\n\n',
+                full_name=self.user.full_name, password_reset_url=password_reset_url),
+            html=_(
+                '<p>'
+                'Hello %(full_name)s,'
+                '<br/><br/>'
+                'Here is the secret link for resetting your personal account password:'
+                '<br/><br/>'
+                '<a href="%(password_reset_url)s">%(password_reset_url)s</a>'
+                '<br/><br/>'
+                '</p>'
+                '<p><small>'
+                'P.S. If you received this mail for no obvious reason, please inform us about it '
+                'at <a href="mailto:libris@kb.se">libris@kb.se</a>!'
+                '</small></p>',
+                full_name=self.user.full_name, password_reset_url=password_reset_url)
+        ))
 
     def __repr__(self):
         """Represent instance as a unique string."""
