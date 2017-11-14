@@ -28,6 +28,8 @@
     ports:
       - 5000:5000
     env:
+      SERVER_NAME: "{{ inventory_hostname }}"
+      PREFERRED_URL_SCHEME: 'https'
       FLASK_DEBUG: 0
       SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
       OAUTH2_PROVIDER_TOKEN_EXPIRES_IN: 3600
