@@ -18,8 +18,8 @@ blueprint = Blueprint('user', __name__, url_prefix='/users', static_folder='../s
 @login_required
 def home():
     """Users landing page."""
-    users_list_active = User.query.filter_by(active=True)
-    users_list_inactive = User.query.filter_by(active=False)
+    users_list_active = User.query.filter_by(is_active=True)
+    users_list_inactive = User.query.filter_by(is_active=False)
 
     return render_template('users/home.html', users_list_active=users_list_active,
                            users_list_inactive=users_list_inactive)
@@ -44,7 +44,7 @@ def register():
         User.create(email=register_user_form.username.data,
                     full_name=register_user_form.full_name.data,
                     password=register_user_form.password.data,
-                    active=True)
+                    is_active=True)
         flash(_('Thank you for registering. You can now log in.'), 'success')
         return redirect(url_for('public.home'))
     else:
@@ -67,7 +67,7 @@ def administer(user_id):
     administer_form = AdministerForm(current_user, user.email, request.form)
     if administer_form.validate_on_submit():
         user.update(full_name=administer_form.full_name.data,
-                    active=administer_form.active.data,
+                    is_active=administer_form.is_active.data,
                     is_admin=administer_form.is_admin.data).save()
         flash(_('Thank you for updating user details for "%(username)s".', username=user.email),
               'success')

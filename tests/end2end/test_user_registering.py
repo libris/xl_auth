@@ -90,7 +90,7 @@ def test_user_sees_error_message_if_passwords_dont_match(superuser, user, testap
 # noinspection PyUnusedLocal
 def test_user_sees_error_message_if_user_already_registered(superuser, user, testapp):
     """Show error if user already registered."""
-    user = UserFactory(active=True)  # A registered user.
+    user = UserFactory(is_active=True)  # A registered user.
     user.save()
     # Goes to homepage
     res = testapp.get('/')

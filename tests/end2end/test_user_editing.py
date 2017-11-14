@@ -27,14 +27,14 @@ def test_superuser_can_administer_existing_user(superuser, testapp):
     form = res.forms['administerForm']
     form['username'] = superuser.email
     form['full_name'] = 'A new name'
-    form['active'].checked = not superuser.active
+    form['is_active'].checked = not superuser.is_active
     # Submits.
     res = form.submit().follow()
     assert res.status_code == 200
     # The user was edited.
     edited_user = User.query.filter(User.email == superuser.email).first()
     assert edited_user.full_name == form['full_name'].value
-    assert edited_user.active == form['active'].checked
+    assert edited_user.is_active == form['is_active'].checked
     assert edited_user.is_admin == form['is_admin'].checked
 
     # The edited user is listed under existing users.
@@ -93,7 +93,7 @@ def test_superuser_sees_error_message_if_username_is_changed_from_administer(sup
     form = res.forms['administerForm']
     form['username'] = 'new.one@domain.com'
     form['full_name'] = superuser.full_name
-    form['active'].checked = superuser.active
+    form['is_active'].checked = superuser.is_active
     form['is_admin'].checked = superuser.is_admin
     # Submits.
     res = form.submit()

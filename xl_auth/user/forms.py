@@ -109,7 +109,7 @@ class AdministerForm(_EditForm):
     """Form for administering user account."""
 
     full_name = full_name
-    active = BooleanField(_('Active'))
+    is_active = BooleanField(_('Active'))
     is_admin = BooleanField(_('Administrator'))
 
     def validate(self):
@@ -128,7 +128,7 @@ class AdministerForm(_EditForm):
         """Apply 'user' attributes as field defaults."""
         self.username.default = user.email
         self.full_name.default = user.full_name
-        self.active.default = user.active
+        self.is_active.default = user.is_active
         self.is_admin.default = user.is_admin
         self.process()
 
