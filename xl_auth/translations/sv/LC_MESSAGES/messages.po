@@ -298,7 +298,7 @@ msgstr "Sigel med databas-ID \"%(collection_id)s\" existerar inte"
 
 #: tests/forms/test_public_login.py:56 xl_auth/public/forms.py:44
 msgid "User not activated"
-msgstr "Användarkontot ej aktiverat"
+msgstr "Användarkontot ej aktiverat; återställ ditt lösenord"
 
 #: tests/forms/test_user_administer.py:32 xl_auth/user/forms.py:78
 msgid "User does not exist"

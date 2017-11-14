@@ -104,7 +104,7 @@ def clean():
 @click.option('-n', '--full-name', default=None, help='Full name for user (default: None)')
 @click.option('-p', '--password', default='password',
               help='Password for user (default: "password")')
-@click.option('--is_active', default=True, is_flag=True, help='Activate account (default: True)')
+@click.option('--is_active', default=False, is_flag=True, help='Activate account (default: False)')
 @click.option('--is-admin', default=False, is_flag=True, help='Create admin user (default: False)')
 @click.option('-f', '--force', default=False, is_flag=True,
               help='Force overwrite existing account (default: False)')
