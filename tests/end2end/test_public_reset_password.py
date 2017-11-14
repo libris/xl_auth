@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Test resetting password."""
+"""Test resetting forgotten password."""
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
@@ -12,8 +12,25 @@ from jinja2 import escape
 from xl_auth.user.models import PasswordReset
 
 
-def test_can_complete_password_reset_flow(password_reset, testapp):
-    """Successfully reset password."""
+def test_can_complete_password_reset_flow(user, testapp):
+    """Successfully request password reset and use the code to change password."""
+    # Goes to homepage.
+    res = testapp.get('/')
+    # Clicks on 'Forgot password'.
+    res = res.click(_('Forgot password?'))
+    # Fills out ForgotPasswordForm.
+    username_with_different_casing = user.email.upper()
+    form = res.forms['forgotPasswordForm']
+    form['username'] = username_with_different_casing
+    # Submits.
+    res = form.submit().follow()
+    assert res.status_code == 200
+
+    # New PasswordReset is added to DB.
+    password_reset = PasswordReset.query.filter_by(user=user).first()
+    assert password_reset.is_active is True
+    assert password_reset.expires_at > (datetime.utcnow() + timedelta(seconds=3600))
+
     # Goes to reset password link.
     res = testapp.get(url_for('public.reset_password', email=password_reset.user.email,
                               code=password_reset.code))
@@ -31,8 +48,26 @@ def test_can_complete_password_reset_flow(password_reset, testapp):
 
 
 # noinspection PyUnusedLocal
+def test_sees_error_message_if_username_does_not_exist(user, testapp):
+    """Show error if username doesn't exist."""
+    # Goes to 'Forgot Password?' page.
+    res = testapp.get(url_for('public.forgot_password'))
+    # Fills out ForgotPasswordForm.
+    form = res.forms['forgotPasswordForm']
+    form['username'] = 'unknown@example.com'
+    # Submits.
+    res = form.submit()
+    # Sees error.
+    assert _('Unknown username/email') in res
+
+    # No PasswordReset is added.
+    password_reset = PasswordReset.query.filter_by(user=user).first()
+    assert password_reset is None
+
+
+# noinspection PyUnusedLocal
 def test_sees_error_message_if_username_does_not_match_exist(user, password_reset, testapp):
-    """Show error if username doesn't match code."""
+    """Show error if username doesn't match code when resetting."""
     assert user != password_reset.user
 
     # Goes to reset password link.
@@ -67,7 +102,7 @@ def test_sees_error_message_if_reset_code_is_expired(password_reset, testapp):
 
 # noinspection PyUnusedLocal
 def test_sees_error_message_if_attempting_to_use_reset_code_twice(password_reset, testapp):
-    """Show error if reset code has aleady been used."""
+    """Show error if reset code has already been used."""
     # Goes to reset password link.
     res = testapp.get(url_for('public.reset_password', email=password_reset.user.email,
                               code=password_reset.code))
