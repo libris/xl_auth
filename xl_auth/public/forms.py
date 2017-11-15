@@ -40,7 +40,7 @@ class LoginForm(FlaskForm):
             self.password.errors.append(_('Invalid password'))
             return False
 
-        if not self.user.active:
+        if not self.user.is_active:
             self.username.errors.append(_('User not activated'))
             return False
 

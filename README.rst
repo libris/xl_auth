@@ -187,6 +187,8 @@ v. 0.6.0
 
 * Added support for resetting forgotten user account passwords
   (`#41 <https://github.com/libris/xl_auth/issues/41>`_)
+* When registering new user accounts, opting in for a password reset email is the preferred way of
+  enabling them to login (`#102 <https://github.com/libris/xl_auth/issues/102>`_)
 
 
 v. 0.5.8

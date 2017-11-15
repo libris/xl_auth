@@ -68,7 +68,7 @@ def test_factory(db):
     assert isinstance(user.permissions, list)
     assert isinstance(user.roles, list)
     assert user.is_admin is False
-    assert user.active is True
+    assert user.is_active is True
     assert user.check_password('myPrecious')
     assert user.last_login_at is None
 

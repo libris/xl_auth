@@ -18,8 +18,8 @@ blueprint = Blueprint('collection', __name__, url_prefix='/collections', static_
 @login_required
 def home():
     """Collections landing page."""
-    collections_list_active = Collection.query.filter_by(active=True)
-    collections_list_inactive = Collection.query.filter_by(active=False)
+    collections_list_active = Collection.query.filter_by(is_active=True)
+    collections_list_inactive = Collection.query.filter_by(is_active=False)
 
     return render_template('collections/home.html', collections_list_active=collections_list_active,
                            collections_list_inactive=collections_list_inactive)
@@ -37,7 +37,7 @@ def register():
         Collection.create(code=register_collection_form.code.data,
                           friendly_name=register_collection_form.friendly_name.data,
                           category=register_collection_form.category.data,
-                          active=True)
+                          is_active=True)
         flash(_('Thank you for registering a new collection.'), 'success')
         return redirect(url_for('collection.home'))
     else:

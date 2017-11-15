@@ -28,6 +28,7 @@ class Config(object):
     WEBPACK_MANIFEST_PATH = 'webpack/manifest.json'
     BABEL_DEFAULT_LOCALE = os.environ.get('BABEL_DEFAULT_LOCALE', 'sv')
     BABEL_DEFAULT_TIMEZONE = 'utc'
+    EMAIL_DEFAULT_FROM = os.environ.get('EMAIL_DEFAULT_FROM', 'noreply@kb.se')
     EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.kb.se')
     EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '25'))
     EMAIL_TIMEOUT = int(os.environ.get('EMAIL_TIMEOUT', '5'))

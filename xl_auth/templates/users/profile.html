@@ -53,7 +53,7 @@ will allow you to create new user accounts and grant registrant/cataloger privil
                 </tr>
                 </thead>
                 <tbody>
-                {% for permission in user.permissions if permission.collection.active %}
+                {% for permission in user.permissions if permission.collection.is_active %}
                     <tr>
                         <td>{{ permission.collection.code }}</td>
                         <td>{{ permission.collection.friendly_name }}</td>

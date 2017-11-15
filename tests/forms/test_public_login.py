@@ -47,7 +47,7 @@ def test_validate_invalid_password(user):
 
 def test_validate_inactive_user(user):
     """Inactive user."""
-    user.active = False
+    user.is_active = False
     user.set_password('example')
     user.save()
     # Correct username and password, but user is not activated.

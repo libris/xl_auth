@@ -68,7 +68,6 @@ class PasswordReset(SurrogatePK, Model):
             subject=_('Password reset for %(username)s at %(server_name)s',
                       username=self.user.email, server_name=service_name),
             mail_to=(self.user.full_name, self.user.email),
-            mail_from=(service_name, 'noreply@kb.se'),
             text=_(
                 'Hello %(full_name)s,'
                 '\n\n'
@@ -113,8 +112,8 @@ class User(UserMixin, SurrogatePK, Model):
     email = Column(db.String(255), unique=True, nullable=False)
     full_name = Column(db.String(255), unique=False, nullable=False)
     password = Column(db.Binary(128), nullable=False)
-    active = Column(db.Boolean(), default=False, nullable=False)
     last_login_at = Column(db.DateTime, default=None)
+    is_active = Column(db.Boolean(), default=False, nullable=False)
     is_admin = Column(db.Boolean(), default=False, nullable=False)
     permissions = relationship('Permission', back_populates='user')
     roles = relationship('Role', back_populates='user')

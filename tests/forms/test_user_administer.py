@@ -16,7 +16,7 @@ def test_validate_success(superuser):
     """Edit user details with success."""
     form = AdministerForm(superuser, superuser.email, username=superuser.email,
                           full_name='My New Name',
-                          active=not superuser.active, is_admin=not superuser.is_admin)
+                          is_active=not superuser.is_active, is_admin=not superuser.is_admin)
 
     assert form.validate() is True
 
@@ -25,7 +25,7 @@ def test_validate_success(superuser):
 def test_validate_username_does_not_exist(db, superuser):
     """Attempt to edit user details with a username that is not registered."""
     form = AdministerForm(superuser, 'missing@nowhere.com', username='missing@nowhere.com',
-                          full_name='Mr Foo', active=choice([True, False]),
+                          full_name='Mr Foo', is_active=choice([True, False]),
                           is_admin=choice([True, False]))
 
     assert form.validate() is False
@@ -36,7 +36,7 @@ def test_validate_modifying_username(superuser):
     """Attempt to edit user by giving it a new username/email."""
     form = AdministerForm(superuser, superuser.email, username='new.address@kb.se',
                           full_name=superuser.full_name,
-                          active=superuser.active, is_admin=superuser.is_admin)
+                          is_active=superuser.is_active, is_admin=superuser.is_admin)
 
     assert form.validate() is False
     assert _('Email cannot be modified') in form.username.errors
@@ -46,7 +46,7 @@ def test_as_regular_user(user):
     """Attempt to use administer form as regular user."""
     form = AdministerForm(user, user.email, username=user.email,
                           full_name=user.full_name,
-                          active=user.active, is_admin=True)
+                          is_active=user.is_active, is_admin=True)
 
     with pytest.raises(ValidationError) as e_info:
         form.validate()

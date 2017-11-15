@@ -12,9 +12,6 @@ from .models import User
 
 username = StringField(_('Email'), validators=[DataRequired(), Email(), Length(min=6, max=255)])
 full_name = StringField(_('Full name'), validators=[DataRequired(), Length(min=3, max=255)])
-password = PasswordField(_('Password'), validators=[DataRequired(), Length(min=6, max=64)])
-confirm = PasswordField(_('Verify password'), validators=[
-    DataRequired(), EqualTo('password', message=_('Passwords must match'))])
 
 
 class RegisterForm(FlaskForm):
@@ -22,8 +19,7 @@ class RegisterForm(FlaskForm):
 
     username = username
     full_name = full_name
-    password = password
-    confirm = confirm
+    send_password_reset_email = BooleanField(_('Send password reset email'), default=True)
 
     def __init__(self, active_user, *args, **kwargs):
         """Create instance."""
@@ -109,7 +105,7 @@ class AdministerForm(_EditForm):
     """Form for administering user account."""
 
     full_name = full_name
-    active = BooleanField(_('Active'))
+    is_active = BooleanField(_('Active'))
     is_admin = BooleanField(_('Administrator'))
 
     def validate(self):
@@ -128,7 +124,7 @@ class AdministerForm(_EditForm):
         """Apply 'user' attributes as field defaults."""
         self.username.default = user.email
         self.full_name.default = user.full_name
-        self.active.default = user.active
+        self.is_active.default = user.is_active
         self.is_admin.default = user.is_admin
         self.process()
 
@@ -136,8 +132,9 @@ class AdministerForm(_EditForm):
 class ChangePasswordForm(_EditForm):
     """Change password form."""
 
-    password = password
-    confirm = confirm
+    password = PasswordField(_('Password'), validators=[DataRequired(), Length(min=6, max=64)])
+    confirm = PasswordField(_('Verify password'), validators=[
+        DataRequired(), EqualTo('password', message=_('Passwords must match'))])
 
     def validate(self):
         """Validate the form."""

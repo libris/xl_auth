@@ -17,7 +17,7 @@ class Collection(SurrogatePK, Model):
     code = Column(db.String(255), unique=True, nullable=False)
     friendly_name = Column(db.String(255), unique=False, nullable=False)
     category = Column(db.String(255), nullable=False)
-    active = Column(db.Boolean(), default=True)
+    is_active = Column(db.Boolean(), default=True)
     permissions = relationship('Permission', back_populates='collection')
     replaces = Column(db.String(255))
     replaced_by = Column(db.String(255))

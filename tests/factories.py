@@ -33,7 +33,7 @@ class UserFactory(BaseFactory):
     email = Sequence(lambda _: 'user{0}@example.com'.format(_))
     full_name = Sequence(lambda _: 'full_name{0}'.format(_))
     password = PostGenerationMethodCall('set_password', 'example')
-    active = True
+    is_active = True
 
     class Meta:
         """Factory configuration."""
@@ -47,7 +47,7 @@ class SuperUserFactory(BaseFactory):
     email = Sequence(lambda _: 'admin{0}@example.com'.format(_))
     full_name = Sequence(lambda _: 'full_name{0}'.format(_))
     password = PostGenerationMethodCall('set_password', 'example')
-    active = True
+    is_active = True
     is_admin = True
 
     class Meta:
@@ -73,7 +73,7 @@ class CollectionFactory(BaseFactory):
     code = Sequence(lambda _: 'c{0}'.format(_))
     friendly_name = Sequence(lambda _: 'friendly_name{0}'.format(_))
     category = choice(['bibliography', 'library', 'uncategorized'])
-    active = True
+    is_active = True
 
     class Meta:
         """Factory configuration."""
