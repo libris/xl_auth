@@ -77,6 +77,8 @@ def reset_password(email, code):
         password_reset.is_active = False
         password_reset.save()
         password_reset.user.set_password(reset_password_form.password.data)
+        if not password_reset.user.is_active:
+            password_reset.user.is_active = True
         password_reset.user.save()
         flash(_('Password for "%(username)s" has been reset.',
                 username=reset_password_form.username.data), 'success')

@@ -12,9 +12,6 @@ from .models import User
 
 username = StringField(_('Email'), validators=[DataRequired(), Email(), Length(min=6, max=255)])
 full_name = StringField(_('Full name'), validators=[DataRequired(), Length(min=3, max=255)])
-password = PasswordField(_('Password'), validators=[DataRequired(), Length(min=6, max=64)])
-confirm = PasswordField(_('Verify password'), validators=[
-    DataRequired(), EqualTo('password', message=_('Passwords must match'))])
 
 
 class RegisterForm(FlaskForm):
@@ -22,8 +19,7 @@ class RegisterForm(FlaskForm):
 
     username = username
     full_name = full_name
-    password = password
-    confirm = confirm
+    send_password_reset_email = BooleanField(_('Send password reset email'), default=True)
 
     def __init__(self, active_user, *args, **kwargs):
         """Create instance."""
@@ -136,8 +132,9 @@ class AdministerForm(_EditForm):
 class ChangePasswordForm(_EditForm):
     """Change password form."""
 
-    password = password
-    confirm = confirm
+    password = PasswordField(_('Password'), validators=[DataRequired(), Length(min=6, max=64)])
+    confirm = PasswordField(_('Verify password'), validators=[
+        DataRequired(), EqualTo('password', message=_('Passwords must match'))])
 
     def validate(self):
         """Validate the form."""

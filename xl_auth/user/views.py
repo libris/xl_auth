@@ -9,7 +9,7 @@ from flask_login import current_user, login_required
 
 from ..utils import flash_errors
 from .forms import AdministerForm, ChangePasswordForm, EditDetailsForm, RegisterForm
-from .models import User
+from .models import PasswordReset, User
 
 blueprint = Blueprint('user', __name__, url_prefix='/users', static_folder='../static')
 
@@ -41,11 +41,18 @@ def register():
 
     register_user_form = RegisterForm(current_user, request.form)
     if register_user_form.validate_on_submit():
-        User.create(email=register_user_form.username.data,
-                    full_name=register_user_form.full_name.data,
-                    password=register_user_form.password.data,
-                    is_active=True)
-        flash(_('Thank you for registering. You can now log in.'), 'success')
+        user = User(email=register_user_form.username.data,
+                    full_name=register_user_form.full_name.data)
+        if register_user_form.send_password_reset_email.data:
+            password_reset = PasswordReset(user)
+            password_reset.send_email()
+            user.save()
+            password_reset.save()
+            flash(_('User "%(username)s" registered and emailed with a password reset link.',
+                    username=user.email), 'success')
+        else:
+            user.save()
+            flash(_('User "%(username)s" registered.', username=user.email), 'success')
         return redirect(url_for('public.home'))
     else:
         flash_errors(register_user_form)

@@ -68,7 +68,6 @@ class PasswordReset(SurrogatePK, Model):
             subject=_('Password reset for %(username)s at %(server_name)s',
                       username=self.user.email, server_name=service_name),
             mail_to=(self.user.full_name, self.user.email),
-            mail_from=(service_name, 'noreply@kb.se'),
             text=_(
                 'Hello %(full_name)s,'
                 '\n\n'

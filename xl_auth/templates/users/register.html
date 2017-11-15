@@ -15,12 +15,8 @@
                 {{ register_user_form.full_name(placeholder=_('First Last'), class_="form-control") }}
             </div>
             <div class="form-group">
-                {{ register_user_form.password.label }}
-                {{ register_user_form.password(placeholder=_('Password'), class_="form-control") }}
-            </div>
-            <div class="form-group">
-                {{ register_user_form.confirm.label }}
-                {{ register_user_form.confirm(placeholder=_('Password (again)'), class_="form-control") }}
+                {{ register_user_form.send_password_reset_email(checked=True) }}
+                {{ register_user_form.send_password_reset_email.label }}
             </div>
             <p><input class="btn btn-default btn-submit" type="submit" value="Register"></p>
         </form>

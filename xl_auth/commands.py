@@ -453,7 +453,8 @@ def import_data(verbose, admin_email, wipe_permissions):
             if collection.is_active != details['is_active']:
                 collection.is_active = details['is_active']
                 collection.save()
-                print('corrected collection %r: is_active=%s' % (collection.code, collection.is_active))
+                print('corrected collection %r: is_active=%s'
+                      % (collection.code, collection.is_active))
         else:
             collection = Collection.create(**details)
             collection.save()
