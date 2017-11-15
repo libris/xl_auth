@@ -189,8 +189,10 @@ def urls(url, order):
 @click.option('-v', '--verbose', default=False, is_flag=True, help='Increase verbosity')
 @click.option('--admin-email', required=True, default=None, help='Email for admin')
 @click.option('--wipe-permissions', default=False, is_flag=True, help='Wipe outdated permissions')
+@click.option('--send-password-resets', default=False, is_flag=True,
+              help='Email password resets to new users')
 @with_appcontext
-def import_data(verbose, admin_email, wipe_permissions):
+def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
     """Read data from Voyager dump and BibDB API to create DB entities.
 
     Creates:
@@ -205,7 +207,7 @@ def import_data(verbose, admin_email, wipe_permissions):
     from .collection.models import Collection
     from .permission.models import Permission
     from .user.forms import RegisterForm as UserRegisterForm
-    from .user.models import User
+    from .user.models import PasswordReset, User
 
     def _get_collection_details_from_bibdb(code):
         raw_bibdb_api_data = json.loads(requests.get(
@@ -259,7 +261,7 @@ def import_data(verbose, admin_email, wipe_permissions):
 
     def _get_voyager_data():
         raw_voyager_sigels_and_locations = requests.get(
-            'https://github.com/libris/xl_auth/files/1437869/171102_KB--sigel_locations.txt'
+            'https://github.com/libris/xl_auth/files/1474613/171115_KB--sigel_locations.txt'
         ).content.decode('latin-1').splitlines()
         voyager_sigels_and_collections = dict()
         voyager_main_sigels, voyager_location_sigels = set(), set()
@@ -479,8 +481,17 @@ def import_data(verbose, admin_email, wipe_permissions):
 
         user = User.query.filter_by(email=email).first()
         if not user:
-            user = User.create(email=email, full_name=full_name, is_active=False)
-            user.save()
+            user = User(email=email, full_name=full_name, is_active=False)
+            if send_password_resets:  # Requires SERVER_NAME and PREFERRED_URL_SCHEME env vars.
+                with current_app.test_request_context():
+                    password_reset = PasswordReset(user)
+                    password_reset.send_email()
+                    user.save()
+                    password_reset.save()
+                print('Added inactive user %r (password reset email sent).' % email)
+            else:
+                user.save()
+                print('Added inactive user %r (no password reset).' % email)
 
     old_permissions = Permission.query.all()
     current_permissions, new_permissions, removed_permissions = [], [], []
