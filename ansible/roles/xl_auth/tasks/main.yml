@@ -29,7 +29,7 @@
       - 5000:5000
     env:
       SERVER_NAME: "{{ inventory_hostname }}"
-      PREFERRED_URL_SCHEME: 'https'
+      PREFERRED_URL_SCHEME: https
       FLASK_DEBUG: 0
       SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
       OAUTH2_PROVIDER_TOKEN_EXPIRES_IN: 3600
@@ -81,6 +81,8 @@
     links:
       - postgres
     env:
+      SERVER_NAME: "{{ inventory_hostname }}"
+      PREFERRED_URL_SCHEME: https
       FLASK_DEBUG: 0
       SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
   when: xl_auth_force_import or start_xl_auth.changed
