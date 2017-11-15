@@ -8,7 +8,7 @@ import datetime as dt
 import pytest
 
 from xl_auth.permission.models import Permission
-from xl_auth.user.models import Role, User
+from xl_auth.user.models import PasswordReset, Role, User
 
 from ..factories import UserFactory
 
@@ -68,7 +68,7 @@ def test_factory(db):
     assert isinstance(user.permissions, list)
     assert isinstance(user.roles, list)
     assert user.is_admin is False
-    assert user.active is True
+    assert user.is_active is True
     assert user.check_password('myPrecious')
     assert user.last_login_at is None
 
@@ -137,3 +137,32 @@ def test_roles():
     user.roles.append(role)
     user.save()
     assert role in user.roles
+
+
+@pytest.mark.usefixtures('db')
+def test_adding_password_reset(collection):
+    """Associate user with a password reset code."""
+    user = UserFactory()
+    user.save()
+    password_reset = PasswordReset(user, is_active=False)
+    password_reset.save()
+
+    assert password_reset in user.password_resets
+
+    other_password_reset = PasswordReset(user)
+    other_password_reset.save()
+    assert other_password_reset in user.password_resets
+
+    assert user.password_resets == [password_reset, other_password_reset]
+
+
+@pytest.mark.usefixtures('db')
+def test_removing_password_reset(collection):
+    """Remove password reset from a user."""
+    user = UserFactory()
+    user.save()
+    password_reset = PasswordReset(user)
+    password_reset.save()
+    password_reset.delete()
+
+    assert password_reset not in user.password_resets

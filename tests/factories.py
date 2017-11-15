@@ -14,7 +14,7 @@ from xl_auth.oauth.client.models import Client
 from xl_auth.oauth.grant.models import Grant
 from xl_auth.oauth.token.models import Token
 from xl_auth.permission.models import Permission
-from xl_auth.user.models import User
+from xl_auth.user.models import PasswordReset, User
 
 
 class BaseFactory(SQLAlchemyModelFactory):
@@ -33,7 +33,7 @@ class UserFactory(BaseFactory):
     email = Sequence(lambda _: 'user{0}@example.com'.format(_))
     full_name = Sequence(lambda _: 'full_name{0}'.format(_))
     password = PostGenerationMethodCall('set_password', 'example')
-    active = True
+    is_active = True
 
     class Meta:
         """Factory configuration."""
@@ -47,7 +47,7 @@ class SuperUserFactory(BaseFactory):
     email = Sequence(lambda _: 'admin{0}@example.com'.format(_))
     full_name = Sequence(lambda _: 'full_name{0}'.format(_))
     password = PostGenerationMethodCall('set_password', 'example')
-    active = True
+    is_active = True
     is_admin = True
 
     class Meta:
@@ -56,13 +56,24 @@ class SuperUserFactory(BaseFactory):
         model = User
 
 
+class PasswordResetFactory(BaseFactory):
+    """PasswordReset factory."""
+
+    user = LazyFunction(UserFactory)
+
+    class Meta:
+        """Factory configuration."""
+
+        model = PasswordReset
+
+
 class CollectionFactory(BaseFactory):
     """Collection factory."""
 
     code = Sequence(lambda _: 'c{0}'.format(_))
     friendly_name = Sequence(lambda _: 'friendly_name{0}'.format(_))
     category = choice(['bibliography', 'library', 'uncategorized'])
-    active = True
+    is_active = True
 
     class Meta:
         """Factory configuration."""

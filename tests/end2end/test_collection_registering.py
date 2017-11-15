@@ -130,7 +130,7 @@ def test_superuser_sees_error_message_if_collection_already_registered(superuser
                                                                        collection,
                                                                        testapp):
     """Show error if collection already registered."""
-    collection = CollectionFactory(active=True)  # A registered collection.
+    collection = CollectionFactory(is_active=True)  # A registered collection.
     collection.save()
     # Goes to homepage
     res = testapp.get('/')

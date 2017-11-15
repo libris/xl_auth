@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2017-11-09 11:12+0100\n"
+"POT-Creation-Date: 2017-11-15 11:47+0100\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -34,7 +34,7 @@ msgstr "Kategori saknas"
 msgid "Code"
 msgstr "Sigel"
 
-#: tests/end2end/test_collection_editing.py:80 tests/forms/test_collection.py:77
+#: tests/end2end/test_collection_editing.py:80 tests/forms/test_collection_edit.py:38
 #: xl_auth/collection/forms.py:63
 msgid "Code cannot be modified"
 msgstr "Koden kan inte ändras"
@@ -48,12 +48,13 @@ msgstr "Namn"
 
 #: tests/end2end/test_collection_editing.py:102 tests/end2end/test_collection_registering.py:79
 #: tests/end2end/test_collection_registering.py:102 tests/end2end/test_user_editing.py:146
-#: tests/forms/test_client.py:48 tests/forms/test_client.py:71 tests/forms/test_client.py:94
-#: tests/forms/test_client.py:105 tests/forms/test_client.py:141 tests/forms/test_client.py:164
-#: tests/forms/test_client.py:187 tests/forms/test_client.py:198 tests/forms/test_collection.py:21
-#: tests/forms/test_collection.py:38 tests/forms/test_permission.py:31
-#: tests/forms/test_permission.py:39 tests/forms/test_permission.py:47
-#: tests/forms/test_permission.py:55
+#: tests/forms/test_client_edit.py:46 tests/forms/test_client_edit.py:69
+#: tests/forms/test_client_edit.py:92 tests/forms/test_client_edit.py:103
+#: tests/forms/test_client_register.py:48 tests/forms/test_client_register.py:71
+#: tests/forms/test_client_register.py:94 tests/forms/test_client_register.py:105
+#: tests/forms/test_collection_edit.py:20 tests/forms/test_collection_register.py:21
+#: tests/forms/test_permission_edit.py:31 tests/forms/test_permission_edit.py:39
+#: tests/forms/test_permission_register.py:18 tests/forms/test_permission_register.py:26
 msgid "This field is required."
 msgstr "Det här fältet är obligatoriskt."
 
@@ -64,7 +65,7 @@ msgid "Category"
 msgstr "Kategori"
 
 #: tests/end2end/test_collection_editing.py:124 tests/end2end/test_collection_registering.py:125
-#: tests/forms/test_collection.py:104 tests/forms/test_collection.py:113
+#: tests/forms/test_collection_edit.py:56 tests/forms/test_collection_register.py:68
 msgid "Not a valid choice"
 msgstr "Inte ett giltigt val"
 
@@ -85,8 +86,8 @@ msgstr "Ändra"
 msgid "New Collection"
 msgstr "Ny sigel"
 
-#: tests/end2end/test_collection_registering.py:153 tests/forms/test_collection.py:47
-#: tests/forms/test_collection.py:59 xl_auth/collection/forms.py:46
+#: tests/end2end/test_collection_registering.py:153 tests/forms/test_collection_register.py:39
+#: tests/forms/test_collection_register.py:50 xl_auth/collection/forms.py:46
 #, python-format
 msgid "Code \"%(code)s\" already registered"
 msgstr "Koden \"%(code)s\" är redan registrerad"
@@ -128,8 +129,8 @@ msgid "Updated permissions for \"%(username)s\" on collection \"%(code)s\"."
 msgstr "Behörighet uppdaterad för \"%(username)s\" på sigel \"%(code)s\"."
 
 #: tests/end2end/test_permission_editing.py:75 tests/end2end/test_permission_registering.py:69
-#: tests/forms/test_permission.py:64 tests/forms/test_permission.py:77 xl_auth/permission/forms.py:64
-#: xl_auth/permission/forms.py:114
+#: tests/forms/test_permission_edit.py:50 tests/forms/test_permission_register.py:35
+#: xl_auth/permission/forms.py:64 xl_auth/permission/forms.py:114
 #, python-format
 msgid "Permissions for user \"%(username)s\" on collection \"%(code)s\" already registered"
 msgstr "En behörighet för användare \"%(username)s\" på sigel \"%(code)s\" finns redan registrerad"
@@ -144,22 +145,48 @@ msgstr "Lägg till behörighet"
 msgid "Added permissions for \"%(username)s\" on collection \"%(code)s\"."
 msgstr "Behörighet tillagd för användare \"%(username)s\" på sigel \"%(code)s\"."
 
-#: tests/end2end/test_public_logging_in.py:72 xl_auth/public/views.py:55
+#: tests/end2end/test_public_logging_in.py:72 xl_auth/public/views.py:98
 msgid "You are logged out."
 msgstr "Du är utloggad."
 
-#: tests/end2end/test_public_logging_in.py:86 tests/forms/test_public.py:45 xl_auth/public/forms.py:38
+#: tests/end2end/test_public_logging_in.py:86 tests/forms/test_public_login.py:45
+#: xl_auth/public/forms.py:40
 msgid "Invalid password"
 msgstr "Felaktigt lösenord"
 
-#: tests/end2end/test_public_logging_in.py:101 tests/forms/test_public.py:35 xl_auth/public/forms.py:34
+#: tests/end2end/test_public_logging_in.py:101 tests/end2end/test_public_reset_password.py:70
+#: tests/forms/test_public_forgot_password.py:17 tests/forms/test_public_login.py:35
+#: xl_auth/public/forms.py:36 xl_auth/public/forms.py:66
 msgid "Unknown username/email"
 msgstr "Okänd epost/användarnamn"
 
+#: tests/end2end/test_public_reset_password.py:25 xl_auth/templates/public/home.html:45
+msgid "Forgot password?"
+msgstr "Glömt ditt lösenord?"
+
+#: tests/end2end/test_public_reset_password.py:91 tests/forms/test_public_reset_password.py:20
+#: xl_auth/public/forms.py:101
+#, python-format
+msgid "Reset code \"%(code)s\" does not exit"
+msgstr "Återställningsnyckel \"%(code)s\" finns inte"
+
+#: tests/end2end/test_public_reset_password.py:109 tests/forms/test_public_reset_password.py:32
+#: xl_auth/public/forms.py:92
+#, python-format
+msgid "Reset code \"%(code)s\" expired at %(isoformat)s"
+msgstr "Giltighetstiden för återställningsnyckel \"%(code)s\" har gått ut (%(isoformat)s)"
+
+#: tests/end2end/test_public_reset_password.py:133 tests/forms/test_public_reset_password.py:44
+#: xl_auth/public/forms.py:97
+#, python-format
+msgid "Reset code \"%(code)s\" already used (%(isoformat)s)"
+msgstr "Återställningsnyckel \"%(code)s\" har redan förbrukats (%(isoformat)s)"
+
 #: tests/end2end/test_user_editing.py:23 tests/end2end/test_user_editing.py:62
-#: tests/end2end/test_user_registering.py:27 tests/end2end/test_user_registering.py:56
-#: xl_auth/templates/collections/home.html:24 xl_auth/templates/collections/home.html:69
-#: xl_auth/templates/nav.html:27 xl_auth/templates/users/home.html:4
+#: tests/end2end/test_user_registering.py:26 tests/end2end/test_user_registering.py:58
+#: tests/end2end/test_user_registering.py:91 xl_auth/templates/collections/home.html:24
+#: xl_auth/templates/collections/home.html:69 xl_auth/templates/nav.html:27
+#: xl_auth/templates/users/home.html:4
 msgid "Users"
 msgstr "Användare"
 
@@ -180,13 +207,14 @@ msgid "No"
 msgstr "Nej"
 
 #: tests/end2end/test_user_editing.py:101 tests/end2end/test_user_editing.py:125
-#: xl_auth/templates/users/home.html:17 xl_auth/templates/users/home.html:62 xl_auth/user/forms.py:13
+#: xl_auth/public/forms.py:53 xl_auth/public/forms.py:74 xl_auth/templates/users/home.html:17
+#: xl_auth/templates/users/home.html:62 xl_auth/user/forms.py:13
 msgid "Email"
 msgstr "Epost"
 
 #: tests/end2end/test_user_editing.py:101 tests/end2end/test_user_editing.py:125
-#: tests/forms/test_user.py:95 tests/forms/test_user.py:123 tests/forms/test_user.py:143
-#: xl_auth/user/forms.py:67
+#: tests/forms/test_user_administer.py:42 tests/forms/test_user_change_password.py:19
+#: tests/forms/test_user_edit_details.py:25 xl_auth/user/forms.py:63
 msgid "Email cannot be modified"
 msgstr "Epost/användarnamn går inte att ändra"
 
@@ -195,8 +223,9 @@ msgid "Full name"
 msgstr "Fullständigt namn"
 
 #: tests/end2end/test_user_editing.py:164 tests/end2end/test_user_editing.py:168
-#: tests/forms/test_permission.py:88 tests/forms/test_permission.py:99 xl_auth/permission/forms.py:38
-#: xl_auth/user/views.py:65 xl_auth/user/views.py:91 xl_auth/user/views.py:119
+#: tests/forms/test_permission_edit.py:62 tests/forms/test_permission_register.py:46
+#: xl_auth/permission/forms.py:38 xl_auth/user/views.py:71 xl_auth/user/views.py:97
+#: xl_auth/user/views.py:125
 #, python-format
 msgid "User ID \"%(user_id)s\" does not exist"
 msgstr "Användare med databas-ID \"%(user_id)s\" existerar inte"
@@ -211,71 +240,71 @@ msgstr "Byt lösenord"
 msgid "Welcome"
 msgstr "Välkommen"
 
-#: tests/end2end/test_user_registering.py:29 xl_auth/templates/users/home.html:11
+#: tests/end2end/test_user_registering.py:28 tests/end2end/test_user_registering.py:60
+#: xl_auth/templates/users/home.html:11
 msgid "New User"
 msgstr "Ny användare"
 
-#: tests/end2end/test_user_registering.py:87 xl_auth/user/forms.py:17
-msgid "Passwords must match"
-msgstr "Lösenorden måste stämma överens"
-
-#: tests/end2end/test_user_registering.py:114 tests/forms/test_user.py:42 tests/forms/test_user.py:53
-#: xl_auth/user/forms.py:47
+#: tests/end2end/test_user_registering.py:122 tests/forms/test_user_register.py:36
+#: tests/forms/test_user_register.py:46 xl_auth/user/forms.py:43
 msgid "Email already registered"
 msgstr "Epost-adressen är redan registrerad"
 
-#: tests/forms/test_client.py:25 tests/forms/test_client.py:118 tests/forms/test_collection.py:124
-#: tests/forms/test_collection.py:135 tests/forms/test_permission.py:144
-#: tests/forms/test_permission.py:174 tests/forms/test_user.py:63 tests/forms/test_user.py:106
-#: tests/forms/test_user.py:132 tests/forms/test_user.py:169 xl_auth/collection/forms.py:41
-#: xl_auth/collection/forms.py:73 xl_auth/oauth/client/forms.py:40 xl_auth/oauth/client/forms.py:67
-#: xl_auth/permission/forms.py:59 xl_auth/permission/forms.py:100 xl_auth/user/forms.py:44
-#: xl_auth/user/forms.py:97 xl_auth/user/forms.py:123 xl_auth/user/forms.py:150
+#: tests/forms/test_client_edit.py:23 tests/forms/test_client_register.py:25
+#: tests/forms/test_collection_edit.py:67 tests/forms/test_collection_register.py:79
+#: tests/forms/test_permission_edit.py:86 tests/forms/test_permission_register.py:80
+#: tests/forms/test_user_administer.py:53 tests/forms/test_user_change_password.py:45
+#: tests/forms/test_user_edit_details.py:34 tests/forms/test_user_register.py:55
+#: xl_auth/collection/forms.py:41 xl_auth/collection/forms.py:73 xl_auth/oauth/client/forms.py:40
+#: xl_auth/oauth/client/forms.py:67 xl_auth/permission/forms.py:59 xl_auth/permission/forms.py:100
+#: xl_auth/user/forms.py:40 xl_auth/user/forms.py:93 xl_auth/user/forms.py:119
+#: xl_auth/user/forms.py:147
 msgid "You do not have sufficient privileges for this operation."
 msgstr "Du har inte tillräcklig behörighet för att utföra denna operation."
 
-#: tests/forms/test_client.py:60 tests/forms/test_client.py:153
+#: tests/forms/test_client_edit.py:58 tests/forms/test_client_register.py:60
 msgid "Field must be between 3 and 64 characters long."
 msgstr "Fältet måste vara mellan 3 och 64 tecken långt."
 
-#: tests/forms/test_client.py:83 tests/forms/test_client.py:176
+#: tests/forms/test_client_edit.py:81 tests/forms/test_client_register.py:83
 msgid "Field must be between 3 and 350 characters long."
 msgstr "Fältet måste vara mellan 3 och 350 tecken långt."
 
-#: tests/forms/test_collection.py:30
-msgid "Field must be between 1 and 5 characters long."
-msgstr "Fältet måste vara mellan 1 och 5 tecken långt."
-
-#: tests/forms/test_collection.py:68 xl_auth/collection/forms.py:77
+#: tests/forms/test_collection_edit.py:29 xl_auth/collection/forms.py:77
 msgid "Code does not exist"
 msgstr "Koden existerar ej"
 
-#: tests/forms/test_collection.py:86 tests/forms/test_collection.py:95
+#: tests/forms/test_collection_edit.py:47 tests/forms/test_collection_register.py:59
 msgid "Field must be between 2 and 255 characters long."
 msgstr "Fältet måste vara mellan 2 och 255 tecken långt."
 
-#: tests/forms/test_permission.py:22 xl_auth/permission/forms.py:104 xl_auth/permission/views.py:61
-#: xl_auth/permission/views.py:87
+#: tests/forms/test_collection_register.py:30
+msgid "Field must be between 1 and 5 characters long."
+msgstr "Fältet måste vara mellan 1 och 5 tecken långt."
+
+#: tests/forms/test_permission_edit.py:22 xl_auth/permission/forms.py:104
+#: xl_auth/permission/views.py:61 xl_auth/permission/views.py:87
 #, python-format
 msgid "Permission ID \"%(permission_id)s\" does not exist"
 msgstr "Behörighet med databas-ID \"%(permission_id)s\" existerar inte"
 
-#: tests/forms/test_permission.py:109 tests/forms/test_permission.py:120 xl_auth/permission/forms.py:45
+#: tests/forms/test_permission_edit.py:73 tests/forms/test_permission_register.py:56
+#: xl_auth/permission/forms.py:45
 #, python-format
 msgid "Collection ID \"%(collection_id)s\" does not exist"
 msgstr "Sigel med databas-ID \"%(collection_id)s\" existerar inte"
 
-#: tests/forms/test_public.py:56 xl_auth/public/forms.py:42
+#: tests/forms/test_public_login.py:56 xl_auth/public/forms.py:44
 msgid "User not activated"
-msgstr "Användarkontot ej aktiverat"
+msgstr "Användarkontot ej aktiverat; återställ ditt lösenord"
 
-#: tests/forms/test_user.py:33
-msgid "Field must be between 3 and 255 characters long."
-msgstr "Fältet måste vara mellan 3 och 255 tecken långt."
-
-#: tests/forms/test_user.py:85 xl_auth/user/forms.py:78
+#: tests/forms/test_user_administer.py:32 xl_auth/user/forms.py:74
 msgid "User does not exist"
 msgstr "Användaren existerar inte"
+
+#: tests/forms/test_user_register.py:28
+msgid "Field must be between 3 and 255 characters long."
+msgstr "Fältet måste vara mellan 3 och 255 tecken långt."
 
 #: tests/models/test_collection.py:97 xl_auth/collection/models.py:40
 #, python-format
@@ -382,17 +411,37 @@ msgstr "Katalogiseringsadmin"
 msgid "Permission"
 msgstr "Behörighet"
 
-#: xl_auth/public/forms.py:17 xl_auth/templates/public/home.html:39
+#: xl_auth/public/forms.py:19 xl_auth/templates/public/home.html:39
 msgid "Username"
 msgstr "Användarnamn"
 
-#: xl_auth/public/forms.py:18 xl_auth/templates/public/home.html:41 xl_auth/user/forms.py:15
+#: xl_auth/public/forms.py:20 xl_auth/public/forms.py:75 xl_auth/templates/public/home.html:41
+#: xl_auth/templates/public/reset_password.html:16 xl_auth/templates/users/change_password.html:15
+#: xl_auth/user/forms.py:135
 msgid "Password"
 msgstr "Lösenord"
+
+#: xl_auth/public/forms.py:76 xl_auth/user/forms.py:136
+msgid "Verify password"
+msgstr "Upprepa lösenord"
+
+#: xl_auth/public/forms.py:78 xl_auth/user/forms.py:137
+msgid "Passwords must match"
+msgstr "Lösenorden måste stämma överens"
 
 #: xl_auth/public/views.py:40
 msgid "You are logged in."
 msgstr "Du har loggat in."
+
+#: xl_auth/public/views.py:61
+#, python-format
+msgid "Password reset link sent to %(email)s."
+msgstr "Återställningslänk skickad till %(email)s."
+
+#: xl_auth/public/views.py:83
+#, python-format
+msgid "Password for \"%(username)s\" has been reset."
+msgstr "Lösenordet för \"%(username)s\" har återställts."
 
 #: xl_auth/templates/401.html:4
 msgid "Unauthorized"
@@ -440,8 +489,9 @@ msgid "Edit Existing Collection"
 msgstr "Ändra befintlig sigel"
 
 #: xl_auth/templates/collections/edit.html:29 xl_auth/templates/oauth/clients/edit.html:44
-#: xl_auth/templates/permissions/edit.html:35 xl_auth/templates/users/administer.html:25
-#: xl_auth/templates/users/change_password.html:21 xl_auth/templates/users/edit_details.html:17
+#: xl_auth/templates/permissions/edit.html:35 xl_auth/templates/public/reset_password.html:22
+#: xl_auth/templates/users/administer.html:25 xl_auth/templates/users/change_password.html:21
+#: xl_auth/templates/users/edit_details.html:17
 msgid "Save"
 msgstr "Spara"
 
@@ -611,6 +661,19 @@ msgstr ""
 "href=\"https://github.com/libris/xl_auth/releases\">release-översikten</a> på GitHub för info om "
 "ändringar mellan olika versioner."
 
+#: xl_auth/templates/public/forgot_password.html:5
+msgid "Request Password Reset"
+msgstr "Begär nyckel för lösenordsåterställning"
+
+#: xl_auth/templates/public/forgot_password.html:11 xl_auth/templates/public/home.html:40
+#: xl_auth/templates/users/register.html:11
+msgid "user@example.com"
+msgstr "namn@organisation.se"
+
+#: xl_auth/templates/public/forgot_password.html:14
+msgid "Send activation code to my email"
+msgstr "Maila min återtällningsnyckel"
+
 #: xl_auth/templates/public/home.html:8
 msgid "Welcome to xl_auth"
 msgstr "Välkommen till Libris Login"
@@ -627,29 +690,37 @@ msgstr "​Se mail från kundservice för instruktioner."
 msgid "Log in"
 msgstr "Logga in"
 
-#: xl_auth/templates/public/home.html:50
+#: xl_auth/templates/public/home.html:53
 msgid "The Libris blog"
 msgstr "Librisbloggen"
 
-#: xl_auth/templates/public/home.html:51
+#: xl_auth/templates/public/home.html:54
 msgid "Read the latest news about the Libris collaboration."
 msgstr "Läs senaste nytt om Libris-samarbetet."
 
-#: xl_auth/templates/public/home.html:52
+#: xl_auth/templates/public/home.html:55
 msgid "Go to the blog"
 msgstr "Gå till bloggen"
 
-#: xl_auth/templates/public/home.html:55
+#: xl_auth/templates/public/home.html:58
 msgid "Support forum"
 msgstr "Supportforum"
 
-#: xl_auth/templates/public/home.html:56
+#: xl_auth/templates/public/home.html:59
 msgid "Get help, ask questions and report errors."
 msgstr "Få hjälp, ställ frågor och rapportera fel."
 
-#: xl_auth/templates/public/home.html:57
+#: xl_auth/templates/public/home.html:60
 msgid "Go to kundo"
 msgstr "Gå till kundo"
+
+#: xl_auth/templates/public/reset_password.html:5
+msgid "Reset Password"
+msgstr "Återställ lösenord"
+
+#: xl_auth/templates/public/reset_password.html:20 xl_auth/templates/users/change_password.html:19
+msgid "Password (again)"
+msgstr "Lösenord (igen)"
 
 #: xl_auth/templates/users/administer.html:5 xl_auth/templates/users/edit_details.html:5
 msgid "Edit User Details"
@@ -716,28 +787,84 @@ msgstr ""
 msgid "Register New User"
 msgstr "Registrera ny användare"
 
-#: xl_auth/user/forms.py:16
-msgid "Verify password"
-msgstr "Upprepa lösenord"
+#: xl_auth/templates/users/register.html:15
+msgid "First Last"
+msgstr "Förnamn Efternamn"
 
-#: xl_auth/user/forms.py:112
+#: xl_auth/user/forms.py:22
+msgid "Send password reset email"
+msgstr "Maila ut lösenordsåterställningslänk"
+
+#: xl_auth/user/forms.py:108
 msgid "Active"
 msgstr "Aktiv"
 
-#: xl_auth/user/forms.py:113
+#: xl_auth/user/forms.py:109
 msgid "Administrator"
 msgstr "Administratör"
 
-#: xl_auth/user/views.py:49
-msgid "Thank you for registering. You can now log in."
-msgstr "Tack för din registrering. Du kan nu logga in."
+#: xl_auth/user/models.py:68
+#, python-format
+msgid "Password reset for %(username)s at %(server_name)s"
+msgstr "Lösenordsåterställning för %(username)s (%(server_name)s)"
 
-#: xl_auth/user/views.py:73 xl_auth/user/views.py:97
+#: xl_auth/user/models.py:71
+#, python-format
+msgid ""
+"Hello %(full_name)s,\n"
+"\n"
+"Here is the secret link for resetting your personal account password:\n"
+"\n"
+"%(password_reset_url)s\n"
+"\n"
+"\n"
+"\n"
+"P.S. If you received this mail for no obvious reason, please inform us about it at libris@kb.se!\n"
+"\n"
+msgstr ""
+"Hej %(full_name)s,\n"
+"\n"
+"Klicka på länken nedan för att återställa ditt personliga lösenord:\n"
+"\n"
+"%(password_reset_url)s\n"
+"\n"
+"\n"
+"\n"
+"P.S. Om du inte vet varför du mottagit detta mail, vänligen kontakta kundtjänst på libris@kb.se!\n"
+"\n"
+
+#: xl_auth/user/models.py:82
+#, python-format
+msgid ""
+"<p>Hello %(full_name)s,<br/><br/>Here is the secret link for resetting your personal account "
+"password:<br/><br/><a "
+"href=\"%(password_reset_url)s\">%(password_reset_url)s</a><br/><br/></p><p><small>P.S. If you "
+"received this mail for no obvious reason, please inform us about it at <a "
+"href=\"mailto:libris@kb.se\">libris@kb.se</a>!</small></p>"
+msgstr ""
+"<p>Hej %(full_name)s,<br/><br/>Klicka på länken nedan för att återställa ditt personliga "
+"lösenord:<br/><br/><a "
+"href=\"%(password_reset_url)s\">%(password_reset_url)s</a><br/><br/></p><p><small>P.S. Om du inte"
+" vet varför du mottagit detta mail, vänligen kontakta <a href=\"mailto:libris@kb.se\">Libris "
+"kundtjänst</a>!</small></p>"
+
+#: xl_auth/user/views.py:51
+#, python-format
+msgid "User \"%(username)s\" registered and emailed with a password reset link."
+msgstr "Användaren \"%(username)s\" har registrerats och mailats en lösenordsåterställningslänk."
+
+#: xl_auth/user/views.py:55
+#, python-format
+msgid "User \"%(username)s\" registered."
+msgstr "Användaren \"%(username)s\" har registrerats."
+
+#: xl_auth/user/views.py:79 xl_auth/user/views.py:103
 #, python-format
 msgid "Thank you for updating user details for \"%(username)s\"."
 msgstr "Användarinställningar uppdaterade för \"%(username)s\"."
 
-#: xl_auth/user/views.py:126
+#: xl_auth/user/views.py:132
 #, python-format
 msgid "Thank you for changing password for \"%(username)s\"."
 msgstr "Lösenord för \"%(username)s\" har ändrats."
+

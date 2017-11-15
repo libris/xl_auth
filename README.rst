@@ -175,12 +175,21 @@ Technology choices:
 DB Models
 ---------
 
-.. image:: https://user-images.githubusercontent.com/786326/32597885-5339ba5e-c538-11e7-8462-f365c8f9cbe1.png
-   :alt: screen shot 2017-11-09 at 10 23 47 am
+.. image:: https://user-images.githubusercontent.com/786326/32836181-43de9248-ca09-11e7-99c5-7b877272aef4.png
+   :alt: screen shot 2017-11-15 at 1 30 31 pm
 
 
 Changelog
 =========
+
+v. 0.6.0
+--------
+
+* Added support for resetting forgotten user account passwords
+  (`#41 <https://github.com/libris/xl_auth/issues/41>`_)
+* When registering new user accounts, opting in for a password reset email is the preferred way of
+  enabling them to login (`#102 <https://github.com/libris/xl_auth/issues/102>`_)
+
 
 v. 0.5.8
 --------

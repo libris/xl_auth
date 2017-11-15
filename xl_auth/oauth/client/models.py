@@ -3,9 +3,6 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from codecs import getencoder
-from os import urandom
-
 from six import string_types
 from sqlalchemy.ext.hybrid import hybrid_property
 
@@ -32,8 +29,8 @@ class Client(Model):
 
     def __init__(self, redirect_uris=None, default_scopes=None, **kwargs):
         """Create instance."""
-        client_id = Client._generate_client_id()
-        client_secret = Client._generate_client_secret()
+        client_id = Client._get_rand_hex_str(32)
+        client_secret = Client._get_rand_hex_str(256)
         db.Model.__init__(self, client_id=client_id, client_secret=client_secret, **kwargs)
         self.redirect_uris = redirect_uris
         self.default_scopes = default_scopes
@@ -43,14 +40,6 @@ class Client(Model):
         """Get record by ID."""
         # noinspection PyUnresolvedReferences
         return cls.query.filter_by(client_id=record_id).first()
-
-    @staticmethod
-    def _generate_client_id():
-        return getencoder('hex')(urandom(16))[0].decode('utf-8')
-
-    @staticmethod
-    def _generate_client_secret():
-        return getencoder('hex')(urandom(128))[0].decode('utf-8')
 
     @hybrid_property
     def client_type(self):

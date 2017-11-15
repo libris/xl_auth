@@ -3,11 +3,14 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import datetime as dt
 import hashlib
 from binascii import hexlify
+from datetime import datetime, timedelta
 from os import urandom
 
+from flask import current_app, url_for
+from flask_babel import lazy_gettext as _
+from flask_emails import Message
 from flask_login import UserMixin
 
 from ..database import Column, Model, SurrogatePK, db, reference_col, relationship
@@ -31,6 +34,77 @@ class Role(SurrogatePK, Model):
         return '<Role({name})>'.format(name=self.name)
 
 
+class PasswordReset(SurrogatePK, Model):
+    """Password reset token for a user."""
+
+    __tablename__ = 'password_resets'
+    user_id = reference_col('users', nullable=True)
+    user = relationship('User', back_populates='password_resets', uselist=False)
+    code = Column(db.String(32), unique=True, nullable=False)
+    is_active = Column(db.Boolean(), default=True, nullable=False)
+    expires_at = Column(db.DateTime, nullable=False,
+                        default=lambda: datetime.utcnow() + timedelta(hours=7 * 24))
+
+    modified_at = Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(db.DateTime, default=datetime.utcnow, nullable=False)
+
+    def __init__(self, user, **kwargs):
+        """Create instance."""
+        db.Model.__init__(self, user=user, code=self._get_rand_hex_str(32), **kwargs)
+
+    @staticmethod
+    def get_by_email_and_code(email, code):
+        """Get by `(email, code)` pair."""
+        user = User.get_by_email(email)
+        if user:
+            return PasswordReset.query.filter_by(code=code, user=user).first()
+
+    def send_email(self):
+        """Email password reset link to the user."""
+        password_reset_url = url_for('public.reset_password', email=self.user.email,
+                                     code=self.code, _external=True)
+        service_name = current_app.config['SERVER_NAME'] or current_app.config['APP_NAME']
+        result = Message(
+            subject=_('Password reset for %(username)s at %(server_name)s',
+                      username=self.user.email, server_name=service_name),
+            mail_to=(self.user.full_name, self.user.email),
+            text=_(
+                'Hello %(full_name)s,'
+                '\n\n'
+                'Here is the secret link for resetting your personal account password:'
+                '\n\n'
+                '%(password_reset_url)s'
+                '\n\n\n\n'
+                'P.S. If you received this mail for no obvious reason, please inform us about it \
+at libris@kb.se!'
+                '\n\n',
+                full_name=self.user.full_name, password_reset_url=password_reset_url),
+            html=_(
+                '<p>'
+                'Hello %(full_name)s,'
+                '<br/><br/>'
+                'Here is the secret link for resetting your personal account password:'
+                '<br/><br/>'
+                '<a href="%(password_reset_url)s">%(password_reset_url)s</a>'
+                '<br/><br/>'
+                '</p>'
+                '<p><small>'
+                'P.S. If you received this mail for no obvious reason, please inform us about it '
+                'at <a href="mailto:libris@kb.se">libris@kb.se</a>!'
+                '</small></p>',
+                full_name=self.user.full_name, password_reset_url=password_reset_url)
+        ).send()
+
+        if not hasattr(result, 'status_code'):
+            result = result[0]
+
+        assert result.status_code == 250
+
+    def __repr__(self):
+        """Represent instance as a unique string."""
+        return '<PasswordReset({email!r})>'.format(email=self.user.email)
+
+
 class User(UserMixin, SurrogatePK, Model):
     """A user of the app."""
 
@@ -38,14 +112,15 @@ class User(UserMixin, SurrogatePK, Model):
     email = Column(db.String(255), unique=True, nullable=False)
     full_name = Column(db.String(255), unique=False, nullable=False)
     password = Column(db.Binary(128), nullable=False)
-    active = Column(db.Boolean(), default=False, nullable=False)
     last_login_at = Column(db.DateTime, default=None)
+    is_active = Column(db.Boolean(), default=False, nullable=False)
     is_admin = Column(db.Boolean(), default=False, nullable=False)
     permissions = relationship('Permission', back_populates='user')
     roles = relationship('Role', back_populates='user')
+    password_resets = relationship('PasswordReset', back_populates='user')
 
-    modified_at = Column(db.DateTime, default=dt.datetime.utcnow, onupdate=dt.datetime.utcnow)
-    created_at = Column(db.DateTime, default=dt.datetime.utcnow, nullable=False)
+    modified_at = Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
     def __init__(self, email, full_name, password=None, **kwargs):
         """Create instance."""
@@ -54,6 +129,11 @@ class User(UserMixin, SurrogatePK, Model):
             self.set_password(password)
         else:
             self.set_password(hexlify(urandom(16)))
+
+    @staticmethod
+    def get_by_email(email):
+        """Get by email."""
+        return User.query.filter(User.email.ilike(email)).first()
 
     def set_password(self, password):
         """Set password."""
@@ -65,7 +145,7 @@ class User(UserMixin, SurrogatePK, Model):
 
     def update_last_login(self, commit=True):
         """Set 'last_login_at' to current datetime."""
-        self.last_login_at = dt.datetime.utcnow()
+        self.last_login_at = datetime.utcnow()
         if commit:
             self.save()
 

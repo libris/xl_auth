@@ -9,7 +9,7 @@ from flask_login import current_user, login_required
 
 from ..utils import flash_errors
 from .forms import AdministerForm, ChangePasswordForm, EditDetailsForm, RegisterForm
-from .models import User
+from .models import PasswordReset, User
 
 blueprint = Blueprint('user', __name__, url_prefix='/users', static_folder='../static')
 
@@ -18,8 +18,8 @@ blueprint = Blueprint('user', __name__, url_prefix='/users', static_folder='../s
 @login_required
 def home():
     """Users landing page."""
-    users_list_active = User.query.filter_by(active=True)
-    users_list_inactive = User.query.filter_by(active=False)
+    users_list_active = User.query.filter_by(is_active=True)
+    users_list_inactive = User.query.filter_by(is_active=False)
 
     return render_template('users/home.html', users_list_active=users_list_active,
                            users_list_inactive=users_list_inactive)
@@ -29,8 +29,7 @@ def home():
 @login_required
 def profile():
     """Own user profile."""
-    user = User.query.filter(User.email == current_user.email).first()
-    return render_template('users/profile.html', user=user)
+    return render_template('users/profile.html', user=current_user)
 
 
 @blueprint.route('/register/', methods=['GET', 'POST'])
@@ -42,12 +41,19 @@ def register():
 
     register_user_form = RegisterForm(current_user, request.form)
     if register_user_form.validate_on_submit():
-        User.create(email=register_user_form.username.data,
-                    full_name=register_user_form.full_name.data,
-                    password=register_user_form.password.data,
-                    active=True)
-        flash(_('Thank you for registering. You can now log in.'), 'success')
-        return redirect(url_for('public.home'))
+        user = User(email=register_user_form.username.data,
+                    full_name=register_user_form.full_name.data)
+        if register_user_form.send_password_reset_email.data:
+            password_reset = PasswordReset(user)
+            password_reset.send_email()
+            user.save()
+            password_reset.save()
+            flash(_('User "%(username)s" registered and emailed with a password reset link.',
+                    username=user.email), 'success')
+        else:
+            user.save()
+            flash(_('User "%(username)s" registered.', username=user.email), 'success')
+        return redirect(url_for('user.home'))
     else:
         flash_errors(register_user_form)
     return render_template('users/register.html', register_user_form=register_user_form)
@@ -68,7 +74,7 @@ def administer(user_id):
     administer_form = AdministerForm(current_user, user.email, request.form)
     if administer_form.validate_on_submit():
         user.update(full_name=administer_form.full_name.data,
-                    active=administer_form.active.data,
+                    is_active=administer_form.is_active.data,
                     is_admin=administer_form.is_admin.data).save()
         flash(_('Thank you for updating user details for "%(username)s".', username=user.email),
               'success')

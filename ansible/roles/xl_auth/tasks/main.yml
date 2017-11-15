@@ -28,6 +28,8 @@
     ports:
       - 5000:5000
     env:
+      SERVER_NAME: "{{ inventory_hostname }}"
+      PREFERRED_URL_SCHEME: https
       FLASK_DEBUG: 0
       SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
       OAUTH2_PROVIDER_TOKEN_EXPIRES_IN: 3600
@@ -50,14 +52,15 @@
   when: start_xl_auth.changed
   tags: xl_auth
 
-- name: run 'flask create_user -e libris@kb.se -p <something-secret> --is-admin --force'
+- name: run 'flask create_user -e libris@kb.se -p <my-secret> --is-active --is-admin --force'
   docker_container:
     name: xl_auth_create_user
     image: "{{ xl_auth_docker }}"
     interactive: yes
     tty: yes
     detach: no
-    command: "create_user -e libris@kb.se -n SuperAdmin -p {{ xl_auth_admin_pass }} --is-admin -f"
+    command: "create_user -e libris@kb.se -n SuperAdmin -p {{ xl_auth_admin_pass }} --is-active
+             --is-admin --force"
     links:
       - postgres
     env:
@@ -73,10 +76,13 @@
     interactive: yes
     tty: yes
     detach: no
-    command: import_data --verbose --admin-email libris@kb.se --wipe-permissions
+    command: "import_data --verbose --admin-email libris@kb.se --wipe-permissions
+             --send-password-resets"
     links:
       - postgres
     env:
+      SERVER_NAME: "{{ inventory_hostname }}"
+      PREFERRED_URL_SCHEME: https
       FLASK_DEBUG: 0
       SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
   when: xl_auth_force_import or start_xl_auth.changed

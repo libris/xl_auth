@@ -42,6 +42,9 @@ Flask-DebugToolbar==0.10.1
 # Python 2/3 compatibility
 six==1.10.0
 
+# Email
+flask-emails==0.4
+
 # Localization
 Flask-Babel==0.11.2
 Babel==2.5.1
