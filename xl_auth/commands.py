@@ -261,7 +261,7 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
 
     def _get_voyager_data():
         raw_voyager_sigels_and_locations = requests.get(
-            'https://github.com/libris/xl_auth/files/1437869/171102_KB--sigel_locations.txt'
+            'https://github.com/libris/xl_auth/files/1474613/171115_KB--sigel_locations.txt'
         ).content.decode('latin-1').splitlines()
         voyager_sigels_and_collections = dict()
         voyager_main_sigels, voyager_location_sigels = set(), set()
