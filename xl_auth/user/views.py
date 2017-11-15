@@ -53,7 +53,7 @@ def register():
         else:
             user.save()
             flash(_('User "%(username)s" registered.', username=user.email), 'success')
-        return redirect(url_for('public.home'))
+        return redirect(url_for('user.home'))
     else:
         flash_errors(register_user_form)
     return render_template('users/register.html', register_user_form=register_user_form)
