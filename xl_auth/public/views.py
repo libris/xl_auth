@@ -56,12 +56,9 @@ def forgot_password():
         if forgot_password_form.validate_on_submit():
             user = User.get_by_email(forgot_password_form.username.data)
             password_reset = PasswordReset(user)
+            password_reset.send_email()
             password_reset.save()
-            # TODO: Do stuff to send out email with code.
-            flash(_('This is your reset code %(code)s.', code=password_reset.code), 'success')
-            # FIXME: Must be removed before deploying to prod.
-            flash('Reset link: %s' % url_for('public.reset_password', email=user.email,
-                                             code=password_reset.code, _external=True), 'warning')
+            flash(_('Password reset link sent to %(email)s.', email=user.email), 'success')
             return redirect(url_for('public.home'))
         else:
             flash_errors(forgot_password_form)

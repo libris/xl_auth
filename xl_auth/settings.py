@@ -11,6 +11,8 @@ from . import __author__, __name__, __version__
 class Config(object):
     """Base configuration."""
 
+    SERVER_NAME = os.environ.get('SERVER_NAME', None)
+    PREFERRED_URL_SCHEME = os.environ.get('PREFERRED_URL_SCHEME', 'http')
     APP_NAME = __name__
     APP_VERSION = __version__
     APP_AUTHOR = __author__
@@ -26,6 +28,9 @@ class Config(object):
     WEBPACK_MANIFEST_PATH = 'webpack/manifest.json'
     BABEL_DEFAULT_LOCALE = os.environ.get('BABEL_DEFAULT_LOCALE', 'sv')
     BABEL_DEFAULT_TIMEZONE = 'utc'
+    EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.kb.se')
+    EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '25'))
+    EMAIL_TIMEOUT = int(os.environ.get('EMAIL_TIMEOUT', '5'))
     OAUTH2_PROVIDER_TOKEN_EXPIRES_IN = int(
         os.environ.get('OAUTH2_PROVIDER_TOKEN_EXPIRES_IN', 3600))
 
@@ -62,3 +67,4 @@ class TestConfig(Config):
     # For faster tests; needs at least 4 to avoid "ValueError: Invalid rounds".
     BCRYPT_LOG_ROUNDS = 4
     WTF_CSRF_ENABLED = False  # Allows form testing.
+    EMAIL_BACKEND = 'flask_emails.backends.DummyBackend'

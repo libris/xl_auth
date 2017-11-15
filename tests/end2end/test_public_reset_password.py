@@ -31,9 +31,12 @@ def test_can_complete_password_reset_flow(user, testapp):
     assert password_reset.is_active is True
     assert password_reset.expires_at > (datetime.utcnow() + timedelta(seconds=3600))
 
+    # URL sent to user email.
+    reset_password_url = url_for('public.reset_password', email=password_reset.user.email,
+                                 code=password_reset.code, _external=True)
+
     # Goes to reset password link.
-    res = testapp.get(url_for('public.reset_password', email=password_reset.user.email,
-                              code=password_reset.code))
+    res = testapp.get(reset_password_url)
     # Fills out ResetPasswordForm.
     form = res.forms['resetPasswordForm']
     form['confirm'] = form['password'] = 'unicorns are real'

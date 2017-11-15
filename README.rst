@@ -182,6 +182,13 @@ DB Models
 Changelog
 =========
 
+v. 0.6.0
+--------
+
+* Added support for resetting forgotten user account passwords
+  (`#41 <https://github.com/libris/xl_auth/issues/41>`_)
+
+
 v. 0.5.8
 --------
 
