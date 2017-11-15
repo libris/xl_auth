@@ -11,15 +11,20 @@ from jinja2 import escape
 
 from xl_auth.user.models import PasswordReset
 
+from ..factories import UserFactory
 
-def test_can_complete_password_reset_flow(user, testapp):
-    """Successfully request password reset and use the code to change password."""
+
+# noinspection PyUnusedLocal
+def test_can_complete_password_reset_flow(db, testapp):
+    """Successfully request password reset, use code to change password and activate account."""
+    inactive_user = UserFactory(is_active=False)
+    assert inactive_user.is_active is False
     # Goes to homepage.
     res = testapp.get('/')
     # Clicks on 'Forgot password'.
     res = res.click(_('Forgot password?'))
     # Fills out ForgotPasswordForm.
-    username_with_different_casing = user.email.upper()
+    username_with_different_casing = inactive_user.email.upper()
     form = res.forms['forgotPasswordForm']
     form['username'] = username_with_different_casing
     # Submits.
@@ -27,7 +32,7 @@ def test_can_complete_password_reset_flow(user, testapp):
     assert res.status_code == 200
 
     # New PasswordReset is added to DB.
-    password_reset = PasswordReset.query.filter_by(user=user).first()
+    password_reset = PasswordReset.query.filter_by(user=inactive_user).first()
     assert password_reset.is_active is True
     assert password_reset.expires_at > (datetime.utcnow() + timedelta(seconds=3600))
 
@@ -44,10 +49,11 @@ def test_can_complete_password_reset_flow(user, testapp):
     res = form.submit().follow()
     assert res.status_code == 200
 
-    # PasswordReset no longer active and password update succeeded.
+    # PasswordReset no longer active, password update succeeded and user is activated.
     updated_password_reset = PasswordReset.query.filter_by(user=password_reset.user).first()
     assert updated_password_reset.is_active is False
     assert updated_password_reset.user.check_password('unicorns are real') is True
+    assert updated_password_reset.user.is_active is True
 
 
 # noinspection PyUnusedLocal
