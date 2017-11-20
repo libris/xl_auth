@@ -32,6 +32,20 @@ def test_created_at_defaults_to_datetime():
     assert isinstance(user.created_at, dt.datetime)
 
 
+def test_created_by_and_modified_by_is_updated(superuser):
+    """Test created by."""
+    user = User(email='foo@bar.com', full_name='Mrs. Foo Bar')
+    user.save(current_user=superuser)
+    assert user.created_by_id == superuser.id
+    assert user.created_by == superuser
+    assert user.modified_by_id == superuser.id
+    assert user.modified_by == superuser
+
+    # User updates something in their profile.
+    user.update(user, commit=True, full_name='Non-gendered Foo Bar')
+    assert user.modified_by == user
+
+
 @pytest.mark.usefixtures('db')
 def test_modified_at_defaults_to_current_datetime():
     """Test modified date."""
