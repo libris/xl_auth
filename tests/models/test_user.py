@@ -49,6 +49,20 @@ def test_modified_at_defaults_to_current_datetime():
 
 
 @pytest.mark.usefixtures('db')
+def test_update_last_login_does_not_update_modified_at():
+    """Test modified date."""
+    user = User('foo@kb.se', 'Hello World')
+    user.save()
+    first_modified_at = user.modified_at
+
+    # Update 'last_login_at' timestamp.
+    user.update_last_login(commit=True)
+
+    # Initial 'modified_at' is still the same.
+    assert first_modified_at == user.modified_at
+
+
+@pytest.mark.usefixtures('db')
 def test_password_defaults_to_a_random_one():
     """Test empty password field is assigned some random password, instead of being set to tull."""
     user = User(email='foo@bar.com', full_name='Mr. Foo Bar')
@@ -76,7 +90,7 @@ def test_factory(db):
 @pytest.mark.usefixtures('db')
 def test_check_password():
     """Check password."""
-    user = User.create(email='foo@bar.com', full_name='Mr. Foo Bar', password='fooBarBaz123')
+    user = User.create(None, email='foo@bar.com', full_name='Mr. Foo Bar', password='fooBarBaz123')
     assert user.check_password('fooBarBaz123') is True
     assert user.check_password('barFooBaz') is False
 
