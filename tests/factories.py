@@ -27,20 +27,6 @@ class BaseFactory(SQLAlchemyModelFactory):
         sqlalchemy_session = db.session
 
 
-class UserFactory(BaseFactory):
-    """User factory."""
-
-    email = Sequence(lambda _: 'user{0}@example.com'.format(_))
-    full_name = Sequence(lambda _: 'full_name{0}'.format(_))
-    password = PostGenerationMethodCall('set_password', 'example')
-    is_active = True
-
-    class Meta:
-        """Factory configuration."""
-
-        model = User
-
-
 class SuperUserFactory(BaseFactory):
     """Super user factory."""
 
@@ -49,6 +35,23 @@ class SuperUserFactory(BaseFactory):
     password = PostGenerationMethodCall('set_password', 'example')
     is_active = True
     is_admin = True
+
+    class Meta:
+        """Factory configuration."""
+
+        model = User
+
+
+class UserFactory(BaseFactory):
+    """User factory."""
+
+    email = Sequence(lambda _: 'user{0}@example.com'.format(_))
+    full_name = Sequence(lambda _: 'full_name{0}'.format(_))
+    password = PostGenerationMethodCall('set_password', 'example')
+    is_active = True
+
+    modified_by = LazyFunction(SuperUserFactory)
+    created_by = LazyFunction(SuperUserFactory)
 
     class Meta:
         """Factory configuration."""

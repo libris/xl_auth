@@ -85,6 +85,8 @@ def test_factory(db):
     assert user.is_active is True
     assert user.check_password('myPrecious')
     assert user.last_login_at is None
+    assert isinstance(user.modified_by, User)
+    assert isinstance(user.created_by, User)
 
 
 @pytest.mark.usefixtures('db')
@@ -154,7 +156,7 @@ def test_roles():
 
 
 @pytest.mark.usefixtures('db')
-def test_adding_password_reset(collection):
+def test_adding_password_reset():
     """Associate user with a password reset code."""
     user = UserFactory()
     user.save()
@@ -171,7 +173,7 @@ def test_adding_password_reset(collection):
 
 
 @pytest.mark.usefixtures('db')
-def test_removing_password_reset(collection):
+def test_removing_password_reset():
     """Remove password reset from a user."""
     user = UserFactory()
     user.save()
