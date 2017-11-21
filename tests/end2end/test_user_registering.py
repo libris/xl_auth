@@ -38,6 +38,9 @@ def test_superuser_can_register_not_triggering_password_reset(superuser, testapp
     new_user = User.get_by_email('foo@bar.com')
     assert isinstance(new_user, User)
     assert new_user.is_active is False
+    # Keeping track of who created what
+    assert new_user.created_by == superuser
+    assert new_user.modified_by == superuser
     # A password reset was not created
     password_reset = PasswordReset.query.filter_by(user=new_user).first()
     assert password_reset is None
@@ -70,6 +73,8 @@ def test_superuser_can_register_with_password_reset(superuser, testapp):
     new_user = User.get_by_email('foo@bar.com')
     assert isinstance(new_user, User)
     assert new_user.is_active is False
+    assert new_user.created_by == superuser
+    assert new_user.modified_by == superuser
     # A password reset was created
     password_resets = PasswordReset.query.filter_by(user=new_user).all()
     assert len(password_resets) == 1

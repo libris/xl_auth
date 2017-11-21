@@ -9,8 +9,12 @@ from flask_babel import gettext as _
 from xl_auth.user.models import User
 
 
-def test_superuser_can_administer_existing_user(superuser, testapp):
+def test_superuser_can_administer_existing_user(superuser, user, testapp):
     """Administer user details for an existing user."""
+    # Check expected premises.
+    user_creator = user.created_by
+    initial_modified_by = user.modified_by
+    assert user_creator != superuser and initial_modified_by != superuser
     # Goes to homepage.
     res = testapp.get('/')
     # Fills out login form.
@@ -22,20 +26,23 @@ def test_superuser_can_administer_existing_user(superuser, testapp):
     # Clicks Users button.
     res = res.click(_('Users'))
     # Clicks Edit Details button.
-    res = res.click(href='/users/administer/{0}'.format(superuser.id))
+    res = res.click(href='/users/administer/{0}'.format(user.id))
     # Fills out the form.
     form = res.forms['administerForm']
-    form['username'] = superuser.email
+    form['username'] = user.email
     form['full_name'] = 'A new name'
-    form['is_active'].checked = not superuser.is_active
+    form['is_active'].checked = not user.is_active
     # Submits.
     res = form.submit().follow()
     assert res.status_code == 200
     # The user was edited.
-    edited_user = User.query.filter(User.email == superuser.email).first()
+    edited_user = User.get_by_email(user.email)
     assert edited_user.full_name == form['full_name'].value
     assert edited_user.is_active == form['is_active'].checked
     assert edited_user.is_admin == form['is_admin'].checked
+    # 'modified_by' is updated to reflect change, with 'created_by' intact
+    assert edited_user.created_by == user_creator
+    assert edited_user.modified_by == superuser
 
     # The edited user is listed under existing users.
     assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(form['username'].value))) == 1
@@ -197,6 +204,8 @@ def test_user_cannot_administer_other_user(superuser, user, testapp):
 
 def test_user_can_edit_own_details(user, testapp):
     """Change details for self."""
+    user_creator = user.created_by
+    assert user_creator != user
     # Goes to homepage.
     res = testapp.get('/')
     # Fills out login form.
@@ -218,6 +227,10 @@ def test_user_can_edit_own_details(user, testapp):
     form = res.forms['editDetailsForm']
     form['full_name'] = 'New Name'
     res = form.submit().follow()
+    # 'modified_by' is updated to reflect change, with 'created_by' intact.
+    edited_user = User.get_by_email(user.email)
+    assert edited_user.created_by == user_creator
+    assert edited_user.modified_by == user
 
     # Make sure name has been updated
     assert len(res.lxml.xpath("//h1[contains(., '{0} {1}')]".format(_('Welcome'), old_name))) == 0
