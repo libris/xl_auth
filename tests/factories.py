@@ -90,6 +90,9 @@ class PermissionFactory(BaseFactory):
     user = LazyFunction(UserFactory)
     collection = LazyFunction(CollectionFactory)
 
+    modified_by = LazyFunction(UserFactory)
+    created_by = LazyFunction(UserFactory)
+
     class Meta:
         """Factory configuration."""
 

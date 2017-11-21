@@ -3,7 +3,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import datetime as dt
+from datetime import datetime, timedelta
 
 import pytest
 
@@ -44,7 +44,7 @@ def test_created_at_defaults_to_datetime():
     user = User(email='foo@bar.com', full_name='Mr. Foo Bar')
     user.save()
     assert bool(user.created_at)
-    assert isinstance(user.created_at, dt.datetime)
+    assert isinstance(user.created_at, datetime)
 
 
 @pytest.mark.usefixtures('db')
@@ -90,24 +90,28 @@ def test_factory(db):
     """Test user factory."""
     user = UserFactory(password='myPrecious')
     db.session.commit()
+
     assert bool(user.email)
     assert bool(user.full_name)
-    assert bool(user.modified_at)
-    assert bool(user.created_at)
-    assert isinstance(user.permissions, list)
-    assert isinstance(user.roles, list)
-    assert user.is_admin is False
-    assert user.is_active is True
     assert user.check_password('myPrecious')
     assert user.last_login_at is None
+    assert user.is_active is True
+    assert user.is_admin is False
+
+    assert isinstance(user.permissions, list)
+    assert isinstance(user.roles, list)
+    assert isinstance(user.password_resets, list)
+
+    assert isinstance(user.modified_at, datetime)
     assert isinstance(user.modified_by, User)
+    assert isinstance(user.created_at, datetime)
     assert isinstance(user.created_by, User)
 
 
 @pytest.mark.usefixtures('db')
 def test_check_password():
     """Check password."""
-    user = User.create(None, email='foo@bar.com', full_name='Mr. Foo Bar', password='fooBarBaz123')
+    user = User.create(email='foo@bar.com', full_name='Mr. Foo Bar', password='fooBarBaz123')
     assert user.check_password('fooBarBaz123') is True
     assert user.check_password('barFooBaz') is False
 

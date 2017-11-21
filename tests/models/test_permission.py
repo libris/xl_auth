@@ -3,7 +3,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import datetime as dt
+from datetime import datetime
 
 import pytest
 from sqlalchemy.exc import IntegrityError
@@ -48,7 +48,7 @@ def test_created_at_defaults_to_datetime(user, collection):
     permission.save()
 
     assert bool(permission.created_at)
-    assert isinstance(permission.created_at, dt.datetime)
+    assert isinstance(permission.created_at, datetime)
 
 
 @pytest.mark.usefixtures('db')
@@ -74,11 +74,15 @@ def test_factory(db):
 
     assert isinstance(permission.user, User)
     assert isinstance(permission.collection, Collection)
+
     assert permission.registrant is False
     assert permission.cataloger is False
     assert permission.cataloging_admin is False
-    assert bool(permission.modified_at)
-    assert bool(permission.created_at)
+
+    assert isinstance(permission.modified_at, datetime)
+    assert isinstance(permission.modified_by, User)
+    assert isinstance(permission.created_at, datetime)
+    assert isinstance(permission.created_by, User)
 
 
 @pytest.mark.usefixtures('db')
