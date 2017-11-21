@@ -3,7 +3,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from datetime import datetime, timedelta
+from datetime import datetime
 
 import pytest
 
@@ -16,7 +16,7 @@ from ..factories import UserFactory
 @pytest.mark.usefixtures('db')
 def test_get_by_id():
     """Get user by ID."""
-    user = User('foo@bar.com', 'Mr. Foo Bar')
+    user = User('foo@bar.com', 'Foo Bar')
     user.save()
 
     retrieved = User.get_by_id(user.id)
@@ -25,7 +25,7 @@ def test_get_by_id():
 
 def test_created_by_and_modified_by_is_updated(superuser):
     """Test created/modified by."""
-    user = User(email='foo@bar.com', full_name='Mrs. Foo Bar')
+    user = User(email='foo@bar.com', full_name='Foo Bar')
     user.save_as(superuser)
     assert user.created_by_id == superuser.id
     assert user.created_by == superuser
@@ -41,7 +41,7 @@ def test_created_by_and_modified_by_is_updated(superuser):
 @pytest.mark.usefixtures('db')
 def test_created_at_defaults_to_datetime():
     """Test creation date."""
-    user = User(email='foo@bar.com', full_name='Mr. Foo Bar')
+    user = User(email='foo@bar.com', full_name='Foo Bar')
     user.save()
     assert bool(user.created_at)
     assert isinstance(user.created_at, datetime)
@@ -80,7 +80,7 @@ def test_update_last_login_does_not_update_modified_at():
 @pytest.mark.usefixtures('db')
 def test_password_defaults_to_a_random_one():
     """Test empty password field is assigned some random password, instead of being set to tull."""
-    user = User(email='foo@bar.com', full_name='Mr. Foo Bar')
+    user = User(email='foo@bar.com', full_name='Foo Bar')
     user.save()
     assert user.password is not None
 
@@ -111,7 +111,7 @@ def test_factory(db):
 @pytest.mark.usefixtures('db')
 def test_check_password():
     """Check password."""
-    user = User.create(email='foo@bar.com', full_name='Mr. Foo Bar', password='fooBarBaz123')
+    user = User.create(email='foo@bar.com', full_name='Foo Bar', password='fooBarBaz123')
     assert user.check_password('fooBarBaz123') is True
     assert user.check_password('barFooBaz') is False
 

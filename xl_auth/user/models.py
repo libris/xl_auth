@@ -127,7 +127,7 @@ class User(UserMixin, SurrogatePK, Model):
 
     created_at = Column(db.DateTime, default=datetime.utcnow, nullable=False)
     created_by_id = reference_col('users', nullable=True)
-    created_by = relationship('User',  remote_side=id, foreign_keys=created_by_id, uselist=False)
+    created_by = relationship('User', remote_side=id, foreign_keys=created_by_id, uselist=False)
 
     def __init__(self, email, full_name, password=None, **kwargs):
         """Create instance."""

@@ -25,6 +25,7 @@ class CRUDMixin(object):
 
     @classmethod
     def create_as(cls, current_user, **kwargs):
+        """Create a new record and save it to the database as 'current_user'."""
         assert hasattr(cls, 'modified_by') and hasattr(cls, 'created_by')
         instance = cls(**kwargs)
         instance.modified_by = instance.created_by = current_user
@@ -32,12 +33,12 @@ class CRUDMixin(object):
 
     @classmethod
     def create(cls, **kwargs):
-        """Create a new record and save it the database."""
+        """Create a new record and save it to the database."""
         instance = cls(**kwargs)
         return instance.save()
 
     def update_as(self, current_user, commit=True, preserve_modified=False, **kwargs):
-        """Update specific fields of the record as 'current_user'."""
+        """Update specific fields of the record and save as 'current_user'."""
         for attr, value in kwargs.items():
             setattr(self, attr, value)
         return self.save_as(current_user, commit=commit, preserve_modified=preserve_modified)

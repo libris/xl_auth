@@ -22,7 +22,7 @@ def test_validate_success(db, superuser):
 # noinspection PyUnusedLocal
 def test_validate_without_full_name(superuser, db):
     """Attempt registering user with name shorter than 3 chars."""
-    form = RegisterForm(superuser, username='mr.librarian@kb.se', full_name='01')
+    form = RegisterForm(superuser, username='librarian@kb.se', full_name='01')
 
     assert form.validate() is False
     assert _('Field must be between 3 and 255 characters long.') in form.full_name.errors

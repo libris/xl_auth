@@ -29,7 +29,7 @@ def test_superuser_can_register_not_triggering_password_reset(superuser, testapp
     # Fills out the form
     form = res.forms['registerUserForm']
     form['username'] = 'foo@bar.com'
-    form['full_name'] = 'Mr End2End'
+    form['full_name'] = 'End2End'
     form['send_password_reset_email'].checked = False
     # Submits
     res = form.submit().follow()
@@ -64,7 +64,7 @@ def test_superuser_can_register_with_password_reset(superuser, testapp):
     # Fills out the form
     form = res.forms['registerUserForm']
     form['username'] = 'foo@bar.com'
-    form['full_name'] = 'Mr End2End'
+    form['full_name'] = 'End2End'
     form['send_password_reset_email'].checked = True
     # Submits
     res = form.submit().follow()
@@ -120,7 +120,7 @@ def test_user_sees_error_message_if_user_already_registered(superuser, user, tes
     # Fills out form, but username is already registered.
     form = res.forms['registerUserForm']
     form['username'] = user.email.upper()  # Default would be `userN@example.com`, not upper-cased.
-    form['full_name'] = 'Mr End2End'
+    form['full_name'] = 'End2End'
     # Submits.
     res = form.submit()
     # Sees error.
