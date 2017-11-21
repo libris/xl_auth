@@ -43,6 +43,10 @@ def test_superuser_can_register_new_client(superuser, testapp):
 
     # A new client was created
     assert len(Client.query.all()) == old_count + 1
+    registered_client = Client.query.filter(Client.name == form['name'].value).first()
+    # Keeping track of who created what
+    assert registered_client.created_by == superuser
+    assert registered_client.modified_by == superuser
 
     # The new client is listed under existing clients
     assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(form['name'].value))) == 1

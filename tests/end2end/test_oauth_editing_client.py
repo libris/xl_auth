@@ -11,6 +11,10 @@ from xl_auth.oauth.client.models import Client
 def test_superuser_can_edit_existing_client(superuser, client, testapp):
     """Edit an existing client."""
     old_count = len(Client.query.all())
+    # Check expected premises
+    client_creator = client.created_by
+    initial_modified_by = client.modified_by
+    assert client_creator != superuser and initial_modified_by != superuser
     # Goes to homepage
     res = testapp.get('/')
     # Fills out login form
@@ -39,6 +43,16 @@ def test_superuser_can_edit_existing_client(superuser, client, testapp):
     # Submits
     res = form.submit().follow()
     assert res.status_code == 200
+
+    # The client was edited
+    edited_client = Client.get_by_id(client.client_id)
+    assert edited_client.name == form['name'].value
+    assert edited_client.description == form['description'].value
+    assert edited_client.redirect_uris == ['http://localhost/']
+    assert edited_client.default_scopes == ['read', 'write']
+    # 'modified_by' is updated to reflect change, with 'created_by' intact
+    assert edited_client.created_by == client_creator
+    assert edited_client.modified_by == superuser
 
     # No new client was created
     assert len(Client.query.all()) == old_count
