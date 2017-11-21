@@ -55,8 +55,12 @@ def test_superuser_can_administer_existing_user(superuser, user, testapp):
     assert len(res.lxml.xpath(admin_xpath)) == 1
 
 
-def test_superuser_can_change_password_for_existing_user(superuser, testapp):
+def test_superuser_can_change_password_for_existing_user(superuser, user, testapp):
     """Change password for an existing user."""
+    # Check expected premises.
+    user_creator = user.created_by
+    initial_modified_by = user.modified_by
+    assert user_creator != superuser and initial_modified_by != superuser
     # Goes to homepage.
     res = testapp.get('/')
     # Fills out login form.
@@ -68,20 +72,23 @@ def test_superuser_can_change_password_for_existing_user(superuser, testapp):
     # Clicks Users button.
     res = res.click(_('Users'))
     # Clicks Change Password button.
-    res = res.click(href='/users/change_password/{0}'.format(superuser.id))
+    res = res.click(href='/users/change_password/{0}'.format(user.id))
     # Fills out the form.
     form = res.forms['changePasswordForm']
-    form['username'] = superuser.email
+    form['username'] = user.email
     form['password'] = 'newSecrets13'
     form['confirm'] = 'newSecrets13'
     # Submits.
     res = form.submit().follow()
     assert res.status_code == 200
     # The user was edited.
-    edited_user = User.query.filter(User.email == superuser.email).first()
+    edited_user = User.query.filter(User.email == user.email).first()
     # Verify the new password is considered valid, not the old one.
     assert edited_user.check_password('myPrecious') is False
     assert edited_user.check_password('newSecrets13') is True
+    # 'modified_by' is updated to reflect change, with 'created_by' intact
+    assert edited_user.created_by == user_creator
+    assert edited_user.modified_by == superuser
 
 
 def test_superuser_sees_error_message_if_username_is_changed_from_administer(superuser, testapp):

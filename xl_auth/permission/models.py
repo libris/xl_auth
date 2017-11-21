@@ -3,7 +3,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import datetime as dt
+from datetime import datetime
 
 from ..database import Column, Model, SurrogatePK, db, reference_col, relationship
 
@@ -15,8 +15,7 @@ class Permission(SurrogatePK, Model):
 
     __tablename__ = 'permissions'
     user_id = reference_col('users', nullable=False)
-    user = relationship('User', back_populates='permissions', uselist=False)
-
+    user = relationship('User', back_populates='permissions', foreign_keys=user_id, uselist=False)
     collection_id = reference_col('collections', nullable=False)
     collection = relationship('Collection', back_populates='permissions', uselist=False)
 
@@ -24,8 +23,13 @@ class Permission(SurrogatePK, Model):
     cataloger = Column(db.Boolean(), default=False, nullable=False)
     cataloging_admin = Column(db.Boolean(), default=False, nullable=False)
 
-    modified_at = Column(db.DateTime, default=dt.datetime.utcnow, onupdate=dt.datetime.utcnow)
-    created_at = Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
+    modified_at = Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    modified_by_id = reference_col('users', nullable=True)
+    modified_by = relationship('User', foreign_keys=modified_by_id, uselist=False)
+
+    created_at = Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    created_by_id = reference_col('users', nullable=True)
+    created_by = relationship('User', foreign_keys=created_by_id, uselist=False)
 
     def __init__(self, **kwargs):
         """Create instance."""

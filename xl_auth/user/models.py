@@ -109,18 +109,25 @@ class User(UserMixin, SurrogatePK, Model):
     """A user of the app."""
 
     __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
     email = Column(db.String(255), unique=True, nullable=False)
     full_name = Column(db.String(255), unique=False, nullable=False)
     password = Column(db.Binary(128), nullable=False)
     last_login_at = Column(db.DateTime, default=None)
     is_active = Column(db.Boolean(), default=False, nullable=False)
     is_admin = Column(db.Boolean(), default=False, nullable=False)
-    permissions = relationship('Permission', back_populates='user')
+    permissions = relationship('Permission', back_populates='user',
+                               foreign_keys='Permission.user_id')
     roles = relationship('Role', back_populates='user')
     password_resets = relationship('PasswordReset', back_populates='user')
 
     modified_at = Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    modified_by_id = reference_col('users', nullable=True)
+    modified_by = relationship('User', remote_side=id, foreign_keys=modified_by_id, uselist=False)
+
     created_at = Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    created_by_id = reference_col('users', nullable=True)
+    created_by = relationship('User',  remote_side=id, foreign_keys=created_by_id, uselist=False)
 
     def __init__(self, email, full_name, password=None, **kwargs):
         """Create instance."""
@@ -147,12 +154,22 @@ class User(UserMixin, SurrogatePK, Model):
         """Set 'last_login_at' to current datetime."""
         self.last_login_at = datetime.utcnow()
         if commit:
-            self.save()
+            self.save(commit=True, preserve_modified=True)
 
     def get_gravatar_url(self, size=32):
         """Get Gravatar URL."""
         hashed_email = hashlib.md5(str(self.email).lower().encode()).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=mm&s={}'.format(hashed_email, size)
+
+    def save_as(self, current_user, commit=True, preserve_modified=False):
+        """Save instance as 'current_user'."""
+        if current_user and not self.created_at:
+            self.created_by = current_user
+        if current_user and not preserve_modified:
+            self.modified_by_id = current_user.id
+            # Using ``self.modified_by = current_user`` yields an error when user modifies itself:
+            # "sqlalchemy.exc.CircularDependencyError: Circular dependency detected."
+        return self.save(commit=commit, preserve_modified=preserve_modified)
 
     def __repr__(self):
         """Represent instance as a unique string."""

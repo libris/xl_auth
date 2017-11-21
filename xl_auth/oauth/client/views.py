@@ -36,12 +36,13 @@ def register():
 
     register_form = RegisterForm(current_user, request.form)
     if register_form.validate_on_submit():
-        Client.create(name=register_form.name.data,
-                      description=register_form.description.data,
-                      is_confidential=register_form.is_confidential.data,
-                      redirect_uris=register_form.redirect_uris.data,
-                      default_scopes=register_form.default_scopes.data,
-                      created_by=current_user.id).save()
+        Client.create_as(current_user,
+                         name=register_form.name.data,
+                         description=register_form.description.data,
+                         is_confidential=register_form.is_confidential.data,
+                         redirect_uris=register_form.redirect_uris.data,
+                         default_scopes=register_form.default_scopes.data,
+                         created_by=current_user.id).save()
         flash(_('Client "%(name)s" created.', name=register_form.name.data), 'success')
         return redirect(url_for('oauth.client.home'))
     else:
@@ -79,10 +80,11 @@ def edit(client_id):
 
     edit_form = EditForm(current_user, request.form)
     if edit_form.validate_on_submit():
-        client.update(name=edit_form.name.data, description=edit_form.description.data,
-                      is_confidential=edit_form.is_confidential.data,
-                      redirect_uris=edit_form.redirect_uris.data,
-                      default_scopes=edit_form.default_scopes.data).save()
+        client.update_as(current_user,
+                         name=edit_form.name.data, description=edit_form.description.data,
+                         is_confidential=edit_form.is_confidential.data,
+                         redirect_uris=edit_form.redirect_uris.data,
+                         default_scopes=edit_form.default_scopes.data).save()
         flash(_('Thank you for updating client details for "%(client_id)s".', client_id=client_id),
               'success')
         return redirect(url_for('oauth.client.home'))

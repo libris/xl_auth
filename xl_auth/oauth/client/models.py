@@ -3,10 +3,12 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+from datetime import datetime
+
 from six import string_types
 from sqlalchemy.ext.hybrid import hybrid_property
 
-from ...database import Column, Model, db
+from ...database import Column, Model, db, reference_col, relationship
 
 
 class Client(Model):
@@ -16,8 +18,6 @@ class Client(Model):
     client_id = Column(db.String(32), primary_key=True)
     client_secret = Column(db.String(256), unique=True, nullable=False)
 
-    created_by = Column(db.ForeignKey('users.id'), nullable=False)
-
     is_confidential = Column(db.Boolean(), default=True, nullable=False)
 
     _redirect_uris = Column(db.Text(), nullable=False)
@@ -26,6 +26,14 @@ class Client(Model):
     # Human readable info fields
     name = Column(db.String(64))
     description = Column(db.String(400))
+
+    modified_at = Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    modified_by_id = reference_col('users', nullable=True)
+    modified_by = relationship('User', foreign_keys=modified_by_id, uselist=False)
+
+    created_at = Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    created_by_id = reference_col('users', nullable=True)
+    created_by = relationship('User', foreign_keys=created_by_id, uselist=False)
 
     def __init__(self, redirect_uris=None, default_scopes=None, **kwargs):
         """Create instance."""

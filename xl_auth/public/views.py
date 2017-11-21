@@ -79,7 +79,7 @@ def reset_password(email, code):
         password_reset.user.set_password(reset_password_form.password.data)
         if not password_reset.user.is_active:
             password_reset.user.is_active = True
-        password_reset.user.save()
+        password_reset.user.save_as(password_reset.user)
         flash(_('Password for "%(username)s" has been reset.',
                 username=reset_password_form.username.data), 'success')
         return redirect(url_for('public.home'))
