@@ -78,6 +78,9 @@ class CollectionFactory(BaseFactory):
     category = choice(['bibliography', 'library', 'uncategorized'])
     is_active = True
 
+    modified_by = LazyFunction(UserFactory)
+    created_by = LazyFunction(UserFactory)
+
     class Meta:
         """Factory configuration."""
 
