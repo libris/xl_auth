@@ -15,7 +15,6 @@ from xl_auth.user.models import User
 from ..factories import PermissionFactory, SuperUserFactory
 
 
-@pytest.mark.usefixtures('db')
 def test_get_by_id(user, collection):
     """Get permission by ID."""
     permission = Permission(user=user, collection=collection)
@@ -41,7 +40,6 @@ def test_created_by_and_modified_by_is_updated(superuser, user, collection):
     assert permission.modified_by == another_superuser
 
 
-@pytest.mark.usefixtures('db')
 def test_created_at_defaults_to_datetime(user, collection):
     """Test creation date."""
     permission = Permission(user=user, collection=collection)
@@ -51,7 +49,6 @@ def test_created_at_defaults_to_datetime(user, collection):
     assert isinstance(permission.created_at, datetime)
 
 
-@pytest.mark.usefixtures('db')
 def test_modified_at_defaults_to_current_datetime(user, collection):
     """Test modified date."""
     permission = Permission(user=user, collection=collection)
@@ -66,7 +63,6 @@ def test_modified_at_defaults_to_current_datetime(user, collection):
     assert first_modified_at != permission.modified_at
 
 
-@pytest.mark.usefixtures('db')
 def test_factory(db):
     """Test permission factory."""
     permission = PermissionFactory()
@@ -85,14 +81,12 @@ def test_factory(db):
     assert isinstance(permission.created_by, User)
 
 
-@pytest.mark.usefixtures('db')
 def test_repr(user, collection):
     """Check repr output."""
     permission = PermissionFactory(user=user, collection=collection)
     assert repr(permission) == '<Permission({!r}@{!r})>'.format(user, collection)
 
 
-@pytest.mark.usefixtures('db')
 def test_unique_constraint(user, collection):
     """Test uniqueness constraint for user-collection pairs."""
     permission = PermissionFactory(user=user, collection=collection)

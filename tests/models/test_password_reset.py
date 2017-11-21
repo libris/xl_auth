@@ -14,7 +14,6 @@ from xl_auth.user.models import PasswordReset, User
 from ..factories import PasswordResetFactory, UserFactory
 
 
-@pytest.mark.usefixtures('db')
 def test_get_by_id(user):
     """Get password reset by ID."""
     password_reset = PasswordReset(user)
@@ -24,7 +23,6 @@ def test_get_by_id(user):
     assert retrieved == password_reset
 
 
-@pytest.mark.usefixtures('db')
 def test_created_at_defaults_to_datetime(user):
     """Test creation date."""
     password_reset = PasswordReset(user)
@@ -33,7 +31,6 @@ def test_created_at_defaults_to_datetime(user):
     assert isinstance(password_reset.created_at, dt.datetime)
 
 
-@pytest.mark.usefixtures('db')
 def test_modified_at_defaults_to_current_datetime(user):
     """Test modified date."""
     password_reset = PasswordReset(user)
@@ -49,7 +46,6 @@ def test_modified_at_defaults_to_current_datetime(user):
     assert first_modified_at != password_reset.modified_at
 
 
-@pytest.mark.usefixtures('db')
 def test_code_defaults_to_a_random_one_with_length_32(user):
     """Test code field is automatically assigned some 32-char random string."""
     password_reset_1 = PasswordReset(user)
@@ -63,7 +59,6 @@ def test_code_defaults_to_a_random_one_with_length_32(user):
     assert len(password_reset_2.code) == 32
 
 
-@pytest.mark.usefixtures('db')
 def test_factory(db):
     """Test password reset factory."""
     password_reset = PasswordResetFactory()
@@ -92,7 +87,6 @@ def test_repr():
     assert repr(password_reset) == '<PasswordReset({!r})>'.format(password_reset.user.email)
 
 
-@pytest.mark.usefixtures('db')
 def test_unique_constraint(user):
     """Test uniqueness constraint for user-code pairs."""
     password_reset = PasswordResetFactory(user=user)

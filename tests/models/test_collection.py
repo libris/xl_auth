@@ -50,7 +50,6 @@ def test_modified_at_defaults_to_current_datetime():
     assert first_modified_at != collection.modified_at
 
 
-@pytest.mark.usefixtures('db')
 def test_factory(db):
     """Test collection factory."""
     collection = CollectionFactory()
@@ -66,7 +65,6 @@ def test_factory(db):
     assert bool(collection.created_at)
 
 
-@pytest.mark.usefixtures('db')
 def test_adding_permissions(user):
     """Add a permission on the collection."""
     collection = CollectionFactory()
@@ -77,7 +75,6 @@ def test_adding_permissions(user):
     assert permission in collection.permissions
 
 
-@pytest.mark.usefixtures('db')
 def test_removing_permissions(user):
     """Remove the permissions an a collection."""
     collection = CollectionFactory()

@@ -107,7 +107,9 @@ class ClientFactory(BaseFactory):
     is_confidential = True
     redirect_uris = 'https://libris.kb.se http://example.com'
     default_scopes = 'read write'
-    created_by = '1'
+
+    modified_by = LazyFunction(UserFactory)
+    created_by = LazyFunction(UserFactory)
 
     class Meta:
         """Factory configuration."""
