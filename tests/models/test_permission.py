@@ -12,7 +12,7 @@ from xl_auth.collection.models import Collection
 from xl_auth.permission.models import Permission
 from xl_auth.user.models import User
 
-from ..factories import PermissionFactory
+from ..factories import PermissionFactory, SuperUserFactory
 
 
 @pytest.mark.usefixtures('db')
@@ -23,6 +23,22 @@ def test_get_by_id(user, collection):
 
     retrieved = Permission.get_by_id(permission.id)
     assert retrieved == permission
+
+
+def test_created_by_and_modified_by_is_updated(superuser, user, collection):
+    """Test created/modified by."""
+    permission = Permission(user=user, collection=collection)
+    permission.save_as(superuser)
+    assert permission.created_by_id == superuser.id
+    assert permission.created_by == superuser
+    assert permission.modified_by_id == superuser.id
+    assert permission.modified_by == superuser
+
+    # Another superuser updates something in the permission.
+    another_superuser = SuperUserFactory()
+    permission.update_as(another_superuser, commit=True, cataloger=not permission.cataloger)
+    assert permission.created_by == superuser
+    assert permission.modified_by == another_superuser
 
 
 @pytest.mark.usefixtures('db')

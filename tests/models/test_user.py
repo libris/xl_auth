@@ -23,6 +23,21 @@ def test_get_by_id():
     assert retrieved == user
 
 
+def test_created_by_and_modified_by_is_updated(superuser):
+    """Test created/modified by."""
+    user = User(email='foo@bar.com', full_name='Mrs. Foo Bar')
+    user.save_as(superuser)
+    assert user.created_by_id == superuser.id
+    assert user.created_by == superuser
+    assert user.modified_by_id == superuser.id
+    assert user.modified_by == superuser
+
+    # User updates something in their profile.
+    user.update_as(user, commit=True, full_name='Non-gendered Foo Bar')
+    assert user.created_by == superuser
+    assert user.modified_by == user
+
+
 @pytest.mark.usefixtures('db')
 def test_created_at_defaults_to_datetime():
     """Test creation date."""
@@ -30,20 +45,6 @@ def test_created_at_defaults_to_datetime():
     user.save()
     assert bool(user.created_at)
     assert isinstance(user.created_at, dt.datetime)
-
-
-def test_created_by_and_modified_by_is_updated(superuser):
-    """Test created by."""
-    user = User(email='foo@bar.com', full_name='Mrs. Foo Bar')
-    user.save(current_user=superuser)
-    assert user.created_by_id == superuser.id
-    assert user.created_by == superuser
-    assert user.modified_by_id == superuser.id
-    assert user.modified_by == superuser
-
-    # User updates something in their profile.
-    user.update(user, commit=True, full_name='Non-gendered Foo Bar')
-    assert user.modified_by == user
 
 
 @pytest.mark.usefixtures('db')
@@ -124,7 +125,7 @@ def test_adding_permissions(collection):
     user = UserFactory()
     user.save()
     permission = Permission(user=user, collection=collection)
-    permission.save()
+    permission.save_as(user)
 
     assert permission in user.permissions
 
@@ -135,7 +136,7 @@ def test_removing_permissions(collection):
     user = UserFactory()
     user.save()
     permission = Permission(user=user, collection=collection)
-    permission.save()
+    permission.save_as(user)
     permission.delete()
 
     assert permission not in user.permissions
