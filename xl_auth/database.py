@@ -24,21 +24,50 @@ class CRUDMixin(object):
     """Mixin that adds convenience methods for CRUD (create, read, update, delete) operations."""
 
     @classmethod
+    def create_as(cls, current_user, **kwargs):
+        assert hasattr(cls, 'modified_by') and hasattr(cls, 'created_by')
+        instance = cls(**kwargs)
+        instance.modified_by = instance.created_by = current_user
+        return instance.save_as(current_user)
+
+    @classmethod
     def create(cls, **kwargs):
         """Create a new record and save it the database."""
         instance = cls(**kwargs)
         return instance.save()
 
-    def update(self, commit=True, **kwargs):
+    def update_as(self, current_user, commit=True, preserve_modified=False, **kwargs):
+        """Update specific fields of the record as 'current_user'."""
+        for attr, value in kwargs.items():
+            setattr(self, attr, value)
+        return self.save_as(current_user, commit=commit, preserve_modified=preserve_modified)
+
+    def update(self, commit=True, preserve_modified=False, **kwargs):
         """Update specific fields of a record."""
         for attr, value in kwargs.items():
             setattr(self, attr, value)
-        return commit and self.save() or self
+        return self.save(commit=commit, preserve_modified=preserve_modified)
 
-    def save(self, commit=True):
+    def save_as(self, current_user, commit=True, preserve_modified=False):
+        """Save instance as 'current_user'."""
+        assert hasattr(self, 'modified_by') and hasattr(self, 'created_by')
+        # noinspection PyUnresolvedReferences
+        if current_user and not self.created_at:
+            # noinspection PyAttributeOutsideInit
+            self.created_by = current_user
+        if current_user and not preserve_modified:
+            # noinspection PyAttributeOutsideInit
+            self.modified_by = current_user
+        return self.save(commit=commit, preserve_modified=preserve_modified)
+
+    def save(self, commit=True, preserve_modified=False):
         """Save the record."""
         db.session.add(self)
         if commit:
+            if preserve_modified and hasattr(self, 'modified_at'):
+                modified_dt = self.modified_at
+                db.session.commit()
+                self.modified_at = modified_dt
             db.session.commit()
         return self
 
