@@ -14,6 +14,10 @@ from xl_auth.collection.models import Collection
 
 def test_superuser_can_edit_existing_collection(superuser, collection, testapp):
     """Edit an existing collection."""
+    # Check expected premises
+    collection_creator = collection.created_by
+    initial_modified_by = collection.modified_by
+    assert collection_creator != superuser and initial_modified_by != superuser
     # Goes to homepage
     res = testapp.get('/')
     # Fills out login form
@@ -39,6 +43,9 @@ def test_superuser_can_edit_existing_collection(superuser, collection, testapp):
     edited_collection = Collection.query.filter(Collection.code == collection.code).first()
     assert edited_collection.friendly_name == form['friendly_name'].value
     assert edited_collection.category == form['category'].value
+    # 'modified_by' is updated to reflect change, with 'created_by' intact
+    assert edited_collection.created_by == collection_creator
+    assert edited_collection.modified_by == superuser
     # The edited collection is listed under existing collections
     collection_id = 'collection-{0}'.format(form['code'].value)
     collection_anchor_xpath = "//a[@class='anchor' and @id='{0}']".format(collection_id)
@@ -53,8 +60,7 @@ def test_superuser_can_edit_existing_collection(superuser, collection, testapp):
             _(form['category'].value.capitalize())))) == 1
     else:
         assert len(res.lxml.xpath("//td[contains(., '{0}')]/ancestor::tr/td[contains(., '{1}')]"
-                                  .format(form['code'].value,
-                                          _('No category')))) == 1
+                                  .format(form['code'].value, _('No category')))) == 1
 
 
 def test_superuser_sees_error_message_if_code_is_changed(superuser, collection, testapp):

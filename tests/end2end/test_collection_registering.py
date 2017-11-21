@@ -39,9 +39,13 @@ def test_superuser_can_register_new_collection(superuser, testapp):
     assert res.status_code == 200
     # A new collection was created
     assert len(Collection.query.all()) == old_count + 1
+    registered_collection = Collection.query.filter(Collection.code == form['code'].value).first()
+    # Keeping track of who created what
+    assert registered_collection.created_by == superuser
+    assert registered_collection.modified_by == superuser
     # The new collection is listed under existing collections
-    collection_id = 'collection-{0}'.format(form['code'].value)
-    collection_anchor_xpath = "//a[@class='anchor' and @id='{0}']".format(collection_id)
+    collection_anchor_xpath = "//a[@class='anchor' and @id='{0}']".format(
+        'collection-' + registered_collection.code)
     assert len(res.lxml.xpath(collection_anchor_xpath)) == 1
 
     assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(form['code'].value))) == 1
@@ -52,8 +56,7 @@ def test_superuser_can_register_new_collection(superuser, testapp):
             _(form['category'].value.capitalize())))) == 1
     else:
         assert len(res.lxml.xpath("//td[contains(., '{0}')]/ancestor::tr/td[contains(., '{1}')]"
-                                  .format(form['code'].value,
-                                          _('No category')))) == 1
+                                  .format(form['code'].value, _('No category')))) == 1
 
 
 # noinspection PyUnusedLocal
