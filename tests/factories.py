@@ -36,6 +36,9 @@ class SuperUserFactory(BaseFactory):
     is_active = True
     is_admin = True
 
+    modified_by_id = '1'
+    created_by_id = '1'
+
     class Meta:
         """Factory configuration."""
 

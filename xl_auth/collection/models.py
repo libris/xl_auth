@@ -22,12 +22,13 @@ class Collection(SurrogatePK, Model):
     replaces = Column(db.String(255))
     replaced_by = Column(db.String(255))
 
-    modified_at = Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    modified_by_id = reference_col('users', nullable=True)
+    modified_at = Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow,
+                         nullable=False)
+    modified_by_id = reference_col('users', nullable=False)
     modified_by = relationship('User', foreign_keys=modified_by_id, uselist=False)
 
     created_at = Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    created_by_id = reference_col('users', nullable=True)
+    created_by_id = reference_col('users', nullable=False)
     created_by = relationship('User', foreign_keys=created_by_id, uselist=False)
 
     def __init__(self, code, friendly_name, category, **kwargs):

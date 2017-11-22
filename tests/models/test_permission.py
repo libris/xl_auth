@@ -15,10 +15,10 @@ from xl_auth.user.models import User
 from ..factories import PermissionFactory, SuperUserFactory
 
 
-def test_get_by_id(user, collection):
+def test_get_by_id(superuser, user, collection):
     """Get permission by ID."""
     permission = Permission(user=user, collection=collection)
-    permission.save()
+    permission.save_as(superuser)
 
     retrieved = Permission.get_by_id(permission.id)
     assert retrieved == permission
@@ -40,19 +40,19 @@ def test_created_by_and_modified_by_is_updated(superuser, user, collection):
     assert permission.modified_by == another_superuser
 
 
-def test_created_at_defaults_to_datetime(user, collection):
+def test_created_at_defaults_to_datetime(superuser, user, collection):
     """Test creation date."""
     permission = Permission(user=user, collection=collection)
-    permission.save()
+    permission.save_as(superuser)
 
     assert bool(permission.created_at)
     assert isinstance(permission.created_at, datetime)
 
 
-def test_modified_at_defaults_to_current_datetime(user, collection):
+def test_modified_at_defaults_to_current_datetime(superuser, user, collection):
     """Test modified date."""
     permission = Permission(user=user, collection=collection)
-    permission.save()
+    permission.save_as(superuser)
     first_modified_at = permission.modified_at
 
     assert abs((first_modified_at - permission.created_at).total_seconds()) < 10

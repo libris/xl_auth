@@ -13,11 +13,10 @@ from xl_auth.user.models import PasswordReset, Role, User
 from ..factories import UserFactory
 
 
-@pytest.mark.usefixtures('db')
-def test_get_by_id():
+def test_get_by_id(superuser):
     """Get user by ID."""
     user = User('foo@bar.com', 'Foo Bar')
-    user.save()
+    user.save_as(superuser)
 
     retrieved = User.get_by_id(user.id)
     assert retrieved == user
@@ -38,36 +37,33 @@ def test_created_by_and_modified_by_is_updated(superuser):
     assert user.modified_by == user
 
 
-@pytest.mark.usefixtures('db')
-def test_created_at_defaults_to_datetime():
+def test_created_at_defaults_to_datetime(superuser):
     """Test creation date."""
     user = User(email='foo@bar.com', full_name='Foo Bar')
-    user.save()
+    user.save_as(superuser)
     assert bool(user.created_at)
     assert isinstance(user.created_at, datetime)
 
 
-@pytest.mark.usefixtures('db')
-def test_modified_at_defaults_to_current_datetime():
+def test_modified_at_defaults_to_current_datetime(superuser):
     """Test modified date."""
     user = User('foo@kb.se', 'Wrong Name')
-    user.save()
+    user.save_as(superuser)
     first_modified_at = user.modified_at
 
     assert abs((first_modified_at - user.created_at).total_seconds()) < 10
 
     user.full_name = 'Correct Name'
-    user.save()
+    user.save_as(user)
 
     # Initial 'modified_at' has been overwritten.
     assert first_modified_at != user.modified_at
 
 
-@pytest.mark.usefixtures('db')
-def test_update_last_login_does_not_update_modified_at():
+def test_update_last_login_does_not_update_modified_at(superuser):
     """Test modified date."""
     user = User('foo@kb.se', 'Hello World')
-    user.save()
+    user.save_as(superuser)
     first_modified_at = user.modified_at
 
     # Update 'last_login_at' timestamp.
@@ -77,11 +73,10 @@ def test_update_last_login_does_not_update_modified_at():
     assert first_modified_at == user.modified_at
 
 
-@pytest.mark.usefixtures('db')
-def test_password_defaults_to_a_random_one():
+def test_password_defaults_to_a_random_one(superuser):
     """Test empty password field is assigned some random password, instead of being set to tull."""
     user = User(email='foo@bar.com', full_name='Foo Bar')
-    user.save()
+    user.save_as(superuser)
     assert user.password is not None
 
 
@@ -108,10 +103,9 @@ def test_factory(db):
     assert isinstance(user.created_by, User)
 
 
-@pytest.mark.usefixtures('db')
-def test_check_password():
+def test_check_password(superuser):
     """Check password."""
-    user = User.create(email='foo@bar.com', full_name='Foo Bar', password='fooBarBaz123')
+    user = User.create_as(superuser, email='foo@bar.com', full_name='Foo Bar', password='fooBarBaz123')
     assert user.check_password('fooBarBaz123') is True
     assert user.check_password('barFooBaz') is False
 

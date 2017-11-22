@@ -24,15 +24,16 @@ class Client(Model):
     _default_scopes = Column(db.Text(), nullable=False)
 
     # Human readable info fields
-    name = Column(db.String(64))
-    description = Column(db.String(400))
+    name = Column(db.String(64), nullable=False)
+    description = Column(db.String(400), nullable=False)
 
-    modified_at = Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    modified_by_id = reference_col('users', nullable=True)
+    modified_at = Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow,
+                         nullable=False)
+    modified_by_id = reference_col('users', nullable=False)
     modified_by = relationship('User', foreign_keys=modified_by_id, uselist=False)
 
     created_at = Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    created_by_id = reference_col('users', nullable=True)
+    created_by_id = reference_col('users', nullable=False)
     created_by = relationship('User', foreign_keys=created_by_id, uselist=False)
 
     def __init__(self, redirect_uris=None, default_scopes=None, **kwargs):

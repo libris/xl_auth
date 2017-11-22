@@ -13,11 +13,11 @@ from xl_auth.user.models import User
 from ..factories import ClientFactory, SuperUserFactory
 
 
-@pytest.mark.usefixtures('db')
-def test_get_by_id():
+def test_get_by_id(superuser):
     """Get client by ID."""
-    client = Client(redirect_uris='http://example.com', default_scopes='fake')
-    client.save()
+    client = Client(name='favv', description='favorite client', redirect_uris='http://example.com',
+                    default_scopes='fake')
+    client.save_as(superuser)
 
     retrieved = Client.get_by_id(client.client_id)
     assert retrieved == client
@@ -25,7 +25,8 @@ def test_get_by_id():
 
 def test_created_by_and_modified_by_is_updated(superuser):
     """Test created/modified by."""
-    client = Client(redirect_uris='http://example.com', default_scopes='fake')
+    client = Client(name='favv', description='favorite client', redirect_uris='http://example.com',
+                    default_scopes='fake')
     client.save_as(superuser)
     assert client.created_by_id == superuser.id
     assert client.created_by == superuser
@@ -39,21 +40,21 @@ def test_created_by_and_modified_by_is_updated(superuser):
     assert client.modified_by == another_superuser
 
 
-@pytest.mark.usefixtures('db')
-def test_created_at_defaults_to_datetime():
+def test_created_at_defaults_to_datetime(superuser):
     """Test creation date."""
-    client = Client(redirect_uris='http://example.com', default_scopes='fake')
-    client.save()
+    client = Client(name='favv', description='favorite client', redirect_uris='http://example.com',
+                    default_scopes='fake')
+    client.save_as(superuser)
 
     assert bool(client.created_at)
     assert isinstance(client.created_at, datetime)
 
 
-@pytest.mark.usefixtures('db')
-def test_modified_at_defaults_to_current_datetime():
+def test_modified_at_defaults_to_current_datetime(superuser):
     """Test modified date."""
-    client = Client(redirect_uris='http://example.com', default_scopes='fake')
-    client.save()
+    client = Client(name='favv', description='favorite client', redirect_uris='http://example.com',
+                    default_scopes='fake')
+    client.save_as(superuser)
     first_modified_at = client.modified_at
 
     assert abs((first_modified_at - client.created_at).total_seconds()) < 10
