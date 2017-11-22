@@ -191,6 +191,52 @@ def urls(url, order):
 
 
 @click.command()
+@with_appcontext
+def one_off_backfill():
+    """One-off backfill for b984311d26d7 with default admin user, if exists."""
+    from datetime import datetime
+    from .collection.models import Collection
+    from .permission.models import Permission
+    from .oauth.client.models import Client
+
+    from os import getenv
+    for var in ['FLASK_DEBUG', 'SQLALCHEMY_DATABASE_URI']:
+        print('%s: %r' % (var, getenv(var)))
+
+    with current_app.test_request_context():
+        superuser = User.get_by_email('libris@kb.se')
+        if superuser:
+            for client in Client.query.all():
+                client.created_at = datetime.utcnow()
+                client.save_as(superuser)
+
+            for collection in Collection.query.all():
+                collection.created_by = superuser
+                collection.modified_by = superuser
+                if not collection.modified_at:
+                    collection.modified_at = collection.created_at
+                if collection.modified_at == collection.created_at:
+                    if collection.replaced_by:
+                        replacement = Collection.query.filter_by(
+                            code=collection.replaced_by).first()
+                        if replacement.created_at > collection.modified_at:
+                            collection.modified_at = replacement.created_at
+                collection.save_as(superuser, preserve_modified=True)
+
+            for permission in Permission.query.all():
+                permission.created_by = superuser
+                permission.modified_by = superuser
+                permission.save_as(superuser, preserve_modified=True)
+
+            for user in User.query.all():
+                user.created_by_id = superuser.id
+                user.modified_by_id = superuser.id
+                if not user.modified_at:
+                    user.modified_at = user.created_at
+                user.save_as(superuser, preserve_modified=True)
+
+
+@click.command()
 @click.option('-v', '--verbose', default=False, is_flag=True, help='Increase verbosity')
 @click.option('--admin-email', required=True, default=None, help='Email for admin')
 @click.option('--wipe-permissions', default=False, is_flag=True, help='Wipe outdated permissions')

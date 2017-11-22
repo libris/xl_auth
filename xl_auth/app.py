@@ -85,3 +85,4 @@ def register_commands(app):
     app.cli.add_command(commands.create_user)
     app.cli.add_command(commands.urls)
     app.cli.add_command(commands.import_data)
+    app.cli.add_command(commands.one_off_backfill)
