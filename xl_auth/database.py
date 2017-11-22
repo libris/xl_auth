@@ -28,7 +28,6 @@ class CRUDMixin(object):
         """Create a new record and save it to the database as 'current_user'."""
         assert hasattr(cls, 'modified_by') and hasattr(cls, 'created_by')
         instance = cls(**kwargs)
-        instance.modified_by = instance.created_by = current_user
         return instance.save_as(current_user)
 
     @classmethod

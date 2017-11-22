@@ -105,7 +105,8 @@ def test_factory(db):
 
 def test_check_password(superuser):
     """Check password."""
-    user = User.create_as(superuser, email='foo@bar.com', full_name='Foo Bar', password='fooBarBaz123')
+    user = User.create_as(superuser, email='foo@bar.com', full_name='Foo Bar',
+                          password='fooBarBaz123')
     assert user.check_password('fooBarBaz123') is True
     assert user.check_password('barFooBaz') is False
 
