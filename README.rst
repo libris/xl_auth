@@ -175,12 +175,18 @@ Technology choices:
 DB Models
 ---------
 
-.. image:: https://user-images.githubusercontent.com/786326/32836181-43de9248-ca09-11e7-99c5-7b877272aef4.png
-   :alt: screen shot 2017-11-15 at 1 30 31 pm
+.. image:: https://user-images.githubusercontent.com/786326/33126887-7b6c746e-cf86-11e7-9176-1d500739adf7.png
+   :alt: screen shot 2017-11-22 at 12 24 37 pm
 
 
 Changelog
 =========
+
+v. 0.6.1
+--------
+
+* Under-the-hood traceability updates (`#78 <https://github.com/libris/xl_auth/issues/78>`_)
+
 
 v. 0.6.0
 --------
