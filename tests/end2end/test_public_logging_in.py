@@ -38,10 +38,13 @@ def test_unauthorized_leads_to_login_which_follows_next_redirect_param_on_succes
     assert '/oauth/authorize?param1=value1&param2=value2' in res.location
 
 
-def test_successful_login_updates_last_login_at(user, testapp):
-    """Successful login sets 'last_login_at' to current UTC datetime."""
+def test_successful_login_updates_last_login_at_only(user, testapp):
+    """Successful login sets 'last_login_at' to current UTC datetime (but not 'modified_*')."""
+    # Check expected premises.
     assert user.last_login_at is None
-
+    initial_modified_at = user.modified_at
+    initial_modified_by = user.modified_by
+    assert initial_modified_by != user
     # Goes to homepage.
     res = testapp.get('/')
     # Fills out login form.
@@ -52,10 +55,12 @@ def test_successful_login_updates_last_login_at(user, testapp):
     res = form.submit().follow()
     assert res.status_code == 200
 
-    # Fetch user from database, now with login timestamp.
+    # Fetch user from database, now with login timestamp but no modified at/by changes.
     updated_user = User.get_by_id(user.id)
     assert isinstance(updated_user.last_login_at, datetime)
     assert (datetime.utcnow() - updated_user.last_login_at).total_seconds() < 10
+    assert updated_user.modified_at == initial_modified_at
+    assert updated_user.modified_by == initial_modified_by
 
 
 def test_sees_alert_on_log_out(user, testapp):

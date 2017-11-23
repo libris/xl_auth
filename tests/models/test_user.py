@@ -3,7 +3,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import datetime as dt
+from datetime import datetime
 
 import pytest
 
@@ -13,46 +13,70 @@ from xl_auth.user.models import PasswordReset, Role, User
 from ..factories import UserFactory
 
 
-@pytest.mark.usefixtures('db')
-def test_get_by_id():
+def test_get_by_id(superuser):
     """Get user by ID."""
-    user = User('foo@bar.com', 'Mr. Foo Bar')
-    user.save()
+    user = User('foo@bar.com', 'Foo Bar')
+    user.save_as(superuser)
 
     retrieved = User.get_by_id(user.id)
     assert retrieved == user
 
 
-@pytest.mark.usefixtures('db')
-def test_created_at_defaults_to_datetime():
+def test_created_by_and_modified_by_is_updated(superuser):
+    """Test created/modified by."""
+    user = User(email='foo@bar.com', full_name='Foo Bar')
+    user.save_as(superuser)
+    assert user.created_by_id == superuser.id
+    assert user.created_by == superuser
+    assert user.modified_by_id == superuser.id
+    assert user.modified_by == superuser
+
+    # User updates something in their profile.
+    user.update_as(user, commit=True, full_name='Bar Foo')
+    assert user.created_by == superuser
+    assert user.modified_by == user
+
+
+def test_created_at_defaults_to_datetime(superuser):
     """Test creation date."""
-    user = User(email='foo@bar.com', full_name='Mr. Foo Bar')
-    user.save()
+    user = User(email='foo@bar.com', full_name='Foo Bar')
+    user.save_as(superuser)
     assert bool(user.created_at)
-    assert isinstance(user.created_at, dt.datetime)
+    assert isinstance(user.created_at, datetime)
 
 
-@pytest.mark.usefixtures('db')
-def test_modified_at_defaults_to_current_datetime():
+def test_modified_at_defaults_to_current_datetime(superuser):
     """Test modified date."""
     user = User('foo@kb.se', 'Wrong Name')
-    user.save()
+    user.save_as(superuser)
     first_modified_at = user.modified_at
 
     assert abs((first_modified_at - user.created_at).total_seconds()) < 10
 
     user.full_name = 'Correct Name'
-    user.save()
+    user.save_as(user)
 
     # Initial 'modified_at' has been overwritten.
     assert first_modified_at != user.modified_at
 
 
-@pytest.mark.usefixtures('db')
-def test_password_defaults_to_a_random_one():
-    """Test empty password field is assigned some random password, instead of being set to tull."""
-    user = User(email='foo@bar.com', full_name='Mr. Foo Bar')
-    user.save()
+def test_update_last_login_does_not_update_modified_at(superuser):
+    """Test modified date."""
+    user = User('foo@kb.se', 'Hello World')
+    user.save_as(superuser)
+    first_modified_at = user.modified_at
+
+    # Update 'last_login_at' timestamp.
+    user.update_last_login(commit=True)
+
+    # Initial 'modified_at' is still the same.
+    assert first_modified_at == user.modified_at
+
+
+def test_password_defaults_to_a_random_one(superuser):
+    """Test empty password field is assigned some random password, instead of being set to null."""
+    user = User(email='foo@bar.com', full_name='Foo Bar')
+    user.save_as(superuser)
     assert user.password is not None
 
 
@@ -61,22 +85,28 @@ def test_factory(db):
     """Test user factory."""
     user = UserFactory(password='myPrecious')
     db.session.commit()
+
     assert bool(user.email)
     assert bool(user.full_name)
-    assert bool(user.modified_at)
-    assert bool(user.created_at)
-    assert isinstance(user.permissions, list)
-    assert isinstance(user.roles, list)
-    assert user.is_admin is False
-    assert user.is_active is True
     assert user.check_password('myPrecious')
     assert user.last_login_at is None
+    assert user.is_active is True
+    assert user.is_admin is False
+
+    assert isinstance(user.permissions, list)
+    assert isinstance(user.roles, list)
+    assert isinstance(user.password_resets, list)
+
+    assert isinstance(user.modified_at, datetime)
+    assert isinstance(user.modified_by, User)
+    assert isinstance(user.created_at, datetime)
+    assert isinstance(user.created_by, User)
 
 
-@pytest.mark.usefixtures('db')
-def test_check_password():
+def test_check_password(superuser):
     """Check password."""
-    user = User.create(email='foo@bar.com', full_name='Mr. Foo Bar', password='fooBarBaz123')
+    user = User.create_as(superuser, email='foo@bar.com', full_name='Foo Bar',
+                          password='fooBarBaz123')
     assert user.check_password('fooBarBaz123') is True
     assert user.check_password('barFooBaz') is False
 
@@ -94,7 +124,7 @@ def test_adding_permissions(collection):
     user = UserFactory()
     user.save()
     permission = Permission(user=user, collection=collection)
-    permission.save()
+    permission.save_as(user)
 
     assert permission in user.permissions
 
@@ -105,7 +135,7 @@ def test_removing_permissions(collection):
     user = UserFactory()
     user.save()
     permission = Permission(user=user, collection=collection)
-    permission.save()
+    permission.save_as(user)
     permission.delete()
 
     assert permission not in user.permissions
@@ -140,7 +170,7 @@ def test_roles():
 
 
 @pytest.mark.usefixtures('db')
-def test_adding_password_reset(collection):
+def test_adding_password_reset():
     """Associate user with a password reset code."""
     user = UserFactory()
     user.save()
@@ -157,7 +187,7 @@ def test_adding_password_reset(collection):
 
 
 @pytest.mark.usefixtures('db')
-def test_removing_password_reset(collection):
+def test_removing_password_reset():
     """Remove password reset from a user."""
     user = UserFactory()
     user.save()

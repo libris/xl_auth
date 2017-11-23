@@ -3,7 +3,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import datetime as dt
+from datetime import datetime
 
 import pytest
 from flask_babel import gettext as _
@@ -11,35 +11,49 @@ from six import string_types
 
 from xl_auth.collection.models import Collection
 from xl_auth.permission.models import Permission
+from xl_auth.user.models import User
 
-from ..factories import CollectionFactory
+from ..factories import CollectionFactory, SuperUserFactory
 
 
-@pytest.mark.usefixtures('db')
-def test_get_by_id():
+def test_get_by_id(superuser):
     """Get collection by ID."""
     collection = Collection(code='SKB', friendly_name='Literature by Strindberg',
                             category='bibliography')
-    collection.save()
+    collection.save_as(superuser)
 
     retrieved = Collection.get_by_id(collection.id)
     assert retrieved == collection
 
 
-@pytest.mark.usefixtures('db')
-def test_created_at_defaults_to_datetime():
+def test_created_by_and_modified_by_is_updated(superuser):
+    """Test created/modified by."""
+    collection = Collection('KBX', 'Secret books', 'library')
+    collection.save_as(superuser)
+    assert collection.created_by_id == superuser.id
+    assert collection.created_by == superuser
+    assert collection.modified_by_id == superuser.id
+    assert collection.modified_by == superuser
+
+    # Another superuser updates something in the collection.
+    another_superuser = SuperUserFactory()
+    collection.update_as(another_superuser, commit=True, is_active=not collection.is_active)
+    assert collection.created_by == superuser
+    assert collection.modified_by == another_superuser
+
+
+def test_created_at_defaults_to_datetime(superuser):
     """Test creation date."""
     collection = Collection('KBX', 'Secret books', 'library')
-    collection.save()
+    collection.save_as(superuser)
     assert bool(collection.created_at)
-    assert isinstance(collection.created_at, dt.datetime)
+    assert isinstance(collection.created_at, datetime)
 
 
-@pytest.mark.usefixtures('db')
-def test_modified_at_defaults_to_current_datetime():
+def test_modified_at_defaults_to_current_datetime(superuser):
     """Test modified date."""
     collection = Collection('KBU', 'Outdated name', 'library')
-    collection.save()
+    collection.save_as(superuser)
     first_modified_at = collection.modified_at
 
     assert abs((first_modified_at - collection.created_at).total_seconds()) < 10
@@ -50,7 +64,6 @@ def test_modified_at_defaults_to_current_datetime():
     assert first_modified_at != collection.modified_at
 
 
-@pytest.mark.usefixtures('db')
 def test_factory(db):
     """Test collection factory."""
     collection = CollectionFactory()
@@ -59,31 +72,32 @@ def test_factory(db):
     assert isinstance(collection.friendly_name, string_types)
     assert collection.category in {'bibliography', 'library', 'uncategorized'}
     assert collection.is_active is True
+    assert isinstance(collection.permissions, list)
     assert collection.replaces is None
     assert collection.replaced_by is None
-    assert isinstance(collection.permissions, list)
-    assert bool(collection.modified_at)
-    assert bool(collection.created_at)
+
+    assert isinstance(collection.modified_at, datetime)
+    assert isinstance(collection.modified_by, User)
+    assert isinstance(collection.created_at, datetime)
+    assert isinstance(collection.created_by, User)
 
 
-@pytest.mark.usefixtures('db')
-def test_adding_permissions(user):
+def test_adding_permissions(superuser, user):
     """Add a permission on the collection."""
     collection = CollectionFactory()
     collection.save()
     permission = Permission(user=user, collection=collection)
-    permission.save()
+    permission.save_as(superuser)
 
     assert permission in collection.permissions
 
 
-@pytest.mark.usefixtures('db')
-def test_removing_permissions(user):
+def test_removing_permissions(superuser, user):
     """Remove the permissions an a collection."""
     collection = CollectionFactory()
     collection.save()
     permission = Permission(user=user, collection=collection)
-    permission.save()
+    permission.save_as(superuser)
     permission.delete()
 
     assert permission not in collection.permissions

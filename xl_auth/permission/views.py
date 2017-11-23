@@ -34,7 +34,8 @@ def register():
 
     register_permission_form = RegisterForm(current_user, request.form)
     if register_permission_form.validate_on_submit():
-        permission = Permission.create(
+        permission = Permission.create_as(
+            current_user,
             user_id=register_permission_form.user_id.data,
             collection_id=register_permission_form.collection_id.data,
             registrant=register_permission_form.registrant.data,
@@ -64,7 +65,7 @@ def edit(permission_id):
 
     edit_permission_form = EditForm(current_user, permission_id, request.form)
     if edit_permission_form.validate_on_submit():
-        permission.update(**edit_permission_form.data).save()
+        permission.update_as(current_user, **edit_permission_form.data).save()
         flash(_('Updated permissions for "%(username)s" on collection "%(code)s".',
                 username=permission.user.email, code=permission.collection.code), 'success')
         return redirect(url_for('permission.home'))

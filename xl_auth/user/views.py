@@ -46,12 +46,12 @@ def register():
         if register_user_form.send_password_reset_email.data:
             password_reset = PasswordReset(user)
             password_reset.send_email()
-            user.save()
+            user.save_as(current_user)
             password_reset.save()
             flash(_('User "%(username)s" registered and emailed with a password reset link.',
                     username=user.email), 'success')
         else:
-            user.save()
+            user.save_as(current_user)
             flash(_('User "%(username)s" registered.', username=user.email), 'success')
         return redirect(url_for('user.home'))
     else:
@@ -73,9 +73,10 @@ def administer(user_id):
 
     administer_form = AdministerForm(current_user, user.email, request.form)
     if administer_form.validate_on_submit():
-        user.update(full_name=administer_form.full_name.data,
-                    is_active=administer_form.is_active.data,
-                    is_admin=administer_form.is_admin.data).save()
+        user.update_as(current_user,
+                       full_name=administer_form.full_name.data,
+                       is_active=administer_form.is_active.data,
+                       is_admin=administer_form.is_admin.data).save()
         flash(_('Thank you for updating user details for "%(username)s".', username=user.email),
               'success')
         return redirect(url_for('user.home'))
@@ -99,7 +100,7 @@ def edit_details(user_id):
 
     edit_details_form = EditDetailsForm(current_user, user.email, request.form)
     if edit_details_form.validate_on_submit():
-        user.update(full_name=edit_details_form.full_name.data).save()
+        user.update_as(current_user, full_name=edit_details_form.full_name.data).save()
         flash(_('Thank you for updating user details for "%(username)s".', username=user.email),
               'success')
         if current_user.is_admin:
@@ -128,7 +129,7 @@ def change_password(user_id):
     change_password_form = ChangePasswordForm(current_user, user.email, request.form)
     if change_password_form.validate_on_submit():
         user.set_password(change_password_form.password.data)
-        user.save()
+        user.save_as(current_user)
         flash(_('Thank you for changing password for "%(username)s".', username=user.email),
               'success')
         if current_user.is_admin:

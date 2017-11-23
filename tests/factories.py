@@ -27,20 +27,6 @@ class BaseFactory(SQLAlchemyModelFactory):
         sqlalchemy_session = db.session
 
 
-class UserFactory(BaseFactory):
-    """User factory."""
-
-    email = Sequence(lambda _: 'user{0}@example.com'.format(_))
-    full_name = Sequence(lambda _: 'full_name{0}'.format(_))
-    password = PostGenerationMethodCall('set_password', 'example')
-    is_active = True
-
-    class Meta:
-        """Factory configuration."""
-
-        model = User
-
-
 class SuperUserFactory(BaseFactory):
     """Super user factory."""
 
@@ -49,6 +35,26 @@ class SuperUserFactory(BaseFactory):
     password = PostGenerationMethodCall('set_password', 'example')
     is_active = True
     is_admin = True
+
+    modified_by_id = '1'
+    created_by_id = '1'
+
+    class Meta:
+        """Factory configuration."""
+
+        model = User
+
+
+class UserFactory(BaseFactory):
+    """User factory."""
+
+    email = Sequence(lambda _: 'user{0}@example.com'.format(_))
+    full_name = Sequence(lambda _: 'full_name{0}'.format(_))
+    password = PostGenerationMethodCall('set_password', 'example')
+    is_active = True
+
+    modified_by = LazyFunction(SuperUserFactory)
+    created_by = LazyFunction(SuperUserFactory)
 
     class Meta:
         """Factory configuration."""
@@ -75,6 +81,9 @@ class CollectionFactory(BaseFactory):
     category = choice(['bibliography', 'library', 'uncategorized'])
     is_active = True
 
+    modified_by = LazyFunction(UserFactory)
+    created_by = LazyFunction(UserFactory)
+
     class Meta:
         """Factory configuration."""
 
@@ -86,6 +95,9 @@ class PermissionFactory(BaseFactory):
 
     user = LazyFunction(UserFactory)
     collection = LazyFunction(CollectionFactory)
+
+    modified_by = LazyFunction(UserFactory)
+    created_by = LazyFunction(UserFactory)
 
     class Meta:
         """Factory configuration."""
@@ -101,7 +113,9 @@ class ClientFactory(BaseFactory):
     is_confidential = True
     redirect_uris = 'https://libris.kb.se http://example.com'
     default_scopes = 'read write'
-    created_by = '1'
+
+    modified_by = LazyFunction(UserFactory)
+    created_by = LazyFunction(UserFactory)
 
     class Meta:
         """Factory configuration."""
