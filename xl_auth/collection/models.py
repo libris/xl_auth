@@ -25,11 +25,11 @@ class Collection(SurrogatePK, Model):
     modified_at = Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow,
                          nullable=False)
     modified_by_id = reference_col('users', nullable=False)
-    modified_by = relationship('User', foreign_keys=modified_by_id, uselist=False)
+    modified_by = relationship('User', foreign_keys=modified_by_id)
 
     created_at = Column(db.DateTime, default=datetime.utcnow, nullable=False)
     created_by_id = reference_col('users', nullable=False)
-    created_by = relationship('User', foreign_keys=created_by_id, uselist=False)
+    created_by = relationship('User', foreign_keys=created_by_id)
 
     def __init__(self, code, friendly_name, category, **kwargs):
         """Create instance."""

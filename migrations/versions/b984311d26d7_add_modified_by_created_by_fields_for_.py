@@ -161,13 +161,11 @@ def upgrade():
         modified_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow,
                              nullable=False)
         modified_by_id = reference_col('users', nullable=True)
-        modified_by = relationship('User', remote_side=id, foreign_keys=modified_by_id,
-                                   uselist=False)
+        modified_by = relationship('User', remote_side=id, foreign_keys=modified_by_id)
 
         created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
         created_by_id = reference_col('users', nullable=True)
-        created_by = relationship('User', remote_side=id, foreign_keys=created_by_id,
-                                  uselist=False)
+        created_by = relationship('User', remote_side=id, foreign_keys=created_by_id)
 
         def __init__(self, email, full_name, password=None, **kwargs):
             """Create instance."""
@@ -204,10 +202,9 @@ def upgrade():
 
         __tablename__ = 'permissions'
         user_id = reference_col('users', nullable=False)
-        user = relationship('User', back_populates='permissions', foreign_keys=user_id,
-                            uselist=False)
+        user = relationship('User', back_populates='permissions', foreign_keys=user_id)
         collection_id = reference_col('collections', nullable=False)
-        collection = relationship('Collection', back_populates='permissions', uselist=False)
+        collection = relationship('Collection', back_populates='permissions')
 
         registrant = Column(Boolean(), default=False, nullable=False)
         cataloger = Column(Boolean(), default=False, nullable=False)
@@ -216,11 +213,11 @@ def upgrade():
         modified_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow,
                              nullable=False)
         modified_by_id = reference_col('users', nullable=False)
-        modified_by = relationship('User', foreign_keys=modified_by_id, uselist=False)
+        modified_by = relationship('User', foreign_keys=modified_by_id)
 
         created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
         created_by_id = reference_col('users', nullable=False)
-        created_by = relationship('User', foreign_keys=created_by_id, uselist=False)
+        created_by = relationship('User', foreign_keys=created_by_id)
 
         def __init__(self, **kwargs):
             """Create instance."""
@@ -242,11 +239,11 @@ def upgrade():
         modified_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow,
                              nullable=True)
         modified_by_id = reference_col('users', nullable=True)
-        modified_by = relationship('User', foreign_keys=modified_by_id, uselist=False)
+        modified_by = relationship('User', foreign_keys=modified_by_id)
 
         created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
         created_by_id = reference_col('users', nullable=True)
-        created_by = relationship('User', foreign_keys=created_by_id, uselist=False)
+        created_by = relationship('User', foreign_keys=created_by_id)
 
         def __init__(self, code, friendly_name, category, **kwargs):
             """Create instance."""
@@ -273,11 +270,11 @@ def upgrade():
         modified_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow,
                              nullable=True)
         modified_by_id = reference_col('users', nullable=True)
-        modified_by = relationship('User', foreign_keys=modified_by_id, uselist=False)
+        modified_by = relationship('User', foreign_keys=modified_by_id)
 
         created_at = Column(DateTime, default=datetime.utcnow, nullable=True)
         created_by_id = reference_col('users', nullable=True)
-        created_by = relationship('User', foreign_keys=created_by_id, uselist=False)
+        created_by = relationship('User', foreign_keys=created_by_id)
 
         def __init__(self, redirect_uris=None, default_scopes=None, **kwargs):
             """Create instance."""

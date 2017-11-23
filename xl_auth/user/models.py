@@ -23,7 +23,7 @@ class Role(SurrogatePK, Model):
     __tablename__ = 'roles'
     name = Column(db.String(80), unique=True, nullable=False)
     user_id = reference_col('users', nullable=True)
-    user = relationship('User', back_populates='roles', uselist=False)
+    user = relationship('User', back_populates='roles')
 
     def __init__(self, name, **kwargs):
         """Create instance."""
@@ -39,7 +39,7 @@ class PasswordReset(SurrogatePK, Model):
 
     __tablename__ = 'password_resets'
     user_id = reference_col('users', nullable=True)
-    user = relationship('User', back_populates='password_resets', uselist=False)
+    user = relationship('User', back_populates='password_resets')
     code = Column(db.String(32), unique=True, nullable=False)
     is_active = Column(db.Boolean(), default=True, nullable=False)
     expires_at = Column(db.DateTime, nullable=False,
@@ -124,11 +124,11 @@ class User(UserMixin, SurrogatePK, Model):
     modified_at = Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow,
                          nullable=False)
     modified_by_id = reference_col('users', nullable=False)
-    modified_by = relationship('User', remote_side=id, foreign_keys=modified_by_id, uselist=False)
+    modified_by = relationship('User', remote_side=id, foreign_keys=modified_by_id)
 
     created_at = Column(db.DateTime, default=datetime.utcnow, nullable=False)
     created_by_id = reference_col('users', nullable=False)
-    created_by = relationship('User', remote_side=id, foreign_keys=created_by_id, uselist=False)
+    created_by = relationship('User', remote_side=id, foreign_keys=created_by_id)
 
     def __init__(self, email, full_name, password=None, **kwargs):
         """Create instance."""
