@@ -32,7 +32,7 @@ def test_created_by_and_modified_by_is_updated(superuser):
     assert user.modified_by == superuser
 
     # User updates something in their profile.
-    user.update_as(user, commit=True, full_name='Non-gendered Foo Bar')
+    user.update_as(user, commit=True, full_name='Bar Foo')
     assert user.created_by == superuser
     assert user.modified_by == user
 
@@ -74,7 +74,7 @@ def test_update_last_login_does_not_update_modified_at(superuser):
 
 
 def test_password_defaults_to_a_random_one(superuser):
-    """Test empty password field is assigned some random password, instead of being set to tull."""
+    """Test empty password field is assigned some random password, instead of being set to null."""
     user = User(email='foo@bar.com', full_name='Foo Bar')
     user.save_as(superuser)
     assert user.password is not None
