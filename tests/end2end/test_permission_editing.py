@@ -28,7 +28,7 @@ def test_superuser_can_edit_existing_permission(superuser, permission, testapp):
     # Clicks Permissions button
     res = res.click(_('Permissions'))
     # Clicks Edit button on a permission
-    res = res.click(_('Edit'))
+    res = res.click(href=url_for('permission.edit', permission_id=permission.id))
     # Fills out the form
     form = res.forms['editPermissionForm']
     # Defaults are kept -- setting ``form['user_id'] = permission.user.id`` is redundant
@@ -62,8 +62,7 @@ def test_superuser_sees_error_message_if_permission_is_already_registered(superu
     # Clicks Permissions button
     res = res.click(_('Permissions'))
     # Clicks Edit button on 'permission'
-    permission_url = url_for('permission.edit', permission_id=permission.id)
-    res = res.click(_('Edit'), href=permission_url)
+    res = res.click(href=url_for('permission.edit', permission_id=permission.id))
     # Fills out the form with same user ID and collection ID as 'other_permission'
     form = res.forms['editPermissionForm']
     form['user_id'] = other_permission.user.id

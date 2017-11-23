@@ -91,18 +91,27 @@ tr {
     }
 }
 
-th {
+td,th {
+    &.word-break-all {
+        word-break: break-all;
+    }
     &.min-width-100px {
         min-width: 100px;
     }
+    &.min-width-90px {
+        min-width: 90px;
+    }
+    &.min-width-80px {
+        min-width: 80px;
+    }
+    &.min-width-70px {
+        min-width: 70px;
+    }
+    &.min-width-60px {
+        min-width: 60px;
+    }
     &.min-width-50px {
         min-width: 50px;
-    }
-}
-
-td {
-    &.word-break-all {
-        word-break: break-all;
     }
     &.bool-value-true {
         color: #009600;

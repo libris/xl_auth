@@ -13,28 +13,28 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th>{{ _('User') }}</th>
-                <th>{{ _('Collection') }}</th>
-                <th>{{ _('Registrant') }}</th>
-                <th>{{ _('Cataloger') }}</th>
-                <th>{{ _('Cataloguing Administrator') }}</th>
-                <th>{{ _('Created At') }}</th>
-                <th>{{ _('Actions') }}</th>
+                <th class="col-md-3">{{ _('User') }}</th>
+                <th class="col-md-1">{{ _('Collection') }}</th>
+                <th class="col-md-2 word-break-all">{{ _('Registrant') }}</th>
+                <th class="col-md-2 word-break-all">{{ _('Cataloger') }}</th>
+                <th class="col-md-2 word-break-all">{{ _('Cataloguing Administrator') }}</th>
+                <th class="col-md-1 min-width-90px">{{ _('Created At') }}</th>
+                <th class="col-md-1"></th>
             </tr>
             </thead>
             <tbody>
-            {% for item in permissions_list %}
+            {% for item in permissions_list | sort(attribute='user.email') %}
                 <tr>
-                    <td>{{ item.user.email }}</td>
+                    <td class="word-break-all">{{ item.user.email }}</td>
                     <td>{{ item.collection.code }}</td>
                     <td class="{{ "bool-value-{}".format(item.registrant).lower() }}">{{ _('Yes') if item.registrant else _('No') }}</td>
                     <td class="{{ "bool-value-{}".format(item.cataloger).lower() }}">{{ _('Yes') if item.cataloger else _('No') }}</td>
                     <td class="{{ "bool-value-{}".format(item.cataloging_admin).lower() }}">{{ _('Yes') if item.cataloging_admin else _('No') }}</td>
                     <td>{{ item.created_at.strftime('%y-%m-%d') }}</td>
-                    <td>
-                        <a class="btn btn-default"
+                    <td class="actions">
+                        <a class="btn btn-xs btn-default" title="{{ _('Edit') }}"
                            href="{{ url_for('permission.edit', permission_id=item.id) }}">
-                            {{ _('Edit') }}
+                            <i class="fa fa-pencil"></i>
                         </a>
                     </td>
                 </tr>

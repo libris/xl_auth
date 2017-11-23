@@ -3,6 +3,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+from flask import url_for
 from flask_babel import gettext as _
 
 from xl_auth.permission.models import Permission
@@ -23,7 +24,7 @@ def test_superuser_can_delete_existing_permission(superuser, permission, testapp
     # Clicks Permissions button
     res = res.click(_('Permissions'))
     # Clicks Edit button on a permission
-    res = res.click(_('Edit'))
+    res = res.click(href=url_for('permission.edit', permission_id=permission.id))
     # Clicks Delete button on a permission
     permission_user_email = permission.user.email
     permission_collection_code = permission.collection.code

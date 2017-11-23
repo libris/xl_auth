@@ -27,9 +27,12 @@ class PermissionForm(FlaskForm):
         """Create instance."""
         super(PermissionForm, self).__init__(*args, **kwargs)
         self.active_user = active_user
-        self.user_id.choices = [(user.id, user.email) for user in User.query.all()]
-        self.collection_id.choices = [(collection.id, collection.code)
-                                      for collection in Collection.query.all()]
+        self.user_id.choices = [(user.id, user.email)
+                                for user in User.query.order_by('email').all()]
+        self.collection_id.choices = [
+            (collection.id, collection.code)
+            for collection in Collection.query.filter_by(is_active=True).order_by('code').all()
+        ]
 
     # noinspection PyMethodMayBeStatic
     def validate_user_id(self, field):
