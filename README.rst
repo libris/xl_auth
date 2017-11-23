@@ -182,6 +182,12 @@ DB Models
 Changelog
 =========
 
+v. 0.6.2
+--------
+
+* Secret usability improvements for admin interface
+
+
 v. 0.6.1
 --------
 
