@@ -401,6 +401,8 @@ def upgrade():
     for permission in session.query(Permission).all():
         permission.created_by = superuser
         permission.modified_by = superuser
+        if not permission.modified_at:
+            permission.modified_at = permission.created_at
         permission.save_as(superuser, preserve_modified=True)
 
     for user in session.query(User).all():
