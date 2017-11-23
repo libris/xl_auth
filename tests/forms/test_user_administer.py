@@ -25,7 +25,7 @@ def test_validate_success(superuser):
 def test_validate_username_does_not_exist(db, superuser):
     """Attempt to edit user details with a username that is not registered."""
     form = AdministerForm(superuser, 'missing@nowhere.com', username='missing@nowhere.com',
-                          full_name='Mr Foo', is_active=choice([True, False]),
+                          full_name='FooBar', is_active=choice([True, False]),
                           is_admin=choice([True, False]))
 
     assert form.validate() is False

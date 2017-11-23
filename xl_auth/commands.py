@@ -102,26 +102,28 @@ def clean():
 @click.command()
 @click.option('-e', '--email', required=True, default=None, help='Email for user')
 @click.option('-n', '--full-name', default=None, help='Full name for user (default: None)')
-@click.option('-p', '--password', default='password',
-              help='Password for user (default: "password")')
-@click.option('--is_active', default=False, is_flag=True, help='Activate account (default: False)')
+@click.option('-p', '--password', default=None, help='Password for user (default: None)')
+@click.option('--admin-email', default='libris@kb.se', help='Related admin (default: None)')
+@click.option('--is-active', default=False, is_flag=True, help='Activate account (default: False)')
 @click.option('--is-admin', default=False, is_flag=True, help='Create admin user (default: False)')
 @click.option('-f', '--force', default=False, is_flag=True,
               help='Force overwrite existing account (default: False)')
 @with_appcontext
-def create_user(email, full_name, password, is_active, is_admin, force):
+def create_user(email, full_name, password, admin_email, is_active, is_admin, force):
     """Create or overwrite user account."""
     user = User.get_by_email(email)
+    op_admin = User.get_by_email(admin_email)
     if force and user:
         if full_name:
             user.full_name = full_name
         user.set_password(password)
         user.update(is_active=is_active, is_admin=is_admin)
-        user.save()
+        user.save_as(op_admin)
         click.echo('Overwritten account with login {0}:{1}'.format(user.email, password))
     else:
-        user = User.create(email=email, full_name=full_name or email, password=password,
-                           is_active=is_active, is_admin=is_admin)
+        user = User.create_as(op_admin,
+                              email=email, full_name=full_name or email, password=password,
+                              is_active=is_active, is_admin=is_admin)
         click.echo('Created account with login {0}:{1}'.format(user.email, password))
 
 
@@ -454,12 +456,17 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
         if collection:
             if collection.is_active != details['is_active']:
                 collection.is_active = details['is_active']
-                collection.save()
+                collection.save_as(admin)
                 print('corrected collection %r: is_active=%s'
                       % (collection.code, collection.is_active))
         else:
-            collection = Collection.create(**details)
-            collection.save()
+            collection = Collection(**details)
+            if collection.created_at:
+                collection.modified_at = collection.created_at
+                collection.modified_by = collection.created_by = admin
+                collection.save(preserve_modified=True)
+            else:
+                collection.save_as(admin)
 
     # Store users.
     for email, full_name in deepcopy(bibdb['cataloging_admin_emails_to_names']).items():
@@ -486,11 +493,11 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
                 with current_app.test_request_context():
                     password_reset = PasswordReset(user)
                     password_reset.send_email()
-                    user.save()
+                    user.save_as(admin)
                     password_reset.save()
                 print('Added inactive user %r (password reset email sent).' % email)
             else:
-                user.save()
+                user.save_as(admin)
                 print('Added inactive user %r (no password reset).' % email)
 
     old_permissions = Permission.query.all()
@@ -513,15 +520,14 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
                 current_permissions.append(permission)
             else:
                 if user.email == 'test@kb.se':
-                    permission = Permission.create(user=user, collection=collection,
-                                                   registrant=collection.code == 'Utb1',
-                                                   cataloger=collection.code == 'Utb2',
-                                                   cataloging_admin=collection.code == 'Utb2')
+                    permission = Permission.create_as(admin, user=user, collection=collection,
+                                                      registrant=collection.code == 'Utb1',
+                                                      cataloger=collection.code == 'Utb2',
+                                                      cataloging_admin=collection.code == 'Utb2')
                 else:
-                    permission = Permission.create(user=user, collection=collection,
-                                                   registrant=True, cataloger=True,
-                                                   cataloging_admin=True)
-                permission.save()
+                    permission = Permission.create_as(admin, user=user, collection=collection,
+                                                      registrant=True, cataloger=True,
+                                                      cataloging_admin=True)
                 new_permissions.append(permission)
 
     # Apply manual additions.
@@ -543,9 +549,9 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
             if verbose:
                 print('Manual permission for %r on %r already exists.' % (email, code))
         else:
-            permission = Permission.create(user=user, collection=collection, registrant=True,
-                                           cataloger=True, cataloging_admin=True)
-            permission.save()
+            permission = Permission.create_as(admin, user=user, collection=collection,
+                                              registrant=True, cataloger=True,
+                                              cataloging_admin=True)
             new_permissions.append(permission)
             if verbose:
                 print('Manually added permissions for %r on %r.' % (email, code))

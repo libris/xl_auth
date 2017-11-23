@@ -14,11 +14,16 @@ from xl_auth.user.models import PasswordReset
 from ..factories import UserFactory
 
 
-# noinspection PyUnusedLocal
 def test_can_complete_password_reset_flow(db, testapp):
     """Successfully request password reset, use code to change password and activate account."""
     inactive_user = UserFactory(is_active=False)
+    db.session.commit()
     assert inactive_user.is_active is False
+    # Check expected premises.
+    user_creator = inactive_user.created_by
+    initial_modified_at = inactive_user.modified_at
+    initial_modified_by = inactive_user.modified_by
+    assert initial_modified_by != inactive_user
     # Goes to homepage.
     res = testapp.get('/')
     # Clicks on 'Forgot password'.
@@ -35,6 +40,7 @@ def test_can_complete_password_reset_flow(db, testapp):
     password_reset = PasswordReset.query.filter_by(user=inactive_user).first()
     assert password_reset.is_active is True
     assert password_reset.expires_at > (datetime.utcnow() + timedelta(seconds=3600))
+    assert password_reset.user.modified_at == initial_modified_at
 
     # URL sent to user email.
     reset_password_url = url_for('public.reset_password', email=password_reset.user.email,
@@ -54,6 +60,10 @@ def test_can_complete_password_reset_flow(db, testapp):
     assert updated_password_reset.is_active is False
     assert updated_password_reset.user.check_password('unicorns are real') is True
     assert updated_password_reset.user.is_active is True
+    # 'modified_by' is updated to reflect change, with 'created_by' intact.
+    assert updated_password_reset.user.created_by == user_creator
+    assert updated_password_reset.user.modified_at != initial_modified_at
+    assert updated_password_reset.user.modified_by == updated_password_reset.user
 
 
 # noinspection PyUnusedLocal

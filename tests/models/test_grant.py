@@ -10,7 +10,6 @@ from xl_auth.oauth.grant.models import Grant
 from ..factories import GrantFactory
 
 
-@pytest.mark.usefixtures('db', 'user', 'client')
 def test_get_by_id(user, client):
     """Get grant by ID."""
     grant = Grant(user=user, client=client, code='temp-secret', redirect_uri='http://example.com',
@@ -21,7 +20,6 @@ def test_get_by_id(user, client):
     assert retrieved == grant
 
 
-@pytest.mark.usefixtures('db')
 def test_factory(db):
     """Test grant factory."""
     grant = GrantFactory()
