@@ -36,38 +36,6 @@
   tags: xl_auth
   register: start_xl_auth
 
-- name: run 'flask db upgrade b984311d26d7'  # TODO: Revert me after 0.6.1.
-  docker_container:
-    name: xl_auth_db_upgrade
-    image: "{{ xl_auth_docker }}"
-    interactive: yes
-    tty: yes
-    detach: no
-    command: db upgrade b984311d26d7
-    links:
-      - postgres
-    env:
-      FLASK_DEBUG: 0
-      SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
-  when: start_xl_auth.changed
-  tags: xl_auth
-
-- name: run 'flask one_off_backfill'  # TODO: Revert me after 0.6.1.
-  docker_container:
-    name: xl_auth_db_upgrade
-    image: "{{ xl_auth_docker }}"
-    interactive: yes
-    tty: yes
-    detach: no
-    command: one_off_backfill
-    links:
-      - postgres
-    env:
-      FLASK_DEBUG: 0
-      SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
-  when: start_xl_auth.changed
-  tags: xl_auth
-
 - name: run 'flask db upgrade'
   docker_container:
     name: xl_auth_db_upgrade

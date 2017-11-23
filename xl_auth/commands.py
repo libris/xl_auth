@@ -103,30 +103,27 @@ def clean():
 @click.option('-e', '--email', required=True, default=None, help='Email for user')
 @click.option('-n', '--full-name', default=None, help='Full name for user (default: None)')
 @click.option('-p', '--password', default=None, help='Password for user (default: None)')
-@click.option('--is_active', default=False, is_flag=True, help='Activate account (default: False)')
+@click.option('--admin-email', default='libris@kb.se', help='Related admin (default: None)')
+@click.option('--is-active', default=False, is_flag=True, help='Activate account (default: False)')
 @click.option('--is-admin', default=False, is_flag=True, help='Create admin user (default: False)')
 @click.option('-f', '--force', default=False, is_flag=True,
               help='Force overwrite existing account (default: False)')
 @with_appcontext
-def create_user(email, full_name, password, is_active, is_admin, force):
+def create_user(email, full_name, password, admin_email, is_active, is_admin, force):
     """Create or overwrite user account."""
     user = User.get_by_email(email)
+    op_admin = User.get_by_email(admin_email)
     if force and user:
         if full_name:
             user.full_name = full_name
         user.set_password(password)
         user.update(is_active=is_active, is_admin=is_admin)
-        user.save()
+        user.save_as(op_admin)
         click.echo('Overwritten account with login {0}:{1}'.format(user.email, password))
     else:
-        default_admin = User.get_by_email('libris@kb.se')
-        if default_admin:
-            admin_user_id = default_admin.id
-        else:
-            admin_user_id = '1'
-        user = User.create(email=email, full_name=full_name or email, password=password,
-                           is_active=is_active, is_admin=is_admin, created_by_id=admin_user_id,
-                           modified_by_id=admin_user_id)
+        user = User.create_as(op_admin,
+                              email=email, full_name=full_name or email, password=password,
+                              is_active=is_active, is_admin=is_admin)
         click.echo('Created account with login {0}:{1}'.format(user.email, password))
 
 
@@ -188,52 +185,6 @@ def urls(url, order):
 
     for row in rows:
         click.echo(str_template.format(*row[:column_length]))
-
-
-@click.command()
-@with_appcontext
-def one_off_backfill():
-    """One-off backfill for b984311d26d7 with default admin user, if exists."""
-    from datetime import datetime
-    from .collection.models import Collection
-    from .permission.models import Permission
-    from .oauth.client.models import Client
-
-    from os import getenv
-    for var in ['FLASK_DEBUG', 'SQLALCHEMY_DATABASE_URI']:
-        print('%s: %r' % (var, getenv(var)))
-
-    with current_app.test_request_context():
-        superuser = User.get_by_email('libris@kb.se')
-        if superuser:
-            for client in Client.query.all():
-                client.created_at = datetime.utcnow()
-                client.save_as(superuser)
-
-            for collection in Collection.query.all():
-                collection.created_by = superuser
-                collection.modified_by = superuser
-                if not collection.modified_at:
-                    collection.modified_at = collection.created_at
-                if collection.modified_at == collection.created_at:
-                    if collection.replaced_by:
-                        replacement = Collection.query.filter_by(
-                            code=collection.replaced_by).first()
-                        if replacement.created_at > collection.modified_at:
-                            collection.modified_at = replacement.created_at
-                collection.save_as(superuser, preserve_modified=True)
-
-            for permission in Permission.query.all():
-                permission.created_by = superuser
-                permission.modified_by = superuser
-                permission.save_as(superuser, preserve_modified=True)
-
-            for user in User.query.all():
-                user.created_by_id = superuser.id
-                user.modified_by_id = superuser.id
-                if not user.modified_at:
-                    user.modified_at = user.created_at
-                user.save_as(superuser, preserve_modified=True)
 
 
 @click.command()
