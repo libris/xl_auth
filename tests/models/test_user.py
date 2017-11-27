@@ -10,7 +10,7 @@ import pytest
 from xl_auth.permission.models import Permission
 from xl_auth.user.models import PasswordReset, Role, User
 
-from ..factories import UserFactory
+from ..factories import CollectionFactory, UserFactory
 
 
 def test_get_by_id(superuser):
@@ -139,6 +139,26 @@ def test_removing_permissions(collection):
     permission.delete()
 
     assert permission not in user.permissions
+
+
+def test_is_cataloging_admin(superuser, user):
+    """Test is_cataloging_admin return value."""
+    collection1, collection2 = CollectionFactory(), CollectionFactory()
+    not_admin_permission = Permission(user=user, collection=collection1,
+                                      cataloging_admin=False).save_as(superuser)
+    admin_permission = Permission(user=user, collection=collection2,
+                                  cataloging_admin=True).save_as(superuser)
+
+    assert not_admin_permission in user.permissions and admin_permission in user.permissions
+    assert user.is_cataloging_admin is True
+
+    admin_permission.delete()
+    assert admin_permission not in user.permissions
+    assert user.is_cataloging_admin is False
+
+    not_admin_permission.delete()
+    assert user.permissions == []
+    assert user.is_cataloging_admin is False
 
 
 @pytest.mark.usefixtures('db')
