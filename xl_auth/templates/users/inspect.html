@@ -45,7 +45,7 @@
             <dd>
                 {{ user.modified_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}, {{  _('by') }}
                 <a href="{{ url_for('user.inspect', user_id=user.modified_by.id) }}">
-                    {{ user.created_by.full_name }}
+                    {{ user.modified_by.full_name }}
                 </a>
             </dd>
 

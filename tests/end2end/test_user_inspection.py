@@ -21,7 +21,7 @@ def test_superuser_can_inspect_user(superuser, user, testapp):
     res = res.click(_('Users'))
     # Clicks Inspect button.
     res = res.click(href='/users/inspect/{0}'.format(user.id))
-    # Fills out the form.
+    # Sees inspect view.
     assert res.status_code is 200
     assert _('Inspect User \'%(email)s\'', email=user.email) in res
 
@@ -37,6 +37,6 @@ def test_user_cannot_inspect_any_user(user, testapp):
     # Submits.
     res = form.submit().follow()
     assert res.status_code is 200
-
     res = testapp.get(url_for('user.inspect', user_id=user.id), expect_errors=True)
+    # Sees error.
     assert res.status == '403 FORBIDDEN'
