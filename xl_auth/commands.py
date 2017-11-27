@@ -424,7 +424,7 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
         return manual_deletions
 
     # Get admin user
-    admin = User.query.filter_by(email=admin_email).first()
+    admin = User.get_by_email(admin_email)
 
     # Gather data.
     voyager = _get_voyager_data()
@@ -486,7 +486,7 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
             del bibdb['cataloging_admin_emails_to_names'][email]
             continue
 
-        user = User.query.filter_by(email=email).first()
+        user = User.get_by_email(email)
         if not user:
             user = User(email=email, full_name=full_name, is_active=False)
             if send_password_resets:  # Requires SERVER_NAME and PREFERRED_URL_SCHEME env vars.
@@ -505,7 +505,7 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
 
     # Store permissions.
     for email, collections in xl_auth['cataloging_admins'].items():
-        user = User.query.filter_by(email=email).first()
+        user = User.get_by_email(email)
         if not user:
             continue
 
