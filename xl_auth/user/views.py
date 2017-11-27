@@ -7,6 +7,10 @@ from flask import Blueprint, abort, flash, redirect, render_template, request, u
 from flask_babel import lazy_gettext as _
 from flask_login import current_user, login_required
 
+from ..collection.models import Collection
+from ..oauth.client.models import Client
+from ..oauth.token.models import Token
+from ..permission.models import Permission
 from ..utils import flash_errors
 from .forms import AdministerForm, ChangePasswordForm, EditDetailsForm, RegisterForm
 from .models import PasswordReset, User
@@ -18,8 +22,8 @@ blueprint = Blueprint('user', __name__, url_prefix='/users', static_folder='../s
 @login_required
 def home():
     """Users landing page."""
-    users_list_active = User.query.filter_by(is_active=True)
-    users_list_inactive = User.query.filter_by(is_active=False)
+    users_list_active = User.query.filter_by(is_active=True).order_by('email')
+    users_list_inactive = User.query.filter_by(is_active=False).order_by('email')
 
     return render_template('users/home.html', users_list_active=users_list_active,
                            users_list_inactive=users_list_inactive)
@@ -57,6 +61,41 @@ def register():
     else:
         flash_errors(register_user_form)
     return render_template('users/register.html', register_user_form=register_user_form)
+
+
+@blueprint.route('/inspect/<int:user_id>', methods=['GET'])
+@login_required
+def inspect(user_id):
+    """Inspect user profile."""
+    if not current_user.is_admin:
+        abort(403)
+
+    user = User.get_by_id(user_id)
+    if not user:
+        flash(_('User ID "%(user_id)s" does not exist', user_id=user_id), 'danger')
+        return redirect(url_for('user.home'))
+    else:
+        tokens = Token.query.filter_by(user=user).all()
+        permissions_created = Permission.query.filter_by(created_by=user).count()
+        permissions_modified = Permission.query.filter_by(modified_by=user).count()
+        collections_created = Collection.query.filter_by(created_by=user).count()
+        collections_modified = Collection.query.filter_by(modified_by=user).count()
+        users_created = User.query.filter_by(created_by=user).count()
+        users_modified = User.query.filter_by(modified_by=user).count()
+        clients_created = Client.query.filter_by(created_by=user).count()
+        clients_modified = Client.query.filter_by(modified_by=user).count()
+
+        return render_template('users/inspect.html',
+                               user=user,
+                               tokens=tokens,
+                               permissions_created=permissions_created,
+                               permissions_modified=permissions_modified,
+                               collections_created=collections_created,
+                               collections_modified=collections_modified,
+                               users_created=users_created,
+                               users_modified=users_modified,
+                               clients_created=clients_created,
+                               clients_modified=clients_modified)
 
 
 @blueprint.route('/administer/<int:user_id>', methods=['GET', 'POST'])
