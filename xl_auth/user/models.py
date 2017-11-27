@@ -12,6 +12,7 @@ from flask import current_app, url_for
 from flask_babel import lazy_gettext as _
 from flask_emails import Message
 from flask_login import UserMixin
+from sqlalchemy.ext.hybrid import hybrid_property
 
 from ..database import Column, Model, SurrogatePK, db, reference_col, relationship
 from ..extensions import bcrypt
@@ -142,6 +143,14 @@ class User(UserMixin, SurrogatePK, Model):
     def get_by_email(email):
         """Get by email."""
         return User.query.filter(User.email.ilike(email)).first()
+
+    @hybrid_property
+    def is_cataloging_admin(self):
+        """Return 'cataloging_admin' status."""
+        for permission in self.permissions:
+            if permission.cataloging_admin:
+                return True
+        return False
 
     def set_password(self, password):
         """Set password."""

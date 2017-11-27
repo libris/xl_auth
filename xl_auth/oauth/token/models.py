@@ -42,6 +42,11 @@ class Token(SurrogatePK, Model):
         return self.expires_at
 
     @hybrid_property
+    def is_active(self):
+        """Return still active (now < expires_at)."""
+        return self.expires_at > datetime.utcnow()
+
+    @hybrid_property
     def scopes(self):
         """Return scopes list."""
         return self._scopes.split(' ')

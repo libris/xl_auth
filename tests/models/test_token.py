@@ -3,6 +3,8 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+from datetime import datetime, timedelta
+
 import pytest
 
 from xl_auth.oauth.token.models import Token
@@ -43,6 +45,16 @@ def test_scopes():
 
     token.scopes = ['read', 'write']
     assert token.scopes == ['read', 'write']
+
+
+@pytest.mark.usefixtures('db')
+def test_is_active():
+    """Test is_active."""
+    expired_token = TokenFactory(expires_at=datetime.utcnow() - timedelta(seconds=1))
+    assert expired_token.is_active is False
+
+    active_token = TokenFactory(expires_at=datetime.utcnow() + timedelta(seconds=10))
+    assert active_token.is_active is True
 
 
 @pytest.mark.usefixtures('db')

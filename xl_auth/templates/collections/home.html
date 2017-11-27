@@ -22,9 +22,9 @@
                 <th class="col-md-7">{{ _('Friendly Name') }}</th>
                 <th class="col-md-1">{{ _('Category') }}</th>
                 <th class="col-md-1">{{ _('Users') }}</th>
-                <th class="min-width-100px">{{ _('Created At') }}</th>
+                <th class="min-width-90px">{{ _('Created At') }}</th>
                 {% if current_user.is_admin %}
-                    <th></th>
+                    <th class="col-md-1"></th>
                 {% endif %}
             </tr>
             </thead>
@@ -39,7 +39,7 @@
                     <td>{{ item.created_at.strftime('%y-%m-%d') }}</td>
                     {% if current_user.is_admin %}
                         <td class="actions">
-                            <a title="{{ _('Edit') }}"
+                            <a class="btn btn-xs btn-default" title="{{ _('Edit') }}"
                                href="{{ url_for('collection.edit', collection_code=item.code) }}">
                                 <i class="edit-button fa fa-pencil"></i>
                             </a>
@@ -63,11 +63,11 @@
             <thead>
             <tr>
                 <th class="col-md-1">{{ _('Code') }}</th>
-                <th class="col-md-7">{{ _('Friendly Name') }}</th>
-                <th class="min-width-100px">{{ _('Replaced By') }}</th>
+                <th class="col-md-6">{{ _('Friendly Name') }}</th>
+                <th class="col-md-1">{{ _('Replaced By') }}</th>
                 <th class="col-md-1">{{ _('Category') }}</th>
                 <th class="col-md-1">{{ _('Users') }}</th>
-                <th class="min-width-100px">{{ _('Created At') }}</th>
+                <th class="min-width-90px">{{ _('Created At') }}</th>
             </tr>
             </thead>
             <tbody>

@@ -18,10 +18,10 @@
                 <th class="col-md-3">{{ _('Name') }}</th>
                 <th class="col-md-1">{{ _('Collections') }}</th>
                 <th class="col-md-1">{{ _('Admin') }}</th>
-                <th class="min-width-100px">{{ _('Last Login At') }}</th>
-                <th class="min-width-100px">{{ _('Created At') }}</th>
+                <th class="min-width-90px">{{ _('Last Login At') }}</th>
+                <th class="min-width-90px">{{ _('Created At') }}</th>
                 {% if current_user.is_admin %}
-                    <th class="min-width-50px"></th>
+                    <th class="min-width-100px"></th>
                 {% endif %}
             </tr>
             </thead>
@@ -36,11 +36,15 @@
                     <td>{{ user.created_at.strftime('%y-%m-%d') }}</td>
                     {% if current_user.is_admin %}
                         <td class="actions">
-                            <a title="{{ _('Edit Details') }}"
+                            <a class="btn btn-xs btn-default" title="{{ _('Inspect') }}"
+                               href="{{ url_for('user.inspect', user_id=user.id) }}">
+                                <i class="fa fa-user"></i>
+                            </a>
+                            <a class="btn btn-xs btn-default" title="{{ _('Edit Details') }}"
                                href="{{ url_for('user.administer', user_id=user.id) }}">
                                 <i class="fa fa-pencil"></i>
                             </a>
-                            <a title="{{ _('Change Password') }}"
+                            <a class="btn btn-xs btn-default" title="{{ _('Change Password') }}"
                                href="{{ url_for('user.change_password', user_id=user.id) }}">
                                 <i class="fa fa-key"></i>
                             </a>
@@ -63,10 +67,10 @@
                 <th class="col-md-3">{{ _('Name') }}</th>
                 <th class="col-md-1">{{ _('Collections') }}</th>
                 <th class="col-md-1">{{ _('Admin') }}</th>
-                <th class="min-width-100px">{{ _('Last Login At') }}</th>
-                <th class="min-width-100px">{{ _('Created At') }}</th>
+                <th class="min-width-90px">{{ _('Last Login At') }}</th>
+                <th class="min-width-90px">{{ _('Created At') }}</th>
                 {% if current_user.is_admin %}
-                    <th class="min-width-50px"></th>
+                    <th class="min-width-100px"></th>
                 {% endif %}
             </tr>
             </thead>
@@ -81,11 +85,15 @@
                     <td>{{ user.created_at.strftime('%y-%m-%d') }}</td>
                     {% if current_user.is_admin %}
                         <td class="actions">
-                            <a title="{{ _('Edit Details') }}"
+                            <a class="btn btn-xs btn-default" title="{{ _('Inspect') }}"
+                               href="{{ url_for('user.inspect', user_id=user.id) }}">
+                                <i class="fa fa-user"></i>
+                            </a>
+                            <a class="btn btn-xs btn-default" title="{{ _('Edit Details') }}"
                                href="{{ url_for('user.administer', user_id=user.id) }}">
                                 <i class="fa fa-pencil"></i>
                             </a>
-                            <a title="{{ _('Change Password') }}"
+                            <a class="btn btn-xs btn-default" title="{{ _('Change Password') }}"
                                href="{{ url_for('user.change_password', user_id=user.id) }}">
                                 <i class="fa fa-key"></i>
                             </a>
