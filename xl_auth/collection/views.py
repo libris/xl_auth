@@ -21,7 +21,8 @@ def home():
     collections_list_active = Collection.query.filter_by(is_active=True).order_by('code')
     collections_list_inactive = Collection.query.filter_by(is_active=False).order_by('code')
 
-    return render_template('collections/home.html', collections_list_active=collections_list_active,
+    return render_template('collections/home.html',
+                           collections_list_active=collections_list_active,
                            collections_list_inactive=collections_list_inactive)
 
 
@@ -45,6 +46,18 @@ def register():
         flash_errors(register_collection_form)
     return render_template('collections/register.html',
                            register_collection_form=register_collection_form)
+
+
+@blueprint.route('/view/<string:collection_code>', methods=['GET'])
+@login_required
+def view(collection_code):
+    """View collection."""
+    collection = Collection.get_by_code(collection_code)
+    if not collection:
+        flash(_('Collection code "%(code)s" does not exist', code=collection_code), 'danger')
+        return redirect(url_for('collection.home'))
+    else:
+        return render_template('collections/view.html', collection=collection)
 
 
 @blueprint.route('/edit/<string:collection_code>', methods=['GET', 'POST'])
