@@ -1,0 +1,169 @@
+<!-- users/inspect.html -->
+{% extends "layout.html" %}
+{% block content %}
+    <h1>{{ _('Inspect User \'%(email)s\'', email=user.email) }}</h1>
+    <br/>
+    <div class="panel panel-default">
+        <dl class="dl-horizontal">
+            <dt>{{ _('Last Login At') }}:</dt>
+            <dd>{{ '-' if not user.last_login_at else user.last_login_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}</dd>
+
+            <dt>{{ _('Active') }}:</dt>
+            <dd>{{ _('Yes') if user.is_active else _('No') }}</dd>
+
+            <dt>{{ _('Administrator') }}:</dt>
+            <dd>{{ _('Yes') if user.is_admin else _('No') }}</dd>
+
+            <dt>{{ _('Cataloguing Administrator') }}:</dt>
+            <dd>{{ _('Yes') if user.is_cataloging_admin else _('No') }}</dd>
+
+            <dt>{{ _('Users Created') }}:</dt>
+            <dd>{{ users_created }}</dd>
+
+            <dt>{{ _('Users Modified') }}:</dt>
+            <dd>{{ users_modified }}</dd>
+
+            <dt>{{ _('Permissions Created') }}:</dt>
+            <dd>{{ permissions_created }}</dd>
+
+            <dt>{{ _('Permissions Modified') }}:</dt>
+            <dd>{{ permissions_modified }}</dd>
+
+            <dt>{{ _('Collections Created') }}:</dt>
+            <dd>{{ collections_created }}</dd>
+
+            <dt>{{ _('Collections Modified') }}:</dt>
+            <dd>{{ collections_modified }}</dd>
+
+            <dt>{{ _('Clients Created') }}:</dt>
+            <dd>{{ clients_created }}</dd>
+
+            <dt>{{ _('Clients Modified') }}:</dt>
+            <dd>{{ clients_modified }}</dd>
+
+            <dt>{{ _('Last Modified') }}:</dt>
+            <dd>
+                {{ user.modified_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}, {{  _('by') }}
+                <a href="{{ url_for('user.inspect', user_id=user.modified_by.id) }}">
+                    {{ user.modified_by.full_name }}
+                </a>
+            </dd>
+
+            <dt>{{ _('Created At') }}:</dt>
+            <dd>
+                {{ user.created_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}, {{  _('by') }}
+                <a href="{{ url_for('user.inspect', user_id=user.created_by.id) }}">
+                    {{ user.created_by.full_name }}
+                </a>
+            </dd>
+        </dl>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong>{{ _('Permissions') }}</strong>
+        </div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th class="col-md-1">{{ _('Collection') }}</th>
+                <th class="col-md-2 word-break-all">{{ _('Registrant') }}</th>
+                <th class="col-md-2 word-break-all">{{ _('Cataloger') }}</th>
+                <th class="col-md-2 word-break-all">{{ _('Cataloguing Administrator') }}</th>
+                <th class="col-md-2">{{ _('Active Collection') }}</th>
+                <th class="col-md-3">{{ _('Last Modified') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for permission in user.permissions | sort(attribute='collection.code') %}
+                <tr>
+                    <td>{{ permission.collection.code }}</td>
+                    <td class="{{ "bool-value-{}".format(permission.registrant).lower() }}">
+                        {{ _('Yes') if permission.registrant else _('No') }}
+                    </td>
+                    <td class="{{ "bool-value-{}".format(permission.cataloger).lower() }}">
+                        {{ _('Yes') if permission.cataloger else _('No') }}
+                    </td>
+                    <td class="{{ "bool-value-{}".format(permission.cataloging_admin).lower() }}">
+                        {{ _('Yes') if permission.cataloging_admin else _('No') }}
+                    </td>
+                    <td class="{{ "bool-value-{}".format(permission.collection.is_active).lower() }}">
+                        {{ _('Yes') if permission.collection.is_active else _('No') }}
+                    </td>
+                    <td>{{ permission.modified_at.strftime('%y-%m-%d') }}, {{  _('by') }}
+                        <a href="{{ url_for('user.inspect', user_id=permission.modified_by.id) }}">
+                            {{ permission.modified_by.full_name }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong>{{ _('Password Resets') }}</strong>
+        </div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th class="col-md-4">{{ _('Reset Code') }}</th>
+                <th class="col-md-2">{{ _('Active') }}</th>
+                <th class="col-md-2 min-width-90px">{{ _('Expires At') }}</th>
+                <th class="col-md-2 min-width-90px">{{ _('Last Modified') }}</th>
+                <th class="col-md-2 min-width-90px">{{ _('Created At') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for password_reset in user.password_resets %}
+                <tr>
+                    <td class="word-break-all"><code>{{ password_reset.code }}</code></td>
+                    <td class="{{ "bool-value-{}".format(password_reset.is_active ).lower() }}">
+                        {{ _('Yes') if password_reset.is_active else _('No') }}
+                    </td>
+                    <td>{{ password_reset.expires_at.strftime('%y-%m-%d %H:%M:%SZ') }}</td>
+                    <td>{{ password_reset.modified_at.strftime('%y-%m-%d %H:%M:%SZ') }}</td>
+                    <td>{{ password_reset.created_at.strftime('%y-%m-%d %H:%M:%SZ') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong>{{ _('OAuth2 Bearer Tokens') }}</strong>
+        </div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>{{ _('ID') }}</th>
+                <th class="col-md-4">{{ _('Client ID') }}</th>
+                <th class="col-md-2">{{ _('Client') }}</th>
+                <th class="col-md-4">{{ _('Access Token') }}</th>
+                <th class="col-md-1">{{ _('Active') }}</th>
+                <th class="col-md-1 min-width-90px">{{ _('Expires At') }}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for token in tokens %}
+                <tr>
+                    <td>{{ token.id }}</td>
+                    <td class="word-break-all"><code>{{ token.client_id }}</code></td>
+                    <td>{{ token.client.name }}</td>
+                    <td class="word-break-all"><code>{{ token.access_token }}</code></td>
+                    <td class="{{ "bool-value-{}".format(token.is_active ).lower() }}">
+                        {{ _('Yes') if token.is_active else _('No') }}
+                    </td>
+                    <td>{{ token.expires_at.strftime('%y-%m-%d %H:%M:%SZ') }}</td>
+                    <td class="actions">
+                        <a class="btn btn-xs btn-danger" title="{{ _('Delete Token') }}"
+                           href="{{ url_for('oauth.token.delete', token_id=token.id) }}">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
