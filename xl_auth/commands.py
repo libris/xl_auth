@@ -452,7 +452,7 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
             del xl_auth['collections'][collection]
             continue
 
-        collection = Collection.query.filter_by(code=details['code']).first()
+        collection = Collection.get_by_code(code=details['code'])
         if collection:
             if collection.is_active != details['is_active']:
                 collection.is_active = details['is_active']
@@ -510,7 +510,7 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
             continue
 
         for code in collections:
-            collection = Collection.query.filter_by(code=code).first()
+            collection = Collection.get_by_code(code)
             if not collection:
                 print('Collection %r does not exist' % code)
                 continue
@@ -537,7 +537,7 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
             print('Cannot add permission manually; user %r does not exist' % email)
             continue
 
-        collection = Collection.query.filter_by(code=code).first()
+        collection = Collection.get_by_code(code)
         if not collection:
             print('Cannot add permission manually, collection %r does not exist' % code)
             continue
@@ -563,7 +563,7 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
             print('Cannot delete permission manually; user %r does not exist' % email)
             continue
 
-        collection = Collection.query.filter_by(code=code).first()
+        collection = Collection.get_by_code(code)
         if not collection:
             print('Cannot delete permission manually, collection %r does not exist' % code)
             continue

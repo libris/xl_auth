@@ -36,6 +36,11 @@ class Collection(SurrogatePK, Model):
         db.Model.__init__(self, code=code, friendly_name=friendly_name, category=category,
                           **kwargs)
 
+    @staticmethod
+    def get_by_code(code):
+        """Get by collection code."""
+        return Collection.query.filter_by(code=code).first()
+
     def get_replaces_and_replaced_by_str(self):
         """Build string with replaces/replaced-by info."""
         if self.replaced_by and self.replaces:
