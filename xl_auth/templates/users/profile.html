@@ -55,7 +55,12 @@ will allow you to create new user accounts and grant registrant/cataloger privil
                 <tbody>
                 {% for permission in user.permissions if permission.collection.is_active %}
                     <tr>
-                        <td>{{ permission.collection.code }}</td>
+                        <td>
+                            <a title="{{ _('View') }}"
+                               href="{{ url_for('collection.view', collection_code=permission.collection.code) }}">
+                                {{ permission.collection.code }}
+                            </a>
+                        </td>
                         <td>{{ permission.collection.friendly_name }}</td>
                         {% if user.is_admin or user.email == 'test@kb.se' %}
                             <td class="{{ "bool-value-{}".format(permission.registrant).lower() }}">

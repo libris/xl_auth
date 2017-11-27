@@ -27,7 +27,7 @@ def test_user_can_view_others_user(user, superuser, testapp):
     assert _('View User \'%(email)s\'', email=superuser.email) in res
 
 
-def test_user_sees_error_message_if_when_user_id_does_not_exist(user, testapp):
+def test_user_sees_error_message_if_user_id_does_not_exist(user, testapp):
     """Show error when attempting to view a user that does not exist."""
     # Goes to homepage.
     res = testapp.get('/')

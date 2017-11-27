@@ -63,6 +63,18 @@ def register():
     return render_template('users/register.html', register_user_form=register_user_form)
 
 
+@blueprint.route('/view/<int:user_id>', methods=['GET'])
+@login_required
+def view(user_id):
+    """View user profile."""
+    user = User.get_by_id(user_id)
+    if not user:
+        flash(_('User ID "%(user_id)s" does not exist', user_id=user_id), 'danger')
+        return redirect(url_for('user.profile'))
+    else:
+        return render_template('users/view.html', user=user)
+
+
 @blueprint.route('/inspect/<int:user_id>', methods=['GET'])
 @login_required
 def inspect(user_id):
