@@ -182,6 +182,12 @@ DB Models
 Changelog
 =========
 
+v. 0.6.3
+--------
+
+* Added "view collection" link to user profile page
+
+
 v. 0.6.2
 --------
 

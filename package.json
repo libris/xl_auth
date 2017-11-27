@@ -1,6 +1,6 @@
 {
   "name": "xl_auth",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "author": "National Library of Sweden",
   "license": "Apache-2.0",
   "description": "OAuth2 authorization for LibrisXL, replacing BibDB counterpart",
