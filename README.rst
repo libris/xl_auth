@@ -28,7 +28,7 @@ Run the following commands to bootstrap your environment ::
     virtualenv venv && source venv/bin/activate
     pip install -r requirements/dev.txt
     npm install
-    npm build
+    npm run build
     export FLASK_APP=$(PWD)/autoapp.py
     export FLASK_DEBUG=1
     flask db upgrade
