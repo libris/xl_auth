@@ -73,6 +73,13 @@ def test_update_last_login_does_not_update_modified_at(superuser):
     assert first_modified_at == user.modified_at
 
 
+def test_tos_approved_at_defaults_to_null(superuser):
+    """Test Terms of Service datetime field is not populated automatically."""
+    user = User(email='foo@bar.com', full_name='Foo Bar')
+    user.save_as(superuser)
+    assert user.tos_approved_at is None
+
+
 def test_password_defaults_to_a_random_one(superuser):
     """Test empty password field is assigned some random password, instead of being set to null."""
     user = User(email='foo@bar.com', full_name='Foo Bar')
@@ -92,6 +99,8 @@ def test_factory(db):
     assert user.last_login_at is None
     assert user.is_active is True
     assert user.is_admin is False
+
+    assert isinstance(user.tos_approved_at, datetime)
 
     assert isinstance(user.permissions, list)
     assert isinstance(user.roles, list)

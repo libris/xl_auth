@@ -115,6 +115,7 @@ class User(UserMixin, SurrogatePK, Model):
     full_name = Column(db.String(255), unique=False, nullable=False)
     password = Column(db.Binary(128), nullable=False)
     last_login_at = Column(db.DateTime, default=None)
+    tos_approved_at = Column(db.DateTime, default=None)
     is_active = Column(db.Boolean(), default=False, nullable=False)
     is_admin = Column(db.Boolean(), default=False, nullable=False)
     permissions = relationship('Permission', back_populates='user',
