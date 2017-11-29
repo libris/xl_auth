@@ -131,7 +131,8 @@ def verify():
                              'friendly_name': permission.collection.friendly_name,
                              'cataloger': permission.cataloger,
                              'registrant': permission.registrant}
-                            for permission in oauth.user.permissions]
+                            for permission in oauth.user.permissions
+                            if permission.collection.is_active]
         }
     )
 

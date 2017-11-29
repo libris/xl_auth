@@ -787,7 +787,7 @@ msgstr "Få hjälp, ställ frågor och rapportera fel."
 
 #: xl_auth/templates/public/home.html:60
 msgid "Go to kundo"
-msgstr "Gå till kundo"
+msgstr "Gå till supportforum"
 
 #: xl_auth/templates/public/reset_password.html:5
 msgid "Reset Password"
