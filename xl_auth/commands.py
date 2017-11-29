@@ -521,7 +521,7 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
             else:
                 if user.email == 'test@kb.se':
                     permission = Permission.create_as(admin, user=user, collection=collection,
-                                                      registrant=collection.code == 'Utb1',
+                                                      registrant=True,
                                                       cataloger=collection.code == 'Utb2',
                                                       cataloging_admin=collection.code == 'Utb2')
                 else:
