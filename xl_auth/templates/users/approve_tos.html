@@ -1,0 +1,31 @@
+<!-- users/approve_tos.html -->
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container-narrow">
+        <h1>{{ _('Approve ToS') }}</h1>
+        <p class="lead">
+            {{ _('To use this service you are required approve our Terms of Service.') }}
+        </p>
+        <p>{{ _('You agree that:') }}</p>
+        <ol>
+            <li>{{ _('Your name, email address, permissions and other account details is visible to other users') }}</li>
+            <li>{{ _('The National Library of Sweden will store your personal information in accordance with Swedish law (PuL)') }}</li>
+            <li>{{ _('You assume full responsibility for your account and actions performed under your authentication') }}</li>
+        </ol>
+        <p>{{ _('Press "I Approve" to register this agreement and get redirected to the next page.') }}</p>
+        <br/>
+        <div class="row">
+            <div class="col-md-12">
+                <form id="approveForm" class="form" method="POST" action="" role="form">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    {{ approve_tos_form.next_redirect(value=next_redirect_url or "") }}
+                    {{ approve_tos_form.tos_approved(value=approve_tos_form.tos_approved.default) }}
+                    <input class="btn btn-lg btn-primary btn-success" type="submit"
+                           value="{{ _('I Approve') }}">
+                </form>
+            </div>
+        </div>
+        <br/>
+        <p>{{ _('(If you do not agree to the ToS, please press the logout button in top-right corner.)') }}</p>
+    </div>
+{% endblock %}

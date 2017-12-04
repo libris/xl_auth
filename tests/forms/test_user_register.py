@@ -10,8 +10,7 @@ from wtforms.validators import ValidationError
 from xl_auth.user.forms import RegisterForm
 
 
-# noinspection PyUnusedLocal
-def test_validate_success(db, superuser):
+def test_validate_success(superuser):
     """Register user with success."""
     form = RegisterForm(superuser, username='first.last@kb.se', full_name='First Last',
                         send_password_reset_email=False)
@@ -19,8 +18,7 @@ def test_validate_success(db, superuser):
     assert form.validate() is True
 
 
-# noinspection PyUnusedLocal
-def test_validate_without_full_name(superuser, db):
+def test_validate_without_full_name(superuser):
     """Attempt registering user with name shorter than 3 chars."""
     form = RegisterForm(superuser, username='librarian@kb.se', full_name='01')
 
@@ -46,7 +44,7 @@ def test_validate_email_already_registered_with_different_casing(superuser):
     assert _('Email already registered') in form.username.errors
 
 
-def test_validate_regular_user(db, user):
+def test_validate_regular_user(user):
     """Attempt to register user as regular user."""
     form = RegisterForm(user, username='first.last@kb.se', full_name='First Last')
 

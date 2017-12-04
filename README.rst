@@ -186,6 +186,7 @@ v. 0.6.3
 --------
 
 * Added "view collection" link to user profile page
+* *Terms of Service* view added, requesting the user to approve
 
 
 v. 0.6.2

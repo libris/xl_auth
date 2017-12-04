@@ -115,6 +115,7 @@ class User(UserMixin, SurrogatePK, Model):
     full_name = Column(db.String(255), unique=False, nullable=False)
     password = Column(db.Binary(128), nullable=False)
     last_login_at = Column(db.DateTime, default=None)
+    tos_approved_at = Column(db.DateTime, default=None)
     is_active = Column(db.Boolean(), default=False, nullable=False)
     is_admin = Column(db.Boolean(), default=False, nullable=False)
     permissions = relationship('Permission', back_populates='user',
@@ -163,6 +164,12 @@ class User(UserMixin, SurrogatePK, Model):
     def update_last_login(self, commit=True):
         """Set 'last_login_at' to current datetime."""
         self.last_login_at = datetime.utcnow()
+        if commit:
+            self.save(commit=True, preserve_modified=True)
+
+    def set_tos_approved(self, commit=True):
+        """Set 'tos_approved_at' to current datetime."""
+        self.tos_approved_at = datetime.utcnow()
         if commit:
             self.save(commit=True, preserve_modified=True)
 
