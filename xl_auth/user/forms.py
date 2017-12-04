@@ -18,11 +18,12 @@ class ApproveToSForm(FlaskForm):
     """Approve ToS form."""
 
     tos_approved = HiddenField(_('ToS Approved'), default='y', validators=[DataRequired()])
+    next_redirect = HiddenField(validators=[DataRequired()])
 
-    def __init__(self, active_user, *args, **kwargs):
+    def __init__(self, user, *args, **kwargs):
         """Create instance."""
         super(ApproveToSForm, self).__init__(*args, **kwargs)
-        self.active_user = active_user
+        self.user = user
 
     def validate(self):
         """Validate the form."""
@@ -31,10 +32,10 @@ class ApproveToSForm(FlaskForm):
         if not initial_validation:
             return False
 
-        if self.active_user.tos_approved_at:
+        if self.user.tos_approved_at:
             self.tos_approved.errors.append(
                 _('ToS already approved at %(isoformat)s.',
-                  isoformat=self.active_user.tos_approved_at.isoformat() + 'Z'))
+                  isoformat=self.user.tos_approved_at.isoformat() + 'Z'))
             return False
 
         if self.tos_approved.data != 'y':

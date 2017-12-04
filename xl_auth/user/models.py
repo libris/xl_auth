@@ -167,6 +167,12 @@ class User(UserMixin, SurrogatePK, Model):
         if commit:
             self.save(commit=True, preserve_modified=True)
 
+    def set_tos_approved(self, commit=True):
+        """Set 'tos_approved_at' to current datetime."""
+        self.tos_approved_at = datetime.utcnow()
+        if commit:
+            self.save(commit=True, preserve_modified=True)
+
     def get_gravatar_url(self, size=32):
         """Get Gravatar URL."""
         hashed_email = hashlib.md5(str(self.email).lower().encode()).hexdigest()

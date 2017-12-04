@@ -52,6 +52,17 @@ def test_user_must_approve_tos_on_login_if_unset(user, testapp):
     res = res.follow()
     assert res.status_code == 200
     assert _('Collections') in res
+    # Logout and login again.
+    res = res.click(href='/logout/').follow()
+    assert res.status_code == 200
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits and gets redirected to profile view instead of approve ToS (as it's already done).
+    res = form.submit()
+    assert res.status_code == 302
+    assert '/users/approve_tos' not in res.location
+    assert res.location.endswith('/users/profile/')
 
 
 def test_unauthorized_leads_to_login_which_follows_next_redirect_param_on_success(user, testapp):
