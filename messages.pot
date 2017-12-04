@@ -817,7 +817,7 @@ msgid "Edit User Details"
 msgstr ""
 
 #: xl_auth/templates/users/approve_tos.html:7
-msgid "For using this service you are required approve our Terms of Service."
+msgid "To use this service you are required approve our Terms of Service."
 msgstr ""
 
 #: xl_auth/templates/users/approve_tos.html:9
