@@ -178,6 +178,33 @@ class User(UserMixin, SurrogatePK, Model):
         hashed_email = hashlib.md5(str(self.email).lower().encode()).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=mm&s={}'.format(hashed_email, size)
 
+    def get_permissions_label_as_seen_by(self, current_user):
+        """Return label for subset returned by 'self.get_permissions_as_seen_by()'."""
+        if current_user == self or current_user.is_admin:
+            return _('All Permissions')
+        elif current_user.is_cataloging_admin:
+            return _('Subset of Permissions (%(actual)s out of %(total)s)',
+                     actual=len(self.get_permissions_as_seen_by(current_user)),
+                     total=len(self.permissions))
+        else:
+            return _('Cataloging Admin Permissions (%(actual)s out of %(total)s)',
+                     actual=len(self.get_permissions_as_seen_by(current_user)),
+                     total=len(self.permissions))
+
+    def get_permissions_as_seen_by(self, current_user):
+        """Return subset of permissions viewable by 'current_user'."""
+        if current_user == self or current_user.is_admin:
+            return self.permissions
+        else:
+            def current_user_is_cataloging_admin_for(collection):
+                for permission in current_user.permissions:
+                    if permission.collection == collection and permission.cataloging_admin:
+                        return True
+
+            return list(filter(
+                lambda _: _.cataloging_admin or current_user_is_cataloging_admin_for(_.collection),
+                self.permissions))
+
     def save_as(self, current_user, commit=True, preserve_modified=False):
         """Save instance as 'current_user'."""
         if current_user and not self.created_at:

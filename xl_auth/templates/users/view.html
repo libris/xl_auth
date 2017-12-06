@@ -39,7 +39,7 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <strong>{{ _('Permissions') }}</strong>
+            <strong>{{ user.get_permissions_label_as_seen_by(current_user) }}</strong>
         </div>
         <table class="table table-hover">
             <thead>
@@ -53,7 +53,8 @@
             </tr>
             </thead>
             <tbody>
-            {% for permission in user.permissions | sort(attribute='collection.code') %}
+            {% for permission in user.get_permissions_as_seen_by(current_user)
+                    | sort(attribute='collection.code') %}
                 <tr>
                     <td>
                         <a href="{{ url_for('collection.view', collection_code=permission.collection.code) }}">
