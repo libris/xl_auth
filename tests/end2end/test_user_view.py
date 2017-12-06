@@ -8,6 +8,8 @@ from flask_babel import gettext as _
 
 from xl_auth.user.models import User
 
+from ..factories import PermissionFactory
+
 
 def test_user_can_view_others_user(user, superuser, testapp):
     """View user info as another user."""
@@ -44,3 +46,102 @@ def test_user_sees_error_message_if_user_id_does_not_exist(user, testapp):
     res = testapp.get(url_for('user.view', user_id=made_up_id)).follow()
     # Sees error message.
     assert _('User ID "%(user_id)s" does not exist', user_id=made_up_id) in res
+
+
+def test_superuser_can_view_all_permissions_on_other_user(superuser, user, testapp):
+    """View all permissions as superuser."""
+    # Add cataloging admin permission.
+    cataloging_admin_permission = PermissionFactory(user=user, cataloging_admin=True)
+    cataloging_admin_permission.save()
+    # Add 2nd cataloger+registrant permission.
+    non_cataloging_admin_permission = PermissionFactory(user=user, cataloging_admin=False)
+    non_cataloging_admin_permission.save()
+    # Goes to homepage.
+    res = testapp.get('/')
+    # Fills out login form.
+    form = res.forms['loginForm']
+    form['username'] = superuser.email
+    form['password'] = 'myPrecious'
+    # Submits.
+    res = form.submit().follow()
+    assert res.status_code is 200
+    # Cleverly figures out the right URL for their profile page.
+    res = testapp.get(url_for('user.view', user_id=user.id))
+    assert res.status_code is 200
+    # Sees all permissions.
+    assert _('All Permissions') in res
+    assert cataloging_admin_permission.collection.code in res
+    assert non_cataloging_admin_permission.collection.code in res
+
+
+def test_user_can_view_all_permissions_on_thyself(user, testapp):
+    """View all your permissions as thyself."""
+    # Add cataloging admin permission.
+    cataloging_admin_permission = PermissionFactory(user=user, cataloging_admin=True)
+    cataloging_admin_permission.save()
+    # Add 2nd cataloger+registrant permission.
+    non_cataloging_admin_permission = PermissionFactory(user=user, cataloging_admin=False)
+    non_cataloging_admin_permission.save()
+    # Goes to homepage.
+    res = testapp.get('/')
+    # Fills out login form.
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits.
+    res = form.submit().follow()
+    assert res.status_code is 200
+    # Cleverly figures out the right URL for their profile page.
+    res = testapp.get(url_for('user.view', user_id=user.id))
+    assert res.status_code is 200
+    # Sees all permissions.
+    assert _('All Permissions') in res
+    assert cataloging_admin_permission.collection.code in res
+    assert non_cataloging_admin_permission.collection.code in res
+
+
+def test_user_can_only_view_cataloging_admin_permissions_on_others_when_not_admin(user, testapp):
+    """View only 'cataloging_admin' permissions on others except for collections you administer."""
+    # Add user with cataloging admin permission.
+    other_users_cataloging_admin_permission = PermissionFactory(cataloging_admin=True)
+    other_users_cataloging_admin_permission.save()
+    # Add another user with cataloger+registrant permission.
+    another_users_non_cataloging_admin_permission = PermissionFactory(cataloging_admin=False)
+    another_users_non_cataloging_admin_permission.save()
+    # Goes to homepage.
+    res = testapp.get('/')
+    # Fills out login form.
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits.
+    res = form.submit().follow()
+    assert res.status_code is 200
+    # Checks out another user that has a cataloging admin privilege.
+    res = testapp.get(
+        url_for('user.view', user_id=other_users_cataloging_admin_permission.user.id))
+    assert res.status_code is 200
+    # Sees the cataloging admin permission.
+    assert _('Cataloging Admin Permissions (%(actual)s out of %(total)s)',
+             actual=1, total=1) in res
+    assert other_users_cataloging_admin_permission.collection.code in res
+    # Checks out another user that DOES NOT have cataloging admin rights only cataloger/registrant.
+    res = testapp.get(
+        url_for('user.view', user_id=another_users_non_cataloging_admin_permission.user.id))
+    assert res.status_code is 200
+    assert _('Cataloging Admin Permissions (%(actual)s out of %(total)s)',
+             actual=0, total=1) in res
+    # Does NOT see the non-admin level permission.
+    assert another_users_non_cataloging_admin_permission.collection.code not in res
+    # Except where the viewer a cataloging admin for the target collection...
+    cataloging_admin_permission_for_viewer = PermissionFactory(
+        user=user,
+        collection=another_users_non_cataloging_admin_permission.collection,
+        cataloging_admin=True
+    )
+    cataloging_admin_permission_for_viewer.save()
+    res = testapp.get(
+        url_for('user.view', user_id=another_users_non_cataloging_admin_permission.user.id))
+    assert res.status_code is 200
+    assert _('Subset of Permissions (%(actual)s out of %(total)s)', actual=1, total=1) in res
+    assert another_users_non_cataloging_admin_permission.collection.code in res
