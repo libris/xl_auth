@@ -833,8 +833,8 @@ msgstr "Gällande villkor:"
 #: xl_auth/templates/users/approve_tos.html:11
 msgid "Your name, email address, permissions and other account details is visible to other users"
 msgstr ""
-"Ditt namn, din epost, dina behörigheter och annan kontoinformation är synlig för andra Libris-"
-"användare"
+"Ditt namn, din epost, dina behörigheter och annan kontoinformation är synlig för andra Libris "
+"Login-användare"
 
 #: xl_auth/templates/users/approve_tos.html:12
 msgid ""
