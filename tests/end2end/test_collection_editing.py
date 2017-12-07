@@ -27,7 +27,7 @@ def test_superuser_can_edit_existing_collection(superuser, collection, testapp):
     # Submits
     res = form.submit().follow()
     # Clicks Collections button
-    res = res.click(href=url_for('collection.home'))
+    res = res.click(href=url_for('collection.home'), index=0)
     # Clicks Edit button
     res = res.click(href='/collections/edit/' + collection.code)
     # Fills out the form
@@ -158,7 +158,7 @@ def test_user_cannot_edit_collection(user, collection, testapp):
     res = form.submit().follow()
 
     # We click the Collections button
-    res = res.click(href=url_for('collection.home'))
+    res = res.click(href=url_for('collection.home'), index=0)
 
     # No Edit buttons for regular users
     assert res.lxml.xpath("//a[contains(@text,'{0}')]".format(_('Edit'))) == []
