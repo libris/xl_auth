@@ -171,6 +171,16 @@ def test_is_cataloging_admin(superuser, user):
     assert user.is_cataloging_admin is False
 
 
+def test_is_cataloging_admin_for(collection):
+    """Test is_cataloging_admin_for return value."""
+    raise NotImplementedError('Fix me for PR #109!')
+
+
+def test_has_any_permission_for(collection):
+    """Test has_any_permission_for return value."""
+    raise NotImplementedError('Fix me for PR #109!')
+
+
 def test_get_permissions_as_seen_by_self(user):
     """Test getting permissions for self."""
     non_admin_permission = PermissionFactory(user=user, cataloging_admin=False).save_as(user)
