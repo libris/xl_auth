@@ -69,7 +69,7 @@ def test_superuser_can_view_all_permissions_on_other_user(superuser, user, testa
     res = testapp.get(url_for('user.view', user_id=user.id))
     assert res.status_code is 200
     # Sees all permissions.
-    assert _('All Permissions') in res
+    assert _('Permissions') in res
     assert cataloging_admin_permission.collection.code in res
     assert non_cataloging_admin_permission.collection.code in res
 
@@ -95,7 +95,7 @@ def test_user_can_view_all_permissions_on_thyself(user, testapp):
     res = testapp.get(url_for('user.view', user_id=user.id))
     assert res.status_code is 200
     # Sees all permissions.
-    assert _('All Permissions') in res
+    assert _('Permissions') in res
     assert cataloging_admin_permission.collection.code in res
     assert non_cataloging_admin_permission.collection.code in res
 
@@ -122,17 +122,16 @@ def test_user_can_only_view_cataloging_admin_permissions_on_others_when_not_admi
         url_for('user.view', user_id=other_users_cataloging_admin_permission.user.id))
     assert res.status_code is 200
     # Sees the cataloging admin permission.
-    assert _('Cataloging Admin Permissions (%(actual)s out of %(total)s)',
-             actual=1, total=1) in res
     assert other_users_cataloging_admin_permission.collection.code in res
     # Checks out another user that DOES NOT have cataloging admin rights only cataloger/registrant.
     res = testapp.get(
         url_for('user.view', user_id=another_users_non_cataloging_admin_permission.user.id))
     assert res.status_code is 200
-    assert _('Cataloging Admin Permissions (%(actual)s out of %(total)s)',
-             actual=0, total=1) in res
     # Does NOT see the non-admin level permission.
-    assert another_users_non_cataloging_admin_permission.collection.code not in res
+    collection_view_url = url_for('collection.view',
+                                  collection_code=another_users_non_cataloging_admin_permission
+                                  .collection.code)
+    assert collection_view_url not in res
     # Except where the viewer a cataloging admin for the target collection...
     cataloging_admin_permission_for_viewer = PermissionFactory(
         user=user,
@@ -143,5 +142,6 @@ def test_user_can_only_view_cataloging_admin_permissions_on_others_when_not_admi
     res = testapp.get(
         url_for('user.view', user_id=another_users_non_cataloging_admin_permission.user.id))
     assert res.status_code is 200
-    assert _('Subset of Permissions (%(actual)s out of %(total)s)', actual=1, total=1) in res
-    assert another_users_non_cataloging_admin_permission.collection.code in res
+    assert _('You will only see permissions for those collections that you are cataloging '
+             'administrator for.') in res
+    assert collection_view_url in res

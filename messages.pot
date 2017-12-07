@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 0.6.3\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-12-04 16:33+0100\n"
+"POT-Creation-Date: 2017-12-07 11:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,9 +113,10 @@ msgstr ""
 #: tests/end2end/test_permission_editing.py:29 tests/end2end/test_permission_editing.py:63
 #: tests/end2end/test_permission_editing.py:90 tests/end2end/test_permission_registering.py:25
 #: tests/end2end/test_permission_registering.py:58 tests/end2end/test_permission_registering.py:85
-#: tests/end2end/test_user_editing.py:197 xl_auth/templates/collections/view.html:54
+#: tests/end2end/test_user_editing.py:197 tests/end2end/test_user_view.py:72
+#: tests/end2end/test_user_view.py:98 xl_auth/templates/collections/view.html:54
 #: xl_auth/templates/nav.html:28 xl_auth/templates/permissions/home.html:4
-#: xl_auth/templates/users/inspect.html:66 xl_auth/templates/users/view.html:42
+#: xl_auth/templates/users/inspect.html:66 xl_auth/templates/users/view.html:52
 msgid "Permissions"
 msgstr ""
 
@@ -216,10 +217,10 @@ msgstr ""
 #: xl_auth/templates/users/inspect.html:97 xl_auth/templates/users/inspect.html:128
 #: xl_auth/templates/users/inspect.html:162 xl_auth/templates/users/profile.html:67
 #: xl_auth/templates/users/profile.html:70 xl_auth/templates/users/profile.html:74
-#: xl_auth/templates/users/view.html:15 xl_auth/templates/users/view.html:18
-#: xl_auth/templates/users/view.html:21 xl_auth/templates/users/view.html:64
-#: xl_auth/templates/users/view.html:67 xl_auth/templates/users/view.html:70
-#: xl_auth/templates/users/view.html:73
+#: xl_auth/templates/users/simple_view.html:12 xl_auth/templates/users/view.html:15
+#: xl_auth/templates/users/view.html:18 xl_auth/templates/users/view.html:21
+#: xl_auth/templates/users/view.html:78 xl_auth/templates/users/view.html:81
+#: xl_auth/templates/users/view.html:84 xl_auth/templates/users/view.html:87
 msgid "Yes"
 msgstr ""
 
@@ -234,10 +235,10 @@ msgstr ""
 #: xl_auth/templates/users/inspect.html:97 xl_auth/templates/users/inspect.html:128
 #: xl_auth/templates/users/inspect.html:162 xl_auth/templates/users/profile.html:67
 #: xl_auth/templates/users/profile.html:70 xl_auth/templates/users/profile.html:74
-#: xl_auth/templates/users/view.html:15 xl_auth/templates/users/view.html:18
-#: xl_auth/templates/users/view.html:21 xl_auth/templates/users/view.html:64
-#: xl_auth/templates/users/view.html:67 xl_auth/templates/users/view.html:70
-#: xl_auth/templates/users/view.html:73
+#: xl_auth/templates/users/simple_view.html:12 xl_auth/templates/users/view.html:15
+#: xl_auth/templates/users/view.html:18 xl_auth/templates/users/view.html:21
+#: xl_auth/templates/users/view.html:78 xl_auth/templates/users/view.html:81
+#: xl_auth/templates/users/view.html:84 xl_auth/templates/users/view.html:87
 msgid "No"
 msgstr ""
 
@@ -254,15 +255,16 @@ msgid "Email cannot be modified"
 msgstr ""
 
 #: tests/end2end/test_user_editing.py:160 xl_auth/templates/users/inspect.html:8
-#: xl_auth/templates/users/view.html:8 xl_auth/user/forms.py:14
+#: xl_auth/templates/users/simple_view.html:8 xl_auth/templates/users/view.html:8
+#: xl_auth/user/forms.py:14
 msgid "Full name"
 msgstr ""
 
 #: tests/end2end/test_user_editing.py:178 tests/end2end/test_user_editing.py:182
-#: tests/end2end/test_user_inspection.py:63 tests/end2end/test_user_view.py:46
+#: tests/end2end/test_user_inspection.py:63 tests/end2end/test_user_view.py:48
 #: tests/forms/test_permission_edit.py:62 tests/forms/test_permission_register.py:46
-#: xl_auth/permission/forms.py:41 xl_auth/user/views.py:90 xl_auth/user/views.py:105
-#: xl_auth/user/views.py:140 xl_auth/user/views.py:167 xl_auth/user/views.py:195
+#: xl_auth/permission/forms.py:41 xl_auth/user/views.py:90 xl_auth/user/views.py:109
+#: xl_auth/user/views.py:144 xl_auth/user/views.py:171 xl_auth/user/views.py:199
 #, python-format
 msgid "User ID \"%(user_id)s\" does not exist"
 msgstr ""
@@ -292,9 +294,14 @@ msgstr ""
 msgid "Email already registered"
 msgstr ""
 
-#: tests/end2end/test_user_view.py:27 xl_auth/templates/users/view.html:4
+#: tests/end2end/test_user_view.py:29 xl_auth/templates/users/simple_view.html:4
+#: xl_auth/templates/users/view.html:4
 #, python-format
 msgid "View User '%(email)s'"
+msgstr ""
+
+#: tests/end2end/test_user_view.py:142 tests/models/test_user.py:231 xl_auth/user/models.py:186
+msgid "You will only see permissions for those collections that you are cataloging administrator for."
 msgstr ""
 
 #: tests/forms/test_client_edit.py:23 tests/forms/test_client_register.py:25
@@ -447,26 +454,26 @@ msgid "User"
 msgstr ""
 
 #: xl_auth/permission/forms.py:20 xl_auth/templates/permissions/home.html:17
-#: xl_auth/templates/users/inspect.html:71 xl_auth/templates/users/view.html:47
+#: xl_auth/templates/users/inspect.html:71 xl_auth/templates/users/view.html:60
 msgid "Collection"
 msgstr ""
 
 #: xl_auth/permission/forms.py:22 xl_auth/templates/collections/view.html:60
 #: xl_auth/templates/permissions/home.html:18 xl_auth/templates/users/inspect.html:72
-#: xl_auth/templates/users/profile.html:49 xl_auth/templates/users/view.html:48
+#: xl_auth/templates/users/profile.html:49 xl_auth/templates/users/view.html:61
 msgid "Registrant"
 msgstr ""
 
 #: xl_auth/permission/forms.py:23 xl_auth/templates/collections/view.html:61
 #: xl_auth/templates/permissions/home.html:19 xl_auth/templates/users/inspect.html:73
-#: xl_auth/templates/users/profile.html:50 xl_auth/templates/users/view.html:49
+#: xl_auth/templates/users/profile.html:50 xl_auth/templates/users/view.html:62
 msgid "Cataloger"
 msgstr ""
 
 #: xl_auth/permission/forms.py:24 xl_auth/templates/collections/view.html:62
 #: xl_auth/templates/permissions/home.html:20 xl_auth/templates/users/inspect.html:20
 #: xl_auth/templates/users/inspect.html:74 xl_auth/templates/users/profile.html:52
-#: xl_auth/templates/users/view.html:20 xl_auth/templates/users/view.html:50
+#: xl_auth/templates/users/view.html:20 xl_auth/templates/users/view.html:63
 msgid "Cataloguing Administrator"
 msgstr ""
 
@@ -614,7 +621,7 @@ msgstr ""
 
 #: xl_auth/templates/collections/view.html:35 xl_auth/templates/users/inspect.html:47
 #: xl_auth/templates/users/inspect.html:76 xl_auth/templates/users/inspect.html:119
-#: xl_auth/templates/users/view.html:23 xl_auth/templates/users/view.html:52
+#: xl_auth/templates/users/view.html:23 xl_auth/templates/users/view.html:65
 msgid "Last Modified"
 msgstr ""
 
@@ -622,7 +629,7 @@ msgstr ""
 #: xl_auth/templates/collections/view.html:83 xl_auth/templates/users/inspect.html:49
 #: xl_auth/templates/users/inspect.html:57 xl_auth/templates/users/inspect.html:99
 #: xl_auth/templates/users/view.html:25 xl_auth/templates/users/view.html:33
-#: xl_auth/templates/users/view.html:75
+#: xl_auth/templates/users/view.html:89
 msgid "by"
 msgstr ""
 
@@ -879,7 +886,8 @@ msgstr ""
 msgid "Inactive Users"
 msgstr ""
 
-#: xl_auth/templates/users/inspect.html:14 xl_auth/templates/users/view.html:14
+#: xl_auth/templates/users/inspect.html:14 xl_auth/templates/users/simple_view.html:11
+#: xl_auth/templates/users/view.html:14
 msgid "Active Account"
 msgstr ""
 
@@ -920,7 +928,7 @@ msgstr ""
 msgid "Clients Modified"
 msgstr ""
 
-#: xl_auth/templates/users/inspect.html:75 xl_auth/templates/users/view.html:51
+#: xl_auth/templates/users/inspect.html:75 xl_auth/templates/users/view.html:64
 msgid "Active Collection"
 msgstr ""
 
@@ -970,6 +978,10 @@ msgstr ""
 
 #: xl_auth/templates/users/register.html:15
 msgid "First Last"
+msgstr ""
+
+#: xl_auth/templates/users/simple_view.html:14 xl_auth/templates/users/view.html:39
+msgid "Cataloging admin for"
 msgstr ""
 
 #: xl_auth/user/forms.py:20
@@ -1024,12 +1036,12 @@ msgstr ""
 msgid "User \"%(username)s\" registered."
 msgstr ""
 
-#: xl_auth/user/views.py:149 xl_auth/user/views.py:173
+#: xl_auth/user/views.py:153 xl_auth/user/views.py:177
 #, python-format
 msgid "Thank you for updating user details for \"%(username)s\"."
 msgstr ""
 
-#: xl_auth/user/views.py:202
+#: xl_auth/user/views.py:206
 #, python-format
 msgid "Thank you for changing password for \"%(username)s\"."
 msgstr ""
