@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 0.6.3\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-12-07 11:12+0100\n"
+"POT-Creation-Date: 2017-12-07 14:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -217,8 +217,8 @@ msgstr ""
 #: xl_auth/templates/users/inspect.html:97 xl_auth/templates/users/inspect.html:128
 #: xl_auth/templates/users/inspect.html:162 xl_auth/templates/users/profile.html:67
 #: xl_auth/templates/users/profile.html:70 xl_auth/templates/users/profile.html:74
-#: xl_auth/templates/users/simple_view.html:12 xl_auth/templates/users/view.html:15
-#: xl_auth/templates/users/view.html:18 xl_auth/templates/users/view.html:21
+#: xl_auth/templates/users/simple_view.html:12 xl_auth/templates/users/view.html:31
+#: xl_auth/templates/users/view.html:34 xl_auth/templates/users/view.html:37
 #: xl_auth/templates/users/view.html:78 xl_auth/templates/users/view.html:81
 #: xl_auth/templates/users/view.html:84 xl_auth/templates/users/view.html:87
 msgid "Yes"
@@ -235,8 +235,8 @@ msgstr ""
 #: xl_auth/templates/users/inspect.html:97 xl_auth/templates/users/inspect.html:128
 #: xl_auth/templates/users/inspect.html:162 xl_auth/templates/users/profile.html:67
 #: xl_auth/templates/users/profile.html:70 xl_auth/templates/users/profile.html:74
-#: xl_auth/templates/users/simple_view.html:12 xl_auth/templates/users/view.html:15
-#: xl_auth/templates/users/view.html:18 xl_auth/templates/users/view.html:21
+#: xl_auth/templates/users/simple_view.html:12 xl_auth/templates/users/view.html:31
+#: xl_auth/templates/users/view.html:34 xl_auth/templates/users/view.html:37
 #: xl_auth/templates/users/view.html:78 xl_auth/templates/users/view.html:81
 #: xl_auth/templates/users/view.html:84 xl_auth/templates/users/view.html:87
 msgid "No"
@@ -300,7 +300,7 @@ msgstr ""
 msgid "View User '%(email)s'"
 msgstr ""
 
-#: tests/end2end/test_user_view.py:142 tests/models/test_user.py:231 xl_auth/user/models.py:186
+#: tests/end2end/test_user_view.py:145 tests/models/test_user.py:234 xl_auth/user/models.py:186
 msgid "You will only see permissions for those collections that you are cataloging administrator for."
 msgstr ""
 
@@ -473,7 +473,7 @@ msgstr ""
 #: xl_auth/permission/forms.py:24 xl_auth/templates/collections/view.html:62
 #: xl_auth/templates/permissions/home.html:20 xl_auth/templates/users/inspect.html:20
 #: xl_auth/templates/users/inspect.html:74 xl_auth/templates/users/profile.html:52
-#: xl_auth/templates/users/view.html:20 xl_auth/templates/users/view.html:63
+#: xl_auth/templates/users/view.html:36 xl_auth/templates/users/view.html:63
 msgid "Cataloguing Administrator"
 msgstr ""
 
@@ -582,7 +582,7 @@ msgstr ""
 #: xl_auth/templates/collections/view.html:43 xl_auth/templates/collections/view.html:63
 #: xl_auth/templates/permissions/home.html:21 xl_auth/templates/users/home.html:22
 #: xl_auth/templates/users/home.html:75 xl_auth/templates/users/inspect.html:55
-#: xl_auth/templates/users/inspect.html:120 xl_auth/templates/users/view.html:31
+#: xl_auth/templates/users/inspect.html:120 xl_auth/templates/users/view.html:22
 msgid "Created At"
 msgstr ""
 
@@ -621,14 +621,14 @@ msgstr ""
 
 #: xl_auth/templates/collections/view.html:35 xl_auth/templates/users/inspect.html:47
 #: xl_auth/templates/users/inspect.html:76 xl_auth/templates/users/inspect.html:119
-#: xl_auth/templates/users/view.html:23 xl_auth/templates/users/view.html:65
+#: xl_auth/templates/users/view.html:14 xl_auth/templates/users/view.html:65
 msgid "Last Modified"
 msgstr ""
 
 #: xl_auth/templates/collections/view.html:37 xl_auth/templates/collections/view.html:45
 #: xl_auth/templates/collections/view.html:83 xl_auth/templates/users/inspect.html:49
 #: xl_auth/templates/users/inspect.html:57 xl_auth/templates/users/inspect.html:99
-#: xl_auth/templates/users/view.html:25 xl_auth/templates/users/view.html:33
+#: xl_auth/templates/users/view.html:16 xl_auth/templates/users/view.html:24
 #: xl_auth/templates/users/view.html:89
 msgid "by"
 msgstr ""
@@ -887,13 +887,13 @@ msgid "Inactive Users"
 msgstr ""
 
 #: xl_auth/templates/users/inspect.html:14 xl_auth/templates/users/simple_view.html:11
-#: xl_auth/templates/users/view.html:14
+#: xl_auth/templates/users/view.html:30
 msgid "Active Account"
 msgstr ""
 
-#: xl_auth/templates/users/inspect.html:17 xl_auth/templates/users/view.html:17
+#: xl_auth/templates/users/inspect.html:17 xl_auth/templates/users/view.html:33
 #: xl_auth/user/forms.py:141
-msgid "Administrator"
+msgid "System Administrator"
 msgstr ""
 
 #: xl_auth/templates/users/inspect.html:23

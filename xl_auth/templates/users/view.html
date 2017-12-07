@@ -11,15 +11,6 @@
             <dt>{{ _('Last Login At') }}:</dt>
             <dd>{{ '-' if not user.last_login_at else user.last_login_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}</dd>
 
-            <dt>{{ _('Active Account') }}:</dt>
-            <dd>{{ _('Yes') if user.is_active else _('No') }}</dd>
-
-            <dt>{{ _('Administrator') }}:</dt>
-            <dd>{{ _('Yes') if user.is_admin else _('No') }}</dd>
-
-            <dt>{{ _('Cataloguing Administrator') }}:</dt>
-            <dd>{{ _('Yes') if user.is_cataloging_admin else _('No') }}</dd>
-
             <dt>{{ _('Last Modified') }}:</dt>
             <dd>
                 {{ user.modified_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}, {{  _('by') }}
@@ -35,6 +26,15 @@
                     {{ user.created_by.full_name }}
                 </a>
             </dd>
+
+            <dt>{{ _('Active Account') }}:</dt>
+            <dd>{{ _('Yes') if user.is_active else _('No') }}</dd>
+
+            <dt>{{ _('System Administrator') }}:</dt>
+            <dd>{{ _('Yes') if user.is_admin else _('No') }}</dd>
+
+            <dt>{{ _('Cataloguing Administrator') }}:</dt>
+            <dd>{{ _('Yes') if user.is_cataloging_admin else _('No') }}</dd>
 
             <dt>{{ _('Cataloging admin for') }}:</dt>
             <dd>
