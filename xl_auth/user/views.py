@@ -91,7 +91,7 @@ def view(user_id):
         return redirect(url_for('user.profile'))
     else:
         # Cataloging admins and admins need to see more information, so they get their own view.
-        if current_user.is_admin or len(current_user.get_cataloging_admin_permissions()) > 0:
+        if current_user.is_admin or current_user.is_cataloging_admin:
             return render_template('users/view.html', user=user)
         else:
             return render_template('users/simple_view.html', user=user)
