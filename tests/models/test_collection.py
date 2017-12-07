@@ -105,7 +105,7 @@ def test_removing_permissions(superuser, user):
 
 def test_get_permissions_as_seen_by(user):
     """Test getting viewable permissions as 'user'."""
-    raise NotImplementedError('Fix me for PR #109!')
+    raise NotImplementedError('Fix me for PR #120!')
 
 
 @pytest.mark.usefixtures('db')

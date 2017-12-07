@@ -133,10 +133,10 @@ def test_cataloging_admin_sees_only_cataloging_admins_on_others_collection(user,
 def test_non_cataloging_admin_user_sees_permissions_table_on_collections_they_have_permissions_for(
         user, collection, testapp):
     """View own and 'cataloging_admin' permissions on collection thyself is associated with."""
-    raise NotImplementedError('Fix me for PR #109!')
+    raise NotImplementedError('Fix me for PR #120!')
 
 
 def test_non_cataloging_admin_users_sees_only_cataloging_admins_on_unassociated_collections(
         user, collection, testapp):
     """Sees cataloging admins' list only when viewing a collection they are not associated with."""
-    raise NotImplementedError('Fix me for PR #109!')
+    raise NotImplementedError('Fix me for PR #120!')

@@ -173,12 +173,12 @@ def test_is_cataloging_admin(superuser, user):
 
 def test_is_cataloging_admin_for(collection):
     """Test is_cataloging_admin_for return value."""
-    raise NotImplementedError('Fix me for PR #109!')
+    raise NotImplementedError('Fix me for PR #120!')
 
 
 def test_has_any_permission_for(collection):
     """Test has_any_permission_for return value."""
-    raise NotImplementedError('Fix me for PR #109!')
+    raise NotImplementedError('Fix me for PR #120!')
 
 
 def test_get_permissions_as_seen_by_self(user):
