@@ -272,6 +272,8 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
             assert voyager_sigel and voyager_location
             voyager_main_sigels.add(voyager_sigel)
             voyager_location_sigels.add(voyager_location)
+            if voyager_sigel == 'SEK' and voyager_location != 'SEK':
+                continue  # Don't add all the collections under SEK super cataloger.
             if voyager_sigel in voyager_sigels_and_collections:
                 voyager_sigels_and_collections[voyager_sigel].add(voyager_location)
             else:
