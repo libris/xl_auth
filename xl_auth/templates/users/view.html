@@ -11,15 +11,6 @@
             <dt>{{ _('Last Login At') }}:</dt>
             <dd>{{ '-' if not user.last_login_at else user.last_login_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}</dd>
 
-            <dt>{{ _('Active Account') }}:</dt>
-            <dd>{{ _('Yes') if user.is_active else _('No') }}</dd>
-
-            <dt>{{ _('Administrator') }}:</dt>
-            <dd>{{ _('Yes') if user.is_admin else _('No') }}</dd>
-
-            <dt>{{ _('Cataloguing Administrator') }}:</dt>
-            <dd>{{ _('Yes') if user.is_cataloging_admin else _('No') }}</dd>
-
             <dt>{{ _('Last Modified') }}:</dt>
             <dd>
                 {{ user.modified_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}, {{  _('by') }}
@@ -35,11 +26,33 @@
                     {{ user.created_by.full_name }}
                 </a>
             </dd>
+
+            <dt>{{ _('Active Account') }}:</dt>
+            <dd>{{ _('Yes') if user.is_active else _('No') }}</dd>
+
+            <dt>{{ _('System Administrator') }}:</dt>
+            <dd>{{ _('Yes') if user.is_admin else _('No') }}</dd>
+
+            <dt>{{ _('Cataloguing Administrator') }}:</dt>
+            <dd>{{ _('Yes') if user.is_cataloging_admin else _('No') }}</dd>
+
+            <dt>{{ _('Cataloging admin for') }}:</dt>
+            <dd>
+                {% for permission in user.get_cataloging_admin_permissions()
+                        | sort(attribute='collection.code') %}
+                    <a href="{{ url_for('collection.view', collection_code=permission.collection.code) }}">
+                        {{ permission.collection.code }}
+                    </a>
+                {% endfor %}
+            </dd>
         </dl>
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">
             <strong>{{ _('Permissions') }}</strong>
+            {% if user.get_permissions_label_help_text_as_seen_by(current_user) != '' %}
+                <span>({{ user.get_permissions_label_help_text_as_seen_by(current_user) }})</span>
+            {% endif %}
         </div>
         <table class="table table-hover">
             <thead>
@@ -53,7 +66,8 @@
             </tr>
             </thead>
             <tbody>
-            {% for permission in user.permissions | sort(attribute='collection.code') %}
+            {% for permission in user.get_permissions_as_seen_by(current_user)
+                    | sort(attribute='collection.code') %}
                 <tr>
                     <td>
                         <a href="{{ url_for('collection.view', collection_code=permission.collection.code) }}">
