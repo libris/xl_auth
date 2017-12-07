@@ -307,7 +307,7 @@ msgid "View User '%(email)s'"
 msgstr "Användare '%(email)s'"
 
 #: tests/end2end/test_user_view.py:145 tests/models/test_user.py:234 xl_auth/user/models.py:186
-msgid "You will only see permissions for those collections that you are cataloging administrator for."
+msgid "You will only see all permissions for those collections that you are cataloging administrator for."
 msgstr "Du kommer enbart se rättigheter knutna till de sigel du är katalogiseringsadministratör för."
 
 #: tests/forms/test_client_edit.py:23 tests/forms/test_client_register.py:25

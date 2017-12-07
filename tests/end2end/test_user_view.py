@@ -142,6 +142,6 @@ def test_user_can_only_view_cataloging_admin_permissions_on_others_when_not_admi
     res = testapp.get(
         url_for('user.view', user_id=another_users_non_cataloging_admin_permission.user.id))
     assert res.status_code is 200
-    assert _('You will only see permissions for those collections that you are cataloging '
+    assert _('You will only see all permissions for those collections that you are cataloging '
              'administrator for.') in res
     assert collection_view_url in res
