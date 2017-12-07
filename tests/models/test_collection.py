@@ -103,6 +103,11 @@ def test_removing_permissions(superuser, user):
     assert permission not in collection.permissions
 
 
+def test_get_permissions_as_seen_by(user):
+    """Test getting viewable permissions as 'user'."""
+    raise NotImplementedError('Fix me for PR #109!')
+
+
 @pytest.mark.usefixtures('db')
 def test_get_replaces_and_replaced_by_str():
     """Check get_replaces_and_replaced_by_str output."""
