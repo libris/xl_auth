@@ -6,6 +6,10 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from flask import escape, url_for
 from flask_babel import gettext as _
 
+from xl_auth.collection.models import Collection
+
+from ..factories import PermissionFactory
+
 
 def test_user_can_view_collection_info(permission, testapp):
     """View info about one of the user's collections."""
@@ -39,3 +43,22 @@ def test_user_sees_error_message_if_collection_code_does_not_exist(user, testapp
     res = testapp.get(url_for('collection.view', collection_code='FAKE1')).follow()
     # Sees error message.
     assert escape(_('Collection code "%(code)s" does not exist', code='FAKE1')) in res
+
+
+def test_superuser_can_view_all_permissions_on_collection(superuser, permission, testapp):
+    """View all permissions as superuser."""
+    # Goes to homepage.
+    res = testapp.get('/')
+    # Fills out login form.
+    form = res.forms['loginForm']
+    form['username'] = superuser.email
+    form['password'] = 'myPrecious'
+    # Submits.
+    res = form.submit().follow()
+    assert res.status_code is 200
+    # Goes to the right URL for viewing a collection.
+    res = testapp.get(url_for('collection.view', collection_code=permission.collection.code))
+    assert res.status_code is 200
+    # Sees all permissions.
+    assert _('Permissions') in res
+    assert permission.user.email in res
