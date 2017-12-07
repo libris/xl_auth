@@ -93,8 +93,8 @@ def test_cataloging_admin_can_view_all_permissions_on_own_collection(user, colle
     assert other_users_non_cataloging_admin_permission.user.email in res
 
 
-def test_cataloging_admin_can_see_only_cataloging_admins_on_others_collection(user, collection,
-                                                                              testapp):
+def test_cataloging_admin_sees_only_cataloging_admins_on_others_collection(user, collection,
+                                                                           testapp):
     """View only 'cataloging_admin' permissions on a collection that you're NOT managing."""
     # Add cataloging admin permission.
     cataloging_admin_permission = PermissionFactory(user=user, collection=collection,
@@ -123,5 +123,20 @@ def test_cataloging_admin_can_see_only_cataloging_admins_on_others_collection(us
     assert res.status_code is 200
     # Sees all permissions.
     assert _('Cataloging Admins') in res
+    assert _('Permissions') in res
+    assert _('You will only see all permissions for those collections that you are '
+             'cataloging administrator for.')
     assert other_users_non_cataloging_admin_permission.user.email not in res
     assert other_user_with_cataloging_admin_permission.user.email in res
+
+
+def test_non_cataloging_admin_user_sees_permissions_table_on_collections_they_have_permissions_for(
+        user, collection, testapp):
+    """View own and 'cataloging_admin' permissions on collection thyself is associated with."""
+    raise NotImplementedError('Fix me for PR #109!')
+
+
+def test_non_cataloging_admin_users_sees_only_cataloging_admins_on_unassociated_collections(
+        user, collection, testapp):
+    """Sees cataloging admins' list only when viewing a collection they are not associated with."""
+    raise NotImplementedError('Fix me for PR #109!')
