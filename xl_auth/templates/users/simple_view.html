@@ -11,13 +11,15 @@
             <dt>{{ _('Active Account') }}:</dt>
             <dd>{{ _('Yes') if user.is_active else _('No') }}</dd>
 
-            <dt>{{ _('Cataloging admin for') }}:</dt>
+            <dt>{{ _('Cataloging Admin for') }}:</dt>
             <dd>
                 {% for permission in user.get_cataloging_admin_permissions()
                         | sort(attribute='collection.code') %}
                     <a href="{{ url_for('collection.view', collection_code=permission.collection.code) }}">
                         {{ permission.collection.code }}
                     </a>
+                {% else %}
+                    -
                 {% endfor %}
             </dd>
         </dl>

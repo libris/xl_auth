@@ -994,7 +994,7 @@ msgid "First Last"
 msgstr "Förnamn Efternamn"
 
 #: xl_auth/templates/users/simple_view.html:14 xl_auth/templates/users/view.html:39
-msgid "Cataloging admin for"
+msgid "Cataloging Admin for"
 msgstr "Ansvarig för"
 
 #: xl_auth/user/forms.py:20
