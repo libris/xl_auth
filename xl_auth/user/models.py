@@ -153,6 +153,18 @@ class User(UserMixin, SurrogatePK, Model):
                 return True
         return False
 
+    def is_cataloging_admin_for(self, collection):
+        """Check 'cataloging_admin' status for a specific collection."""
+        for permission in self.permissions:
+            if permission.cataloging_admin and permission.collection == collection:
+                return True
+        return False
+
+    def has_any_permission_for(self, collection):
+        """Check for any permission on a specific collection."""
+        return any([permission for permission in self.permissions
+                    if permission.collection == collection])
+
     def set_password(self, password):
         """Set password."""
         self.password = bcrypt.generate_password_hash(password)
