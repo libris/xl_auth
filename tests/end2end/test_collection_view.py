@@ -62,3 +62,32 @@ def test_superuser_can_view_all_permissions_on_collection(superuser, permission,
     # Sees all permissions.
     assert _('Permissions') in res
     assert permission.user.email in res
+
+
+def test_cataloging_admin_can_view_all_permissions_on_own_collection(user, collection, testapp):
+    """View all permissions on a collection that you're managing."""
+    # Add cataloging admin permission.
+    cataloging_admin_permission = PermissionFactory(user=user, collection=collection,
+                                                    cataloging_admin=True)
+    cataloging_admin_permission.save()
+    # Add 2nd cataloger+registrant permission.
+    other_users_non_cataloging_admin_permission = PermissionFactory(collection=collection,
+                                                                    cataloging_admin=False)
+    other_users_non_cataloging_admin_permission.save()
+    # Goes to homepage.
+    res = testapp.get('/')
+    # Fills out login form.
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits.
+    res = form.submit().follow()
+    assert res.status_code is 200
+    # Goes to the right URL for viewing a collection.
+    res = testapp.get(url_for('collection.view',
+                              collection_code=cataloging_admin_permission.collection.code))
+    assert res.status_code is 200
+    # Sees all permissions.
+    assert _('Permissions') in res
+    assert cataloging_admin_permission.user.email in res
+    assert other_users_non_cataloging_admin_permission.user.email in res
