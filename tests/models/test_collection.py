@@ -13,7 +13,7 @@ from xl_auth.collection.models import Collection
 from xl_auth.permission.models import Permission
 from xl_auth.user.models import User
 
-from ..factories import CollectionFactory, SuperUserFactory
+from ..factories import CollectionFactory, SuperUserFactory, UserFactory
 
 
 def test_get_by_id(superuser):
@@ -103,9 +103,39 @@ def test_removing_permissions(superuser, user):
     assert permission not in collection.permissions
 
 
-def test_get_permissions_as_seen_by(user):
+def test_get_permissions_as_seen_by(collection, user, superuser):
     """Test getting viewable permissions as 'user'."""
-    raise NotImplementedError('Fix me for PR #120!')
+    # If there are no permissions, we se no permissions.
+    assert collection.get_permissions_as_seen_by(user) == []
+
+    # If 'user' is not cataloging admin, they don't see regular user permissions on a collection.
+    other_user = UserFactory()
+    others_non_cataloging_admin_permission = Permission(user=other_user, collection=collection,
+                                                        cataloging_admin=False).save_as(superuser)
+    assert others_non_cataloging_admin_permission not in \
+        collection.get_permissions_as_seen_by(user)
+
+    # 'user' sees own and cataloging admin permissions on a collection.
+    users_own_permission = Permission(user=user, collection=collection,
+                                      cataloging_admin=False).save_as(superuser)
+    third_user = UserFactory()
+    thirds_cataloging_admin_permission = Permission(user=third_user, collection=collection,
+                                                    cataloging_admin=True).save_as(superuser)
+    assert len(collection.get_permissions_as_seen_by(user)) == 2
+    assert users_own_permission in collection.get_permissions_as_seen_by(user)
+    assert thirds_cataloging_admin_permission in collection.get_permissions_as_seen_by(user)
+
+    # When 'user' becomes a cataloging admin on a collection, they sees all permissions.
+    users_own_permission.cataloging_admin = True
+    users_own_permission.save()
+    assert len(collection.get_permissions_as_seen_by(user)) == 3
+    assert others_non_cataloging_admin_permission in collection.get_permissions_as_seen_by(user)
+    assert users_own_permission in collection.get_permissions_as_seen_by(user)
+    assert thirds_cataloging_admin_permission in collection.get_permissions_as_seen_by(user)
+
+    # As a system admin, you see all permissions on a collection.
+    assert len(superuser.permissions) == 0
+    assert len(collection.get_permissions_as_seen_by(superuser)) == 3
 
 
 @pytest.mark.usefixtures('db')
