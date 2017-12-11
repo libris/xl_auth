@@ -13,7 +13,7 @@ from xl_auth.collection.models import Collection
 from xl_auth.permission.models import Permission
 from xl_auth.user.models import User
 
-from ..factories import CollectionFactory, SuperUserFactory, UserFactory
+from ..factories import CollectionFactory, PermissionFactory, SuperUserFactory, UserFactory
 
 
 def test_get_by_id(superuser):
@@ -136,6 +136,16 @@ def test_get_permissions_as_seen_by(collection, user, superuser):
     # As a system admin, you see all permissions on a collection.
     assert len(superuser.permissions) == 0
     assert len(collection.get_permissions_as_seen_by(superuser)) == 3
+
+
+def test_get_permissions_label_help_text(collection, user, superuser):
+    """Test getting permissions label help text."""
+    assert collection.get_permissions_label_help_text_as_seen_by(superuser) == ''
+    assert (collection.get_permissions_label_help_text_as_seen_by(user) ==
+            _('You will only see all permissions for those collections that you are '
+              'cataloging admin for.'))
+    PermissionFactory(user=user, collection=collection, cataloging_admin=True)
+    assert collection.get_permissions_label_help_text_as_seen_by(user) == ''
 
 
 @pytest.mark.usefixtures('db')

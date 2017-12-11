@@ -255,7 +255,7 @@ def test_get_permissions_label_help_text(user, superuser):
     PermissionFactory(user=user, cataloging_admin=True).save_as(user)
     assert (superuser.get_permissions_label_help_text_as_seen_by(user) ==
             _('You will only see permissions for those collections that you are '
-              'cataloging administrator for.'))
+              'cataloging admin for.'))
 
 
 @pytest.mark.usefixtures('db')

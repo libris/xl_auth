@@ -122,8 +122,8 @@ def test_cataloging_admin_sees_only_cataloging_admins_on_others_collection(user,
     # Sees a subset of permissions.
     assert _('Cataloging Admins') in res
     assert _('Permissions') in res
-    assert _('You will only see all permissions on those collections that you are '
-             'cataloging administrator for.') in res
+    assert _('You will only see all permissions for those collections that you are '
+             'cataloging admin for.') in res
     assert other_users_non_cataloging_admin_permission.user.email not in res
     assert other_user_with_cataloging_admin_permission.user.email in res
 
@@ -151,8 +151,8 @@ def test_non_cataloging_admin_user_sees_permissions_table_on_collections_they_ha
     # Sees a subset of permissions.
     assert _('Cataloging Admins') in res
     assert _('Permissions') in res
-    assert _('You will only see all permissions on those collections that you are '
-             'cataloging administrator for.') in res
+    assert _('You will only see all permissions for those collections that you are '
+             'cataloging admin for.') in res
     assert cataloging_admin_permission.user.email in res
     assert others_regular_permission.user.email not in res
     assert own_regular_permission.user.email in res
@@ -182,5 +182,5 @@ def test_non_cataloging_admin_users_sees_only_cataloging_admins_on_unassociated_
     assert cataloging_admin_permission.user.email in res
     # Does not see permissions table.
     assert _('Permissions') not in res
-    assert _('You will only see all permissions on those collections that you are '
-             'cataloging administrator for.') not in res
+    assert _('You will only see all permissions for those collections that you are '
+             'cataloging admin for.') not in res
