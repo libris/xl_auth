@@ -8,7 +8,7 @@ from flask_babel import gettext as _
 
 from xl_auth.collection.models import Collection
 
-from ..factories import PermissionFactory, CollectionFactory
+from ..factories import CollectionFactory, PermissionFactory
 
 
 def test_user_can_view_collection_info(permission, testapp):
@@ -121,11 +121,11 @@ def test_cataloging_admin_sees_only_cataloging_admins_on_others_collection(user,
     # Goes to the right URL for viewing a collection.
     res = testapp.get(url_for('collection.view', collection_code=other_collection.code))
     assert res.status_code is 200
-    # Sees all permissions.
+    # Sees some permissions.
     assert _('Cataloging Admins') in res
     assert _('Permissions') in res
-    assert _('You will only see all permissions for those collections that you are '
-             'cataloging administrator for.')
+    assert _('You will only see all permissions on those collections that you are '
+             'cataloging administrator for.') in res
     assert other_users_non_cataloging_admin_permission.user.email not in res
     assert other_user_with_cataloging_admin_permission.user.email in res
 
@@ -133,7 +133,32 @@ def test_cataloging_admin_sees_only_cataloging_admins_on_others_collection(user,
 def test_non_cataloging_admin_user_sees_permissions_table_on_collections_they_have_permissions_for(
         user, collection, testapp):
     """View own and 'cataloging_admin' permissions on collection thyself is associated with."""
-    raise NotImplementedError('Fix me for PR #120!')
+    # Preconditions.
+    cataloging_admin_permission = PermissionFactory(collection=collection, cataloging_admin=True)
+    assert cataloging_admin_permission.cataloging_admin is True
+    others_regular_permission = PermissionFactory(collection=collection, cataloging_admin=False)
+    own_regular_permission = PermissionFactory(user=user, collection=collection,
+                                               cataloging_admin=False)
+    # Goes to homepage.
+    res = testapp.get('/')
+    # Fills out login form.
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits.
+    res = form.submit().follow()
+    assert res.status_code is 200
+    # Goes to the right URL for viewing a collection.
+    res = testapp.get(url_for('collection.view', collection_code=collection.code))
+    assert res.status_code is 200
+    # Sees all permissions.
+    assert _('Cataloging Admins') in res
+    assert _('Permissions') in res
+    assert _('You will only see all permissions on those collections that you are '
+             'cataloging administrator for.') in res
+    assert cataloging_admin_permission.user.email in res
+    assert others_regular_permission.user.email not in res
+    assert own_regular_permission.user.email in res
 
 
 def test_non_cataloging_admin_users_sees_only_cataloging_admins_on_unassociated_collections(
