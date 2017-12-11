@@ -27,8 +27,13 @@
                 <h3>{{ _('Important') }}!</h3>
             </div>
             <div class="panel-body">
-                <p>{{ _('Contact customer service at <a href="mailto:libris@kb.se">libris@kb.se</a> \
-if your permissions are not correctly listed below.') }}</p>
+                <p>{{ _('If you are missing a permission or any of the permissions below are '
+                        'incorrect, please contact the cataloging administrator for that collection.') }}</p>
+                <p>{{ _('You can find the collection administrator contact information by following the collection link '
+                        'below or by going to <a href="%(collections_link)s">the Collections list view</a> and selecting '
+                        'the collection there.', collections_link=url_for('collection.home')) }}</p>
+                <p>{{ _('For any other questions or concerns, please contact customer service at '
+                        '<a href="mailto:libris@kb.se">libris@kb.se</a>.') }}</p>
             </div>
         </div>
     {% endif %}
@@ -36,8 +41,6 @@ if your permissions are not correctly listed below.') }}</p>
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3>{{ _('Permissions (Active Collections Only)') }}</h3>
-            <p>{{ _('Note: <em>Cataloging Admin</em> is a new privilege that, in the near future, \
-will allow you to create new user accounts and grant registrant/cataloger privileges to others. ') }}</p>
         </div>
         <div class="panel-body">
             <table class="table table-hover">
