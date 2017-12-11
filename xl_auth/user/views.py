@@ -90,7 +90,11 @@ def view(user_id):
         flash(_('User ID "%(user_id)s" does not exist', user_id=user_id), 'danger')
         return redirect(url_for('user.profile'))
     else:
-        return render_template('users/view.html', user=user)
+        # Cataloging admins and admins need to see more information, so they get their own view.
+        if current_user.is_admin or current_user.is_cataloging_admin:
+            return render_template('users/view.html', user=user)
+        else:
+            return render_template('users/simple_view.html', user=user)
 
 
 @blueprint.route('/inspect/<int:user_id>', methods=['GET'])

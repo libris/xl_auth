@@ -178,6 +178,35 @@ class User(UserMixin, SurrogatePK, Model):
         hashed_email = hashlib.md5(str(self.email).lower().encode()).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=mm&s={}'.format(hashed_email, size)
 
+    def get_permissions_label_help_text_as_seen_by(self, current_user):
+        """Return help text for permissions label."""
+        if current_user == self or current_user.is_admin:
+            return ''
+        elif current_user.is_cataloging_admin:
+            return _('You will only see permissions for those collections that you are '
+                     'cataloging administrator for.')
+        else:
+            # This text is never shown to regular users viewing another user
+            return ''
+
+    def get_permissions_as_seen_by(self, current_user):
+        """Return subset of permissions viewable by 'current_user'."""
+        if current_user == self or current_user.is_admin:
+            return self.permissions
+        else:
+            def current_user_is_cataloging_admin_for(collection):
+                for permission in current_user.permissions:
+                    if permission.collection == collection and permission.cataloging_admin:
+                        return True
+                return False
+
+            return [perm for perm in self.permissions
+                    if current_user_is_cataloging_admin_for(perm.collection)]
+
+    def get_cataloging_admin_permissions(self):
+        """Return all cataloging admin permissions for this user."""
+        return [perm for perm in self.permissions if perm.cataloging_admin]
+
     def save_as(self, current_user, commit=True, preserve_modified=False):
         """Save instance as 'current_user'."""
         if current_user and not self.created_at:

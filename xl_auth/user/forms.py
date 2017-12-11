@@ -138,7 +138,7 @@ class AdministerForm(_EditForm):
 
     full_name = full_name
     is_active = BooleanField(_('Active'))
-    is_admin = BooleanField(_('Administrator'))
+    is_admin = BooleanField(_('System Administrator'))
 
     def validate(self):
         """Validate the form."""
