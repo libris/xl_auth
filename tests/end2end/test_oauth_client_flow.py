@@ -12,7 +12,7 @@ from xl_auth import __version__
 from xl_auth.oauth.grant.models import Grant
 from xl_auth.oauth.token.models import Token
 
-from ..factories import PermissionFactory
+from ..factories import CollectionFactory, PermissionFactory
 
 
 def test_oauth_authorize_success(user, client, testapp):
@@ -169,6 +169,29 @@ def test_verify_success_response(token, testapp):
             assert permission['registrant'] is False
             assert permission['cataloger'] is True
             assert permission['friendly_name'] == permission2.collection.friendly_name
+
+
+def test_verify_returns_permissions_on_active_collections_only(token, testapp):
+    """Get user details and token expiry."""
+    inactive_collection = CollectionFactory(is_active=False)
+    permission1 = PermissionFactory(user=token.user, collection=inactive_collection,
+                                    registrant=True, cataloger=False)
+    permission1.save()
+
+    active_collection = CollectionFactory(is_active=True)
+    permission2 = PermissionFactory(user=token.user, collection=active_collection,
+                                    registrant=False, cataloger=True)
+    permission2.save()
+
+    res = testapp.get(url_for('oauth.verify'),
+                      headers={'Authorization': str('Bearer ' + token.access_token)})
+
+    assert len(res.json_body['user']['permissions']) == 1
+    returned_permission = res.json_body['user']['permissions'][0]
+    assert returned_permission['code'] == active_collection.code
+    assert returned_permission['registrant'] == permission2.registrant
+    assert returned_permission['cataloger'] == permission2.cataloger
+    assert returned_permission['friendly_name'] == active_collection.friendly_name
 
 
 def test_verify_without_bearer(testapp):

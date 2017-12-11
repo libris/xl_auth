@@ -25,6 +25,46 @@ def test_can_log_in_returns_200(user, testapp):
     assert res.status_code == 200
 
 
+def test_user_must_approve_tos_on_login_if_unset(user, testapp):
+    """After login, the user is requested to approve ToS if not done already."""
+    user.tos_approved_at = None
+    user.save()
+    # Goes to pages that requires authentication and gets redirected to login page.
+    res = testapp.get('/collections/?foo=1&baz=2').follow()
+    # Fills out login form.
+    username_with_different_casing = user.email.upper()
+    form = res.forms['loginForm']
+    form['username'] = username_with_different_casing
+    form['password'] = 'myPrecious'
+    # Submits and gets redirected to approve ToS view.
+    res = form.submit()
+    assert res.status_code == 302
+    assert '/users/approve_tos' in res.location
+    res = res.follow()
+    assert res.status_code == 200
+    assert _('Approve ToS') in res
+    form = res.forms['approveForm']
+    form['tos_approved'] = 'y'
+    res = form.submit()
+    # Gets redirected to path initially requested.
+    assert res.status_code == 302
+    assert '/collections/?foo=1&baz=2' in res.location
+    res = res.follow()
+    assert res.status_code == 200
+    assert _('Collections') in res
+    # Logout and login again.
+    res = res.click(href='/logout/').follow()
+    assert res.status_code == 200
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits and gets redirected to profile view instead of approve ToS (as it's already done).
+    res = form.submit()
+    assert res.status_code == 302
+    assert '/users/approve_tos' not in res.location
+    assert res.location.endswith('/users/profile/')
+
+
 def test_unauthorized_leads_to_login_which_follows_next_redirect_param_on_success(user, testapp):
     """Redirect using 'next' query param if set."""
     # Goes to pages that requires authentication.
@@ -35,6 +75,7 @@ def test_unauthorized_leads_to_login_which_follows_next_redirect_param_on_succes
     form['password'] = 'myPrecious'
     # Submits.
     res = form.submit()
+    assert res.status_code == 302
     assert '/oauth/authorize?param1=value1&param2=value2' in res.location
 
 

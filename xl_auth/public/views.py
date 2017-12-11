@@ -31,16 +31,20 @@ def redirect_unauthorized():
 
 @blueprint.route('/', methods=['GET', 'POST'])
 def home():
-    """Home page."""
+    """Root path with login form."""
     login_form = LoginForm(request.form)
     # Handle logging in.
     if request.method == 'POST':
         if login_form.validate_on_submit():
-            login_user(login_form.user)
-            flash(_('You are logged in.'), 'success')
             redirect_url = login_form.next_redirect.data or url_for('user.profile')
+            login_user(login_form.user)
             current_user.update_last_login()
-            return redirect(redirect_url)
+            if current_user.tos_approved_at:
+                flash(_('You are logged in.'), 'success')
+                return redirect(redirect_url)
+            else:
+                return redirect(
+                    url_for('user.approve_tos') + '?next={}'.format(quote(redirect_url)))
         else:
             flash_errors(login_form)
 

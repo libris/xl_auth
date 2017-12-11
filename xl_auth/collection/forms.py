@@ -72,7 +72,7 @@ class EditForm(CollectionForm):
         if not self.active_user.is_admin:
             raise ValidationError(_('You do not have sufficient privileges for this operation.'))
 
-        collection = Collection.query.filter_by(code=self.code.data).first()
+        collection = Collection.get_by_code(code=self.code.data)
         if not collection:
             self.code.errors.append(_('Code does not exist'))
             return False
