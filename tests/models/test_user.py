@@ -183,9 +183,15 @@ def test_is_cataloging_admin_for(user, collection, superuser):
     assert user.is_cataloging_admin_for(admin_permission.collection) is True
 
 
-def test_has_any_permission_for(collection):
+def test_has_any_permission_for(user, collection, superuser):
     """Test has_any_permission_for return value."""
-    raise NotImplementedError('Fix me for PR #120!')
+    other_collection = CollectionFactory()
+    regular_permission = Permission(user=user, collection=other_collection,
+                                    cataloging_admin=False).save_as(superuser)
+    assert user.has_any_permission_for(collection) is False
+    regular_permission.collection = collection
+    regular_permission.save()
+    assert user.has_any_permission_for(collection) is True
 
 
 def test_get_permissions_as_seen_by_self(user):
