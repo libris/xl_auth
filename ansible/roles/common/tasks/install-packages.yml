@@ -11,6 +11,7 @@
     - tree
     - gcc
     - python-devel
+    - yum-versionlock
 
 - name: install emacs
   yum: name=emacs state=present

@@ -10,6 +10,12 @@
 
 - name: install docker-ce-17.09.1.ce
   yum: name=docker-ce-17.09.1.ce state=present allow_downgrade=yes
+  register: yum_install_docker
+  tags: docker
+
+- name: lock docker-ce version
+  shell: yum versionlock docker-ce
+  when: yum_install_docker.changed
   tags: docker
 
 - name: install docker-compose-1.16.1
