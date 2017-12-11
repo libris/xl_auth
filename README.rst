@@ -187,8 +187,11 @@ v. 0.6.3
 
 * Added "view collection" link to user profile page
 * *Terms of Service* view added, requesting the user to approve
+  (`#112 <https://github.com/libris/xl_auth/issues/112>`_)
 * Bug fix for loading Voyager permissions on SEK
   (`#113 <https://github.com/libris/xl_auth/issues/113>`_)
+* Bug fix for permissions exchange with LibrisXL
+  (`#110 <https://github.com/libris/xl_auth/issues/110>`_)
 
 
 v. 0.6.2
