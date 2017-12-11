@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""Test viewing user."""
+"""Test viewing collection."""
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 from flask import escape, url_for
 from flask_babel import gettext as _
-
-from xl_auth.collection.models import Collection
 
 from ..factories import CollectionFactory, PermissionFactory
 
@@ -121,7 +119,7 @@ def test_cataloging_admin_sees_only_cataloging_admins_on_others_collection(user,
     # Goes to the right URL for viewing a collection.
     res = testapp.get(url_for('collection.view', collection_code=other_collection.code))
     assert res.status_code is 200
-    # Sees some permissions.
+    # Sees a subset of permissions.
     assert _('Cataloging Admins') in res
     assert _('Permissions') in res
     assert _('You will only see all permissions on those collections that you are '
@@ -135,7 +133,6 @@ def test_non_cataloging_admin_user_sees_permissions_table_on_collections_they_ha
     """View own and 'cataloging_admin' permissions on collection thyself is associated with."""
     # Preconditions.
     cataloging_admin_permission = PermissionFactory(collection=collection, cataloging_admin=True)
-    assert cataloging_admin_permission.cataloging_admin is True
     others_regular_permission = PermissionFactory(collection=collection, cataloging_admin=False)
     own_regular_permission = PermissionFactory(user=user, collection=collection,
                                                cataloging_admin=False)
@@ -151,7 +148,7 @@ def test_non_cataloging_admin_user_sees_permissions_table_on_collections_they_ha
     # Goes to the right URL for viewing a collection.
     res = testapp.get(url_for('collection.view', collection_code=collection.code))
     assert res.status_code is 200
-    # Sees all permissions.
+    # Sees a subset of permissions.
     assert _('Cataloging Admins') in res
     assert _('Permissions') in res
     assert _('You will only see all permissions on those collections that you are '
@@ -164,4 +161,26 @@ def test_non_cataloging_admin_user_sees_permissions_table_on_collections_they_ha
 def test_non_cataloging_admin_users_sees_only_cataloging_admins_on_unassociated_collections(
         user, collection, testapp):
     """Sees cataloging admins' list only when viewing a collection they are not associated with."""
-    raise NotImplementedError('Fix me for PR #120!')
+    # Preconditions.
+    cataloging_admin_permission = PermissionFactory(collection=collection, cataloging_admin=True)
+    assert user.has_any_permission_for(collection) is False
+
+    # Goes to homepage.
+    res = testapp.get('/')
+    # Fills out login form.
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits.
+    res = form.submit().follow()
+    assert res.status_code is 200
+    # Goes to the right URL for viewing a collection.
+    res = testapp.get(url_for('collection.view', collection_code=collection.code))
+    assert res.status_code is 200
+    # Sees cataloging admins' list.
+    assert _('Cataloging Admins') in res
+    assert cataloging_admin_permission.user.email in res
+    # Does not see permissions table.
+    assert _('Permissions') not in res
+    assert _('You will only see all permissions on those collections that you are '
+             'cataloging administrator for.') not in res
