@@ -41,6 +41,14 @@ class Collection(SurrogatePK, Model):
         """Get by collection code."""
         return Collection.query.filter_by(code=code).first()
 
+    def get_permissions_label_help_text_as_seen_by(self, current_user):
+        """Return help text for permissions label."""
+        if not (current_user.is_cataloging_admin_for(self) or current_user.is_admin):
+            return _('You will only see all permissions for those collections that you are '
+                     'cataloging admin for.')
+        else:
+            return ''
+
     def get_permissions_as_seen_by(self, current_user):
         """Return subset of permissions viewable by 'current_user'."""
         if current_user.is_cataloging_admin_for(self) or current_user.is_admin:

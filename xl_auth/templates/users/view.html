@@ -52,7 +52,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <strong>{{ _('Permissions') }}</strong>
-            {% if user.get_permissions_label_help_text_as_seen_by(current_user) != '' %}
+            {% if user.get_permissions_label_help_text_as_seen_by(current_user) %}
                 <span>({{ user.get_permissions_label_help_text_as_seen_by(current_user) }})</span>
             {% endif %}
         </div>

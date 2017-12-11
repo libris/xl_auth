@@ -195,8 +195,8 @@ class User(UserMixin, SurrogatePK, Model):
         if current_user == self or current_user.is_admin:
             return ''
         elif current_user.is_cataloging_admin:
-            return _('You will only see all permissions for those collections that you are '
-                     'cataloging administrator for.')
+            return _('You will only see permissions for those collections that you are '
+                     'cataloging admin for.')
         else:
             # This text is never shown to regular users viewing another user
             return ''
