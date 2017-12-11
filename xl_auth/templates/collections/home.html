@@ -32,7 +32,13 @@
             {% for item in collections_list_active %}
                 <tr class="{{ 'collection-row-tooltip' if (item.replaces or item.replaced_by) }}"
                     title="{{ item.get_replaces_and_replaced_by_str() }}">
-                    <td><a class="anchor" id="collection-{{ item.code }}"></a>{{ item.code }}</td>
+                    <td>
+                        <a class="anchor" id="collection-{{ item.code }}"></a>
+                        <a title="{{ _('View') }}"
+                           href="{{ url_for('collection.view', collection_code=item.code) }}">
+                            {{ item.code }}
+                        </a>
+                    </td>
                     <td>{{ item.friendly_name }}</td>
                     <td>{{ _(item.category.capitalize()) if item.category in ['bibliography', 'library'] else _('No category') }}</td>
                     <td>{{ item.permissions | length }}</td>
@@ -41,7 +47,7 @@
                         <td class="actions">
                             <a class="btn btn-xs btn-default" title="{{ _('Edit') }}"
                                href="{{ url_for('collection.edit', collection_code=item.code) }}">
-                                <i class="edit-button fa fa-pencil"></i>
+                                <i class="fa fa-pencil"></i>
                             </a>
                         </td>
                     {% endif %}
@@ -73,9 +79,20 @@
             <tbody>
             {% for item in collections_list_inactive %}
                 <tr>
-                    <td>{{ item.code }}</td>
+                    <td>
+                        <a title="{{ _('View') }}"
+                           href="{{ url_for('collection.view', collection_code=item.code) }}">
+                            {{ item.code }}
+                        </a>
+                    </td>
                     <td>{{ item.friendly_name }}</td>
-                    <td><a href="#collection-{{ item.replaced_by }}">{{ item.replaced_by }}</a></td>
+                    <td>
+                        {% if item.replaced_by %}
+                            <a href="#collection-{{ item.replaced_by }}">{{ item.replaced_by }}</a>
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
                     <td>{{ _(item.category.capitalize()) if item.category in ['bibliography', 'library'] else _('No category') }}</td>
                     <td>{{ item.permissions | length }}</td>
                     <td>{{ item.created_at.strftime('%y-%m-%d') }}</td>

@@ -12,7 +12,7 @@ from ..oauth.client.models import Client
 from ..oauth.token.models import Token
 from ..permission.models import Permission
 from ..utils import flash_errors
-from .forms import AdministerForm, ChangePasswordForm, EditDetailsForm, RegisterForm
+from .forms import AdministerForm, ApproveToSForm, ChangePasswordForm, EditDetailsForm, RegisterForm
 from .models import PasswordReset, User
 
 blueprint = Blueprint('user', __name__, url_prefix='/users', static_folder='../static')
@@ -27,6 +27,24 @@ def home():
 
     return render_template('users/home.html', users_list_active=users_list_active,
                            users_list_inactive=users_list_inactive)
+
+
+@blueprint.route('/approve_tos', methods=['GET', 'POST'])
+def approve_tos():
+    """Request approval of application ToS."""
+    approve_tos_form = ApproveToSForm(current_user, request.form)
+    # Handle ToS approval.
+    if request.method == 'POST':
+        if approve_tos_form.validate_on_submit():
+            redirect_url = approve_tos_form.next_redirect.data
+            approve_tos_form.user.set_tos_approved()
+            flash(_('ToS approved.'), 'success')
+            return redirect(redirect_url)
+        else:
+            flash_errors(approve_tos_form)
+
+    return render_template('users/approve_tos.html', approve_tos_form=approve_tos_form,
+                           next_redirect_url=request.args.get('next'))
 
 
 @blueprint.route('/profile/')
@@ -61,6 +79,22 @@ def register():
     else:
         flash_errors(register_user_form)
     return render_template('users/register.html', register_user_form=register_user_form)
+
+
+@blueprint.route('/view/<int:user_id>', methods=['GET'])
+@login_required
+def view(user_id):
+    """View user profile."""
+    user = User.get_by_id(user_id)
+    if not user:
+        flash(_('User ID "%(user_id)s" does not exist', user_id=user_id), 'danger')
+        return redirect(url_for('user.profile'))
+    else:
+        # Cataloging admins and admins need to see more information, so they get their own view.
+        if current_user.is_admin or current_user.is_cataloging_admin:
+            return render_template('users/view.html', user=user)
+        else:
+            return render_template('users/simple_view.html', user=user)
 
 
 @blueprint.route('/inspect/<int:user_id>', methods=['GET'])

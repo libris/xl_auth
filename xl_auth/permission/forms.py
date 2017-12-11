@@ -21,7 +21,7 @@ class PermissionForm(FlaskForm):
                                 validators=[DataRequired()])
     registrant = BooleanField(_('Registrant'))
     cataloger = BooleanField(_('Cataloger'))
-    cataloging_admin = BooleanField(_('Cataloguing Administrator'))
+    cataloging_admin = BooleanField(_('Cataloging Admin'))
 
     def __init__(self, active_user, *args, **kwargs):
         """Create instance."""

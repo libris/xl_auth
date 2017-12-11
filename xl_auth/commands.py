@@ -263,7 +263,7 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
 
     def _get_voyager_data():
         raw_voyager_sigels_and_locations = requests.get(
-            'https://github.com/libris/xl_auth/files/1474613/171115_KB--sigel_locations.txt'
+            'https://github.com/libris/xl_auth/files/1513982/171129_KB--sigel_locations.txt'
         ).content.decode('latin-1').splitlines()
         voyager_sigels_and_collections = dict()
         voyager_main_sigels, voyager_location_sigels = set(), set()
@@ -272,6 +272,8 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
             assert voyager_sigel and voyager_location
             voyager_main_sigels.add(voyager_sigel)
             voyager_location_sigels.add(voyager_location)
+            if voyager_sigel == 'SEK' and voyager_location != 'SEK':
+                continue  # Don't add all the collections under SEK super cataloger.
             if voyager_sigel in voyager_sigels_and_collections:
                 voyager_sigels_and_collections[voyager_sigel].add(voyager_location)
             else:
@@ -452,7 +454,7 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
             del xl_auth['collections'][collection]
             continue
 
-        collection = Collection.query.filter_by(code=details['code']).first()
+        collection = Collection.get_by_code(code=details['code'])
         if collection:
             if collection.is_active != details['is_active']:
                 collection.is_active = details['is_active']
@@ -510,7 +512,7 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
             continue
 
         for code in collections:
-            collection = Collection.query.filter_by(code=code).first()
+            collection = Collection.get_by_code(code)
             if not collection:
                 print('Collection %r does not exist' % code)
                 continue
@@ -521,9 +523,9 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
             else:
                 if user.email == 'test@kb.se':
                     permission = Permission.create_as(admin, user=user, collection=collection,
-                                                      registrant=collection.code == 'Utb1',
+                                                      registrant=True,
                                                       cataloger=collection.code == 'Utb2',
-                                                      cataloging_admin=collection.code == 'Utb2')
+                                                      cataloging_admin=False)
                 else:
                     permission = Permission.create_as(admin, user=user, collection=collection,
                                                       registrant=True, cataloger=True,
@@ -537,7 +539,7 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
             print('Cannot add permission manually; user %r does not exist' % email)
             continue
 
-        collection = Collection.query.filter_by(code=code).first()
+        collection = Collection.get_by_code(code)
         if not collection:
             print('Cannot add permission manually, collection %r does not exist' % code)
             continue
@@ -563,7 +565,7 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
             print('Cannot delete permission manually; user %r does not exist' % email)
             continue
 
-        collection = Collection.query.filter_by(code=code).first()
+        collection = Collection.get_by_code(code)
         if not collection:
             print('Cannot delete permission manually, collection %r does not exist' % code)
             continue

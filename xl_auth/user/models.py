@@ -115,6 +115,7 @@ class User(UserMixin, SurrogatePK, Model):
     full_name = Column(db.String(255), unique=False, nullable=False)
     password = Column(db.Binary(128), nullable=False)
     last_login_at = Column(db.DateTime, default=None)
+    tos_approved_at = Column(db.DateTime, default=None)
     is_active = Column(db.Boolean(), default=False, nullable=False)
     is_admin = Column(db.Boolean(), default=False, nullable=False)
     permissions = relationship('Permission', back_populates='user',
@@ -152,6 +153,18 @@ class User(UserMixin, SurrogatePK, Model):
                 return True
         return False
 
+    def is_cataloging_admin_for(self, collection):
+        """Check 'cataloging_admin' status for a specific collection."""
+        for permission in self.permissions:
+            if permission.cataloging_admin and permission.collection == collection:
+                return True
+        return False
+
+    def has_any_permission_for(self, collection):
+        """Check for any permission on a specific collection."""
+        return any([permission for permission in self.permissions
+                    if permission.collection == collection])
+
     def set_password(self, password):
         """Set password."""
         self.password = bcrypt.generate_password_hash(password)
@@ -166,10 +179,45 @@ class User(UserMixin, SurrogatePK, Model):
         if commit:
             self.save(commit=True, preserve_modified=True)
 
+    def set_tos_approved(self, commit=True):
+        """Set 'tos_approved_at' to current datetime."""
+        self.tos_approved_at = datetime.utcnow()
+        if commit:
+            self.save(commit=True, preserve_modified=True)
+
     def get_gravatar_url(self, size=32):
         """Get Gravatar URL."""
         hashed_email = hashlib.md5(str(self.email).lower().encode()).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=mm&s={}'.format(hashed_email, size)
+
+    def get_permissions_label_help_text_as_seen_by(self, current_user):
+        """Return help text for permissions label."""
+        if current_user == self or current_user.is_admin:
+            return ''
+        elif current_user.is_cataloging_admin:
+            return _('You will only see permissions for those collections that you are '
+                     'cataloging admin for.')
+        else:
+            # This text is never shown to regular users viewing another user
+            return ''
+
+    def get_permissions_as_seen_by(self, current_user):
+        """Return subset of permissions viewable by 'current_user'."""
+        if current_user == self or current_user.is_admin:
+            return self.permissions
+        else:
+            def current_user_is_cataloging_admin_for(collection):
+                for permission in current_user.permissions:
+                    if permission.collection == collection and permission.cataloging_admin:
+                        return True
+                return False
+
+            return [perm for perm in self.permissions
+                    if current_user_is_cataloging_admin_for(perm.collection)]
+
+    def get_cataloging_admin_permissions(self):
+        """Return all cataloging admin permissions for this user."""
+        return [perm for perm in self.permissions if perm.cataloging_admin]
 
     def save_as(self, current_user, commit=True, preserve_modified=False):
         """Save instance as 'current_user'."""

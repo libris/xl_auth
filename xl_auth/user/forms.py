@@ -5,13 +5,45 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from flask_babel import lazy_gettext as _
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, PasswordField, StringField
+from wtforms import BooleanField, HiddenField, PasswordField, StringField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
 
 from .models import User
 
 username = StringField(_('Email'), validators=[DataRequired(), Email(), Length(min=6, max=255)])
 full_name = StringField(_('Full name'), validators=[DataRequired(), Length(min=3, max=255)])
+
+
+class ApproveToSForm(FlaskForm):
+    """Approve ToS form."""
+
+    tos_approved = HiddenField(_('ToS Approved'), default='y', validators=[DataRequired()])
+    next_redirect = HiddenField(validators=[DataRequired()])
+
+    def __init__(self, user, *args, **kwargs):
+        """Create instance."""
+        super(ApproveToSForm, self).__init__(*args, **kwargs)
+        self.user = user
+
+    def validate(self):
+        """Validate the form."""
+        initial_validation = super(ApproveToSForm, self).validate()
+
+        if not initial_validation:
+            return False
+
+        if self.user.tos_approved_at:
+            self.tos_approved.errors.append(
+                _('ToS already approved at %(isoformat)s.',
+                  isoformat=self.user.tos_approved_at.isoformat() + 'Z'))
+            return False
+
+        if self.tos_approved.data != 'y':
+            self.tos_approved.errors.append(
+                _('Invalid option "%(value)s".', value=self.tos_approved.data))
+            return False
+
+        return True
 
 
 class RegisterForm(FlaskForm):
@@ -34,12 +66,12 @@ class RegisterForm(FlaskForm):
         if not initial_validation:
             return False
 
-        user = User.get_by_email(self.username.data)
+        self.user = User.get_by_email(self.username.data)
 
         if not self.active_user.is_admin:
             raise ValidationError(_('You do not have sufficient privileges for this operation.'))
 
-        if user:
+        if self.user:
             self.username.errors.append(_('Email already registered'))
             return False
 
@@ -106,7 +138,7 @@ class AdministerForm(_EditForm):
 
     full_name = full_name
     is_active = BooleanField(_('Active'))
-    is_admin = BooleanField(_('Administrator'))
+    is_admin = BooleanField(_('System Administrator'))
 
     def validate(self):
         """Validate the form."""

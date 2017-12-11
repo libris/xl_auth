@@ -3,6 +3,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+from datetime import datetime
 from random import choice
 
 from factory import LazyFunction, PostGenerationMethodCall, Sequence
@@ -36,6 +37,8 @@ class SuperUserFactory(BaseFactory):
     is_active = True
     is_admin = True
 
+    tos_approved_at = LazyFunction(datetime.utcnow)
+
     modified_by_id = '1'
     created_by_id = '1'
 
@@ -52,6 +55,8 @@ class UserFactory(BaseFactory):
     full_name = Sequence(lambda _: 'full_name{0}'.format(_))
     password = PostGenerationMethodCall('set_password', 'example')
     is_active = True
+
+    tos_approved_at = LazyFunction(datetime.utcnow)
 
     modified_by = LazyFunction(SuperUserFactory)
     created_by = LazyFunction(SuperUserFactory)

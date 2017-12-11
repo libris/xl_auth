@@ -6,11 +6,12 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from datetime import datetime
 
 import pytest
+from flask_babel import gettext as _
 
 from xl_auth.permission.models import Permission
 from xl_auth.user.models import PasswordReset, Role, User
 
-from ..factories import CollectionFactory, UserFactory
+from ..factories import CollectionFactory, PermissionFactory, UserFactory
 
 
 def test_get_by_id(superuser):
@@ -73,6 +74,13 @@ def test_update_last_login_does_not_update_modified_at(superuser):
     assert first_modified_at == user.modified_at
 
 
+def test_tos_approved_at_defaults_to_null(superuser):
+    """Test Terms of Service datetime field is not populated automatically."""
+    user = User(email='foo@bar.com', full_name='Foo Bar')
+    user.save_as(superuser)
+    assert user.tos_approved_at is None
+
+
 def test_password_defaults_to_a_random_one(superuser):
     """Test empty password field is assigned some random password, instead of being set to null."""
     user = User(email='foo@bar.com', full_name='Foo Bar')
@@ -92,6 +100,8 @@ def test_factory(db):
     assert user.last_login_at is None
     assert user.is_active is True
     assert user.is_admin is False
+
+    assert isinstance(user.tos_approved_at, datetime)
 
     assert isinstance(user.permissions, list)
     assert isinstance(user.roles, list)
@@ -159,6 +169,93 @@ def test_is_cataloging_admin(superuser, user):
     not_admin_permission.delete()
     assert user.permissions == []
     assert user.is_cataloging_admin is False
+
+
+def test_is_cataloging_admin_for(user, collection, superuser):
+    """Test is_cataloging_admin_for return value."""
+    other_collection = CollectionFactory()
+    not_admin_permission = Permission(user=user, collection=collection,
+                                      cataloging_admin=False).save_as(superuser)
+    admin_permission = Permission(user=user, collection=other_collection,
+                                  cataloging_admin=True).save_as(superuser)
+
+    assert user.is_cataloging_admin_for(not_admin_permission.collection) is False
+    assert user.is_cataloging_admin_for(admin_permission.collection) is True
+
+
+def test_has_any_permission_for(user, collection, superuser):
+    """Test has_any_permission_for return value."""
+    other_collection = CollectionFactory()
+    regular_permission = Permission(user=user, collection=other_collection,
+                                    cataloging_admin=False).save_as(superuser)
+    assert user.has_any_permission_for(collection) is False
+    regular_permission.collection = collection
+    regular_permission.save()
+    assert user.has_any_permission_for(collection) is True
+
+
+def test_get_permissions_as_seen_by_self(user):
+    """Test getting permissions for self."""
+    non_admin_permission = PermissionFactory(user=user, cataloging_admin=False).save_as(user)
+    assert user.get_permissions_as_seen_by(user) == [non_admin_permission]
+    admin_permission = PermissionFactory(user=user, cataloging_admin=True).save_as(user)
+
+    seen_permissions = user.get_permissions_as_seen_by(user)
+    assert len(seen_permissions) == 2
+    assert non_admin_permission in seen_permissions
+    assert admin_permission in seen_permissions
+
+
+def test_get_permissions_as_seen_by_other_user(user, superuser):
+    """Test getting permissions for someone as regular user."""
+    collection1, collection2 = CollectionFactory(), CollectionFactory()
+    Permission(user=superuser, collection=collection1, cataloging_admin=True).save_as(superuser)
+    col2_permission = Permission(user=superuser, collection=collection2,
+                                 cataloging_admin=False).save_as(superuser)
+
+    # If we have no permissions, we see no permissions
+    assert superuser.get_permissions_as_seen_by(user) == []
+
+    # If we only have non-cataloging admin permissions, we see no permissions
+    Permission(user=user, collection=collection1, cataloging_admin=False).save_as(superuser)
+    assert superuser.get_permissions_as_seen_by(user) == []
+
+    # If we have cataloging admin permissions, we see permissions for that collection
+    Permission(user=user, collection=collection2, cataloging_admin=True).save_as(superuser)
+    assert superuser.get_permissions_as_seen_by(user) == [col2_permission]
+
+
+def test_get_permissions_as_seen_by_superuser(user, superuser):
+    """Test getting permissions for someone as superuser."""
+    non_admin_permission = PermissionFactory(user=user, cataloging_admin=False).save_as(user)
+    assert user.get_permissions_as_seen_by(user) == [non_admin_permission]
+    admin_permission = PermissionFactory(user=user, cataloging_admin=True).save_as(user)
+
+    # Same as for regular user looking at their own permissions
+    seen_permissions = user.get_permissions_as_seen_by(superuser)
+    assert len(seen_permissions) == 2
+    assert non_admin_permission in seen_permissions
+    assert admin_permission in seen_permissions
+
+
+def test_get_cataloging_admin_permissions(user):
+    """Test getting all cataloging admin permissions."""
+    assert user.get_cataloging_admin_permissions() == []
+
+    PermissionFactory(user=user, cataloging_admin=False).save_as(user)
+    assert user.get_cataloging_admin_permissions() == []
+
+    admin_permission = PermissionFactory(user=user, cataloging_admin=True).save_as(user)
+    assert user.get_cataloging_admin_permissions() == [admin_permission]
+
+
+def test_get_permissions_label_help_text(user, superuser):
+    """Test getting permissions label help text."""
+    assert superuser.get_permissions_label_help_text_as_seen_by(user) == ''
+    PermissionFactory(user=user, cataloging_admin=True).save_as(user)
+    assert (superuser.get_permissions_label_help_text_as_seen_by(user) ==
+            _('You will only see permissions for those collections that you are '
+              'cataloging admin for.'))
 
 
 @pytest.mark.usefixtures('db')

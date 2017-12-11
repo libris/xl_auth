@@ -1,0 +1,27 @@
+<!-- users/simple_view.html -->
+{% extends "layout.html" %}
+{% block content %}
+    <h1>{{ _('View User \'%(email)s\'', email=user.email) }}</h1>
+    <br/>
+    <div class="panel panel-default">
+        <dl class="dl-horizontal">
+            <dt>{{ _('Full name') }}:</dt>
+            <dd>{{ user.full_name }}</dd>
+
+            <dt>{{ _('Active Account') }}:</dt>
+            <dd>{{ _('Yes') if user.is_active else _('No') }}</dd>
+
+            <dt>{{ _('Cataloging Admin for') }}:</dt>
+            <dd>
+                {% for permission in user.get_cataloging_admin_permissions()
+                        | sort(attribute='collection.code') %}
+                    <a href="{{ url_for('collection.view', collection_code=permission.collection.code) }}">
+                        {{ permission.collection.code }}
+                    </a>
+                {% else %}
+                    -
+                {% endfor %}
+            </dd>
+        </dl>
+    </div>
+{% endblock %}
