@@ -17,11 +17,10 @@
   tags: docker
 
 - name: template docker daemon.json
-  lineinfile:
+  template:
+    src: daemon.json.j2
     dest: /etc/docker/daemon.json
-    state: absent
-    create: yes
-    line: '{"experimental": true}'
+  notify: restart docker
   tags: docker
 
 - name: docker running and enabled
