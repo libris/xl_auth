@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2017-12-07 14:44+0100\n"
+"POT-Creation-Date: 2017-12-07 16:25+0100\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -30,7 +30,7 @@ msgstr "Kategori saknas"
 
 #: tests/end2end/test_collection_editing.py:86 tests/end2end/test_collection_registering.py:82
 #: xl_auth/collection/forms.py:17 xl_auth/templates/collections/home.html:21
-#: xl_auth/templates/collections/home.html:71 xl_auth/templates/users/profile.html:46
+#: xl_auth/templates/collections/home.html:71 xl_auth/templates/users/profile.html:49
 msgid "Code"
 msgstr "Sigel"
 
@@ -216,8 +216,8 @@ msgstr "Användare"
 #: xl_auth/templates/users/inspect.html:21 xl_auth/templates/users/inspect.html:88
 #: xl_auth/templates/users/inspect.html:91 xl_auth/templates/users/inspect.html:94
 #: xl_auth/templates/users/inspect.html:97 xl_auth/templates/users/inspect.html:128
-#: xl_auth/templates/users/inspect.html:162 xl_auth/templates/users/profile.html:67
-#: xl_auth/templates/users/profile.html:70 xl_auth/templates/users/profile.html:74
+#: xl_auth/templates/users/inspect.html:162 xl_auth/templates/users/profile.html:70
+#: xl_auth/templates/users/profile.html:73 xl_auth/templates/users/profile.html:77
 #: xl_auth/templates/users/simple_view.html:12 xl_auth/templates/users/view.html:31
 #: xl_auth/templates/users/view.html:34 xl_auth/templates/users/view.html:37
 #: xl_auth/templates/users/view.html:78 xl_auth/templates/users/view.html:81
@@ -234,8 +234,8 @@ msgstr "Ja"
 #: xl_auth/templates/users/inspect.html:21 xl_auth/templates/users/inspect.html:88
 #: xl_auth/templates/users/inspect.html:91 xl_auth/templates/users/inspect.html:94
 #: xl_auth/templates/users/inspect.html:97 xl_auth/templates/users/inspect.html:128
-#: xl_auth/templates/users/inspect.html:162 xl_auth/templates/users/profile.html:67
-#: xl_auth/templates/users/profile.html:70 xl_auth/templates/users/profile.html:74
+#: xl_auth/templates/users/inspect.html:162 xl_auth/templates/users/profile.html:70
+#: xl_auth/templates/users/profile.html:73 xl_auth/templates/users/profile.html:77
 #: xl_auth/templates/users/simple_view.html:12 xl_auth/templates/users/view.html:31
 #: xl_auth/templates/users/view.html:34 xl_auth/templates/users/view.html:37
 #: xl_auth/templates/users/view.html:78 xl_auth/templates/users/view.html:81
@@ -461,19 +461,19 @@ msgstr "Sigel"
 
 #: xl_auth/permission/forms.py:22 xl_auth/templates/collections/view.html:60
 #: xl_auth/templates/permissions/home.html:18 xl_auth/templates/users/inspect.html:72
-#: xl_auth/templates/users/profile.html:49 xl_auth/templates/users/view.html:61
+#: xl_auth/templates/users/profile.html:52 xl_auth/templates/users/view.html:61
 msgid "Registrant"
 msgstr "Beståndsregistrerare"
 
 #: xl_auth/permission/forms.py:23 xl_auth/templates/collections/view.html:61
 #: xl_auth/templates/permissions/home.html:19 xl_auth/templates/users/inspect.html:73
-#: xl_auth/templates/users/profile.html:50 xl_auth/templates/users/view.html:62
+#: xl_auth/templates/users/profile.html:53 xl_auth/templates/users/view.html:62
 msgid "Cataloger"
 msgstr "Katalogisatör"
 
 #: xl_auth/permission/forms.py:24 xl_auth/templates/collections/view.html:62
 #: xl_auth/templates/permissions/home.html:20 xl_auth/templates/users/inspect.html:20
-#: xl_auth/templates/users/inspect.html:74 xl_auth/templates/users/profile.html:52
+#: xl_auth/templates/users/inspect.html:74 xl_auth/templates/users/profile.html:55
 #: xl_auth/templates/users/view.html:36 xl_auth/templates/users/view.html:63
 msgid "Cataloguing Administrator"
 msgstr "Katalogiseringsadmin"
@@ -575,7 +575,7 @@ msgid "Active Collections"
 msgstr "Aktiva sigler"
 
 #: xl_auth/templates/collections/home.html:22 xl_auth/templates/collections/home.html:72
-#: xl_auth/templates/users/profile.html:47
+#: xl_auth/templates/users/profile.html:50
 msgid "Friendly Name"
 msgstr "Namn"
 
@@ -590,7 +590,7 @@ msgstr "Skapad"
 #: xl_auth/templates/collections/home.html:37 xl_auth/templates/collections/home.html:83
 #: xl_auth/templates/collections/view.html:14 xl_auth/templates/collections/view.html:26
 #: xl_auth/templates/users/home.html:32 xl_auth/templates/users/home.html:85
-#: xl_auth/templates/users/profile.html:59
+#: xl_auth/templates/users/profile.html:62
 msgid "View"
 msgstr "Visa"
 
@@ -966,24 +966,33 @@ msgstr "Viktigt"
 
 #: xl_auth/templates/users/profile.html:30
 msgid ""
-"Contact customer service at <a href=\"mailto:libris@kb.se\">libris@kb.se</a> if your permissions "
-"are not correctly listed below."
+"If you are missing a permission or any of the permissions below are incorrect, please contact the"
+" cataloging administrator for that collection."
 msgstr ""
-"Kontakta omgående kundservice på <a href=\"mailto:libris@kb.se\">libris@kb.se</a> för rättning "
-"ifall dina behörigheter inte är 100 %% korrekt listade."
+"Om du saknar en rättighet eller om någon av rättigheterna nedan är felaktig, vänligen kontakta "
+"katalogiseringsadministratören för aktuellt sigel."
 
-#: xl_auth/templates/users/profile.html:38
+#: xl_auth/templates/users/profile.html:32
+#, python-format
+msgid ""
+"You can find the collection administrator contact information by following the collection link "
+"below or by going to <a href=\"%(collections_link)s\">the Collections list view</a> and selecting"
+" the collection there."
+msgstr ""
+"Kontaktuppgifter till rätt administratör hittar du genom att följa sigel-länken nedan eller genom"
+" att gå till <a href=\"%(collections_link)s\">listvyn för sigler</a> och där välja aktuellt "
+"sigel."
+
+#: xl_auth/templates/users/profile.html:35
+msgid ""
+"For any other questions or concerns, please contact customer service at <a "
+"href=\"mailto:libris@kb.se\">libris@kb.se</a>."
+msgstr "För övriga frågor, vänligen kontakta Libris kundservice på <a "
+"href=\"mailto:libris@kb.se\">libris@kb.se</a>."
+
+#: xl_auth/templates/users/profile.html:43
 msgid "Permissions (Active Collections Only)"
 msgstr "Behörigheter på aktiva sigel"
-
-#: xl_auth/templates/users/profile.html:39
-msgid ""
-"Note: <em>Cataloguing Admin</em> is a new privilege that, in the near future, will allow you to "
-"create new user accounts and grant registrant/cataloger privileges to others. "
-msgstr ""
-"Obs: <em>Katalogiseringsadmin</em> är en behörighet som (inom en snar framtid) kommer ge dig "
-"rättigheter för att skapa nya användare. På dina sigler kommer du kunna tilldela behörigheter "
-"till andra som beståndregistrerare/katalogisatörer."
 
 #: xl_auth/templates/users/register.html:5
 msgid "Register New User"
