@@ -182,6 +182,13 @@ DB Models
 Changelog
 =========
 
+v. 0.6.4
+--------
+
+* Provisioning and stability updates (`#121 <https://github.com/libris/xl_auth/issues/121>`_,
+  `#122 <https://github.com/libris/xl_auth/issues/122>`_)
+
+
 v. 0.6.3
 --------
 
