@@ -32,62 +32,85 @@
                 {% endif %}
             </dd>
 
-            <dt>{{ _('Last Modified') }}:</dt>
+            <dt>{{ _('Cataloging Admins') }}:</dt>
             <dd>
-                {{ collection.modified_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}, {{  _('by') }}
-                <a href="{{ url_for('user.view', user_id=collection.modified_by.id) }}">
-                    {{ collection.modified_by.full_name }}
-                </a>
+                {% for permission in collection.permissions | selectattr('cataloging_admin')
+                        | sort(attribute='created_at') %}
+                    <a href="{{ url_for('user.view', user_id=permission.user.id) }}">{{
+                        permission.user.email }}</a>{{
+                            _(' and ') if loop.revindex == 2 else (', ' if not loop.last) }}
+                {% else %}
+                    <em>{{ _('None registered, please contact libris@kb.se to create one.') }}</em>
+                {% endfor %}
             </dd>
 
-            <dt>{{ _('Created At') }}:</dt>
-            <dd>
-                {{ collection.created_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}, {{  _('by') }}
-                <a href="{{ url_for('user.view', user_id=collection.created_by.id) }}">
-                    {{ collection.created_by.full_name }}
-                </a>
-            </dd>
+            {% if current_user.is_admin or current_user.is_cataloging_admin %}
+                <dt>{{ _('Last Modified') }}:</dt>
+                <dd>
+                    {{ collection.modified_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}, {{  _('by') }}
+                    <a href="{{ url_for('user.view', user_id=collection.modified_by.id) }}">
+                        {{ collection.modified_by.full_name }}
+                    </a>
+                </dd>
+
+                <dt>{{ _('Created At') }}:</dt>
+                <dd>
+                    {{ collection.created_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}, {{  _('by') }}
+                    <a href="{{ url_for('user.view', user_id=collection.created_by.id) }}">
+                        {{ collection.created_by.full_name }}
+                    </a>
+                </dd>
+            {% endif %}
         </dl>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <strong>{{ _('Permissions') }}</strong>
-        </div>
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th class="col-md-2">{{ _('User') }}</th>
-                <th class="col-md-3 word-break-all">{{ _('Registrant') }}</th>
-                <th class="col-md-2 word-break-all">{{ _('Cataloger') }}</th>
-                <th class="col-md-3 word-break-all">{{ _('Cataloguing Administrator') }}</th>
-                <th class="col-md-2">{{ _('Created At') }}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for permission in collection.permissions | sort(attribute='created_at') %}
+    {% if current_user.is_admin or current_user.is_cataloging_admin
+            or current_user.has_any_permission_for(collection) %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>{{ _('Permissions') }}</strong>
+                {% if collection.get_permissions_label_help_text_as_seen_by(current_user) %}
+                    <span>
+                        ({{ collection.get_permissions_label_help_text_as_seen_by(current_user) }})
+                    </span>
+                {% endif %}
+            </div>
+            <table class="table table-hover">
+                <thead>
                 <tr>
-                    <td class="word-break-all">
-                        <a href="{{ url_for('user.view', user_id=permission.user.id) }}">
-                            {{ permission.user.email }}
-                        </a>
-                    </td>
-                    <td class="{{ "bool-value-{}".format(permission.registrant).lower() }}">
-                        {{ _('Yes') if permission.registrant else _('No') }}
-                    </td>
-                    <td class="{{ "bool-value-{}".format(permission.cataloger).lower() }}">
-                        {{ _('Yes') if permission.cataloger else _('No') }}
-                    </td>
-                    <td class="{{ "bool-value-{}".format(permission.cataloging_admin).lower() }}">
-                        {{ _('Yes') if permission.cataloging_admin else _('No') }}
-                    </td>
-                    <td>{{ permission.created_at.strftime('%y-%m-%d') }}, {{  _('by') }}
-                        <a href="{{ url_for('user.view', user_id=permission.created_by.id) }}">
-                            {{ permission.created_by.full_name }}
-                        </a>
-                    </td>
+                    <th class="col-md-2">{{ _('User') }}</th>
+                    <th class="col-md-3 word-break-all">{{ _('Registrant') }}</th>
+                    <th class="col-md-2 word-break-all">{{ _('Cataloger') }}</th>
+                    <th class="col-md-3 word-break-all">{{ _('Cataloging Admin') }}</th>
+                    <th class="col-md-2">{{ _('Created At') }}</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                {% for permission in collection.get_permissions_as_seen_by(current_user)
+                        | sort(attribute='created_at') %}
+                    <tr>
+                        <td class="word-break-all">
+                            <a href="{{ url_for('user.view', user_id=permission.user.id) }}">
+                                {{ permission.user.email }}
+                            </a>
+                        </td>
+                        <td class="{{ "bool-value-{}".format(permission.registrant).lower() }}">
+                            {{ _('Yes') if permission.registrant else _('No') }}
+                        </td>
+                        <td class="{{ "bool-value-{}".format(permission.cataloger).lower() }}">
+                            {{ _('Yes') if permission.cataloger else _('No') }}
+                        </td>
+                        <td class="{{ "bool-value-{}".format(permission.cataloging_admin).lower() }}">
+                            {{ _('Yes') if permission.cataloging_admin else _('No') }}
+                        </td>
+                        <td>{{ permission.created_at.strftime('%y-%m-%d') }}, {{  _('by') }}
+                            <a href="{{ url_for('user.view', user_id=permission.created_by.id) }}">
+                                {{ permission.created_by.full_name }}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
 {% endblock %}

@@ -33,16 +33,18 @@
             <dt>{{ _('System Administrator') }}:</dt>
             <dd>{{ _('Yes') if user.is_admin else _('No') }}</dd>
 
-            <dt>{{ _('Cataloguing Administrator') }}:</dt>
+            <dt>{{ _('Cataloging Admin') }}:</dt>
             <dd>{{ _('Yes') if user.is_cataloging_admin else _('No') }}</dd>
 
-            <dt>{{ _('Cataloging admin for') }}:</dt>
+            <dt>{{ _('Cataloging Admin for') }}:</dt>
             <dd>
                 {% for permission in user.get_cataloging_admin_permissions()
                         | sort(attribute='collection.code') %}
                     <a href="{{ url_for('collection.view', collection_code=permission.collection.code) }}">
                         {{ permission.collection.code }}
                     </a>
+                {% else %}
+                    -
                 {% endfor %}
             </dd>
         </dl>
@@ -50,7 +52,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <strong>{{ _('Permissions') }}</strong>
-            {% if user.get_permissions_label_help_text_as_seen_by(current_user) != '' %}
+            {% if user.get_permissions_label_help_text_as_seen_by(current_user) %}
                 <span>({{ user.get_permissions_label_help_text_as_seen_by(current_user) }})</span>
             {% endif %}
         </div>
@@ -60,7 +62,7 @@
                 <th class="col-md-1">{{ _('Collection') }}</th>
                 <th class="col-md-3 word-break-all">{{ _('Registrant') }}</th>
                 <th class="col-md-2 word-break-all">{{ _('Cataloger') }}</th>
-                <th class="col-md-3 word-break-all">{{ _('Cataloguing Administrator') }}</th>
+                <th class="col-md-3 word-break-all">{{ _('Cataloging Admin') }}</th>
                 <th class="col-md-1">{{ _('Active Collection') }}</th>
                 <th class="col-md-2">{{ _('Last Modified') }}</th>
             </tr>

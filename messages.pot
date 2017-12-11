@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 0.6.3\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-12-07 16:25+0100\n"
+"POT-Creation-Date: 2017-12-11 15:45+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,7 +68,7 @@ msgstr ""
 msgid "Not a valid choice"
 msgstr ""
 
-#: tests/end2end/test_collection_editing.py:146 tests/end2end/test_collection_view.py:41
+#: tests/end2end/test_collection_editing.py:146 tests/end2end/test_collection_view.py:43
 #: xl_auth/collection/views.py:57 xl_auth/collection/views.py:72
 #, python-format
 msgid "Collection code \"%(code)s\" does not exist"
@@ -91,9 +91,34 @@ msgstr ""
 msgid "Code \"%(code)s\" already registered"
 msgstr ""
 
-#: tests/end2end/test_collection_view.py:24 xl_auth/templates/collections/view.html:4
+#: tests/end2end/test_collection_view.py:26 xl_auth/templates/collections/view.html:4
 #, python-format
 msgid "View Collection '%(code)s'"
+msgstr ""
+
+#: tests/end2end/test_collection_view.py:61 tests/end2end/test_collection_view.py:89
+#: tests/end2end/test_collection_view.py:124 tests/end2end/test_collection_view.py:153
+#: tests/end2end/test_collection_view.py:184 tests/end2end/test_permission_deleting.py:25
+#: tests/end2end/test_permission_deleting.py:52 tests/end2end/test_permission_editing.py:29
+#: tests/end2end/test_permission_editing.py:63 tests/end2end/test_permission_editing.py:90
+#: tests/end2end/test_permission_registering.py:25 tests/end2end/test_permission_registering.py:58
+#: tests/end2end/test_permission_registering.py:85 tests/end2end/test_user_editing.py:197
+#: tests/end2end/test_user_view.py:72 tests/end2end/test_user_view.py:98
+#: xl_auth/templates/collections/view.html:70 xl_auth/templates/nav.html:28
+#: xl_auth/templates/permissions/home.html:4 xl_auth/templates/users/inspect.html:66
+#: xl_auth/templates/users/view.html:54
+msgid "Permissions"
+msgstr ""
+
+#: tests/end2end/test_collection_view.py:123 tests/end2end/test_collection_view.py:152
+#: tests/end2end/test_collection_view.py:181 xl_auth/templates/collections/view.html:35
+msgid "Cataloging Admins"
+msgstr ""
+
+#: tests/end2end/test_collection_view.py:125 tests/end2end/test_collection_view.py:154
+#: tests/end2end/test_collection_view.py:185 tests/models/test_collection.py:145
+#: xl_auth/collection/models.py:47
+msgid "You will only see all permissions for those collections that you are cataloging admin for."
 msgstr ""
 
 #: tests/end2end/test_oauth_deleting_client.py:34 xl_auth/oauth/client/views.py:66
@@ -107,17 +132,6 @@ msgstr ""
 
 #: tests/end2end/test_oauth_registering_client.py:31 xl_auth/templates/oauth/clients/home.html:11
 msgid "New Client"
-msgstr ""
-
-#: tests/end2end/test_permission_deleting.py:25 tests/end2end/test_permission_deleting.py:52
-#: tests/end2end/test_permission_editing.py:29 tests/end2end/test_permission_editing.py:63
-#: tests/end2end/test_permission_editing.py:90 tests/end2end/test_permission_registering.py:25
-#: tests/end2end/test_permission_registering.py:58 tests/end2end/test_permission_registering.py:85
-#: tests/end2end/test_user_editing.py:197 tests/end2end/test_user_view.py:72
-#: tests/end2end/test_user_view.py:98 xl_auth/templates/collections/view.html:54
-#: xl_auth/templates/nav.html:28 xl_auth/templates/permissions/home.html:4
-#: xl_auth/templates/users/inspect.html:66 xl_auth/templates/users/view.html:52
-msgid "Permissions"
 msgstr ""
 
 #: tests/end2end/test_permission_deleting.py:31 xl_auth/templates/permissions/edit.html:7
@@ -207,38 +221,38 @@ msgid "Users"
 msgstr ""
 
 #: tests/end2end/test_user_editing.py:52 xl_auth/templates/collections/view.html:9
-#: xl_auth/templates/collections/view.html:75 xl_auth/templates/collections/view.html:78
-#: xl_auth/templates/collections/view.html:81 xl_auth/templates/permissions/home.html:30
+#: xl_auth/templates/collections/view.html:97 xl_auth/templates/collections/view.html:100
+#: xl_auth/templates/collections/view.html:103 xl_auth/templates/permissions/home.html:30
 #: xl_auth/templates/permissions/home.html:31 xl_auth/templates/permissions/home.html:32
 #: xl_auth/templates/users/home.html:38 xl_auth/templates/users/home.html:91
 #: xl_auth/templates/users/inspect.html:15 xl_auth/templates/users/inspect.html:18
 #: xl_auth/templates/users/inspect.html:21 xl_auth/templates/users/inspect.html:88
 #: xl_auth/templates/users/inspect.html:91 xl_auth/templates/users/inspect.html:94
 #: xl_auth/templates/users/inspect.html:97 xl_auth/templates/users/inspect.html:128
-#: xl_auth/templates/users/inspect.html:162 xl_auth/templates/users/profile.html:70
-#: xl_auth/templates/users/profile.html:73 xl_auth/templates/users/profile.html:77
+#: xl_auth/templates/users/inspect.html:162 xl_auth/templates/users/profile.html:67
+#: xl_auth/templates/users/profile.html:70 xl_auth/templates/users/profile.html:73
 #: xl_auth/templates/users/simple_view.html:12 xl_auth/templates/users/view.html:31
 #: xl_auth/templates/users/view.html:34 xl_auth/templates/users/view.html:37
-#: xl_auth/templates/users/view.html:78 xl_auth/templates/users/view.html:81
-#: xl_auth/templates/users/view.html:84 xl_auth/templates/users/view.html:87
+#: xl_auth/templates/users/view.html:80 xl_auth/templates/users/view.html:83
+#: xl_auth/templates/users/view.html:86 xl_auth/templates/users/view.html:89
 msgid "Yes"
 msgstr ""
 
 #: tests/end2end/test_user_editing.py:52 xl_auth/templates/collections/view.html:9
-#: xl_auth/templates/collections/view.html:75 xl_auth/templates/collections/view.html:78
-#: xl_auth/templates/collections/view.html:81 xl_auth/templates/permissions/home.html:30
+#: xl_auth/templates/collections/view.html:97 xl_auth/templates/collections/view.html:100
+#: xl_auth/templates/collections/view.html:103 xl_auth/templates/permissions/home.html:30
 #: xl_auth/templates/permissions/home.html:31 xl_auth/templates/permissions/home.html:32
 #: xl_auth/templates/users/home.html:38 xl_auth/templates/users/home.html:91
 #: xl_auth/templates/users/inspect.html:15 xl_auth/templates/users/inspect.html:18
 #: xl_auth/templates/users/inspect.html:21 xl_auth/templates/users/inspect.html:88
 #: xl_auth/templates/users/inspect.html:91 xl_auth/templates/users/inspect.html:94
 #: xl_auth/templates/users/inspect.html:97 xl_auth/templates/users/inspect.html:128
-#: xl_auth/templates/users/inspect.html:162 xl_auth/templates/users/profile.html:70
-#: xl_auth/templates/users/profile.html:73 xl_auth/templates/users/profile.html:77
+#: xl_auth/templates/users/inspect.html:162 xl_auth/templates/users/profile.html:67
+#: xl_auth/templates/users/profile.html:70 xl_auth/templates/users/profile.html:73
 #: xl_auth/templates/users/simple_view.html:12 xl_auth/templates/users/view.html:31
 #: xl_auth/templates/users/view.html:34 xl_auth/templates/users/view.html:37
-#: xl_auth/templates/users/view.html:78 xl_auth/templates/users/view.html:81
-#: xl_auth/templates/users/view.html:84 xl_auth/templates/users/view.html:87
+#: xl_auth/templates/users/view.html:80 xl_auth/templates/users/view.html:83
+#: xl_auth/templates/users/view.html:86 xl_auth/templates/users/view.html:89
 msgid "No"
 msgstr ""
 
@@ -300,8 +314,8 @@ msgstr ""
 msgid "View User '%(email)s'"
 msgstr ""
 
-#: tests/end2end/test_user_view.py:145 tests/models/test_user.py:234 xl_auth/user/models.py:186
-msgid "You will only see permissions for those collections that you are cataloging administrator for."
+#: tests/end2end/test_user_view.py:145 tests/models/test_user.py:257 xl_auth/user/models.py:198
+msgid "You will only see permissions for those collections that you are cataloging admin for."
 msgstr ""
 
 #: tests/forms/test_client_edit.py:23 tests/forms/test_client_register.py:25
@@ -370,17 +384,17 @@ msgstr ""
 msgid "Field must be between 3 and 255 characters long."
 msgstr ""
 
-#: tests/models/test_collection.py:111 xl_auth/collection/models.py:47
+#: tests/models/test_collection.py:156 xl_auth/collection/models.py:64
 #, python-format
 msgid "Replaces %(replaces_code)s, then replaced by %(replaced_by_code)s"
 msgstr ""
 
-#: tests/models/test_collection.py:114 xl_auth/collection/models.py:50
+#: tests/models/test_collection.py:159 xl_auth/collection/models.py:67
 #, python-format
 msgid "Replaces %(replaces_code)s"
 msgstr ""
 
-#: tests/models/test_collection.py:117 xl_auth/collection/models.py:52
+#: tests/models/test_collection.py:162 xl_auth/collection/models.py:69
 #, python-format
 msgid "Replaced by %(replaced_by_code)s"
 msgstr ""
@@ -447,34 +461,34 @@ msgstr ""
 msgid "Successfully deleted OAuth2 Bearer token \"%(token_id)s\"."
 msgstr ""
 
-#: xl_auth/permission/forms.py:19 xl_auth/templates/collections/view.html:59
+#: xl_auth/permission/forms.py:19 xl_auth/templates/collections/view.html:80
 #: xl_auth/templates/oauth/grants/home.html:14 xl_auth/templates/oauth/tokens/home.html:14
 #: xl_auth/templates/permissions/home.html:16
 msgid "User"
 msgstr ""
 
 #: xl_auth/permission/forms.py:20 xl_auth/templates/permissions/home.html:17
-#: xl_auth/templates/users/inspect.html:71 xl_auth/templates/users/view.html:60
+#: xl_auth/templates/users/inspect.html:71 xl_auth/templates/users/view.html:62
 msgid "Collection"
 msgstr ""
 
-#: xl_auth/permission/forms.py:22 xl_auth/templates/collections/view.html:60
+#: xl_auth/permission/forms.py:22 xl_auth/templates/collections/view.html:81
 #: xl_auth/templates/permissions/home.html:18 xl_auth/templates/users/inspect.html:72
-#: xl_auth/templates/users/profile.html:52 xl_auth/templates/users/view.html:61
+#: xl_auth/templates/users/profile.html:51 xl_auth/templates/users/view.html:63
 msgid "Registrant"
 msgstr ""
 
-#: xl_auth/permission/forms.py:23 xl_auth/templates/collections/view.html:61
+#: xl_auth/permission/forms.py:23 xl_auth/templates/collections/view.html:82
 #: xl_auth/templates/permissions/home.html:19 xl_auth/templates/users/inspect.html:73
-#: xl_auth/templates/users/profile.html:53 xl_auth/templates/users/view.html:62
+#: xl_auth/templates/users/profile.html:52 xl_auth/templates/users/view.html:64
 msgid "Cataloger"
 msgstr ""
 
-#: xl_auth/permission/forms.py:24 xl_auth/templates/collections/view.html:62
+#: xl_auth/permission/forms.py:24 xl_auth/templates/collections/view.html:83
 #: xl_auth/templates/permissions/home.html:20 xl_auth/templates/users/inspect.html:20
-#: xl_auth/templates/users/inspect.html:74 xl_auth/templates/users/profile.html:55
-#: xl_auth/templates/users/view.html:36 xl_auth/templates/users/view.html:63
-msgid "Cataloguing Administrator"
+#: xl_auth/templates/users/inspect.html:74 xl_auth/templates/users/profile.html:53
+#: xl_auth/templates/users/view.html:36 xl_auth/templates/users/view.html:65
+msgid "Cataloging Admin"
 msgstr ""
 
 #: xl_auth/permission/forms.py:78
@@ -579,7 +593,7 @@ msgid "Friendly Name"
 msgstr ""
 
 #: xl_auth/templates/collections/home.html:25 xl_auth/templates/collections/home.html:76
-#: xl_auth/templates/collections/view.html:43 xl_auth/templates/collections/view.html:63
+#: xl_auth/templates/collections/view.html:56 xl_auth/templates/collections/view.html:84
 #: xl_auth/templates/permissions/home.html:21 xl_auth/templates/users/home.html:22
 #: xl_auth/templates/users/home.html:75 xl_auth/templates/users/inspect.html:55
 #: xl_auth/templates/users/inspect.html:120 xl_auth/templates/users/view.html:22
@@ -589,7 +603,7 @@ msgstr ""
 #: xl_auth/templates/collections/home.html:37 xl_auth/templates/collections/home.html:83
 #: xl_auth/templates/collections/view.html:14 xl_auth/templates/collections/view.html:26
 #: xl_auth/templates/users/home.html:32 xl_auth/templates/users/home.html:85
-#: xl_auth/templates/users/profile.html:62
+#: xl_auth/templates/users/profile.html:60
 msgid "View"
 msgstr ""
 
@@ -619,17 +633,25 @@ msgstr ""
 msgid "Replaces"
 msgstr ""
 
-#: xl_auth/templates/collections/view.html:35 xl_auth/templates/users/inspect.html:47
+#: xl_auth/templates/collections/view.html:41
+msgid " and "
+msgstr ""
+
+#: xl_auth/templates/collections/view.html:43
+msgid "None registered, please contact libris@kb.se to create one."
+msgstr ""
+
+#: xl_auth/templates/collections/view.html:48 xl_auth/templates/users/inspect.html:47
 #: xl_auth/templates/users/inspect.html:76 xl_auth/templates/users/inspect.html:119
-#: xl_auth/templates/users/view.html:14 xl_auth/templates/users/view.html:65
+#: xl_auth/templates/users/view.html:14 xl_auth/templates/users/view.html:67
 msgid "Last Modified"
 msgstr ""
 
-#: xl_auth/templates/collections/view.html:37 xl_auth/templates/collections/view.html:45
-#: xl_auth/templates/collections/view.html:83 xl_auth/templates/users/inspect.html:49
+#: xl_auth/templates/collections/view.html:50 xl_auth/templates/collections/view.html:58
+#: xl_auth/templates/collections/view.html:105 xl_auth/templates/users/inspect.html:49
 #: xl_auth/templates/users/inspect.html:57 xl_auth/templates/users/inspect.html:99
 #: xl_auth/templates/users/view.html:16 xl_auth/templates/users/view.html:24
-#: xl_auth/templates/users/view.html:89
+#: xl_auth/templates/users/view.html:91
 msgid "by"
 msgstr ""
 
@@ -776,7 +798,7 @@ msgid "Welcome to xl_auth"
 msgstr ""
 
 #: xl_auth/templates/public/home.html:10 xl_auth/templates/public/home.html:27
-msgid "This is an early beta release of Libris authorization service."
+msgid "This is a beta release of Libris authorization service."
 msgstr ""
 
 #: xl_auth/templates/public/home.html:13 xl_auth/templates/public/home.html:30
@@ -928,7 +950,7 @@ msgstr ""
 msgid "Clients Modified"
 msgstr ""
 
-#: xl_auth/templates/users/inspect.html:75 xl_auth/templates/users/view.html:64
+#: xl_auth/templates/users/inspect.html:75 xl_auth/templates/users/view.html:66
 msgid "Active Collection"
 msgstr ""
 
@@ -959,7 +981,7 @@ msgstr ""
 #: xl_auth/templates/users/profile.html:30
 msgid ""
 "If you are missing a permission or any of the permissions below are incorrect, please contact the"
-" cataloging administrator for that collection."
+" cataloging admin for that collection."
 msgstr ""
 
 #: xl_auth/templates/users/profile.html:32
@@ -989,7 +1011,7 @@ msgid "First Last"
 msgstr ""
 
 #: xl_auth/templates/users/simple_view.html:14 xl_auth/templates/users/view.html:39
-msgid "Cataloging admin for"
+msgid "Cataloging Admin for"
 msgstr ""
 
 #: xl_auth/user/forms.py:20

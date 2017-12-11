@@ -28,12 +28,12 @@
             </div>
             <div class="panel-body">
                 <p>{{ _('If you are missing a permission or any of the permissions below are '
-                    'incorrect, please contact the cataloging administrator for that collection.') }}</p>
+                        'incorrect, please contact the cataloging admin for that collection.') }}</p>
                 <p>{{ _('You can find the collection administrator contact information by following the collection link '
-                    'below or by going to <a href="%(collections_link)s">the Collections list view</a> and selecting '
-                    'the collection there.', collections_link=url_for('collection.home')) }}</p>
+                        'below or by going to <a href="%(collections_link)s">the Collections list view</a> and selecting '
+                        'the collection there.', collections_link=url_for('collection.home')) }}</p>
                 <p>{{ _('For any other questions or concerns, please contact customer service at '
-                    '<a href="mailto:libris@kb.se">libris@kb.se</a>.') }}</p>
+                        '<a href="mailto:libris@kb.se">libris@kb.se</a>.') }}</p>
             </div>
         </div>
     {% endif %}
@@ -48,11 +48,9 @@
                 <tr>
                     <th>{{ _('Code') }}</th>
                     <th>{{ _('Friendly Name') }}</th>
-                    {% if user.is_admin or user.email == 'test@kb.se' %}
-                        <th>{{ _('Registrant') }}</th>
-                        <th>{{ _('Cataloger') }}</th>
-                    {% endif %}
-                    <th>{{ _('Cataloguing Administrator') }}</th>
+                    <th>{{ _('Registrant') }}</th>
+                    <th>{{ _('Cataloger') }}</th>
+                    <th>{{ _('Cataloging Admin') }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -65,14 +63,12 @@
                             </a>
                         </td>
                         <td>{{ permission.collection.friendly_name }}</td>
-                        {% if user.is_admin or user.email == 'test@kb.se' %}
-                            <td class="{{ "bool-value-{}".format(permission.registrant).lower() }}">
-                                {{ _('Yes') if permission.registrant else _('No') }}
-                            </td>
-                            <td class="{{ "bool-value-{}".format(permission.cataloger).lower() }}">
-                                {{ _('Yes') if permission.cataloger else _('No') }}
-                            </td>
-                        {% endif %}
+                        <td class="{{ "bool-value-{}".format(permission.registrant).lower() }}">
+                            {{ _('Yes') if permission.registrant else _('No') }}
+                        </td>
+                        <td class="{{ "bool-value-{}".format(permission.cataloger).lower() }}">
+                            {{ _('Yes') if permission.cataloger else _('No') }}
+                        </td>
                         <td class="{{ "bool-value-{}".format(permission.cataloging_admin).lower() }}">
                             {{ _('Yes') if permission.cataloging_admin else _('No') }}
                         </td>

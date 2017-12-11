@@ -171,6 +171,29 @@ def test_is_cataloging_admin(superuser, user):
     assert user.is_cataloging_admin is False
 
 
+def test_is_cataloging_admin_for(user, collection, superuser):
+    """Test is_cataloging_admin_for return value."""
+    other_collection = CollectionFactory()
+    not_admin_permission = Permission(user=user, collection=collection,
+                                      cataloging_admin=False).save_as(superuser)
+    admin_permission = Permission(user=user, collection=other_collection,
+                                  cataloging_admin=True).save_as(superuser)
+
+    assert user.is_cataloging_admin_for(not_admin_permission.collection) is False
+    assert user.is_cataloging_admin_for(admin_permission.collection) is True
+
+
+def test_has_any_permission_for(user, collection, superuser):
+    """Test has_any_permission_for return value."""
+    other_collection = CollectionFactory()
+    regular_permission = Permission(user=user, collection=other_collection,
+                                    cataloging_admin=False).save_as(superuser)
+    assert user.has_any_permission_for(collection) is False
+    regular_permission.collection = collection
+    regular_permission.save()
+    assert user.has_any_permission_for(collection) is True
+
+
 def test_get_permissions_as_seen_by_self(user):
     """Test getting permissions for self."""
     non_admin_permission = PermissionFactory(user=user, cataloging_admin=False).save_as(user)
@@ -232,7 +255,7 @@ def test_get_permissions_label_help_text(user, superuser):
     PermissionFactory(user=user, cataloging_admin=True).save_as(user)
     assert (superuser.get_permissions_label_help_text_as_seen_by(user) ==
             _('You will only see permissions for those collections that you are '
-              'cataloging administrator for.'))
+              'cataloging admin for.'))
 
 
 @pytest.mark.usefixtures('db')
