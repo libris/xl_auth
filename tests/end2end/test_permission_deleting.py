@@ -3,6 +3,8 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+import re
+
 from flask import url_for
 from flask_babel import gettext as _
 
@@ -23,13 +25,21 @@ def test_superuser_can_delete_existing_permission(superuser, permission, testapp
     res = form.submit().follow()
     # Clicks Permissions button
     res = res.click(_('Permissions'))
-    # Clicks Edit button on a permission
-    res = res.click(href=url_for('permission.edit', permission_id=permission.id))
     # Clicks Delete button on a permission
     permission_user_email = permission.user.email
     permission_collection_code = permission.collection.code
-    res = res.click(_('Delete Permission')).follow()
+    res = res.click(href=url_for('permission.delete', permission_id=permission.id)
+                         + '\?next=' + url_for('permission.home'))
     assert res.status_code == 200
+    assert _('Acknowledge Deletion') in res
+    assert _('Delete permissions for "%(username)s" on collection "%(code)s"?',
+             username=permission_user_email, code=permission_collection_code) in res
+    form = res.forms['deletePermissionForm']
+    form['acknowledged'] = 'y'
+    res = form.submit()
+    assert res.status_code == 302
+    assert url_for('permission.home') in res.location
+    res = res.follow()
     # Permission was deleted, so number of permissions are 1 less than initial state
     assert _('Successfully deleted permissions for "%(username)s" on collection "%(code)s".',
              username=permission_user_email, code=permission_collection_code) in res
