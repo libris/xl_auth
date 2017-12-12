@@ -8,14 +8,20 @@
     gpgkey: https://download.docker.com/linux/centos/gpg
   tags: docker
 
-- name: install docker-ce-17.09.1.ce
-  yum: name=docker-ce-17.09.1.ce state=present allow_downgrade=yes
-  register: yum_install_docker
+- name: remove docker-ce version lock
+  shell: yum versionlock delete docker-ce
+  register: versionlock_delete_docker
+  changed_when: '"versionlock delete: no matches" in versionlock_delete_docker.stdout'
+  failed_when: no
   tags: docker
 
-- name: lock docker-ce version
+- name: install docker-ce-17.09.1.ce
+  yum: name=docker-ce-17.09.1.ce state=present allow_downgrade=yes
+  tags: docker
+
+- name: add docker-ce version lock
   shell: yum versionlock docker-ce
-  when: yum_install_docker.changed
+  changed_when: no
   tags: docker
 
 - name: install docker-compose-1.16.1
