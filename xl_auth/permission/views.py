@@ -7,7 +7,7 @@ from flask import Blueprint, abort, flash, redirect, render_template, request, u
 from flask_babel import lazy_gettext as _
 from flask_login import current_user, login_required
 
-from ..utils import flash_errors
+from ..utils import flash_errors, get_redirect_target
 from .forms import DeleteForm, EditForm, RegisterForm
 from .models import Permission
 
@@ -84,12 +84,12 @@ def delete(permission_id):
     if not permission:
         flash(_('Permission ID "%(permission_id)s" does not exist', permission_id=permission_id),
               'danger')
-        return redirect(request.args.get('next') or url_for('public.home'))
+        return redirect(get_redirect_target())
 
     delete_permission_form = DeleteForm(current_user, permission_id, request.form)
     if request.method == 'POST':
         if delete_permission_form.validate_on_submit():
-            redirect_url = delete_permission_form.next_redirect.data
+            redirect_url = get_redirect_target()
             username, collection_code = permission.user.email, permission.collection.code
             permission.delete()
             flash(_('Successfully deleted permissions for "%(username)s" on collection '
@@ -100,4 +100,4 @@ def delete(permission_id):
 
     return render_template('permissions/delete.html', permission=permission,
                            delete_permission_form=delete_permission_form,
-                           next_redirect_url=request.args.get('next'))
+                           next_redirect_url=get_redirect_target())

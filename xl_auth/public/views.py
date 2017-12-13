@@ -12,7 +12,7 @@ from six.moves.urllib_parse import quote
 from ..extensions import login_manager
 from ..public.forms import ForgotPasswordForm, LoginForm, ResetPasswordForm
 from ..user.models import PasswordReset, User
-from ..utils import flash_errors
+from ..utils import flash_errors, get_redirect_target
 
 blueprint = Blueprint('public', __name__, static_folder='../static')
 
@@ -36,7 +36,7 @@ def home():
     # Handle logging in.
     if request.method == 'POST':
         if login_form.validate_on_submit():
-            redirect_url = login_form.next_redirect.data or url_for('user.profile')
+            redirect_url = get_redirect_target() or url_for('user.profile')
             login_user(login_form.user)
             current_user.update_last_login()
             if current_user.tos_approved_at:
@@ -49,7 +49,7 @@ def home():
             flash_errors(login_form)
 
     return render_template('public/home.html', login_form=login_form,
-                           next_redirect_url=request.args.get('next'))
+                           next_redirect_url=get_redirect_target())
 
 
 @blueprint.route('/forgot_password/', methods=['GET', 'POST'])
