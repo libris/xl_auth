@@ -2,9 +2,6 @@
 {% extends "layout.html" %}
 {% block content %}
     <div class="container-narrow">
-        <a class="btn btn-xs btn-danger pull-right"
-           href="{{ url_for('permission.delete', permission_id=permission.id) }}">
-            {{ _('Delete Permission') }}</a>
         <h1>{{ _('Edit Existing Permission') }}</h1>
         <br/>
         <form id="editPermissionForm" autocomplete="off" class="form form-edit" method="POST"

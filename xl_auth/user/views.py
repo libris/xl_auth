@@ -11,7 +11,7 @@ from ..collection.models import Collection
 from ..oauth.client.models import Client
 from ..oauth.token.models import Token
 from ..permission.models import Permission
-from ..utils import flash_errors
+from ..utils import flash_errors, get_redirect_target
 from .forms import AdministerForm, ApproveToSForm, ChangePasswordForm, EditDetailsForm, RegisterForm
 from .models import PasswordReset, User
 
@@ -33,10 +33,9 @@ def home():
 def approve_tos():
     """Request approval of application ToS."""
     approve_tos_form = ApproveToSForm(current_user, request.form)
-    # Handle ToS approval.
     if request.method == 'POST':
         if approve_tos_form.validate_on_submit():
-            redirect_url = approve_tos_form.next_redirect.data
+            redirect_url = get_redirect_target()
             approve_tos_form.user.set_tos_approved()
             flash(_('ToS approved.'), 'success')
             return redirect(redirect_url)
@@ -44,7 +43,7 @@ def approve_tos():
             flash_errors(approve_tos_form)
 
     return render_template('users/approve_tos.html', approve_tos_form=approve_tos_form,
-                           next_redirect_url=request.args.get('next'))
+                           next_redirect_url=get_redirect_target())
 
 
 @blueprint.route('/profile/')

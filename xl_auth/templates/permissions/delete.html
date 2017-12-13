@@ -1,0 +1,25 @@
+<!-- permissions/delete.html -->
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container-narrow">
+        <h1>{{ _('Acknowledge Deletion') }}</h1>
+        <p class="lead">
+            {{ _('Delete permission for "%(username)s" on collection "%(code)s"?',
+                 username=permission.user.email, code=permission.collection.code) }}
+        </p>
+        <br/>
+        <div class="row">
+            <div class="col-md-12">
+                <form id="deletePermissionForm" class="form" method="POST" action="" role="form">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    {{ delete_permission_form.next_redirect(value=next_redirect_url or "") }}
+                    {{ delete_permission_form.permission_id(value=delete_permission_form.permission_id.default) }}
+                    {{ delete_permission_form.acknowledged(value=delete_permission_form.acknowledged.default) }}
+                    <input class="btn btn-lg btn-danger btn-success" type="submit"
+                           value="{{ _('Confirm') }}">
+                </form>
+            </div>
+        </div>
+        <br/>
+    </div>
+{% endblock %}
