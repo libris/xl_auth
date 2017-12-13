@@ -44,7 +44,7 @@ def test_validate_when_acknowledged_is_not_y(permission):
 def test_validate_permission_edit_as_user(user, permission):
     """Attempt to edit entry as user that's not cataloging admin."""
     assert user.is_cataloging_admin is False
-    form = DeleteForm(user, permission.id, permission_id=permission.id, acknowledget='y')
+    form = DeleteForm(user, permission.id, permission_id=permission.id, acknowledged='y')
 
     assert form.validate() is False
     assert _('You do not have sufficient privileges for this operation.') in \
@@ -56,7 +56,7 @@ def test_validate_success_as_cataloging_admin(user, permission):
     # Make user cataloging admin.
     PermissionFactory(user=user, collection=permission.collection, cataloging_admin=True)
     assert user.is_cataloging_admin_for(permission.collection) is True
-    form = DeleteForm(user, permission.id, permission_id=permission.id, acknowledget='y')
+    form = DeleteForm(user, permission.id, permission_id=permission.id, acknowledged='y')
 
     assert form.validate() is True
     assert form.data == {
@@ -68,7 +68,7 @@ def test_validate_success_as_cataloging_admin(user, permission):
 
 def test_validate_success_as_superuser(superuser, permission):
     """Delete entry with success as superuser."""
-    form = DeleteForm(superuser, permission.id, permission_id=permission.id, acknowledget='y')
+    form = DeleteForm(superuser, permission.id, permission_id=permission.id, acknowledged='y')
 
     assert form.validate() is True
     assert form.data == {

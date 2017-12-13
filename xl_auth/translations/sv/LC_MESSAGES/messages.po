@@ -141,7 +141,7 @@ msgstr "Bekräfta borttagning"
 
 #: tests/end2end/test_permission_deleting.py:34 xl_auth/templates/permissions/delete.html:7
 #, python-format
-msgid "Delete permissions for \"%(username)s\" on collection \"%(code)s\"?"
+msgid "Delete permission for \"%(username)s\" on collection \"%(code)s\"?"
 msgstr "Ta bort behörigheter för \"%(username)s\" på sigel \"%(code)s\"?"
 
 #: tests/end2end/test_permission_deleting.py:43 tests/end2end/test_permission_deleting.py:81

@@ -31,7 +31,7 @@ def test_superuser_can_delete_existing_permission(superuser, permission, testapp
                     '\?next=' + url_for('permission.home'))
     assert res.status_code == 200
     assert _('Acknowledge Deletion') in res
-    assert _('Delete permissions for "%(username)s" on collection "%(code)s"?',
+    assert _('Delete permission for "%(username)s" on collection "%(code)s"?',
              username=permission_user_email, code=permission_collection_code) in res
     form = res.forms['deletePermissionForm']
     form['acknowledged'] = 'y'
