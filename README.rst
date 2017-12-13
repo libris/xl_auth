@@ -182,6 +182,14 @@ DB Models
 Changelog
 =========
 
+v. 0.7.0
+--------
+
+* Preserve permissions created by others than libris@kb.se superuser
+* Revised API endpoint for deleting permissions; now allowing cataloging admins to
+  delete permissions on their collections (`#123 <https://github.com/libris/xl_auth/issues/123>`_)
+
+
 v. 0.6.4
 --------
 
