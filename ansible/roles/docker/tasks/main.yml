@@ -8,8 +8,20 @@
     gpgkey: https://download.docker.com/linux/centos/gpg
   tags: docker
 
-- name: install docker-ce-17.09.0.ce
-  yum: name=docker-ce-17.09.0.ce state=present
+- name: remove docker-ce version lock
+  shell: yum versionlock delete docker-ce
+  register: versionlock_delete_docker
+  changed_when: '"versionlock delete: no matches" in versionlock_delete_docker.stdout'
+  failed_when: no
+  tags: docker
+
+- name: install docker-ce-17.09.1.ce
+  yum: name=docker-ce-17.09.1.ce state=present allow_downgrade=yes
+  tags: docker
+
+- name: add docker-ce version lock
+  shell: yum versionlock docker-ce
+  changed_when: no
   tags: docker
 
 - name: install docker-compose-1.16.1
@@ -17,11 +29,10 @@
   tags: docker
 
 - name: template docker daemon.json
-  lineinfile:
+  template:
+    src: daemon.json.j2
     dest: /etc/docker/daemon.json
-    state: absent
-    create: yes
-    line: '{"experimental": true}'
+  notify: restart docker
   tags: docker
 
 - name: docker running and enabled
