@@ -3,9 +3,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import pytest
 from flask_babel import gettext as _
-from wtforms.validators import ValidationError
 
 from xl_auth.permission.forms import EditForm
 
@@ -75,19 +73,19 @@ def test_validate_collection_id_does_not_exist(superuser, permission):
 
 
 def test_validate_permission_edit_as_user(permission, user, collection):
-    """Attempt to edit entry as non-admin user."""
+    """Attempt to edit entry as user that's not cataloging admin."""
     assert permission.user.id != user.id  # Existing permission maps to different user.
     assert permission.collection.id != collection.id  # And a different collection..
     form = EditForm(user, permission.id, user_id=user.id, collection_id=collection.id,
                     registrant=True, cataloger=True, cataloging_admin=True)
 
-    with pytest.raises(ValidationError) as e_info:
-        form.validate()
-    assert e_info.value.args[0] == _('You do not have sufficient privileges for this operation.')
+    form.validate()
+    assert _('You do not have sufficient privileges for this operation.') in \
+        form.permission_id.errors
 
 
-def test_validate_success(superuser, permission, user, collection):
-    """Edit entry with success."""
+def test_validate_success_as_superuser(superuser, permission, user, collection):
+    """Edit entry with success as superuser."""
     assert permission.user.id != user.id  # Existing permission maps to different user.
     assert permission.collection.id != collection.id  # And a different collection..
     form = EditForm(superuser, permission.id, user_id=user.id, collection_id=collection.id,
@@ -100,5 +98,6 @@ def test_validate_success(superuser, permission, user, collection):
         'collection_id': collection.id,
         'registrant': True,
         'cataloger': True,
-        'cataloging_admin': True
+        'cataloging_admin': True,
+        'next_redirect': None
     }
