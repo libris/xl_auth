@@ -583,11 +583,17 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
                 print('Cannot manually deleted permissions for %r on %r; does not exist.'
                       % (email, code))
 
-    # Optionally wipe stray permissions.
+    # Optionally wipe stray permissions, but only if created by admin account.
     for permission in old_permissions:
         if permission in current_permissions and permission not in removed_permissions:
             continue
         else:
+            if permission.created_by != admin:
+                print('Unknown permission for %r on %r, created by %r (deleting=False).'
+                      % (permission.user.email, permission.collection.code,
+                         permission.created_by.email))
+                continue
+
             print('Permission for %r on %r not found during import (deleting=%s).'
                   % (permission.user.email, permission.collection.code, wipe_permissions))
             if wipe_permissions:
