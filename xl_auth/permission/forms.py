@@ -137,11 +137,6 @@ class DeleteForm(FlaskForm):
         self.permission_id.default = target_permission_id
         self.permission_id.validators = [AnyOf([target_permission_id])]
 
-    def validate_user_id(self, field):
-        """Validate user ID exists in 'users' table."""
-        if not User.get_by_id(field.data):
-            raise ValidationError(_('User ID "%(user_id)s" does not exist', user_id=field.data))
-
     def validate(self):
         """Validate the form."""
         initial_validation = super(DeleteForm, self).validate()
