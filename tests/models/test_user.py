@@ -182,6 +182,13 @@ def test_is_cataloging_admin_for(user, collection, superuser):
     assert user.is_cataloging_admin_for(not_admin_permission.collection) is False
     assert user.is_cataloging_admin_for(admin_permission.collection) is True
 
+    assert user.is_cataloging_admin_for(admin_permission.collection,
+                                        not_admin_permission.collection) is False
+    not_admin_permission.cataloging_admin = True
+    now_also_admin_permission = not_admin_permission.save()
+    assert user.is_cataloging_admin_for(admin_permission.collection,
+                                        now_also_admin_permission.collection) is True
+
 
 def test_has_any_permission_for(user, collection, superuser):
     """Test has_any_permission_for return value."""
