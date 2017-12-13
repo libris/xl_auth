@@ -8,7 +8,7 @@ from flask_babel import lazy_gettext as _
 from flask_login import current_user, login_required
 
 from ..utils import flash_errors
-from .forms import EditForm, RegisterForm
+from .forms import DeleteForm, EditForm, RegisterForm
 from .models import Permission
 
 blueprint = Blueprint('permission', __name__, url_prefix='/permissions', static_folder='../static')
@@ -76,20 +76,28 @@ def edit(permission_id):
                                permission=permission)
 
 
-@blueprint.route('/delete/<permission_id>', methods=['GET', 'DELETE'])
+@blueprint.route('/delete/<permission_id>', methods=['GET', 'POST'])
 @login_required
 def delete(permission_id):
     """Delete existing permission."""
-    if not current_user.is_admin:
-        abort(403)
-
     permission = Permission.get_by_id(permission_id)
     if not permission:
         flash(_('Permission ID "%(permission_id)s" does not exist', permission_id=permission_id),
               'danger')
-    else:
-        username, collection_code = permission.user.email, permission.collection.code
-        permission.delete()
-        flash(_('Successfully deleted permissions for "%(username)s" on collection "%(code)s".',
-                username=username, code=collection_code), 'success')
-    return redirect(url_for('permission.home'))
+        return redirect(request.args.get('next') or url_for('public.home'))
+
+    delete_permission_form = DeleteForm(current_user, permission_id, request.form)
+    if request.method == 'POST':
+        if delete_permission_form.validate_on_submit():
+            redirect_url = delete_permission_form.next_redirect.data
+            username, collection_code = permission.user.email, permission.collection.code
+            permission.delete()
+            flash(_('Successfully deleted permissions for "%(username)s" on collection '
+                    '"%(code)s".', username=username, code=collection_code), 'success')
+            return redirect(redirect_url)
+        else:
+            flash_errors(delete_permission_form)
+
+    return render_template('permissions/delete.html', permission=permission,
+                           delete_permission_form=delete_permission_form,
+                           next_redirect_url=request.args.get('next'))

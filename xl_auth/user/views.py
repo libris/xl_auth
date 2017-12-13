@@ -33,7 +33,6 @@ def home():
 def approve_tos():
     """Request approval of application ToS."""
     approve_tos_form = ApproveToSForm(current_user, request.form)
-    # Handle ToS approval.
     if request.method == 'POST':
         if approve_tos_form.validate_on_submit():
             redirect_url = approve_tos_form.next_redirect.data

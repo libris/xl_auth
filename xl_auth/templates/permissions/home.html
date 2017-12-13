@@ -19,22 +19,37 @@
                 <th class="col-md-2 word-break-all">{{ _('Cataloger') }}</th>
                 <th class="col-md-2 word-break-all">{{ _('Cataloging Admin') }}</th>
                 <th class="col-md-1 min-width-90px">{{ _('Created At') }}</th>
-                <th class="col-md-1"></th>
+                <th class="min-width-70px"></th>
             </tr>
             </thead>
             <tbody>
-            {% for item in permissions_list | sort(attribute='user.email') %}
+            {% for permission in permissions_list | sort(attribute='user.email') %}
                 <tr>
-                    <td class="word-break-all">{{ item.user.email }}</td>
-                    <td>{{ item.collection.code }}</td>
-                    <td class="{{ "bool-value-{}".format(item.registrant).lower() }}">{{ _('Yes') if item.registrant else _('No') }}</td>
-                    <td class="{{ "bool-value-{}".format(item.cataloger).lower() }}">{{ _('Yes') if item.cataloger else _('No') }}</td>
-                    <td class="{{ "bool-value-{}".format(item.cataloging_admin).lower() }}">{{ _('Yes') if item.cataloging_admin else _('No') }}</td>
-                    <td>{{ item.created_at.strftime('%y-%m-%d') }}</td>
+                    <td class="word-break-all">
+                        <a title="{{ _('View') }}"
+                           href="{{ url_for('user.view', user_id=permission.user.id) }}">
+                            {{ permission.user.email }}
+                        </a>
+                    </td>
+                    <td>
+                        <a title="{{ _('View') }}"
+                           href="{{ url_for('collection.view', collection_code=permission.collection.code) }}">
+                            {{ permission.collection.code }}
+                        </a>
+                    </td>
+                    <td class="{{ "bool-value-{}".format(permission.registrant).lower() }}">{{ _('Yes') if permission.registrant else _('No') }}</td>
+                    <td class="{{ "bool-value-{}".format(permission.cataloger).lower() }}">{{ _('Yes') if permission.cataloger else _('No') }}</td>
+                    <td class="{{ "bool-value-{}".format(permission.cataloging_admin).lower() }}">{{ _('Yes') if permission.cataloging_admin else _('No') }}</td>
+                    <td>{{ permission.created_at.strftime('%y-%m-%d') }}</td>
                     <td class="actions">
                         <a class="btn btn-xs btn-default" title="{{ _('Edit') }}"
-                           href="{{ url_for('permission.edit', permission_id=item.id) }}">
+                           href="{{ url_for('permission.edit', permission_id=permission.id) }}">
                             <i class="fa fa-pencil"></i>
+                        </a>
+                        <a class="btn btn-xs btn-danger" title="{{ _('Delete Permission') }}"
+                           href="{{ url_for('permission.delete', permission_id=permission.id)
+                                            + '?next=' + url_for('permission.home') }}">
+                            <i class="fa fa-trash"></i>
                         </a>
                     </td>
                 </tr>
