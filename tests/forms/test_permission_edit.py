@@ -21,6 +21,16 @@ def test_validate_permission_id_does_not_exist(superuser, permission):
              permission_id=invalid_permission_id) in form.permission_id.errors
 
 
+def test_validate_inconsistent_permission_id(permission):
+    """Attempt editing permission with inconsistent 'permission_id'."""
+    other_permission = PermissionFactory()
+    form = EditForm(permission.user, permission.id, permission_id=other_permission.id)
+
+    assert form.validate() is False
+    assert _('Invalid value, must be one of: %(values)s.', values=permission.id) in \
+        form.permission_id.errors
+
+
 def test_validate_without_user_id(superuser, permission):
     """Attempt editing entry with empty string for user ID."""
     form = EditForm(superuser, permission.id, permission_id=permission.id,
