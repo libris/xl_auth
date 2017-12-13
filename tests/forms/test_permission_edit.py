@@ -23,7 +23,7 @@ def test_validate_permission_id_does_not_exist(superuser, permission):
 
 def test_validate_inconsistent_permission_id(permission):
     """Attempt editing permission with inconsistent 'permission_id'."""
-    other_permission = PermissionFactory()
+    other_permission = PermissionFactory().save_as(permission.user)
     form = EditForm(permission.user, permission.id, permission_id=other_permission.id)
 
     assert form.validate() is False
@@ -97,13 +97,35 @@ def test_validate_permission_edit_as_user(permission, user, collection):
         form.permission_id.errors
 
 
+def test_validate_grant_cataloging_admin_permission_as_cataloging_admin(user, permission):
+    """Attempt to make another user cataloging admin being only cataloging admin yourself."""
+    # Make 'user' cataloging admin for 'permission.collection'.
+    PermissionFactory(user=user, collection=permission.collection,
+                      cataloging_admin=True).save_as(user)
+    assert user.is_cataloging_admin_for(permission.collection) is True
+    # Make another user on the same collection that's not a cataloging admin.
+    other_users_permission = PermissionFactory(collection=permission.collection,
+                                               cataloging_admin=False).save_as(user)
+    assert other_users_permission.user.is_cataloging_admin_for(permission.collection) is False
+    form = EditForm(user, other_users_permission.id,
+                    permission_id=other_users_permission.id,
+                    user_id=other_users_permission.user.id,
+                    collection_id=permission.collection.id,
+                    cataloging_admin=True)
+
+    assert form.validate() is False
+    assert _('Cataloging admin rights can only be granted by system admins.') in \
+        form.cataloging_admin.errors
+
+
 def test_validate_success_as_cataloging_admin(user, permission):
     """Edit entry with success as cataloging admin."""
     # Make user cataloging admin for 'permission.collection' and 'other_collection'.
-    PermissionFactory(user=user, collection=permission.collection, cataloging_admin=True)
-    other_collection = CollectionFactory()
-    PermissionFactory(user=user, collection=other_collection, cataloging_admin=True)
-    other_user = UserFactory()
+    PermissionFactory(user=user, collection=permission.collection,
+                      cataloging_admin=True).save_as(user)
+    other_collection = CollectionFactory().save_as(user)
+    PermissionFactory(user=user, collection=other_collection, cataloging_admin=True).save_as(user)
+    other_user = UserFactory().save_as(user)
     assert user.is_cataloging_admin_for(permission.collection) is True
     form = EditForm(user, permission.id,
                     permission_id=permission.id,
