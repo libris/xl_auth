@@ -57,6 +57,16 @@ def test_validate_collection_id_does_not_exist(superuser, user, collection):
              collection_id=invalid_collection_id) in form.collection_id.errors
 
 
+def test_validate_register_permission_as_user(user, collection):
+    """Attempt registering permission as a user that's not cataloging admin."""
+    form = RegisterForm(user, user_id=user.id, collection_id=collection.id, registrant=True,
+                        cataloger=False, cataloging_admin=False)
+
+    form.validate()
+    assert _('You do not have sufficient privileges for this operation.') in \
+        form.collection_id.errors
+
+
 def test_validate_success_as_cataloging_admin(user, collection, superuser):
     """Register new permission with success as cataloging admin."""
     # Make user cataloging admin for 'collection'.
@@ -94,12 +104,3 @@ def test_validate_success_as_superuser(superuser, user, collection):
         'cataloging_admin': False,
         'next_redirect': None
     }
-
-
-def test_as_user(user, collection):
-    """Attempt to register new permission."""
-    form = RegisterForm(user, user_id=user.id, collection_id=collection.id)
-
-    with pytest.raises(ValidationError) as e_info:
-        form.validate()
-    assert e_info.value.args[0] == _('You do not have sufficient privileges for this operation.')
