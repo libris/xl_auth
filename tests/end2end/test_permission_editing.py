@@ -64,7 +64,7 @@ def test_cataloging_admin_can_edit_permission_from_collection_view(user, permiss
     form['password'] = 'myPrecious'
     # Submits
     res = form.submit().follow()
-    # Clicks to View collection from profile instead
+    # Clicks to View Collection from profile
     res = res.click(href=url_for('collection.view', collection_code=permission.collection.code))
     # Clicks Edit on a permission
     res = res.click(href=url_for('permission.edit', permission_id=permission.id))
@@ -102,11 +102,11 @@ def test_cataloging_admin_can_edit_permission_from_user_view(user, permission, s
     form['password'] = 'myPrecious'
     # Submits
     res = form.submit().follow()
-    # Clicks to View collection from profile instead
+    # Clicks to View Collection from profile
     res = res.click(href=url_for('collection.view', collection_code=permission.collection.code))
-    # Clicks to view user on collection permissions view
+    # Clicks to View User on collection permissions view
     res = res.click(href=url_for('user.view', user_id=permission.user_id))
-    # Clicks Edit on a permission on the User View
+    # Clicks Edit on a permission on the user view
     res = res.click(href=url_for('permission.edit', permission_id=permission.id))
     # Fills out the form, by changing to another user
     form = res.forms['editPermissionForm']
@@ -123,7 +123,7 @@ def test_cataloging_admin_can_edit_permission_from_user_view(user, permission, s
              username=other_user.email, code=permission.collection.code) in res
     assert len(Permission.query.all()) == old_permission_count
     # The edited permission is NOT listed on the view for permissions of initial user.
-    assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(
+    assert len(res.lxml.xpath("//td/a[@href='{0}']".format(
         url_for('permission.edit', permission_id=permission.id)))) == 0
 
 
@@ -172,7 +172,7 @@ def test_user_cannot_edit_permission(user, permission, testapp):
     # Try to go there directly
     testapp.get('/permissions/', status=403)
 
-    # Try to delete a specific permission directly
+    # Try to edit a specific permission directly
     res = testapp.get(url_for('permission.edit', permission_id=permission.id))
     form = res.forms['editPermissionForm']
     form['registrant'].checked = not permission.registrant
