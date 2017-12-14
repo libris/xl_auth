@@ -65,16 +65,18 @@ def test_cataloging_admin_can_delete_existing_permission(user, permission, super
     # We see no Permissions button
     assert res.lxml.xpath("//a[contains(@text,'{0}')]".format(_('Permissions'))) == []
 
-    # Try to go there directly
+    # Try to go there directly and fail
     testapp.get('/permissions/', status=403)
 
-    # Try to delete a specific permission directly
-    res = testapp.get(url_for('permission.delete', permission_id=permission.id))
+    # Go to profile instead and click through delete flow
+    res = testapp.get(url_for('user.profile'))
+    res = res.click(href=url_for('collection.view', collection_code=permission_collection_code))
+    res = res.click(href=url_for('permission.delete', permission_id=permission.id))
     form = res.forms['deletePermissionForm']
     form['acknowledged'] = 'y'
     res = form.submit()
     assert res.status_code == 302
-    assert url_for('public.home') in res.location
+    assert url_for('collection.view', collection_code=permission_collection_code) in res.location
     res = res.follow()
 
     # Permission was deleted, so number of permissions are 1 less than initial state
