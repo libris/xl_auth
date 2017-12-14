@@ -153,12 +153,12 @@ class User(UserMixin, SurrogatePK, Model):
                 return True
         return False
 
-    def is_cataloging_admin_for(self, collection):
-        """Check 'cataloging_admin' status for a specific collection."""
-        for permission in self.permissions:
-            if permission.cataloging_admin and permission.collection == collection:
-                return True
-        return False
+    def is_cataloging_admin_for(self, *collections):
+        """Check 'cataloging_admin' status for one or more specific collections."""
+        collections = set(collections)
+        admin_permissions = set(_ for _ in self.permissions
+                                if _.cataloging_admin and _.collection in collections)
+        return bool(len(admin_permissions) and len(admin_permissions) == len(collections))
 
     def has_any_permission_for(self, collection):
         """Check for any permission on a specific collection."""

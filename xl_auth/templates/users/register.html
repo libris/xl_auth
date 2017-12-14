@@ -18,7 +18,7 @@
                 {{ register_user_form.send_password_reset_email(checked=True) }}
                 {{ register_user_form.send_password_reset_email.label }}
             </div>
-            <p><input class="btn btn-default btn-submit" type="submit" value="Register"></p>
+            <p><input class="btn btn-default btn-submit" type="submit" value="{{ _('Register') }}"></p>
         </form>
     </div>
 {% endblock %}

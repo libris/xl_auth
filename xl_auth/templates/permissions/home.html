@@ -4,11 +4,12 @@
     <h1>{{ _('Permissions') }}</h1>
     <br/>
     <div class="panel panel-default">
-        <!-- Default panel contents -->
         <div class="panel-heading">
             <strong>{{ _('Existing Permissions') }}</strong>
             <a class="btn btn-xs btn-primary pull-right"
-               href="{{ url_for('permission.register') }}">{{ _('New Permission') }}</a>
+               href="{{ url_for('permission.register') + '?next=' + url_for('permission.home') }}">
+                {{ _('New Permission') }}
+            </a>
         </div>
         <table class="table table-hover">
             <thead>
@@ -43,7 +44,8 @@
                     <td>{{ permission.created_at.strftime('%y-%m-%d') }}</td>
                     <td class="actions">
                         <a class="btn btn-xs btn-default" title="{{ _('Edit') }}"
-                           href="{{ url_for('permission.edit', permission_id=permission.id) }}">
+                           href="{{ url_for('permission.edit', permission_id=permission.id)
+                                            + '?next=' + url_for('permission.home') }}">
                             <i class="fa fa-pencil"></i>
                         </a>
                         <a class="btn btn-xs btn-danger" title="{{ _('Delete Permission') }}"
