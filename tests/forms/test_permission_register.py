@@ -67,9 +67,21 @@ def test_validate_register_permission_as_user(user, collection):
         form.collection_id.errors
 
 
+def test_validate_add_cataloging_admin_permission_as_cataloging_admin(user, collection, superuser):
+    """Attempt to make another user cataloging admin being only cataloging admin yourself."""
+    PermissionFactory(user=user, collection=collection, cataloging_admin=True).save_as(superuser)
+    assert user.is_cataloging_admin_for(collection) is True
+    other_user = UserFactory().save_as(user)
+    form = RegisterForm(user, user_id=other_user.id, collection_id=collection.id,
+                        cataloging_admin=True)
+
+    assert form.validate() is False
+    assert _('Cataloging admin rights can only be granted by system admins.') in \
+        form.cataloging_admin.errors
+
+
 def test_validate_success_as_cataloging_admin(user, collection, superuser):
     """Register new permission with success as cataloging admin."""
-    # Make user cataloging admin for 'collection'.
     PermissionFactory(user=user, collection=collection, cataloging_admin=True).save_as(superuser)
     assert user.is_cataloging_admin_for(collection) is True
     other_user = UserFactory().save_as(user)
