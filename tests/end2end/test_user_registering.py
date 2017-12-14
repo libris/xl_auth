@@ -11,7 +11,6 @@ from xl_auth.user.models import PasswordReset, User
 from ..factories import UserFactory
 
 
-# noinspection PyUnusedLocal
 def test_superuser_can_register_not_triggering_password_reset(superuser, testapp):
     """Register a new user, not creating any password reset."""
     # Goes to homepage
@@ -46,7 +45,6 @@ def test_superuser_can_register_not_triggering_password_reset(superuser, testapp
     assert password_reset is None
 
 
-# noinspection PyUnusedLocal
 def test_superuser_can_register_with_password_reset(superuser, testapp):
     """Register a new user, automatically creating a password reset (for emailing)."""
     # Goes to homepage
@@ -80,9 +78,9 @@ def test_superuser_can_register_with_password_reset(superuser, testapp):
     assert len(password_resets) == 1
 
 
-# noinspection PyUnusedLocal
-def test_user_cant_register(user, testapp):
-    """Register a new user."""
+def test_user_without_cataloging_admin_permissions_can_not_register(user, testapp):
+    """Attempt registering a new user without having one-or-more 'cataloging_admin' permissions."""
+    assert user.is_cataloging_admin is False
     # Goes to homepage
     res = testapp.get('/')
     # Fills out login form
@@ -99,11 +97,19 @@ def test_user_cant_register(user, testapp):
     # We see no link to Create Account
     assert res.lxml.xpath("//a[starts-with(@href,'/users/register')]") == []
     # We try to go there directly
-    res = testapp.get('/users/register/', status=403)
+    res = testapp.get('/users/register/')
+    # Fills out the form
+    form = res.forms['registerUserForm']
+    form['username'] = 'foo@bar.com'
+    form['full_name'] = 'End2End'
+    form['send_password_reset_email'].checked = True
+    # Submits
+    res = form.submit()
+    assert res.status_code == 200
+    assert _('You do not have sufficient privileges for this operation.') in res
 
 
-# noinspection PyUnusedLocal
-def test_user_sees_error_message_if_user_already_registered(superuser, user, testapp):
+def test_user_sees_error_message_if_user_already_registered(superuser, testapp):
     """Show error if user already registered."""
     user = UserFactory(is_active=True)  # A registered user.
     user.save()

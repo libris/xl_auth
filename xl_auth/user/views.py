@@ -57,26 +57,25 @@ def profile():
 @login_required
 def register():
     """Register new user."""
-    if not current_user.is_admin:
-        abort(403)
-
     register_user_form = RegisterForm(current_user, request.form)
-    if register_user_form.validate_on_submit():
-        user = User(email=register_user_form.username.data,
-                    full_name=register_user_form.full_name.data)
-        if register_user_form.send_password_reset_email.data:
-            password_reset = PasswordReset(user)
-            password_reset.send_email()
-            user.save_as(current_user)
-            password_reset.save()
-            flash(_('User "%(username)s" registered and emailed with a password reset link.',
-                    username=user.email), 'success')
+    if request.method == 'POST':
+        if register_user_form.validate_on_submit():
+            user = User(email=register_user_form.username.data,
+                        full_name=register_user_form.full_name.data)
+            if register_user_form.send_password_reset_email.data:
+                password_reset = PasswordReset(user)
+                password_reset.send_email()
+                user.save_as(current_user)
+                password_reset.save()
+                flash(_('User "%(username)s" registered and emailed with a password reset link.',
+                        username=user.email), 'success')
+            else:
+                user.save_as(current_user)
+                flash(_('User "%(username)s" registered.', username=user.email), 'success')
+            return redirect(url_for('user.home'))
         else:
-            user.save_as(current_user)
-            flash(_('User "%(username)s" registered.', username=user.email), 'success')
-        return redirect(url_for('user.home'))
-    else:
-        flash_errors(register_user_form)
+            flash_errors(register_user_form)
+
     return render_template('users/register.html', register_user_form=register_user_form)
 
 
