@@ -9,7 +9,7 @@ from jinja2 import escape
 
 from xl_auth.permission.models import Permission
 
-from ..factories import CollectionFactory, PermissionFactory
+from ..factories import CollectionFactory, PermissionFactory, UserFactory
 
 
 def test_superuser_can_edit_existing_permission(superuser, permission, testapp):
@@ -54,8 +54,8 @@ def test_cataloging_admin_can_edit_permission_from_collection_view(user, permiss
     PermissionFactory(user=user, collection=permission.collection,
                       cataloging_admin=True).save_as(superuser)
     initial_collection_code = permission.collection.code
-    other_permission = PermissionFactory(user=user, cataloging_admin=True)
-    old_count = len(Permission.query.all())
+    other_permission = PermissionFactory(user=user, cataloging_admin=True).save_as(superuser)
+    old_permission_count = len(Permission.query.all())
     # Goes to homepage
     res = testapp.get('/')
     # Fills out login form
@@ -68,7 +68,7 @@ def test_cataloging_admin_can_edit_permission_from_collection_view(user, permiss
     res = res.click(href=url_for('collection.view', collection_code=permission.collection.code))
     # Clicks Edit on a permission
     res = res.click(href=url_for('permission.edit', permission_id=permission.id))
-    # Fills out the form
+    # Fills out the form, by changing to another collection
     form = res.forms['editPermissionForm']
     # Defaults are kept -- setting ``form['user_id'] = permission.user.id`` is redundant
     form['collection_id'] = other_permission.collection.id
@@ -81,9 +81,50 @@ def test_cataloging_admin_can_edit_permission_from_collection_view(user, permiss
     # The permission was updated, and number of permissions are the same as initial state
     assert _('Updated permissions for "%(username)s" on collection "%(code)s".',
              username=permission.user.email, code=other_permission.collection.code) in res
-    assert len(Permission.query.all()) == old_count
+    assert len(Permission.query.all()) == old_permission_count
     # The edited permission is NOT listed on page for 'initial_collection_code'.
     assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(permission.user.email))) == 0
+
+
+def test_cataloging_admin_can_edit_permission_from_user_view(user, permission, superuser, testapp):
+    """Edit existing permission from user view as cataloging admin."""
+    # Make 'user' cataloging admin for 'permission.collection' and 2nd one
+    PermissionFactory(user=user, collection=permission.collection,
+                      cataloging_admin=True).save_as(superuser)
+    initial_permission_user_id = permission.user.id
+    other_user = UserFactory().save_as(superuser)
+    old_permission_count = len(Permission.query.all())
+    # Goes to homepage
+    res = testapp.get('/')
+    # Fills out login form
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits
+    res = form.submit().follow()
+    # Clicks to View collection from profile instead
+    res = res.click(href=url_for('collection.view', collection_code=permission.collection.code))
+    # Clicks to view user on collection permissions view
+    res = res.click(href=url_for('user.view', user_id=permission.user_id))
+    # Clicks Edit on a permission on the User View
+    res = res.click(href=url_for('permission.edit', permission_id=permission.id))
+    # Fills out the form, by changing to another user
+    form = res.forms['editPermissionForm']
+    # Defaults are kept, setting ``form['collection_id'] = permission.collection.id`` is redundant
+    form['user_id'] = other_user.id
+    # Submits
+    res = form.submit()
+    assert res.status_code == 302
+    assert url_for('user.view', user_id=initial_permission_user_id) in res.location
+    res = res.follow()
+    assert res.status_code == 200
+    # The permission was updated, and number of permissions are the same as initial state
+    assert _('Updated permissions for "%(username)s" on collection "%(code)s".',
+             username=other_user.email, code=permission.collection.code) in res
+    assert len(Permission.query.all()) == old_permission_count
+    # The edited permission is NOT listed on the view for permissions of initial user.
+    assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(
+        url_for('permission.edit', permission_id=permission.id)))) == 0
 
 
 def test_superuser_sees_error_if_permission_is_already_registered(superuser, permission, testapp):
