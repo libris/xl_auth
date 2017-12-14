@@ -188,6 +188,7 @@ v. 0.7.1
 * Revised API endpoints for registering/editing permissions; now allowing cataloging admins to
   register new and edit existing permissions on their collections
   (`#126 <https://github.com/libris/xl_auth/issues/126>`_)
+* UX enhancements (`#129 <https://github.com/libris/xl_auth/issues/129>`_)
 
 
 v. 0.7.0

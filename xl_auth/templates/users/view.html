@@ -1,7 +1,7 @@
 <!-- users/view.html -->
 {% extends "layout.html" %}
 {% block content %}
-    <h1>{{ _('View User \'%(email)s\'', email=user.email) }}</h1>
+    <h1>{{ _('View User \'<a href="mailto:%(email)s">%(email)s</a>\'', email=user.email) }}</h1>
     <br/>
     <div class="panel panel-default">
         <dl class="dl-horizontal">
