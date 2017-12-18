@@ -76,7 +76,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for permission in user.permissions %}
+                {% for permission in user.permissions if permission.collection.is_active %}
                     <tr>
                         <td>
                             <a title="{{ _('View') }}"
