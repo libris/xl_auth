@@ -23,7 +23,7 @@ def home():
 
     return render_template('collections/home.html',
                            active_collections_with_users=[_ for _ in active_collections
-                                                          if len(_.permissions)],
+                                                          if len(_.permissions) > 0],
                            active_collections_without_users=[_ for _ in active_collections
                                                              if len(_.permissions) == 0],
                            inactive_collections=inactive_collections)

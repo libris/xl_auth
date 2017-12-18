@@ -57,6 +57,9 @@ def profile():
 @login_required
 def register():
     """Register new user."""
+    if not (current_user.is_admin or current_user.is_cataloging_admin):
+        abort(403)
+
     register_user_form = RegisterForm(current_user, request.form)
     if request.method == 'POST':
         if register_user_form.validate_on_submit():

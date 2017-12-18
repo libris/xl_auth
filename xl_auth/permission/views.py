@@ -34,6 +34,9 @@ def home():
 @login_required
 def register(user_id, collection_id):
     """Register new permission."""
+    if not (current_user.is_admin or current_user.is_cataloging_admin):
+        abort(403)
+
     register_permission_form = RegisterForm(current_user, request.form)
     if request.method == 'POST':
         if register_permission_form.validate_on_submit():
@@ -59,6 +62,9 @@ def register(user_id, collection_id):
 @login_required
 def edit(permission_id):
     """Edit existing permission."""
+    if not (current_user.is_admin or current_user.is_cataloging_admin):
+        abort(403)
+
     permission = Permission.get_by_id(permission_id)
     if not permission:
         flash(_('Permission ID "%(permission_id)s" does not exist', permission_id=permission_id),
@@ -85,6 +91,9 @@ def edit(permission_id):
 @login_required
 def delete(permission_id):
     """Delete existing permission."""
+    if not (current_user.is_admin or current_user.is_cataloging_admin):
+        abort(403)
+
     permission = Permission.get_by_id(permission_id)
     if not permission:
         flash(_('Permission ID "%(permission_id)s" does not exist', permission_id=permission_id),
