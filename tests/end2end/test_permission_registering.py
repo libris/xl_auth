@@ -155,8 +155,10 @@ def test_superuser_sees_error_if_permission_is_already_registered(superuser, per
           username=permission.user.email, code=permission.collection.code)) in res
 
 
-def test_user_cannot_register_permission(user, collection, testapp):
+def test_user_cannot_register_permission(user, collection, superuser, testapp):
     """Attempt to register a permission."""
+    assert user.is_cataloging_admin_for(collection) is False
+    assert user.is_cataloging_admin is False
     # Goes to homepage
     res = testapp.get('/')
     # Fills out login form
@@ -173,6 +175,10 @@ def test_user_cannot_register_permission(user, collection, testapp):
     testapp.get('/permissions/', status=403)
 
     # Try to register a permission with direct URL
+    testapp.get(url_for('permission.register'), status=403)
+
+    # Be cataloging admin for another collection and try again
+    PermissionFactory(user=user, cataloging_admin=True).save_as(superuser)
     res = testapp.get('/permissions/register/')
     form = res.forms['registerPermissionForm']
     form['user_id'] = user.id
