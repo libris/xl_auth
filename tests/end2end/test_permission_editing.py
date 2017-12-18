@@ -154,9 +154,10 @@ def test_superuser_sees_error_if_permission_is_already_registered(superuser, per
           username=other_permission.user.email, code=other_permission.collection.code)) in res
 
 
-def test_user_cannot_edit_permission(user, permission, testapp):
+def test_user_cannot_edit_permission(user, permission, superuser, testapp):
     """Attempt to edit a permission as non-'cataloging admin' user."""
     assert user.is_cataloging_admin_for(permission.collection) is False
+    assert user.is_cataloging_admin is False
     # Goes to homepage
     res = testapp.get('/')
     # Fills out login form
@@ -173,6 +174,10 @@ def test_user_cannot_edit_permission(user, permission, testapp):
     testapp.get('/permissions/', status=403)
 
     # Try to edit a specific permission directly
+    testapp.get(url_for('permission.edit', permission_id=permission.id), status=403)
+
+    # Accidentally be cataloging admin for another collection and try again
+    PermissionFactory(user=user, cataloging_admin=True).save_as(superuser)
     res = testapp.get(url_for('permission.edit', permission_id=permission.id))
     form = res.forms['editPermissionForm']
     form['registrant'].checked = not permission.registrant
