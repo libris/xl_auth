@@ -97,16 +97,7 @@ def test_user_without_cataloging_admin_permissions_can_not_register(user, testap
     # We see no link to Create Account
     assert res.lxml.xpath("//a[starts-with(@href,'/users/register')]") == []
     # We try to go there directly
-    res = testapp.get('/users/register/')
-    # Fills out the form
-    form = res.forms['registerUserForm']
-    form['username'] = 'foo@bar.com'
-    form['full_name'] = 'End2End'
-    form['send_password_reset_email'].checked = True
-    # Submits
-    res = form.submit()
-    assert res.status_code == 200
-    assert _('You do not have sufficient privileges for this operation.') in res
+    testapp.get('/users/register/', status=403)
 
 
 def test_user_sees_error_message_if_user_already_registered(superuser, testapp):

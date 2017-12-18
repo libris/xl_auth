@@ -88,6 +88,7 @@ def test_cataloging_admin_can_delete_existing_permission(user, permission, super
 def test_user_cannot_delete_permission(user, permission, superuser, testapp):
     """Attempt to delete a permission as non-'cataloging admin' user."""
     assert user.is_cataloging_admin_for(permission.collection) is False
+    assert user.is_cataloging_admin is False
     old_count = len(Permission.query.all())
     # Goes to homepage
     res = testapp.get('/')
