@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2017-12-14 18:13+0100\n"
+"POT-Creation-Date: 2017-12-18 11:41+0100\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -102,10 +102,10 @@ msgstr "Sigel '%(code)s'"
 #: tests/end2end/test_collection_view.py:61 tests/end2end/test_collection_view.py:89
 #: tests/end2end/test_collection_view.py:124 tests/end2end/test_collection_view.py:153
 #: tests/end2end/test_collection_view.py:184 tests/end2end/test_permission_deleting.py:26
-#: tests/end2end/test_permission_deleting.py:66 tests/end2end/test_permission_deleting.py:102
+#: tests/end2end/test_permission_deleting.py:66 tests/end2end/test_permission_deleting.py:103
 #: tests/end2end/test_permission_editing.py:28 tests/end2end/test_permission_editing.py:142
-#: tests/end2end/test_permission_editing.py:170 tests/end2end/test_permission_registering.py:27
-#: tests/end2end/test_permission_registering.py:143 tests/end2end/test_permission_registering.py:170
+#: tests/end2end/test_permission_editing.py:171 tests/end2end/test_permission_registering.py:27
+#: tests/end2end/test_permission_registering.py:143 tests/end2end/test_permission_registering.py:172
 #: tests/end2end/test_user_editing.py:197 tests/end2end/test_user_view.py:73
 #: tests/end2end/test_user_view.py:99 xl_auth/templates/collections/view.html:70
 #: xl_auth/templates/nav.html:28 xl_auth/templates/permissions/home.html:4
@@ -147,26 +147,26 @@ msgid "Delete permission for \"%(username)s\" on collection \"%(code)s\"?"
 msgstr "Ta bort behörigheter för \"%(username)s\" på sigel \"%(code)s\"?"
 
 #: tests/end2end/test_permission_deleting.py:43 tests/end2end/test_permission_deleting.py:83
-#: xl_auth/permission/views.py:99
+#: xl_auth/permission/views.py:108
 #, python-format
 msgid "Successfully deleted permissions for \"%(username)s\" on collection \"%(code)s\"."
 msgstr "Behörighet borttagen för \"%(username)s\" på sigel \"%(code)s\"."
 
-#: tests/end2end/test_permission_deleting.py:112 tests/forms/test_client_edit.py:23
+#: tests/end2end/test_permission_deleting.py:117 tests/forms/test_client_edit.py:23
 #: tests/forms/test_client_register.py:25 tests/forms/test_collection_edit.py:67
 #: tests/forms/test_collection_register.py:79 tests/forms/test_permission_delete.py:50
 #: tests/forms/test_permission_edit.py:96 tests/forms/test_permission_register.py:66
 #: tests/forms/test_user_administer.py:53 tests/forms/test_user_change_password.py:45
-#: tests/forms/test_user_edit_details.py:34 tests/forms/test_user_register.py:53
+#: tests/forms/test_user_edit_details.py:34 tests/forms/test_user_register.py:44
 #: xl_auth/collection/forms.py:41 xl_auth/collection/forms.py:73 xl_auth/oauth/client/forms.py:40
 #: xl_auth/oauth/client/forms.py:67 xl_auth/permission/forms.py:69 xl_auth/permission/forms.py:133
-#: xl_auth/permission/forms.py:154 xl_auth/permission/forms.py:206 xl_auth/user/forms.py:72
-#: xl_auth/user/forms.py:125 xl_auth/user/forms.py:151 xl_auth/user/forms.py:179
+#: xl_auth/permission/forms.py:154 xl_auth/permission/forms.py:206 xl_auth/user/forms.py:77
+#: xl_auth/user/forms.py:125 xl_auth/user/forms.py:159 xl_auth/user/forms.py:178
 msgid "You do not have sufficient privileges for this operation."
 msgstr "Du har inte tillräcklig behörighet för att utföra denna operation."
 
 #: tests/end2end/test_permission_editing.py:42 tests/end2end/test_permission_editing.py:82
-#: tests/end2end/test_permission_editing.py:122 xl_auth/permission/views.py:72
+#: tests/end2end/test_permission_editing.py:122 xl_auth/permission/views.py:78
 #, python-format
 msgid "Updated permissions for \"%(username)s\" on collection \"%(code)s\"."
 msgstr "Behörighet uppdaterad för \"%(username)s\" på sigel \"%(code)s\"."
@@ -186,7 +186,7 @@ msgid "New Permission"
 msgstr "Lägg till behörighet"
 
 #: tests/end2end/test_permission_registering.py:40 tests/end2end/test_permission_registering.py:79
-#: tests/end2end/test_permission_registering.py:124 xl_auth/permission/views.py:47
+#: tests/end2end/test_permission_registering.py:124 xl_auth/permission/views.py:50
 #, python-format
 msgid "Added permissions for \"%(username)s\" on collection \"%(code)s\"."
 msgstr "Behörighet tillagd för användare \"%(username)s\" på sigel \"%(code)s\"."
@@ -239,8 +239,8 @@ msgid "Reset code \"%(code)s\" already used (%(isoformat)s)"
 msgstr "Återställningsnyckel \"%(code)s\" har redan förbrukats (%(isoformat)s)"
 
 #: tests/end2end/test_user_editing.py:27 tests/end2end/test_user_editing.py:73
-#: tests/end2end/test_user_inspection.py:23 tests/end2end/test_user_registering.py:26
-#: tests/end2end/test_user_registering.py:61 tests/end2end/test_user_registering.py:96
+#: tests/end2end/test_user_inspection.py:23 tests/end2end/test_user_registering.py:25
+#: tests/end2end/test_user_registering.py:59 tests/end2end/test_user_registering.py:94
 #: xl_auth/templates/collections/home.html:34 xl_auth/templates/collections/home.html:99
 #: xl_auth/templates/collections/home.html:161 xl_auth/templates/nav.html:27
 #: xl_auth/templates/users/home.html:4
@@ -291,7 +291,7 @@ msgstr "Epost"
 
 #: tests/end2end/test_user_editing.py:115 tests/end2end/test_user_editing.py:139
 #: tests/forms/test_user_administer.py:42 tests/forms/test_user_change_password.py:19
-#: tests/forms/test_user_edit_details.py:25 xl_auth/user/forms.py:95
+#: tests/forms/test_user_edit_details.py:25 xl_auth/user/forms.py:97
 msgid "Email cannot be modified"
 msgstr "Epost/användarnamn går inte att ändra"
 
@@ -304,8 +304,8 @@ msgstr "Fullständigt namn"
 #: tests/end2end/test_user_editing.py:178 tests/end2end/test_user_editing.py:182
 #: tests/end2end/test_user_inspection.py:63 tests/end2end/test_user_view.py:49
 #: tests/forms/test_permission_edit.py:72 tests/forms/test_permission_register.py:46
-#: xl_auth/permission/forms.py:50 xl_auth/user/views.py:89 xl_auth/user/views.py:108
-#: xl_auth/user/views.py:143 xl_auth/user/views.py:170 xl_auth/user/views.py:198
+#: xl_auth/permission/forms.py:50 xl_auth/user/views.py:91 xl_auth/user/views.py:110
+#: xl_auth/user/views.py:145 xl_auth/user/views.py:172 xl_auth/user/views.py:200
 #, python-format
 msgid "User ID \"%(user_id)s\" does not exist"
 msgstr "Användare med databas-ID \"%(user_id)s\" existerar inte"
@@ -325,13 +325,13 @@ msgstr "Välkommen"
 msgid "Inspect User '%(email)s'"
 msgstr "Inspektera '%(email)s'"
 
-#: tests/end2end/test_user_registering.py:28 tests/end2end/test_user_registering.py:63
+#: tests/end2end/test_user_registering.py:27 tests/end2end/test_user_registering.py:61
 #: xl_auth/templates/users/home.html:11
 msgid "New User"
 msgstr "Ny användare"
 
-#: tests/end2end/test_user_registering.py:127 tests/forms/test_user_register.py:34
-#: tests/forms/test_user_register.py:44 xl_auth/user/forms.py:75
+#: tests/end2end/test_user_registering.py:124 tests/forms/test_user_register.py:26
+#: tests/forms/test_user_register.py:36 xl_auth/user/forms.py:67
 msgid "Email already registered"
 msgstr "Epost-adressen är redan registrerad"
 
@@ -341,7 +341,7 @@ msgstr "Epost-adressen är redan registrerad"
 msgid "View User '<a href=\"mailto:%(email)s\">%(email)s</a>'"
 msgstr "Användare '<a href=\"mailto:%(email)s\">%(email)s</a>'"
 
-#: tests/end2end/test_user_view.py:146 tests/models/test_user.py:264 xl_auth/user/models.py:198
+#: tests/end2end/test_user_view.py:146 tests/models/test_user.py:264 xl_auth/user/models.py:200
 msgid "You will only see permissions for those collections that you are cataloging admin for."
 msgstr "Du ser enbart behörigheter på de sigel du är katalogiseringsadmin för."
 
@@ -366,8 +366,8 @@ msgid "Field must be between 1 and 5 characters long."
 msgstr "Fältet måste vara mellan 1 och 5 tecken långt."
 
 #: tests/forms/test_permission_delete.py:20 tests/forms/test_permission_edit.py:20
-#: xl_auth/permission/forms.py:123 xl_auth/permission/forms.py:210 xl_auth/permission/views.py:64
-#: xl_auth/permission/views.py:90
+#: xl_auth/permission/forms.py:123 xl_auth/permission/forms.py:210 xl_auth/permission/views.py:70
+#: xl_auth/permission/views.py:99
 #, python-format
 msgid "Permission ID \"%(permission_id)s\" does not exist"
 msgstr "Behörighet med databas-ID \"%(permission_id)s\" existerar inte"
@@ -395,7 +395,7 @@ msgstr ""
 msgid "User not activated"
 msgstr "Användarkontot ej aktiverat; återställ ditt lösenord"
 
-#: tests/forms/test_user_administer.py:32 xl_auth/user/forms.py:106
+#: tests/forms/test_user_administer.py:32 xl_auth/user/forms.py:107
 msgid "User does not exist"
 msgstr "Användaren existerar inte"
 
@@ -409,7 +409,7 @@ msgstr "Ogiltigt värde \"%(value)s\"."
 msgid "ToS already approved at %(isoformat)s."
 msgstr "Tjänstevillkor redan godkända sedan %(isoformat)s."
 
-#: tests/forms/test_user_register.py:26
+#: tests/forms/test_user_register.py:18
 msgid "Field must be between 3 and 255 characters long."
 msgstr "Fältet måste vara mellan 3 och 255 tecken långt."
 
@@ -607,7 +607,7 @@ msgstr "Gå till"
 #: xl_auth/templates/collections/home.html:9 xl_auth/templates/collections/home.html:86
 #: xl_auth/templates/collections/home.html:143
 msgid "Active Collections without Users"
-msgstr "Aktiva sigler som ej har användare associerade"
+msgstr "Aktiva sigler utan användare"
 
 #: xl_auth/templates/collections/home.html:13 xl_auth/templates/collections/home.html:78
 #: xl_auth/templates/collections/home.html:151
@@ -617,7 +617,7 @@ msgstr "Inaktiva sigler"
 #: xl_auth/templates/collections/home.html:21 xl_auth/templates/collections/home.html:74
 #: xl_auth/templates/collections/home.html:139
 msgid "Active Collections with Users"
-msgstr "Aktiva sigler som har kopplade användare"
+msgstr "Aktiva sigler med en eller flera användare"
 
 #: xl_auth/templates/collections/home.html:32 xl_auth/templates/collections/home.html:97
 #: xl_auth/templates/collections/home.html:158 xl_auth/templates/users/profile.html:50
@@ -688,6 +688,11 @@ msgstr "Ändrad"
 #: xl_auth/templates/users/view.html:99
 msgid "by"
 msgstr "av"
+
+#: xl_auth/templates/collections/view.html:128 xl_auth/templates/permissions/home.html:51
+#: xl_auth/templates/users/view.html:113
+msgid "Delete Permission"
+msgstr "🙀 Ta bort behörighet"
 
 #: xl_auth/templates/oauth/authorize.html:5
 msgid "Authorization Request"
@@ -795,10 +800,6 @@ msgstr "Ändra behörighet"
 #: xl_auth/templates/permissions/home.html:8
 msgid "Existing Permissions"
 msgstr "Befintliga behörigheter"
-
-#: xl_auth/templates/permissions/home.html:49
-msgid "Delete Permission"
-msgstr "🙀 Ta bort behörighet"
 
 #: xl_auth/templates/permissions/register.html:5
 msgid "Register New Permission"
@@ -1123,22 +1124,22 @@ msgstr ""
 msgid "ToS approved."
 msgstr "Tjänstevillkorsgodkännande sparat."
 
-#: xl_auth/user/views.py:72
+#: xl_auth/user/views.py:73
 #, python-format
 msgid "User \"%(username)s\" registered and emailed with a password reset link."
 msgstr "Användaren \"%(username)s\" har registrerats och mailats en lösenordsåterställningslänk."
 
-#: xl_auth/user/views.py:76
+#: xl_auth/user/views.py:77
 #, python-format
 msgid "User \"%(username)s\" registered."
 msgstr "Användaren \"%(username)s\" har registrerats."
 
-#: xl_auth/user/views.py:152 xl_auth/user/views.py:176
+#: xl_auth/user/views.py:154 xl_auth/user/views.py:178
 #, python-format
 msgid "Thank you for updating user details for \"%(username)s\"."
 msgstr "Användarinställningar uppdaterade för \"%(username)s\"."
 
-#: xl_auth/user/views.py:205
+#: xl_auth/user/views.py:207
 #, python-format
 msgid "Thank you for changing password for \"%(username)s\"."
 msgstr "Lösenord för \"%(username)s\" har ändrats."
