@@ -132,7 +132,7 @@ def test_validate_success_as_cataloging_admin(user, permission, superuser):
                     permission_id=permission.id,
                     user_id=other_user.id,
                     collection_id=other_collection.id,
-                    cataloging_admin=permission.cataloging_admin,
+                    cataloging_admin=permission.cataloging_admin,  # Must remain unchanged.
                     registrant=not permission.registrant,
                     cataloger=not permission.cataloger)
 
