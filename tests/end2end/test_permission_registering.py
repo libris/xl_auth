@@ -177,7 +177,7 @@ def test_user_cannot_register_permission(user, collection, superuser, testapp):
     # Try to register a permission with direct URL
     testapp.get(url_for('permission.register'), status=403)
 
-    # Be cataloging admin for another collection and try again
+    # Be cataloging admin for unrelated collection and try again
     PermissionFactory(user=user, cataloging_admin=True).save_as(superuser)
     res = testapp.get('/permissions/register/')
     form = res.forms['registerPermissionForm']

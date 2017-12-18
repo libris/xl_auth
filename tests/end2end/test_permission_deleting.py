@@ -85,7 +85,7 @@ def test_cataloging_admin_can_delete_existing_permission(user, permission, super
     assert len(Permission.query.all()) == old_count - 1
 
 
-def test_user_cannot_delete_permission(user, permission, testapp):
+def test_user_cannot_delete_permission(user, permission, superuser, testapp):
     """Attempt to delete a permission as non-'cataloging admin' user."""
     assert user.is_cataloging_admin_for(permission.collection) is False
     old_count = len(Permission.query.all())
@@ -104,12 +104,17 @@ def test_user_cannot_delete_permission(user, permission, testapp):
     # Try to go there directly
     testapp.get('/permissions/', status=403)
 
-    # Try to delete a specific permission directly
+    # Try to delete a specific permission with direct URL
+    testapp.get(url_for('permission.delete', permission_id=permission.id), status=403)
+
+    # Accidentally be cataloging admin for unrelated collection and try again
+    temp_permission = PermissionFactory(user=user, cataloging_admin=True).save_as(superuser)
     res = testapp.get(url_for('permission.delete', permission_id=permission.id))
     form = res.forms['deletePermissionForm']
     form['acknowledged'] = 'y'
     res = form.submit()
     assert _('You do not have sufficient privileges for this operation.') in res
+    temp_permission.delete()
 
     # Nothing was deleted
     assert len(Permission.query.all()) == old_count

@@ -176,7 +176,7 @@ def test_user_cannot_edit_permission(user, permission, superuser, testapp):
     # Try to edit a specific permission directly
     testapp.get(url_for('permission.edit', permission_id=permission.id), status=403)
 
-    # Accidentally be cataloging admin for another collection and try again
+    # Accidentally be cataloging admin for unrelated collection and try again
     PermissionFactory(user=user, cataloging_admin=True).save_as(superuser)
     res = testapp.get(url_for('permission.edit', permission_id=permission.id))
     form = res.forms['editPermissionForm']
