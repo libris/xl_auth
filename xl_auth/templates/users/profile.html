@@ -40,7 +40,7 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3>{{ _('Permissions (Active Collections Only)') }}</h3>
+            <h3>{{ _('My Permissions') }}</h3>
         </div>
         <div class="panel-body">
             <table class="table table-hover">
@@ -54,7 +54,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for permission in user.permissions if permission.collection.is_active %}
+                {% for permission in user.permissions %}
                     <tr>
                         <td>
                             <a title="{{ _('View') }}"
