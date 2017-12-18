@@ -189,7 +189,8 @@ v. 0.7.1
   register new and edit existing permissions on their collections
   (`#126 <https://github.com/libris/xl_auth/issues/126>`_)
 * UX enhancements (`#129 <https://github.com/libris/xl_auth/issues/129>`_,
-  `#134 <https://github.com/libris/xl_auth/issues/134>`_)
+  `#134 <https://github.com/libris/xl_auth/issues/134>`_,
+  `#131 <https://github.com/libris/xl_auth/issues/131>`_)
 
 
 v. 0.7.0

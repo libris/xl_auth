@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 0.7.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-12-18 11:57+0100\n"
+"POT-Creation-Date: 2017-12-18 13:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1011,7 +1011,7 @@ msgid "Edit Display Name"
 msgstr ""
 
 #: xl_auth/templates/users/profile.html:27
-msgid "Important"
+msgid "Information About Your Permissions"
 msgstr ""
 
 #: xl_auth/templates/users/profile.html:30
