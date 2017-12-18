@@ -8,7 +8,7 @@ from flask_babel import gettext as _
 
 from xl_auth.user.models import PasswordReset, User
 
-from ..factories import UserFactory
+from ..factories import PermissionFactory, UserFactory
 
 
 def test_superuser_can_register_not_triggering_password_reset(superuser, testapp):
@@ -76,6 +76,41 @@ def test_superuser_can_register_with_password_reset(superuser, testapp):
     # A password reset was created
     password_resets = PasswordReset.query.filter_by(user=new_user).all()
     assert len(password_resets) == 1
+
+
+def test_cataloging_admin_can_register_not_triggering_password_reset(user, superuser, testapp):
+    """Register a new user as cataloging admin, not creating any password reset."""
+    PermissionFactory(user=user, cataloging_admin=True).save_as(superuser)
+    # Goes to homepage
+    res = testapp.get('/')
+    # Fills out login form
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits
+    res = form.submit().follow()
+    # Gets redirected to profile page
+    assert _('Your Responsibilities as Cataloging Admin') in res
+    # Clicks Create Account button
+    res = res.click(_('New User'))
+    # Fills out the form
+    form = res.forms['registerUserForm']
+    form['username'] = 'foo@bar.com'
+    form['full_name'] = 'End2End'
+    form['send_password_reset_email'].checked = False
+    # Submits
+    res = form.submit().follow()
+    assert res.status_code == 200
+    # A new user was created
+    new_user = User.get_by_email('foo@bar.com')
+    assert isinstance(new_user, User)
+    assert new_user.is_active is False
+    # Keeping track of who created what
+    assert new_user.created_by == user
+    assert new_user.modified_by == user
+    # A password reset was not created
+    password_reset = PasswordReset.query.filter_by(user=new_user).first()
+    assert password_reset is None
 
 
 def test_user_without_cataloging_admin_permissions_can_not_register(user, testapp):
