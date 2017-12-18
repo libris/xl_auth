@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2017-12-18 13:09+0100\n"
+"POT-Creation-Date: 2017-12-18 15:29+0100\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -31,7 +31,7 @@ msgstr "Kategori saknas"
 #: tests/end2end/test_collection_editing.py:86 tests/end2end/test_collection_registering.py:82
 #: xl_auth/collection/forms.py:17 xl_auth/templates/collections/home.html:31
 #: xl_auth/templates/collections/home.html:96 xl_auth/templates/collections/home.html:157
-#: xl_auth/templates/users/profile.html:49
+#: xl_auth/templates/users/profile.html:71
 msgid "Code"
 msgstr "Sigel"
 
@@ -240,7 +240,7 @@ msgstr "Återställningsnyckel \"%(code)s\" har redan förbrukats (%(isoformat)s
 
 #: tests/end2end/test_user_editing.py:27 tests/end2end/test_user_editing.py:73
 #: tests/end2end/test_user_inspection.py:23 tests/end2end/test_user_registering.py:25
-#: tests/end2end/test_user_registering.py:59 tests/end2end/test_user_registering.py:94
+#: tests/end2end/test_user_registering.py:59 tests/end2end/test_user_registering.py:165
 #: xl_auth/templates/collections/home.html:34 xl_auth/templates/collections/home.html:99
 #: xl_auth/templates/collections/home.html:161 xl_auth/templates/nav.html:27
 #: xl_auth/templates/users/home.html:4
@@ -256,8 +256,8 @@ msgstr "Användare"
 #: xl_auth/templates/users/inspect.html:21 xl_auth/templates/users/inspect.html:88
 #: xl_auth/templates/users/inspect.html:91 xl_auth/templates/users/inspect.html:94
 #: xl_auth/templates/users/inspect.html:97 xl_auth/templates/users/inspect.html:128
-#: xl_auth/templates/users/inspect.html:162 xl_auth/templates/users/profile.html:67
-#: xl_auth/templates/users/profile.html:70 xl_auth/templates/users/profile.html:73
+#: xl_auth/templates/users/inspect.html:162 xl_auth/templates/users/profile.html:89
+#: xl_auth/templates/users/profile.html:92 xl_auth/templates/users/profile.html:95
 #: xl_auth/templates/users/simple_view.html:12 xl_auth/templates/users/view.html:31
 #: xl_auth/templates/users/view.html:34 xl_auth/templates/users/view.html:37
 #: xl_auth/templates/users/view.html:88 xl_auth/templates/users/view.html:91
@@ -274,8 +274,8 @@ msgstr "Ja"
 #: xl_auth/templates/users/inspect.html:21 xl_auth/templates/users/inspect.html:88
 #: xl_auth/templates/users/inspect.html:91 xl_auth/templates/users/inspect.html:94
 #: xl_auth/templates/users/inspect.html:97 xl_auth/templates/users/inspect.html:128
-#: xl_auth/templates/users/inspect.html:162 xl_auth/templates/users/profile.html:67
-#: xl_auth/templates/users/profile.html:70 xl_auth/templates/users/profile.html:73
+#: xl_auth/templates/users/inspect.html:162 xl_auth/templates/users/profile.html:89
+#: xl_auth/templates/users/profile.html:92 xl_auth/templates/users/profile.html:95
 #: xl_auth/templates/users/simple_view.html:12 xl_auth/templates/users/view.html:31
 #: xl_auth/templates/users/view.html:34 xl_auth/templates/users/view.html:37
 #: xl_auth/templates/users/view.html:88 xl_auth/templates/users/view.html:91
@@ -326,11 +326,17 @@ msgid "Inspect User '%(email)s'"
 msgstr "Inspektera '%(email)s'"
 
 #: tests/end2end/test_user_registering.py:27 tests/end2end/test_user_registering.py:61
-#: xl_auth/templates/users/home.html:11
+#: tests/end2end/test_user_registering.py:96 tests/end2end/test_user_registering.py:132
+#: xl_auth/templates/users/home.html:11 xl_auth/templates/users/profile.html:57
 msgid "New User"
 msgstr "Lägg till ny användare"
 
-#: tests/end2end/test_user_registering.py:124 tests/forms/test_user_register.py:26
+#: tests/end2end/test_user_registering.py:94 tests/end2end/test_user_registering.py:130
+#: xl_auth/templates/users/profile.html:44
+msgid "Your Responsibilities as Cataloging Admin"
+msgstr "Ditt ansvar som katalogiseringsadmin"
+
+#: tests/end2end/test_user_registering.py:195 tests/forms/test_user_register.py:26
 #: tests/forms/test_user_register.py:36 xl_auth/user/forms.py:67
 msgid "Email already registered"
 msgstr "Epost-adressen är redan registrerad"
@@ -503,19 +509,19 @@ msgstr "Sigel"
 
 #: xl_auth/permission/forms.py:22 xl_auth/templates/collections/view.html:89
 #: xl_auth/templates/permissions/home.html:19 xl_auth/templates/users/inspect.html:72
-#: xl_auth/templates/users/profile.html:51 xl_auth/templates/users/view.html:70
+#: xl_auth/templates/users/profile.html:73 xl_auth/templates/users/view.html:70
 msgid "Registrant"
 msgstr "Beståndsregistrerare"
 
 #: xl_auth/permission/forms.py:23 xl_auth/templates/collections/view.html:90
 #: xl_auth/templates/permissions/home.html:20 xl_auth/templates/users/inspect.html:73
-#: xl_auth/templates/users/profile.html:52 xl_auth/templates/users/view.html:71
+#: xl_auth/templates/users/profile.html:74 xl_auth/templates/users/view.html:71
 msgid "Cataloger"
 msgstr "Katalogisatör"
 
 #: xl_auth/permission/forms.py:24 xl_auth/templates/collections/view.html:91
 #: xl_auth/templates/permissions/home.html:21 xl_auth/templates/users/inspect.html:20
-#: xl_auth/templates/users/inspect.html:74 xl_auth/templates/users/profile.html:53
+#: xl_auth/templates/users/inspect.html:74 xl_auth/templates/users/profile.html:75
 #: xl_auth/templates/users/view.html:36 xl_auth/templates/users/view.html:72
 msgid "Cataloging Admin"
 msgstr "Katalogiseringsadmin"
@@ -614,13 +620,13 @@ msgstr "Aktiva sigler utan användare"
 msgid "Inactive Collections"
 msgstr "Inaktiva sigler"
 
-#: xl_auth/templates/collections/home.htm:21 xl_auth/templates/collections/home.html:74
+#: xl_auth/templates/collections/home.html:21 xl_auth/templates/collections/home.html:74
 #: xl_auth/templates/collections/home.html:139
 msgid "Active Collections with Users"
 msgstr "Aktiva sigler med en eller flera användare"
 
 #: xl_auth/templates/collections/home.html:32 xl_auth/templates/collections/home.html:97
-#: xl_auth/templates/collections/home.html:158 xl_auth/templates/users/profile.html:50
+#: xl_auth/templates/collections/home.html:158 xl_auth/templates/users/profile.html:72
 msgid "Friendly Name"
 msgstr "Namn"
 
@@ -637,7 +643,7 @@ msgstr "Skapad"
 #: xl_auth/templates/collections/home.html:169 xl_auth/templates/collections/view.html:14
 #: xl_auth/templates/collections/view.html:26 xl_auth/templates/permissions/home.html:30
 #: xl_auth/templates/permissions/home.html:36 xl_auth/templates/users/home.html:32
-#: xl_auth/templates/users/home.html:85 xl_auth/templates/users/profile.html:60
+#: xl_auth/templates/users/home.html:85 xl_auth/templates/users/profile.html:82
 msgid "View"
 msgstr "Visa"
 
@@ -1051,7 +1057,27 @@ msgstr ""
 "För övriga frågor, vänligen kontakta Libris kundservice på <a "
 "href=\"mailto:libris@kb.se\">libris@kb.se</a>."
 
-#: xl_auth/templates/users/profile.html:43
+#: xl_auth/templates/users/profile.html:48
+msgid ""
+"You are a cataloging admin in Libris Login. This means that you are responsible for managing "
+"other users' access to your collections. You manage permissions by going to your collection's "
+"detail view and use the add/edit/delete buttons."
+msgstr ""
+"Du är katalogiseringsadmin i Libris Login. Detta innebär att du är ansvarig för att hålla "
+"behörighetslistan korrekt och aktuell för dina sigler. Du administrerar behörigheter genom att gå"
+" till detaljvyn för ett sigel och använda knapparna <em>\"Lägg till\"</em>, <em>\"Ändra\"</em> "
+"och <em>\"Ta bort\"</em>."
+
+#: xl_auth/templates/users/profile.html:54
+msgid ""
+"When attempting to grant a new permission, you might find that the intended user does not exist. "
+"In this event, you may register the user account by following this link:"
+msgstr ""
+"I samband med att du avser tilldela en behörighet så kan du, från tid till tid, finna att den "
+"avsedda mottagaren inte finns registrerad. I detta fall bör du lägga till ett nytt konto via "
+"länken som följer:"
+
+#: xl_auth/templates/users/profile.html:65
 msgid "Your Permissions"
 msgstr "Dina behörigheter"
 
