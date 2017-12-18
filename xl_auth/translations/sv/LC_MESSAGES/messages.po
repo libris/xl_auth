@@ -328,7 +328,7 @@ msgstr "Inspektera '%(email)s'"
 #: tests/end2end/test_user_registering.py:27 tests/end2end/test_user_registering.py:61
 #: xl_auth/templates/users/home.html:11
 msgid "New User"
-msgstr "Ny användare"
+msgstr "Lägg till ny användare"
 
 #: tests/end2end/test_user_registering.py:124 tests/forms/test_user_register.py:26
 #: tests/forms/test_user_register.py:36 xl_auth/user/forms.py:67
@@ -614,7 +614,7 @@ msgstr "Aktiva sigler utan användare"
 msgid "Inactive Collections"
 msgstr "Inaktiva sigler"
 
-#: xl_auth/templates/collections/home.html:21 xl_auth/templates/collections/home.html:74
+#: xl_auth/templates/collections/home.htm:21 xl_auth/templates/collections/home.html:74
 #: xl_auth/templates/collections/home.html:139
 msgid "Active Collections with Users"
 msgstr "Aktiva sigler med en eller flera användare"
@@ -1052,8 +1052,8 @@ msgstr ""
 "href=\"mailto:libris@kb.se\">libris@kb.se</a>."
 
 #: xl_auth/templates/users/profile.html:43
-msgid "My Permissions"
-msgstr "Mina behörigheter"
+msgid "Your Permissions"
+msgstr "Dina behörigheter"
 
 #: xl_auth/templates/users/register.html:5
 msgid "Register New User"

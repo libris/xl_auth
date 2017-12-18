@@ -1035,7 +1035,7 @@ msgid ""
 msgstr ""
 
 #: xl_auth/templates/users/profile.html:43
-msgid "My Permissions"
+msgid "Your Permissions"
 msgstr ""
 
 #: xl_auth/templates/users/register.html:5
