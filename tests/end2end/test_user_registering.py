@@ -31,7 +31,10 @@ def test_superuser_can_register_not_triggering_password_reset(superuser, testapp
     form['full_name'] = 'End2End'
     form['send_password_reset_email'].checked = False
     # Submits
-    res = form.submit().follow()
+    res = form.submit()
+    assert res.status_code == 302
+    assert res.location.endswith(url_for('user.home'))
+    res = res.follow()
     assert res.status_code == 200
     # A new user was created
     new_user = User.get_by_email('foo@bar.com')
@@ -65,7 +68,10 @@ def test_superuser_can_register_with_password_reset(superuser, testapp):
     form['full_name'] = 'End2End'
     form['send_password_reset_email'].checked = True
     # Submits
-    res = form.submit().follow()
+    res = form.submit()
+    assert res.status_code == 302
+    assert res.location.endswith(url_for('user.home'))
+    res = res.follow()
     assert res.status_code == 200
     # A new user was created
     new_user = User.get_by_email('foo@bar.com')
