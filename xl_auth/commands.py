@@ -204,6 +204,7 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
 
     """
     import requests
+    from flask_babel import gettext
 
     from .collection.forms import RegisterForm as CollectionRegisterForm
     from .collection.models import Collection
@@ -479,7 +480,9 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
         with current_app.test_request_context():
             user_form = UserRegisterForm(None, username=email, full_name=full_name)
             user_form.validate()
-        if user_form.username.errors or user_form.full_name.errors:
+        if gettext('Email already registered') in user_form.username.errors:
+            pass
+        elif user_form.username.errors or user_form.full_name.errors:
             print('validation failed for %s <%s>' % (full_name, email))
             for username_error in user_form.username.errors:
                 print('email %r: %s' % (email, username_error))
