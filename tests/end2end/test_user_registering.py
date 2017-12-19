@@ -100,8 +100,8 @@ def test_cataloging_admin_can_register_not_triggering_password_reset(user, super
     form['full_name'] = 'End2End'
     form['send_password_reset_email'].checked = False
     # Submits
-    res = form.submit().follow()
-    assert res.status_code == 200
+    res = form.submit()
+    assert res.status_code == 302
     # A new user was created
     new_user = User.get_by_email('foo@bar.com')
     assert isinstance(new_user, User)
@@ -112,6 +112,10 @@ def test_cataloging_admin_can_register_not_triggering_password_reset(user, super
     # A password reset was not created
     password_reset = PasswordReset.query.filter_by(user=new_user).first()
     assert password_reset is None
+    # Redirect goes to detail view for the new user
+    assert res.location.endswith(url_for('user.view', user_id=new_user.id))
+    res = res.follow()
+    assert res.status_code == 200
 
 
 def test_cataloging_admin_can_register_with_password_reset(user, superuser, testapp):
