@@ -7,6 +7,8 @@
         <form id="editPermissionForm" autocomplete="off" class="form form-edit" method="POST"
               action="" role="form">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            {{ edit_permission_form.next_redirect(value=next_redirect_url or "") }}
+            {{ edit_permission_form.permission_id() }}
             <div class="form-group">
                 {{ edit_permission_form.user_id.label }}
                 {{ edit_permission_form.user_id(class_="form-control", autocomplete="off") }}

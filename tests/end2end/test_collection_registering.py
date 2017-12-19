@@ -28,7 +28,7 @@ def test_superuser_can_register_new_collection(superuser, testapp):
     # Clicks Collections button
     res = res.click(href=url_for('collection.home'), index=0)
     # Clicks Register New Collection button
-    res = res.click(_('New Collection'))
+    res = res.click(_('New Collection'), index=0)
     # Fills out the form
     form = res.forms['registerCollectionForm']
     form['code'] = 'SfX'

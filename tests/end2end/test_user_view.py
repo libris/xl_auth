@@ -26,7 +26,8 @@ def test_user_can_view_others_user(user, superuser, testapp):
     res = testapp.get(url_for('user.view', user_id=superuser.id))
     # Sees user info.
     assert res.status_code is 200
-    assert _('View User \'%(email)s\'', email=superuser.email) in res
+    assert _('View User \'<a href="mailto:%(email)s">%(email)s</a>\'',
+             email=superuser.email) in res
 
 
 def test_user_sees_error_message_if_user_id_does_not_exist(user, testapp):

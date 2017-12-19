@@ -52,27 +52,29 @@ class RegisterForm(FlaskForm):
     username = username
     full_name = full_name
     send_password_reset_email = BooleanField(_('Send password reset email'), default=True)
+    next_redirect = HiddenField()
 
-    def __init__(self, active_user, *args, **kwargs):
+    def __init__(self, current_user, *args, **kwargs):
         """Create instance."""
         super(RegisterForm, self).__init__(*args, **kwargs)
         self.user = None
-        self.active_user = active_user
+        self.current_user = current_user
+
+    # noinspection PyMethodMayBeStatic
+    def validate_username(self, field):
+        """Verify username does not already exist."""
+        if User.get_by_email(field.data):
+            raise ValidationError(_('Email already registered'))
 
     def validate(self):
         """Validate the form."""
         initial_validation = super(RegisterForm, self).validate()
-
         if not initial_validation:
             return False
 
-        self.user = User.get_by_email(self.username.data)
-
-        if not self.active_user.is_admin:
-            raise ValidationError(_('You do not have sufficient privileges for this operation.'))
-
-        if self.user:
-            self.username.errors.append(_('Email already registered'))
+        if not (self.current_user.is_admin or self.current_user.is_cataloging_admin):
+            self.username.errors.append(
+                _('You do not have sufficient privileges for this operation.'))
             return False
 
         return True
@@ -83,10 +85,10 @@ class _EditForm(FlaskForm):
 
     username = username
 
-    def __init__(self, active_user, target_username, *args, **kwargs):
+    def __init__(self, current_user, target_username, *args, **kwargs):
         """Create instance."""
         super(_EditForm, self).__init__(*args, **kwargs)
-        self.active_user = active_user
+        self.current_user = current_user
         self.target_username = target_username
 
     def validate_username(self, field):
@@ -97,7 +99,6 @@ class _EditForm(FlaskForm):
     def validate(self):
         """Validate the form."""
         initial_validation = super(_EditForm, self).validate()
-
         if not initial_validation:
             return False
 
@@ -117,11 +118,10 @@ class EditDetailsForm(_EditForm):
     def validate(self):
         """Validate the form."""
         initial_validation = super(EditDetailsForm, self).validate()
-
         if not initial_validation:
             return False
 
-        if self.active_user.email != self.target_username:
+        if self.current_user.email != self.target_username:
             raise ValidationError(_('You do not have sufficient privileges for this operation.'))
 
         return True
@@ -140,18 +140,6 @@ class AdministerForm(_EditForm):
     is_active = BooleanField(_('Active'))
     is_admin = BooleanField(_('System Administrator'))
 
-    def validate(self):
-        """Validate the form."""
-        initial_validation = super(AdministerForm, self).validate()
-
-        if not initial_validation:
-            return False
-
-        if not self.active_user.is_admin:
-            raise ValidationError(_('You do not have sufficient privileges for this operation.'))
-
-        return True
-
     def set_defaults(self, user):
         """Apply 'user' attributes as field defaults."""
         self.username.default = user.email
@@ -159,6 +147,18 @@ class AdministerForm(_EditForm):
         self.is_active.default = user.is_active
         self.is_admin.default = user.is_admin
         self.process()
+
+    def validate(self):
+        """Validate the form."""
+        initial_validation = super(AdministerForm, self).validate()
+
+        if not initial_validation:
+            return False
+
+        if not self.current_user.is_admin:
+            raise ValidationError(_('You do not have sufficient privileges for this operation.'))
+
+        return True
 
 
 class ChangePasswordForm(_EditForm):
@@ -171,11 +171,10 @@ class ChangePasswordForm(_EditForm):
     def validate(self):
         """Validate the form."""
         initial_validation = super(ChangePasswordForm, self).validate()
-
         if not initial_validation:
             return False
 
-        if not self.active_user.is_admin and (self.active_user.email != self.target_username):
+        if not self.current_user.is_admin and (self.current_user.email != self.target_username):
             raise ValidationError(_('You do not have sufficient privileges for this operation.'))
 
         return True

@@ -18,12 +18,15 @@ blueprint = Blueprint('collection', __name__, url_prefix='/collections', static_
 @login_required
 def home():
     """Collections landing page."""
-    collections_list_active = Collection.query.filter_by(is_active=True).order_by('code')
-    collections_list_inactive = Collection.query.filter_by(is_active=False).order_by('code')
+    active_collections = Collection.query.filter_by(is_active=True).order_by('code')
+    inactive_collections = Collection.query.filter_by(is_active=False).order_by('code')
 
     return render_template('collections/home.html',
-                           collections_list_active=collections_list_active,
-                           collections_list_inactive=collections_list_inactive)
+                           active_collections_with_users=[_ for _ in active_collections
+                                                          if len(_.permissions) > 0],
+                           active_collections_without_users=[_ for _ in active_collections
+                                                             if len(_.permissions) == 0],
+                           inactive_collections=inactive_collections)
 
 
 @blueprint.route('/register/', methods=['GET', 'POST'])

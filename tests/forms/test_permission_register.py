@@ -3,11 +3,11 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import pytest
 from flask_babel import gettext as _
-from wtforms.validators import ValidationError
 
 from xl_auth.permission.forms import RegisterForm
+
+from ..factories import PermissionFactory, UserFactory
 
 
 def test_validate_without_user_id(superuser, collection):
@@ -57,8 +57,54 @@ def test_validate_collection_id_does_not_exist(superuser, user, collection):
              collection_id=invalid_collection_id) in form.collection_id.errors
 
 
-def test_validate_success(superuser, user, collection):
-    """Register new permission with success."""
+def test_validate_register_permission_as_user(user, collection):
+    """Attempt registering permission as a user that's not cataloging admin."""
+    form = RegisterForm(user, user_id=user.id, collection_id=collection.id, registrant=True,
+                        cataloger=False, cataloging_admin=False)
+
+    form.validate()
+    assert _('You do not have sufficient privileges for this operation.') in \
+        form.collection_id.errors
+
+
+def test_validate_add_cataloging_admin_permission_as_cataloging_admin(user, collection, superuser):
+    """Attempt to make another user cataloging admin being only cataloging admin yourself."""
+    PermissionFactory(user=user, collection=collection, cataloging_admin=True).save_as(superuser)
+    assert user.is_cataloging_admin_for(collection) is True
+    other_user = UserFactory().save_as(user)
+    form = RegisterForm(user, user_id=other_user.id, collection_id=collection.id,
+                        cataloging_admin=True)
+
+    assert form.validate() is False
+    assert _('Cataloging admin rights can only be granted by system admins.') in \
+        form.cataloging_admin.errors
+
+
+def test_validate_success_as_cataloging_admin(user, collection, superuser):
+    """Register new permission with success as cataloging admin."""
+    PermissionFactory(user=user, collection=collection, cataloging_admin=True).save_as(superuser)
+    assert user.is_cataloging_admin_for(collection) is True
+    other_user = UserFactory().save_as(user)
+    form = RegisterForm(user,
+                        user_id=other_user.id,
+                        collection_id=collection.id,
+                        registrant=True,
+                        cataloger=True,
+                        cataloging_admin=False)
+
+    assert form.validate() is True
+    assert form.data == {
+        'user_id': other_user.id,
+        'collection_id': collection.id,
+        'registrant': True,
+        'cataloger': True,
+        'cataloging_admin': False,
+        'next_redirect': None
+    }
+
+
+def test_validate_success_as_superuser(superuser, user, collection):
+    """Register new permission with success as superuser."""
     form = RegisterForm(superuser, user_id=user.id, collection_id=collection.id)
 
     assert form.validate() is True
@@ -67,14 +113,6 @@ def test_validate_success(superuser, user, collection):
         'collection_id': collection.id,
         'registrant': False,
         'cataloger': False,
-        'cataloging_admin': False
+        'cataloging_admin': False,
+        'next_redirect': None
     }
-
-
-def test_as_user(user, collection):
-    """Attempt to register new permission."""
-    form = RegisterForm(user, user_id=user.id, collection_id=collection.id)
-
-    with pytest.raises(ValidationError) as e_info:
-        form.validate()
-    assert e_info.value.args[0] == _('You do not have sufficient privileges for this operation.')
