@@ -18,8 +18,10 @@
     <div class="panel panel-default">
         <a class="anchor" id="active-collections-with-users"></a>
         <div class="panel-heading">
-            <strong>{{ _('Active Collections with Users') }}</strong>
-            <span>({{ active_collections_with_users | length }})</span>
+            <strong>
+                {{ _('Active Collections with Users') }}
+                ({{ active_collections_with_users | length }})
+            </strong>
             {% if current_user.is_admin %}
                 <a class="btn btn-xs btn-primary pull-right"
                    href="{{ url_for('collection.register') }}">{{ _('New Collection') }}</a>
@@ -83,8 +85,10 @@
     <div class="panel panel-default">
         <a class="anchor" id="active-collections-without-users"></a>
         <div class="panel-heading">
-            <strong>{{ _('Active Collections without Users') }}</strong>
-            <span>({{ active_collections_without_users | length }})</span>
+            <strong>
+                {{ _('Active Collections without Users') }}
+                ({{ active_collections_without_users | length }})
+            </strong>
             {% if current_user.is_admin %}
                 <a class="btn btn-xs btn-primary pull-right"
                    href="{{ url_for('collection.register') }}">{{ _('New Collection') }}</a>
@@ -148,8 +152,10 @@
     <div class="panel panel-default inactive-collections">
         <a class="anchor" id="inactive-collections"></a>
         <div class="panel-heading">
-            <strong>{{ _('Inactive Collections') }}</strong>
-            <span>({{ inactive_collections.count() }})</span>
+            <strong>
+                {{ _('Inactive Collections') }}
+                ({{ inactive_collections.count() }})
+            </strong>
         </div>
         <table class="table table-hover collections-table">
             <thead>
