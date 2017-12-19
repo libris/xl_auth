@@ -623,7 +623,7 @@ msgstr "Inaktiva sigler"
 #: xl_auth/templates/collections/home.html:21 xl_auth/templates/collections/home.html:74
 #: xl_auth/templates/collections/home.html:139
 msgid "Active Collections with Users"
-msgstr "Aktiva sigler med en eller flera användare"
+msgstr "Aktiva sigler med användare"
 
 #: xl_auth/templates/collections/home.html:32 xl_auth/templates/collections/home.html:97
 #: xl_auth/templates/collections/home.html:158 xl_auth/templates/users/profile.html:72
