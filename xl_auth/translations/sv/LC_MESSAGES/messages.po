@@ -86,7 +86,7 @@ msgstr "Ändra"
 #: tests/end2end/test_collection_registering.py:31 tests/end2end/test_collection_registering.py:174
 #: xl_auth/templates/collections/home.html:25 xl_auth/templates/collections/home.html:90
 msgid "New Collection"
-msgstr "Ny sigel"
+msgstr "Lägg till nytt sigel"
 
 #: tests/end2end/test_collection_registering.py:156 tests/forms/test_collection_register.py:39
 #: tests/forms/test_collection_register.py:50 xl_auth/collection/forms.py:46
@@ -122,7 +122,7 @@ msgstr "Administratörer"
 #: tests/end2end/test_collection_view.py:185 tests/models/test_collection.py:145
 #: xl_auth/collection/models.py:47
 msgid "You will only see all permissions for those collections that you are cataloging admin for."
-msgstr "Du ser enbart samtliga behörigheter för de sigel du är katalogiseringsadmin för."
+msgstr "Du ser enbart samtliga behörigheter för de sigler du är katalogiseringsadmin för."
 
 #: tests/end2end/test_oauth_deleting_client.py:34 xl_auth/oauth/client/views.py:66
 #, python-format
@@ -349,7 +349,7 @@ msgstr "Användare '<a href=\"mailto:%(email)s\">%(email)s</a>'"
 
 #: tests/end2end/test_user_view.py:146 tests/models/test_user.py:264 xl_auth/user/models.py:200
 msgid "You will only see permissions for those collections that you are cataloging admin for."
-msgstr "Du ser enbart behörigheter på de sigel du är katalogiseringsadmin för."
+msgstr "Du ser enbart behörigheter på de sigler du är katalogiseringsadmin för."
 
 #: tests/forms/test_client_edit.py:58 tests/forms/test_client_register.py:60
 msgid "Field must be between 3 and 64 characters long."
@@ -444,7 +444,7 @@ msgstr "Bibliotek"
 
 #: xl_auth/collection/views.py:46
 msgid "Thank you for registering a new collection."
-msgstr "Ny sigel registrerad."
+msgstr "Nytt sigel registrerat."
 
 #: xl_auth/collection/views.py:83
 #, python-format
@@ -596,7 +596,7 @@ msgstr "Logga ut"
 
 #: xl_auth/templates/collections/edit.html:5
 msgid "Edit Existing Collection"
-msgstr "Ändra befintlig sigel"
+msgstr "Ändra befintligt sigel"
 
 #: xl_auth/templates/collections/edit.html:29 xl_auth/templates/oauth/clients/edit.html:44
 #: xl_auth/templates/permissions/edit.html:34 xl_auth/templates/public/reset_password.html:22
@@ -657,7 +657,7 @@ msgstr "Sidtopp"
 
 #: xl_auth/templates/collections/register.html:5
 msgid "Register New Collection"
-msgstr "Registrera ny sigel"
+msgstr "Registrera nytt sigel"
 
 #: xl_auth/templates/collections/register.html:26 xl_auth/templates/oauth/clients/register.html:31
 #: xl_auth/templates/permissions/register.html:32 xl_auth/templates/users/register.html:21
