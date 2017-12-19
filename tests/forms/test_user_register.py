@@ -3,19 +3,11 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import pytest
 from flask_babel import gettext as _
-from wtforms.validators import ValidationError
 
 from xl_auth.user.forms import RegisterForm
 
-
-def test_validate_success(superuser):
-    """Register user with success."""
-    form = RegisterForm(superuser, username='first.last@kb.se', full_name='First Last',
-                        send_password_reset_email=False)
-
-    assert form.validate() is True
+from ..factories import PermissionFactory
 
 
 def test_validate_without_full_name(superuser):
@@ -44,10 +36,27 @@ def test_validate_email_already_registered_with_different_casing(superuser):
     assert _('Email already registered') in form.username.errors
 
 
-def test_validate_regular_user(user):
+def test_validate_user_registration_as_regular_user(user):
     """Attempt to register user as regular user."""
     form = RegisterForm(user, username='first.last@kb.se', full_name='First Last')
 
-    with pytest.raises(ValidationError) as e_info:
-        form.validate()
-    assert e_info.value.args[0] == _('You do not have sufficient privileges for this operation.')
+    assert form.validate() is False
+    assert _('You do not have sufficient privileges for this operation.') in form.username.errors
+
+
+def test_validate_success_as_cataloging_admin(user, superuser):
+    """Register user with success as cataloging admin."""
+    PermissionFactory(user=user, cataloging_admin=True).save_as(superuser)
+    assert user.is_cataloging_admin is True
+    form = RegisterForm(user, username='first.last@kb.se', full_name='First Last',
+                        send_password_reset_email=False)
+
+    assert form.validate() is True
+
+
+def test_validate_success_as_superuser(superuser):
+    """Register user with success as superuser."""
+    form = RegisterForm(superuser, username='first.last@kb.se', full_name='First Last',
+                        send_password_reset_email=False)
+
+    assert form.validate() is True

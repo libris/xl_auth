@@ -22,9 +22,9 @@
     </div>
 
     {% if current_user.email != 'test@kb.se' %}
-        <div class="panel panel-danger">
+        <div class="panel panel-default">
             <div class="panel-heading">
-                <h3>{{ _('Important') }}!</h3>
+                <h3>{{ _('Information About Your Permissions') }}</h3>
             </div>
             <div class="panel-body">
                 <p>{{ _('If you are missing a permission or any of the permissions below are '
@@ -38,9 +38,31 @@
         </div>
     {% endif %}
 
+    {% if current_user.is_cataloging_admin %}
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h3>{{ _('Your Responsibilities as Cataloging Admin') }}</h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    {{ _('You are a cataloging admin in Libris Login. This means that you are '
+                         'responsible for managing other users\' access to your collections. '
+                         'You manage permissions by going to your collection\'s detail view and '
+                         'use the add/edit/delete buttons.') }}
+                </p>
+                <p>
+                    {{ _('When attempting to grant a new permission, you might find that '
+                         'the intended user does not exist. In this event, you may register '
+                         'the user account by following this link:') }}
+                    <a href="{{ url_for('user.register') }}">{{ _('New User') }}</a>
+                </p>
+            </div>
+        </div>
+    {% endif %}
+
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3>{{ _('Permissions (Active Collections Only)') }}</h3>
+            <h3>{{ _('Your Permissions') }}</h3>
         </div>
         <div class="panel-body">
             <table class="table table-hover">

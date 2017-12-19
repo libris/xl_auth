@@ -23,7 +23,7 @@ def test_validate_permission_id_does_not_exist(superuser, permission):
 
 def test_validate_inconsistent_permission_id(permission):
     """Attempt deleting permission with inconsistent 'permission_id'."""
-    other_permission = PermissionFactory()
+    other_permission = PermissionFactory().save_as(permission.user)
     form = DeleteForm(permission.user, permission.id, permission_id=other_permission.id,
                       acknowledged='y')
 
@@ -54,7 +54,8 @@ def test_validate_permission_edit_as_user(user, permission):
 def test_validate_success_as_cataloging_admin(user, permission):
     """Delete entry with success as cataloging admin."""
     # Make user cataloging admin.
-    PermissionFactory(user=user, collection=permission.collection, cataloging_admin=True)
+    PermissionFactory(user=user, collection=permission.collection,
+                      cataloging_admin=True).save_as(user)
     assert user.is_cataloging_admin_for(permission.collection) is True
     form = DeleteForm(user, permission.id, permission_id=permission.id, acknowledged='y')
 

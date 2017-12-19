@@ -65,16 +65,18 @@ def test_cataloging_admin_can_delete_existing_permission(user, permission, super
     # We see no Permissions button
     assert res.lxml.xpath("//a[contains(@text,'{0}')]".format(_('Permissions'))) == []
 
-    # Try to go there directly
+    # Try to go there directly and fail
     testapp.get('/permissions/', status=403)
 
-    # Try to delete a specific permission directly
-    res = testapp.get(url_for('permission.delete', permission_id=permission.id))
+    # Go to profile instead and click through delete flow
+    res = testapp.get(url_for('user.profile'))
+    res = res.click(href=url_for('collection.view', collection_code=permission_collection_code))
+    res = res.click(href=url_for('permission.delete', permission_id=permission.id))
     form = res.forms['deletePermissionForm']
     form['acknowledged'] = 'y'
     res = form.submit()
     assert res.status_code == 302
-    assert url_for('public.home') in res.location
+    assert url_for('collection.view', collection_code=permission_collection_code) in res.location
     res = res.follow()
 
     # Permission was deleted, so number of permissions are 1 less than initial state
@@ -83,9 +85,10 @@ def test_cataloging_admin_can_delete_existing_permission(user, permission, super
     assert len(Permission.query.all()) == old_count - 1
 
 
-def test_user_cannot_delete_permission(user, permission, testapp):
-    """Attempt to delete a permission as non-cataloging admin user."""
+def test_user_cannot_delete_permission(user, permission, superuser, testapp):
+    """Attempt to delete a permission as non-'cataloging admin' user."""
     assert user.is_cataloging_admin_for(permission.collection) is False
+    assert user.is_cataloging_admin is False
     old_count = len(Permission.query.all())
     # Goes to homepage
     res = testapp.get('/')
@@ -102,12 +105,17 @@ def test_user_cannot_delete_permission(user, permission, testapp):
     # Try to go there directly
     testapp.get('/permissions/', status=403)
 
-    # Try to delete a specific permission directly
+    # Try to delete a specific permission with direct URL
+    testapp.get(url_for('permission.delete', permission_id=permission.id), status=403)
+
+    # Accidentally be cataloging admin for unrelated collection and try again
+    temp_permission = PermissionFactory(user=user, cataloging_admin=True).save_as(superuser)
     res = testapp.get(url_for('permission.delete', permission_id=permission.id))
     form = res.forms['deletePermissionForm']
     form['acknowledged'] = 'y'
     res = form.submit()
     assert _('You do not have sufficient privileges for this operation.') in res
+    temp_permission.delete()
 
     # Nothing was deleted
     assert len(Permission.query.all()) == old_count

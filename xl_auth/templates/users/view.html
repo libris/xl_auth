@@ -1,7 +1,7 @@
 <!-- users/view.html -->
 {% extends "layout.html" %}
 {% block content %}
-    <h1>{{ _('View User \'%(email)s\'', email=user.email) }}</h1>
+    <h1>{{ _('View User \'<a href="mailto:%(email)s">%(email)s</a>\'', email=user.email) }}</h1>
     <br/>
     <div class="panel panel-default">
         <dl class="dl-horizontal">
@@ -13,7 +13,7 @@
 
             <dt>{{ _('Last Modified') }}:</dt>
             <dd>
-                {{ user.modified_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}, {{  _('by') }}
+                {{ user.modified_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}, {{ _('by') }}
                 <a href="{{ url_for('user.view', user_id=user.modified_by.id) }}">
                     {{ user.modified_by.full_name }}
                 </a>
@@ -21,7 +21,7 @@
 
             <dt>{{ _('Created At') }}:</dt>
             <dd>
-                {{ user.created_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}, {{  _('by') }}
+                {{ user.created_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}, {{ _('by') }}
                 <a href="{{ url_for('user.view', user_id=user.created_by.id) }}">
                     {{ user.created_by.full_name }}
                 </a>
@@ -55,6 +55,13 @@
             {% if user.get_permissions_label_help_text_as_seen_by(current_user) %}
                 <span>({{ user.get_permissions_label_help_text_as_seen_by(current_user) }})</span>
             {% endif %}
+            {% if current_user.is_admin or current_user.is_cataloging_admin %}
+                <a class="btn btn-xs btn-primary pull-right"
+                   href="{{ url_for('permission.register', user_id=user.id)
+                            + '?next=' + url_for('user.view', user_id=user.id) }}">
+                    {{ _('New Permission') }}
+                </a>
+            {% endif %}
         </div>
         <table class="table table-hover">
             <thead>
@@ -65,6 +72,7 @@
                 <th class="col-md-3 word-break-all">{{ _('Cataloging Admin') }}</th>
                 <th class="col-md-1">{{ _('Active Collection') }}</th>
                 <th class="col-md-2">{{ _('Last Modified') }}</th>
+                <th class="min-width-70px"></th>
             </tr>
             </thead>
             <tbody>
@@ -88,10 +96,26 @@
                     <td class="{{ "bool-value-{}".format(permission.collection.is_active).lower() }}">
                         {{ _('Yes') if permission.collection.is_active else _('No') }}
                     </td>
-                    <td>{{ permission.modified_at.strftime('%y-%m-%d') }}, {{  _('by') }}
+                    <td>{{ permission.modified_at.strftime('%y-%m-%d') }}, {{ _('by') }}
                         <a href="{{ url_for('user.view', user_id=permission.modified_by.id) }}">
                             {{ permission.modified_by.full_name }}
                         </a>
+                    </td>
+                    <td class="actions">
+                        {% if current_user.is_admin or
+                                current_user.is_cataloging_admin_for(permission.collection) %}
+                            <a class="btn btn-xs btn-default" title="{{ _('Edit') }}"
+                               href="{{ url_for('permission.edit', permission_id=permission.id)
+                                        + '?next=' + url_for('user.view', user_id=user.id) }}">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            <a class="btn btn-xs btn-danger"
+                               title="{{ _('Delete Permission') }}"
+                               href="{{ url_for('permission.delete', permission_id=permission.id)
+                                        + '?next=' + url_for('user.view', user_id=user.id) }}">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
