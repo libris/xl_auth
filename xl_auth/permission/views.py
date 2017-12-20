@@ -7,6 +7,8 @@ from flask import Blueprint, abort, flash, redirect, render_template, request
 from flask_babel import lazy_gettext as _
 from flask_login import current_user, login_required
 
+from six.moves.urllib_parse import quote
+
 from ..utils import flash_errors, get_redirect_target
 from .forms import DeleteForm, EditForm, RegisterForm
 from .models import Permission
@@ -55,7 +57,9 @@ def register(user_id, collection_id):
 
     register_permission_form.set_defaults(user_id, collection_id)
     return render_template('permissions/register.html',
-                           register_permission_form=register_permission_form)
+                           register_permission_form=register_permission_form,
+                           full_path_quoted=quote(request.full_path),
+                           next_redirect_url=get_redirect_target())
 
 
 @blueprint.route('/edit/<permission_id>', methods=['GET', 'POST'])
@@ -84,6 +88,7 @@ def edit(permission_id):
     edit_permission_form.set_defaults(permission)
     return render_template('permissions/edit.html', permission=permission,
                            edit_permission_form=edit_permission_form,
+                           full_path_quoted=quote(request.full_path),
                            next_redirect_url=request.args.get('next'))
 
 

@@ -35,10 +35,9 @@ def approve_tos():
     approve_tos_form = ApproveToSForm(current_user, request.form)
     if request.method == 'POST':
         if approve_tos_form.validate_on_submit():
-            redirect_url = get_redirect_target()
             approve_tos_form.user.set_tos_approved()
             flash(_('ToS approved.'), 'success')
-            return redirect(redirect_url)
+            return redirect(get_redirect_target())
         else:
             flash_errors(approve_tos_form)
 
@@ -63,7 +62,7 @@ def register():
     register_user_form = RegisterForm(current_user, request.form)
     if request.method == 'POST':
         if register_user_form.validate_on_submit():
-            user = User(email=register_user_form.username.data,
+            user = User(email=register_user_form.username.data.lower().strip(),
                         full_name=register_user_form.full_name.data)
             if register_user_form.send_password_reset_email.data:
                 password_reset = PasswordReset(user)
@@ -75,11 +74,12 @@ def register():
             else:
                 user.save_as(current_user)
                 flash(_('User "%(username)s" registered.', username=user.email), 'success')
-            return redirect(url_for('user.home'))
+            return redirect(get_redirect_target() or url_for('user.view', user_id=user.id))
         else:
             flash_errors(register_user_form)
 
-    return render_template('users/register.html', register_user_form=register_user_form)
+    return render_template('users/register.html', register_user_form=register_user_form,
+                           next_redirect_url=get_redirect_target())
 
 
 @blueprint.route('/view/<int:user_id>', methods=['GET'])
@@ -89,7 +89,7 @@ def view(user_id):
     user = User.get_by_id(user_id)
     if not user:
         flash(_('User ID "%(user_id)s" does not exist', user_id=user_id), 'danger')
-        return redirect(url_for('user.profile'))
+        return redirect(get_redirect_target())
     else:
         # Cataloging admins and admins need to see more information, so they get their own view.
         if current_user.is_admin or current_user.is_cataloging_admin:
@@ -108,7 +108,7 @@ def inspect(user_id):
     user = User.get_by_id(user_id)
     if not user:
         flash(_('User ID "%(user_id)s" does not exist', user_id=user_id), 'danger')
-        return redirect(url_for('user.home'))
+        return redirect(get_redirect_target())
     else:
         tokens = Token.query.filter_by(user=user).all()
         permissions_created = Permission.query.filter_by(created_by=user).count()
@@ -143,7 +143,7 @@ def administer(user_id):
     user = User.get_by_id(user_id)
     if not user:
         flash(_('User ID "%(user_id)s" does not exist', user_id=user_id), 'danger')
-        return redirect(url_for('user.home'))
+        return redirect(get_redirect_target())
 
     administer_form = AdministerForm(current_user, user.email, request.form)
     if administer_form.validate_on_submit():
@@ -153,11 +153,12 @@ def administer(user_id):
                        is_admin=administer_form.is_admin.data).save()
         flash(_('Thank you for updating user details for "%(username)s".', username=user.email),
               'success')
-        return redirect(url_for('user.home'))
+        return redirect(get_redirect_target())
     else:
         administer_form.set_defaults(user)
         flash_errors(administer_form)
-        return render_template('users/administer.html', administer_form=administer_form, user=user)
+        return render_template('users/administer.html', administer_form=administer_form, user=user,
+                               next_redirect_url=get_redirect_target())
 
 
 @blueprint.route('/edit_details/<int:user_id>', methods=['GET', 'POST'])
@@ -170,22 +171,19 @@ def edit_details(user_id):
     user = User.get_by_id(user_id)
     if not user:
         flash(_('User ID "%(user_id)s" does not exist', user_id=user_id), 'danger')
-        return redirect(url_for('user.home'))
+        return redirect(get_redirect_target())
 
     edit_details_form = EditDetailsForm(current_user, user.email, request.form)
     if edit_details_form.validate_on_submit():
         user.update_as(current_user, full_name=edit_details_form.full_name.data).save()
         flash(_('Thank you for updating user details for "%(username)s".', username=user.email),
               'success')
-        if current_user.is_admin:
-            return redirect(url_for('user.home'))
-        else:
-            return redirect(url_for('user.profile'))
+        return redirect(get_redirect_target())
     else:
         edit_details_form.set_defaults(user)
         flash_errors(edit_details_form)
-        return render_template(
-            'users/edit_details.html', edit_details_form=edit_details_form, user=user)
+        return render_template('users/edit_details.html', edit_details_form=edit_details_form,
+                               user=user, next_redirect_url=get_redirect_target())
 
 
 @blueprint.route('/change_password/<int:user_id>', methods=['GET', 'POST'])
@@ -198,7 +196,7 @@ def change_password(user_id):
     user = User.get_by_id(user_id)
     if not user:
         flash(_('User ID "%(user_id)s" does not exist', user_id=user_id), 'danger')
-        return redirect(url_for('user.home'))
+        return redirect(get_redirect_target())
 
     change_password_form = ChangePasswordForm(current_user, user.email, request.form)
     if change_password_form.validate_on_submit():
@@ -206,11 +204,9 @@ def change_password(user_id):
         user.save_as(current_user)
         flash(_('Thank you for changing password for "%(username)s".', username=user.email),
               'success')
-        if current_user.is_admin:
-            return redirect(url_for('user.home'))
-        else:
-            return redirect(url_for('user.profile'))
+        return redirect(get_redirect_target())
     else:
         flash_errors(change_password_form)
         return render_template(
-            'users/change_password.html', change_password_form=change_password_form, user=user)
+            'users/change_password.html', change_password_form=change_password_form, user=user,
+            next_redirect_url=get_redirect_target())

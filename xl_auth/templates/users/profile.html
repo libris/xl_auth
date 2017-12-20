@@ -10,13 +10,11 @@
 
             {% if current_user.email != 'test@kb.se' %}
                 <a class="btn btn-default"
-                   href="{{ url_for('user.edit_details', user_id=current_user.id) }}">
-                    {{ _('Edit Display Name') }}
-                </a>
+                   href="{{ url_for('user.edit_details', user_id=current_user.id)
+                            + '?next=' + url_for('user.profile') }}">{{ _('Edit Display Name') }}</a>
                 <a class="btn btn-default"
-                   href="{{ url_for('user.change_password', user_id=current_user.id) }}">
-                    {{ _('Change Password') }}
-                </a>
+                   href="{{ url_for('user.change_password', user_id=current_user.id)
+                            + '?next=' + url_for('user.profile')}}">{{ _('Change Password') }}</a>
             {% endif %}
         </div>
     </div>

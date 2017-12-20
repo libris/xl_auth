@@ -6,6 +6,7 @@
         <br/>
         <form id="editDetailsForm" class="form form-edit" method="POST" action="" role="form">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            {{ edit_details_form.next_redirect(value=next_redirect_url or "") }}
             <div class="form-group">
                 {{ edit_details_form.username.label }}
                 {{ edit_details_form.username(class_="form-control", readonly=True) }}
