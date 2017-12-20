@@ -33,17 +33,21 @@ def test_superuser_can_administer_existing_user(superuser, user, testapp):
     form['full_name'] = 'A new name'
     form['is_active'].checked = not user.is_active
     # Submits.
-    res = form.submit().follow()
-    assert res.status_code == 200
+    res = form.submit()
+    # Redirected back to users' overview.
+    assert res.status_code == 302
+    assert res.location.endswith(url_for('user.home'))
     # The user was edited.
     edited_user = User.get_by_email(user.email)
     assert edited_user.full_name == form['full_name'].value
     assert edited_user.is_active == form['is_active'].checked
     assert edited_user.is_admin == form['is_admin'].checked
-    # 'modified_by' is updated to reflect change, with 'created_by' intact
+    # 'modified_by' is updated to reflect change, with 'created_by' intact.
     assert edited_user.created_by == user_creator
     assert edited_user.modified_by == superuser
-
+    # Redirect succeeds.
+    res = res.follow()
+    assert res.status_code == 200
     # The edited user is listed under existing users.
     assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(form['username'].value))) == 1
     assert len(res.lxml.xpath("//td[contains(., '{0}')]".format(form['full_name'].value))) == 1
@@ -79,16 +83,21 @@ def test_superuser_can_change_password_for_existing_user(superuser, user, testap
     form['password'] = 'newSecrets13'
     form['confirm'] = 'newSecrets13'
     # Submits.
-    res = form.submit().follow()
-    assert res.status_code == 200
+    res = form.submit()
+    # Redirected back to users' overview.
+    assert res.status_code == 302
+    assert res.location.endswith(url_for('user.home'))
     # The user was edited.
     edited_user = User.query.filter(User.email == user.email).first()
     # Verify the new password is considered valid, not the old one.
     assert edited_user.check_password('myPrecious') is False
     assert edited_user.check_password('newSecrets13') is True
-    # 'modified_by' is updated to reflect change, with 'created_by' intact
+    # 'modified_by' is updated to reflect change, with 'created_by' intact.
     assert edited_user.created_by == user_creator
     assert edited_user.modified_by == superuser
+    # Redirect succeeds.
+    res = res.follow()
+    assert res.status_code == 200
 
 
 def test_superuser_sees_error_message_if_username_is_changed_from_administer(superuser, testapp):
@@ -233,12 +242,17 @@ def test_user_can_edit_own_details(user, testapp):
     # Change name
     form = res.forms['editDetailsForm']
     form['full_name'] = 'New Name'
-    res = form.submit().follow()
+    res = form.submit()
+    # Redirected back to profile page.
+    assert res.status_code == 302
+    assert res.location.endswith(url_for('user.profile'))
     # 'modified_by' is updated to reflect change, with 'created_by' intact.
     edited_user = User.get_by_email(user.email)
     assert edited_user.created_by == user_creator
     assert edited_user.modified_by == user
-
+    # Redirect succeeds.
+    res = res.follow()
+    assert res.status_code == 200
     # Make sure name has been updated
     assert len(res.lxml.xpath("//h1[contains(., '{0} {1}')]".format(_('Welcome'), old_name))) == 0
     assert len(res.lxml.xpath("//h1[contains(., '{0} New Name')]".format(_('Welcome')))) == 1
