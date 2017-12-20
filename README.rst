@@ -182,6 +182,15 @@ DB Models
 Changelog
 =========
 
+v. 0.7.2
+--------
+
+* Added support for creating new users directly from register/edit permission views
+  (`#140 <https://github.com/libris/xl_auth/issues/140>`_)
+* UX enhancements (`#142 <https://github.com/libris/xl_auth/issues/142>`_,
+  `#133 <https://github.com/libris/xl_auth/issues/133>`_)
+
+
 v. 0.7.1
 --------
 
