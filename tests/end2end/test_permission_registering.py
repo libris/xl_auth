@@ -10,7 +10,7 @@ from jinja2 import escape
 from xl_auth.permission.models import Permission
 from xl_auth.user.models import User
 
-from ..factories import PermissionFactory, UserFactory
+from ..factories import PermissionFactory
 
 
 def test_superuser_can_register_new_permission(superuser, collection, testapp):
