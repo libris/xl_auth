@@ -17,7 +17,7 @@ blueprint = Blueprint('collection', __name__, url_prefix='/collections', static_
 @blueprint.route('/')
 @login_required
 def home():
-    """Collections landing page."""
+    """Collections' overview landing page."""
     active_collections = Collection.query.filter_by(is_active=True).order_by('code')
     inactive_collections = Collection.query.filter_by(is_active=False).order_by('code')
 

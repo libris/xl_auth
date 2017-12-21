@@ -21,12 +21,10 @@ blueprint = Blueprint('user', __name__, url_prefix='/users', static_folder='../s
 @blueprint.route('/')
 @login_required
 def home():
-    """Users landing page."""
-    users_list_active = User.query.filter_by(is_active=True).order_by('email')
-    users_list_inactive = User.query.filter_by(is_active=False).order_by('email')
-
-    return render_template('users/home.html', users_list_active=users_list_active,
-                           users_list_inactive=users_list_inactive)
+    """Users' overview landing page."""
+    return render_template('users/home.html',
+                           active_users=User.query.filter_by(is_active=True).order_by('email'),
+                           inactive_users=User.query.filter_by(is_active=False).order_by('email'))
 
 
 @blueprint.route('/approve_tos', methods=['GET', 'POST'])

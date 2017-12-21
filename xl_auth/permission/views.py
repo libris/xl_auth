@@ -19,7 +19,7 @@ blueprint = Blueprint('permission', __name__, url_prefix='/permissions', static_
 @blueprint.route('/')
 @login_required
 def home():
-    """Permissions landing page."""
+    """Permissions' overview landing page."""
     if not current_user.is_admin:
         abort(403)
 
