@@ -3,12 +3,21 @@
 {% block content %}
     <h1>{{ _('Users') }}</h1>
     <br/>
+    {{ _('Go to') }}:
+    <ul>
+        <li>
+            <a href="#inactive-users">{{ _('Inactive Users') }}</a>
+            ({{ inactive_users | length }})
+        </li>
+    </ul>
+    <hr/>
     <div class="panel panel-default">
+        <a class="anchor" id="active-users"></a>
         <div class="panel-heading">
-            <strong>{{ _('Active Users') }}</strong>
+            <strong>{{ _('Active Users') }} ({{ active_users | length }})</strong>
             {% if current_user.is_admin %}
                 <a class="btn btn-xs btn-primary pull-right"
-                   href="{{ url_for('user.register') }}">{{ _('New User') }}</a>
+                   href="{{ url_for('user.register') + '?next=' + url_for('user.home') }}">{{ _('New User') }}</a>
             {% endif %}
         </div>
         <table class="table table-hover">
@@ -26,7 +35,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for user in users_list_active %}
+            {% for user in active_users %}
                 <tr>
                     <td class="word-break-all">
                         <a title="{{ _('View') }}" href="{{ url_for('user.view', user_id=user.id) }}">
@@ -45,11 +54,13 @@
                                 <i class="fa fa-user"></i>
                             </a>
                             <a class="btn btn-xs btn-default" title="{{ _('Edit Details') }}"
-                               href="{{ url_for('user.administer', user_id=user.id) }}">
+                               href="{{ url_for('user.administer', user_id=user.id)
+                                        + '?next=' + url_for('user.home') }}">
                                 <i class="fa fa-pencil"></i>
                             </a>
                             <a class="btn btn-xs btn-default" title="{{ _('Change Password') }}"
-                               href="{{ url_for('user.change_password', user_id=user.id) }}">
+                               href="{{ url_for('user.change_password', user_id=user.id)
+                                        + '?next=' + url_for('user.home') }}">
                                 <i class="fa fa-key"></i>
                             </a>
                         </td>
@@ -60,9 +71,18 @@
         </table>
     </div>
     <br/>
+    {{ _('Go to') }}:
+    <ul>
+        <li>
+            <a href="#active-users">{{ _('Active Users') }}</a>
+            ({{ active_users | length }})
+        </li>
+    </ul>
+    <hr/>
     <div class="panel panel-default">
+        <a class="anchor" id="inactive-users"></a>
         <div class="panel-heading">
-            <strong>{{ _('Inactive Users') }}</strong>
+            <strong>{{ _('Inactive Users') }} ({{ inactive_users | length }})</strong>
         </div>
         <table class="table table-hover">
             <thead>
@@ -79,7 +99,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for user in users_list_inactive %}
+            {% for user in inactive_users %}
                 <tr>
                     <td class="word-break-all">
                         <a title="{{ _('View') }}" href="{{ url_for('user.view', user_id=user.id) }}">
