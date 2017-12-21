@@ -22,8 +22,9 @@ def test_superuser_can_delete_existing_permission(superuser, permission, testapp
     form['password'] = 'myPrecious'
     # Submits
     res = form.submit().follow()
-    # Clicks Permissions button
-    res = res.click(_('Permissions'))
+    assert res.status_code == 200
+    # Goes to Permissions' overview
+    res = testapp.get(url_for('permission.home'))
     # Clicks Delete button on a permission
     permission_user_email = permission.user.email
     permission_collection_code = permission.collection.code

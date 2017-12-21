@@ -24,8 +24,9 @@ def test_superuser_can_register_new_permission(superuser, collection, testapp):
     form['password'] = 'myPrecious'
     # Submits
     res = form.submit().follow()
-    # Clicks Permissions button
-    res = res.click(_('Permissions'))
+    assert res.status_code == 200
+    # Goes to Permissions' overview
+    res = testapp.get(url_for('permission.home'))
     # Clicks Register New Permission button
     res = res.click(_('New Permission'))
     # Fills out the form
@@ -152,8 +153,9 @@ def test_superuser_sees_error_if_permission_is_already_registered(superuser, per
     form['password'] = 'myPrecious'
     # Submits
     res = form.submit().follow()
-    # Clicks Permissions button
-    res = res.click(_('Permissions'))
+    assert res.status_code == 200
+    # Goes to Permissions' overview
+    res = testapp.get(url_for('permission.home'))
     # Clicks Register New Permission button
     res = res.click(_('New Permission'))
     # Fills out the form with same user ID and collection ID as (existing) 'permission'
