@@ -11,6 +11,9 @@
             <dt>{{ _('Last Login At') }}:</dt>
             <dd>{{ '-' if not user.last_login_at else user.last_login_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}</dd>
 
+            <dt>{{ _('ToS Approved') }}:</dt>
+            <dd>{{ '-' if not user.tos_approved_at else user.tos_approved_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}</dd>
+
             <dt>{{ _('Active Account') }}:</dt>
             <dd>{{ _('Yes') if user.is_active else _('No') }}</dd>
 
