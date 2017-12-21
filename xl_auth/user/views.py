@@ -28,6 +28,7 @@ def home():
 
 
 @blueprint.route('/approve_tos', methods=['GET', 'POST'])
+@login_required
 def approve_tos():
     """Request approval of application ToS."""
     approve_tos_form = ApproveToSForm(current_user, request.form)

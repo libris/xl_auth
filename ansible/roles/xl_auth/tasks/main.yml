@@ -1,5 +1,10 @@
 ---
 
+- name: read data for creating xl_auth secret
+  shell: "cat /etc/pki/tls/private/{{ inventory_hostname }}.key"
+  register: ssh_key_contents
+  tags: xl_auth
+
 - name: start postgres
   docker_container:
     name: postgres
@@ -31,12 +36,13 @@
       - 5000:5000
     env:
       SERVER_NAME: "{{ inventory_hostname }}"
+      XL_AUTH_SECRET: "{{ ssh_key_contents.stdout | hash('md5') }}"
       PREFERRED_URL_SCHEME: https
       FLASK_DEBUG: 0
       SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
       OAUTH2_PROVIDER_TOKEN_EXPIRES_IN: 3600
-  tags: xl_auth
   register: start_xl_auth
+  tags: xl_auth
 
 - name: run 'flask db upgrade'
   docker_container:
