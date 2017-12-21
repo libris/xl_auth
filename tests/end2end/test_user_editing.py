@@ -229,16 +229,13 @@ def test_user_can_edit_own_details(user, testapp):
     form['username'] = user.email
     form['password'] = 'myPrecious'
     # Submits.
-    res = form.submit().follow()
-
+    res = form.submit()
+    assert res.status_code == 302
+    assert res.location.endswith(url_for('user.profile'))
     old_name = user.full_name
-
-    # Make sure we're on the profile page
-    assert len(res.lxml.xpath("//h1[contains(., '{0} {1}')]".format(_('Welcome'), old_name))) == 1
-
+    res = res.follow()
     # Click on 'Edit' button
     res = res.click(_('Edit'))
-
     # Change name
     form = res.forms['editDetailsForm']
     form['full_name'] = 'New Name'
@@ -254,5 +251,5 @@ def test_user_can_edit_own_details(user, testapp):
     res = res.follow()
     assert res.status_code == 200
     # Make sure name has been updated
-    assert len(res.lxml.xpath("//h1[contains(., '{0} {1}')]".format(_('Welcome'), old_name))) == 0
-    assert len(res.lxml.xpath("//h1[contains(., '{0} New Name')]".format(_('Welcome')))) == 1
+    assert len(res.lxml.xpath("//h1[contains(., '{0}')]".format(old_name))) == 0
+    assert len(res.lxml.xpath("//h1[contains(., 'New Name')]")) == 1
