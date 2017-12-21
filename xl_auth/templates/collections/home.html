@@ -9,10 +9,6 @@
             <a href="#active-collections-without-users">{{ _('Active Collections without Users') }}</a>
             ({{ active_collections_without_users | length }})
         </li>
-        <li>
-            <a href="#inactive-collections">{{ _('Inactive Collections') }}</a>
-            ({{ inactive_collections.count() }})
-        </li>
     </ul>
     <hr/>
     <div class="panel panel-default">
@@ -76,10 +72,6 @@
             <a href="#active-collections-with-users">{{ _('Active Collections with Users') }}</a>
             ({{ active_collections_with_users | length }})
         </li>
-        <li>
-            <a href="#inactive-collections">{{ _('Inactive Collections') }}</a>
-            ({{ inactive_collections.count() }})
-        </li>
     </ul>
     <hr/>
     <div class="panel panel-default">
@@ -136,64 +128,6 @@
         </table>
     </div>
     <hr/>
-    <br/>
-    {{ _('Go to') }}:
-    <ul>
-        <li>
-            <a href="#active-collections-with-users">{{ _('Active Collections with Users') }}</a>
-            ({{ active_collections_with_users | length }})
-        </li>
-        <li>
-            <a href="#active-collections-without-users">{{ _('Active Collections without Users') }}</a>
-            ({{ active_collections_without_users | length }})
-        </li>
-    </ul>
-    <hr/>
-    <div class="panel panel-default inactive-collections">
-        <a class="anchor" id="inactive-collections"></a>
-        <div class="panel-heading">
-            <strong>
-                {{ _('Inactive Collections') }}
-                ({{ inactive_collections.count() }})
-            </strong>
-        </div>
-        <table class="table table-hover collections-table">
-            <thead>
-            <tr>
-                <th class="col-md-1">{{ _('Code') }}</th>
-                <th class="col-md-6">{{ _('Friendly Name') }}</th>
-                <th class="col-md-1">{{ _('Replaced By') }}</th>
-                <th class="col-md-1">{{ _('Category') }}</th>
-                <th class="col-md-1">{{ _('Users') }}</th>
-                <th class="min-width-90px">{{ _('Created At') }}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for collection in inactive_collections %}
-                <tr>
-                    <td>
-                        <a title="{{ _('View') }}"
-                           href="{{ url_for('collection.view', collection_code=collection.code) }}">
-                            {{ collection.code }}
-                        </a>
-                    </td>
-                    <td>{{ collection.friendly_name }}</td>
-                    <td>
-                        {% if collection.replaced_by %}
-                            <a href="#collection-{{ collection.replaced_by }}">{{ collection.replaced_by }}</a>
-                        {% else %}
-                            -
-                        {% endif %}
-                    </td>
-                    <td>{{ _(collection.category.capitalize()) if collection.category in ['bibliography', 'library'] else _('No category') }}</td>
-                    <td>{{ collection.permissions | length }}</td>
-                    <td>{{ collection.created_at.strftime('%y-%m-%d') }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <hr>
     {{ _('Go to') }}: <a href="#">{{ _('Top of page') }}</a>
     <br/>
 {% endblock %}
