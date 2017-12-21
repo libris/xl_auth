@@ -7,9 +7,14 @@
         <form id="registerPermissionForm" autocomplete="off" class="form form-register"
               method="POST" action="" role="form">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            {{ register_permission_form.next_redirect(value=next_redirect_url or "") }}
             <div class="form-group">
                 {{ register_permission_form.user_id.label }}
                 {{ register_permission_form.user_id(placeholder="123", class_="form-control", autocomplete="off") }}
+                {{ _('Can\'t find the user you\'re looking for?') }}
+                <a href="{{ url_for('user.register') + '?next=' + full_path_quoted }}">
+                    {{ _('New User') }}
+                </a>
             </div>
             <div class="form-group">
                 {{ register_permission_form.collection_id.label }}

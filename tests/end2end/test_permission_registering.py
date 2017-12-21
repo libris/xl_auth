@@ -8,8 +8,9 @@ from flask_babel import gettext as _
 from jinja2 import escape
 
 from xl_auth.permission.models import Permission
+from xl_auth.user.models import User
 
-from ..factories import PermissionFactory, UserFactory
+from ..factories import PermissionFactory
 
 
 def test_superuser_can_register_new_permission(superuser, collection, testapp):
@@ -23,8 +24,9 @@ def test_superuser_can_register_new_permission(superuser, collection, testapp):
     form['password'] = 'myPrecious'
     # Submits
     res = form.submit().follow()
-    # Clicks Permissions button
-    res = res.click(_('Permissions'))
+    assert res.status_code == 200
+    # Goes to Permissions' overview
+    res = testapp.get(url_for('permission.home'))
     # Clicks Register New Permission button
     res = res.click(_('New Permission'))
     # Fills out the form
@@ -49,28 +51,40 @@ def test_cataloging_admin_can_register_permission_from_collection_view(user, col
                                                                        testapp):
     """Register new permission from collection view as cataloging admin."""
     PermissionFactory(user=user, collection=collection, cataloging_admin=True).save_as(superuser)
-    other_user = UserFactory().save_as(superuser)
     old_permission_count = len(Permission.query.all())
     # Goes to homepage
     res = testapp.get('/')
     # Fills out login form
-    form = res.forms['loginForm']
-    form['username'] = user.email
-    form['password'] = 'myPrecious'
+    login_form = res.forms['loginForm']
+    login_form['username'] = user.email
+    login_form['password'] = 'myPrecious'
     # Submits
-    res = form.submit().follow()
+    res = login_form.submit().follow()
     # Clicks to View Collection from profile
     res = res.click(href=url_for('collection.view', collection_code=collection.code))
     # Clicks Register New Permission
     res = res.click(_('New Permission'))
+    # Finds that the intended user doesn't exist
+    res = res.click(_('New User'))
+    # Fills out the user registration form
+    register_user_form = res.forms['registerUserForm']
+    register_user_form['username'] = 'my_registrant@su.se'
+    register_user_form['full_name'] = 'Registrant'
+    register_user_form['send_password_reset_email'].checked = False
+    res = register_user_form.submit()
+    assert res.status_code == 302
+    assert url_for('permission.register', collection_id=collection.id) in res.location
+    other_user = User.get_by_email('my_registrant@su.se')
     # Fills out the form to grant 'other_user' permissions on 'collection'
-    form = res.forms['registerPermissionForm']
-    form['user_id'] = other_user.id
-    # Defaults are kept, setting ``form['collection_id'] = collection.id`` is redundant
-    form['registrant'].checked = True
-    form['cataloger'].checked = True
+    res = res.follow()
+    assert res.status_code == 200
+    register_permission_form = res.forms['registerPermissionForm']
+    register_permission_form['user_id'] = other_user.id
+    # Defaults are kept, ``register_permission_form['collection_id'] = collection.id`` is redundant
+    register_permission_form['registrant'].checked = True
+    register_permission_form['cataloger'].checked = True
     # Submits
-    res = form.submit()
+    res = register_permission_form.submit()
     assert res.status_code == 302
     assert url_for('collection.view', collection_code=collection.code) in res.location
     res = res.follow()
@@ -139,8 +153,9 @@ def test_superuser_sees_error_if_permission_is_already_registered(superuser, per
     form['password'] = 'myPrecious'
     # Submits
     res = form.submit().follow()
-    # Clicks Permissions button
-    res = res.click(_('Permissions'))
+    assert res.status_code == 200
+    # Goes to Permissions' overview
+    res = testapp.get(url_for('permission.home'))
     # Clicks Register New Permission button
     res = res.click(_('New Permission'))
     # Fills out the form with same user ID and collection ID as (existing) 'permission'

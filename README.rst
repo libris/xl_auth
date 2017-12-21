@@ -156,6 +156,19 @@ The latest application build can be built and run using Docker for testing purpo
 All Flask command-line tools are accessed by optional input argument to the container, e.g.
 ``flask shell -> docker run -it ...ahl/auth shell``, ``flask db -> docker run -it ...ahl/auth db``.
 
+Docker images built by Jenkins can be tried out locally by executing the following steps ::
+
+    docker run -itp 5000:5000 --rm --name xl_auth mblomdahl/xl_auth:next
+    # Above command does not detach, so, in another terminal:
+    docker exec -it xl_auth /usr/local/bin/flask create_user -e me@kb.se -p 1234 --force \
+        --is-admin --is-active
+    # Now open localhost:5000 in the browser and login as me@kb.se
+
+
+To import users, collections and permissions into the Docker container, run ::
+
+    docker exec -it xl_auth /usr/local/bin/flask import_data --admin-email=libris@kb.se
+
 
 Project Notes
 =============
@@ -181,6 +194,17 @@ DB Models
 
 Changelog
 =========
+
+v. 0.7.2
+--------
+
+* Added support for creating new users directly from register/edit permission views
+  (`#140 <https://github.com/libris/xl_auth/issues/140>`_)
+* UX enhancements (`#142 <https://github.com/libris/xl_auth/issues/142>`_,
+  `#133 <https://github.com/libris/xl_auth/issues/133>`_)
+* Link to Permissions' overview removed from navbar
+* Ignoring/discarding permissions on inactive collections
+
 
 v. 0.7.1
 --------

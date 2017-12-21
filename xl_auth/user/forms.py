@@ -84,6 +84,7 @@ class _EditForm(FlaskForm):
     """Edit user form."""
 
     username = username
+    next_redirect = HiddenField()
 
     def __init__(self, current_user, target_username, *args, **kwargs):
         """Create instance."""

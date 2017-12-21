@@ -49,9 +49,15 @@ def test_validate_success_as_cataloging_admin(user, superuser):
     PermissionFactory(user=user, cataloging_admin=True).save_as(superuser)
     assert user.is_cataloging_admin is True
     form = RegisterForm(user, username='first.last@kb.se', full_name='First Last',
-                        send_password_reset_email=False)
+                        send_password_reset_email=True)
 
     assert form.validate() is True
+    assert form.data == {
+        'username': 'first.last@kb.se',
+        'full_name': 'First Last',
+        'send_password_reset_email': True,
+        'next_redirect': None
+    }
 
 
 def test_validate_success_as_superuser(superuser):
@@ -60,3 +66,9 @@ def test_validate_success_as_superuser(superuser):
                         send_password_reset_email=False)
 
     assert form.validate() is True
+    assert form.data == {
+        'username': 'first.last@kb.se',
+        'full_name': 'First Last',
+        'send_password_reset_email': False,
+        'next_redirect': None
+    }

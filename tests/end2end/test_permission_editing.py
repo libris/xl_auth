@@ -8,8 +8,9 @@ from flask_babel import gettext as _
 from jinja2 import escape
 
 from xl_auth.permission.models import Permission
+from xl_auth.user.models import User
 
-from ..factories import CollectionFactory, PermissionFactory, UserFactory
+from ..factories import CollectionFactory, PermissionFactory
 
 
 def test_superuser_can_edit_existing_permission(superuser, permission, testapp):
@@ -24,8 +25,9 @@ def test_superuser_can_edit_existing_permission(superuser, permission, testapp):
     form['password'] = 'myPrecious'
     # Submits
     res = form.submit().follow()
-    # Clicks Permissions button
-    res = res.click(_('Permissions'))
+    assert res.status_code == 200
+    # Goes to Permissions' overview
+    res = testapp.get(url_for('permission.home'))
     # Clicks Edit button on a permission
     res = res.click(href=url_for('permission.edit', permission_id=permission.id))
     # Fills out the form
@@ -92,7 +94,6 @@ def test_cataloging_admin_can_edit_permission_from_user_view(user, permission, s
     PermissionFactory(user=user, collection=permission.collection,
                       cataloging_admin=True).save_as(superuser)
     initial_permission_user_id = permission.user.id
-    other_user = UserFactory().save_as(superuser)
     old_permission_count = len(Permission.query.all())
     # Goes to homepage
     res = testapp.get('/')
@@ -108,7 +109,21 @@ def test_cataloging_admin_can_edit_permission_from_user_view(user, permission, s
     res = res.click(href=url_for('user.view', user_id=permission.user_id))
     # Clicks Edit on a permission on the user view
     res = res.click(href=url_for('permission.edit', permission_id=permission.id))
-    # Fills out the form, by changing to another user
+    # Finds that the intended user doesn't exist
+    res = res.click(_('New User'))
+    # Fills out the user registration form
+    register_user_form = res.forms['registerUserForm']
+    register_user_form['username'] = 'other_user@ub.uu.se'
+    register_user_form['full_name'] = 'Other User'
+    register_user_form['send_password_reset_email'].checked = False
+    res = register_user_form.submit()
+    assert res.status_code == 302
+    assert url_for('permission.edit', permission_id=permission.id) in res.location
+    other_user = User.get_by_email('other_user@ub.uu.se')
+    # Fills out the form to grant 'other_user' permissions on 'collection'
+    res = res.follow()
+    assert res.status_code == 200
+    # Fills out the form, by changing to 'other_user''
     form = res.forms['editPermissionForm']
     # Defaults are kept, setting ``form['collection_id'] = permission.collection.id`` is redundant
     form['user_id'] = other_user.id
@@ -138,8 +153,9 @@ def test_superuser_sees_error_if_permission_is_already_registered(superuser, per
     form['password'] = 'myPrecious'
     # Submits
     res = form.submit().follow()
-    # Clicks Permissions button
-    res = res.click(_('Permissions'))
+    assert res.status_code == 200
+    # Goes to Permissions' overview
+    res = testapp.get(url_for('permission.home'))
     # Clicks Edit button on 'permission'
     res = res.click(href=url_for('permission.edit', permission_id=permission.id))
     # Fills out the form with same user ID and collection ID as 'other_permission'

@@ -24,7 +24,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for permission in permissions_list | sort(attribute='user.email') %}
+            {% for permission in permissions %}
                 <tr>
                     <td class="word-break-all">
                         <a title="{{ _('View') }}"

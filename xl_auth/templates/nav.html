@@ -25,7 +25,6 @@
                 <li><a class="navbar-link" href="{{ url_for('collection.home') }}">{{ _('Collections') }}</a></li>
                 {% if current_user.is_admin %}
                 <li><a class="navbar-link" href="{{ url_for('user.home') }}">{{ _('Users') }}</a></li>
-                <li><a class="navbar-link" href="{{ url_for('permission.home') }}">{{ _('Permissions') }}</a></li>
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">

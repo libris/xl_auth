@@ -1,6 +1,6 @@
 ---
 
-- name: provision stuff for alpha roll-out
+- name: provision stuff for beta roll-out
   hosts: all
   become: True
   roles:

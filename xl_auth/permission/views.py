@@ -6,7 +6,11 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from flask import Blueprint, abort, flash, redirect, render_template, request
 from flask_babel import lazy_gettext as _
 from flask_login import current_user, login_required
+from sqlalchemy.orm import contains_eager
 
+from six.moves.urllib_parse import quote
+
+from ..user.models import User
 from ..utils import flash_errors, get_redirect_target
 from .forms import DeleteForm, EditForm, RegisterForm
 from .models import Permission
@@ -17,12 +21,16 @@ blueprint = Blueprint('permission', __name__, url_prefix='/permissions', static_
 @blueprint.route('/')
 @login_required
 def home():
-    """Permissions landing page."""
+    """Permissions' overview landing page."""
     if not current_user.is_admin:
         abort(403)
 
-    permissions_list = Permission.query.all()
-    return render_template('permissions/home.html', permissions_list=permissions_list)
+    permissions = Permission.query.join(Permission.user).join(Permission.collection).options(
+        contains_eager(Permission.user),
+        contains_eager(Permission.collection)
+    ).order_by(User.email).all()
+
+    return render_template('permissions/home.html', permissions=permissions)
 
 
 @blueprint.route('/register/', methods=['GET', 'POST'],
@@ -55,7 +63,9 @@ def register(user_id, collection_id):
 
     register_permission_form.set_defaults(user_id, collection_id)
     return render_template('permissions/register.html',
-                           register_permission_form=register_permission_form)
+                           register_permission_form=register_permission_form,
+                           full_path_quoted=quote(request.full_path),
+                           next_redirect_url=get_redirect_target())
 
 
 @blueprint.route('/edit/<permission_id>', methods=['GET', 'POST'])
@@ -84,6 +94,7 @@ def edit(permission_id):
     edit_permission_form.set_defaults(permission)
     return render_template('permissions/edit.html', permission=permission,
                            edit_permission_form=edit_permission_form,
+                           full_path_quoted=quote(request.full_path),
                            next_redirect_url=request.args.get('next'))
 
 

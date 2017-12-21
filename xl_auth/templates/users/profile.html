@@ -3,20 +3,23 @@
 {% block content %}
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h1>{{ _('Welcome') }} {{ current_user.full_name }}</h1>
+            <h1>
+                {{ _('Welcome') }}
+                <a href="{{ url_for('user.view', user_id=current_user.id) }}">
+                    {{ current_user.full_name }}
+                </a>
+            </h1>
         </div>
         <div class="panel-body">
             <p><strong>{{ _('This is your personal profile page.') }}</strong></p>
 
             {% if current_user.email != 'test@kb.se' %}
                 <a class="btn btn-default"
-                   href="{{ url_for('user.edit_details', user_id=current_user.id) }}">
-                    {{ _('Edit Display Name') }}
-                </a>
+                   href="{{ url_for('user.edit_details', user_id=current_user.id)
+                            + '?next=' + url_for('user.profile') }}">{{ _('Edit Display Name') }}</a>
                 <a class="btn btn-default"
-                   href="{{ url_for('user.change_password', user_id=current_user.id) }}">
-                    {{ _('Change Password') }}
-                </a>
+                   href="{{ url_for('user.change_password', user_id=current_user.id)
+                            + '?next=' + url_for('user.profile')}}">{{ _('Change Password') }}</a>
             {% endif %}
         </div>
     </div>
