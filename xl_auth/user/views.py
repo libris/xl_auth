@@ -22,8 +22,8 @@ blueprint = Blueprint('user', __name__, url_prefix='/users', static_folder='../s
 @login_required
 def home():
     """Users' overview landing page."""
-    active_users = User.query.filter_by(is_active=True).all()
-    inactive_users = User.query.filter_by(is_active=False).all()
+    active_users = User.query.filter_by(is_active=True).order_by('email').all()
+    inactive_users = User.query.filter_by(is_active=False).order_by('email').all()
 
     return render_template('users/home.html', active_users=active_users,
                            inactive_users=inactive_users)
