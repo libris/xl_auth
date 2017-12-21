@@ -7,14 +7,14 @@
     <ul>
         <li>
             <a href="#inactive-users">{{ _('Inactive Users') }}</a>
-            ({{ inactive_users.count() }})
+            ({{ inactive_users | length }})
         </li>
     </ul>
     <hr/>
     <div class="panel panel-default">
         <a class="anchor" id="active-users"></a>
         <div class="panel-heading">
-            <strong>{{ _('Active Users') }} ({{ active_users.count() }})</strong>
+            <strong>{{ _('Active Users') }} ({{ active_users | length }})</strong>
             {% if current_user.is_admin %}
                 <a class="btn btn-xs btn-primary pull-right"
                    href="{{ url_for('user.register') + '?next=' + url_for('user.home') }}">{{ _('New User') }}</a>
@@ -75,14 +75,14 @@
     <ul>
         <li>
             <a href="#active-users">{{ _('Active Users') }}</a>
-            ({{ active_users.count() }})
+            ({{ active_users | length }})
         </li>
     </ul>
     <hr/>
     <div class="panel panel-default">
         <a class="anchor" id="inactive-users"></a>
         <div class="panel-heading">
-            <strong>{{ _('Inactive Users') }} ({{ inactive_users.count() }})</strong>
+            <strong>{{ _('Inactive Users') }} ({{ inactive_users | length }})</strong>
         </div>
         <table class="table table-hover">
             <thead>

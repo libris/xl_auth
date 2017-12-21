@@ -119,7 +119,7 @@ class User(UserMixin, SurrogatePK, Model):
     is_active = Column(db.Boolean(), default=False, nullable=False)
     is_admin = Column(db.Boolean(), default=False, nullable=False)
     permissions = relationship('Permission', back_populates='user',
-                               foreign_keys='Permission.user_id')
+                               foreign_keys='Permission.user_id', lazy='joined')
     roles = relationship('Role', back_populates='user')
     password_resets = relationship('PasswordReset', back_populates='user')
 

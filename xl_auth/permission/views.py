@@ -6,6 +6,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from flask import Blueprint, abort, flash, redirect, render_template, request
 from flask_babel import lazy_gettext as _
 from flask_login import current_user, login_required
+from sqlalchemy.orm import contains_eager
 
 from six.moves.urllib_parse import quote
 
@@ -23,8 +24,12 @@ def home():
     if not current_user.is_admin:
         abort(403)
 
-    permissions_list = Permission.query.all()
-    return render_template('permissions/home.html', permissions_list=permissions_list)
+    permissions = Permission.query.join(Permission.user).join(Permission.collection).options(
+        contains_eager(Permission.user),
+        contains_eager(Permission.collection)
+    ).order_by('users.email').all()
+
+    return render_template('permissions/home.html', permissions=permissions)
 
 
 @blueprint.route('/register/', methods=['GET', 'POST'],

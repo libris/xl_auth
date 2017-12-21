@@ -15,9 +15,9 @@ class Permission(SurrogatePK, Model):
 
     __tablename__ = 'permissions'
     user_id = reference_col('users', nullable=False)
-    user = relationship('User', back_populates='permissions', foreign_keys=user_id)
+    user = relationship('User', back_populates='permissions', foreign_keys=user_id, lazy='joined')
     collection_id = reference_col('collections', nullable=False)
-    collection = relationship('Collection', back_populates='permissions')
+    collection = relationship('Collection', back_populates='permissions', lazy='joined')
 
     registrant = Column(db.Boolean(), default=False, nullable=False)
     cataloger = Column(db.Boolean(), default=False, nullable=False)
