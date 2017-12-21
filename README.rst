@@ -202,6 +202,8 @@ v. 0.7.2
   (`#140 <https://github.com/libris/xl_auth/issues/140>`_)
 * UX enhancements (`#142 <https://github.com/libris/xl_auth/issues/142>`_,
   `#133 <https://github.com/libris/xl_auth/issues/133>`_)
+* Link to Permissions' overview removed from navbar
+* Ignoring/discarding permissions on inactive collections
 
 
 v. 0.7.1
