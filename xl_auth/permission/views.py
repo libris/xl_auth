@@ -10,6 +10,7 @@ from sqlalchemy.orm import contains_eager
 
 from six.moves.urllib_parse import quote
 
+from ..user.models import User
 from ..utils import flash_errors, get_redirect_target
 from .forms import DeleteForm, EditForm, RegisterForm
 from .models import Permission
@@ -27,7 +28,7 @@ def home():
     permissions = Permission.query.join(Permission.user).join(Permission.collection).options(
         contains_eager(Permission.user),
         contains_eager(Permission.collection)
-    ).order_by('users.email').all()
+    ).order_by(User.email).all()
 
     return render_template('permissions/home.html', permissions=permissions)
 
