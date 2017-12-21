@@ -2,6 +2,7 @@
 
 - name: read data for creating xl_auth secret
   shell: "cat /etc/pki/tls/private/{{ inventory_hostname }}.key"
+  changed_when: no
   register: ssh_key_contents
   tags: xl_auth
 
