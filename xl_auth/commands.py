@@ -523,7 +523,7 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
                                                     collection_id=collection.id).first()
             if permission:
                 current_permissions.append(permission)
-            else:
+            elif collection.is_active:  # No creating permissions on inactive collections.
                 if user.email == 'test@kb.se':
                     permission = Permission.create_as(admin, user=user, collection=collection,
                                                       registrant=True,
@@ -587,9 +587,15 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
                       % (email, code))
 
     # Optionally wipe permissions not deduced from controlled sources (BibDB, Voyager, manual),
-    # but only if created by admin account.
+    # but only if created by admin account. And also existing permissions on inactive collections.
     for permission in old_permissions:
-        if permission in current_permissions and permission not in removed_permissions:
+        if not permission.collection.is_active:
+            print('Existing permission for %r on inactive collection %r (deleting=%s).'
+                  % (permission.user.email, permission.collection.code, wipe_permissions))
+            if wipe_permissions:
+                permission.delete()
+            continue
+        elif permission in current_permissions and permission not in removed_permissions:
             continue
         else:
             if permission.created_by != admin:
