@@ -1026,7 +1026,7 @@ msgid "Active Collection"
 msgstr ""
 
 #: xl_auth/templates/users/inspect.html:116
-msgid "Permissions Created or Modified for Other Users"
+msgid "Permissions Created or Modified by This User"
 msgstr ""
 
 #: xl_auth/templates/users/inspect.html:127 xl_auth/templates/users/inspect.html:176

@@ -1036,8 +1036,8 @@ msgid "Active Collection"
 msgstr "Sigel aktivt"
 
 #: xl_auth/templates/users/inspect.html:116
-msgid "Permissions Created or Modified for Other Users"
-msgstr "Behörigheter denna användare skapat/ändrat för andra"
+msgid "Permissions Created or Modified by This User"
+msgstr "Behörigheter skapade/ändrade av denna användare"
 
 #: xl_auth/templates/users/inspect.html:127 xl_auth/templates/users/inspect.html:176
 msgid "CatAdm"
