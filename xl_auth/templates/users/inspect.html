@@ -66,7 +66,7 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <strong>{{ _('Permissions') }}</strong>
+            <strong>{{ _('Own Permissions') }} ({{ user.permissions | length }})</strong>
         </div>
         <table class="table table-hover">
             <thead>
@@ -99,9 +99,106 @@
                     <td class="{{ "bool-value-{}".format(permission.collection.is_active).lower() }}">
                         {{ _('Yes') if permission.collection.is_active else _('No') }}
                     </td>
-                    <td>{{ permission.modified_at.strftime('%y-%m-%d') }}, {{  _('by') }}
+                    <td>
+                        {{ permission.modified_at.strftime('%y-%m-%d') }}, {{  _('by') }}
                         <a href="{{ url_for('user.inspect', user_id=permission.modified_by.id) }}">
                             {{ permission.modified_by.full_name }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong>
+                {{ _('Permissions Created or Modified for Other Users') }}
+                ({{ permissions_created_or_modified | length }})
+            </strong>
+        </div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th class="col-md-1">{{ _('Collection') }}</th>
+                <th class="col-md-3">{{ _('Email') }}</th>
+                <th class="col-md-3 word-break-all">{{ _('Registrant') }}</th>
+                <th class="col-md-2 word-break-all">{{ _('Cataloger') }}</th>
+                <th class="col-md-1">{{ _('CatAdm') }}</th>
+                <th class="col-md-2">{{ _('Created At') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for permission in permissions_created_or_modified | sort(attribute='collection.code') %}
+                <tr>
+                    <td>
+                        <a href="{{ url_for('collection.view', collection_code=permission.collection.code) }}">
+                            {{ permission.collection.code }}
+                        </a>
+                    </td>
+                    <td class="word-break-all">
+                        <a href="{{ url_for('user.inspect', user_id=permission.user.id) }}">
+                            {{ permission.user.email }}
+                        </a>
+                    </td>
+                    <td class="{{ "bool-value-{}".format(permission.registrant).lower() }}">
+                        {{ _('Yes') if permission.registrant else _('No') }}
+                    </td>
+                    <td class="{{ "bool-value-{}".format(permission.cataloger).lower() }}">
+                        {{ _('Yes') if permission.cataloger else _('No') }}
+                    </td>
+                    <td class="{{ "bool-value-{}".format(permission.cataloging_admin).lower() }}">
+                        {{ _('Yes') if permission.cataloging_admin else _('No') }}
+                    </td>
+                    <td>
+                        {{ permission.created_at.strftime('%y-%m-%d') }}, {{  _('by') }}
+                        <a href="{{ url_for('user.inspect', user_id=permission.created_by.id) }}">
+                            {{ permission.created_by.full_name }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong>
+                {{ _('Other Users Created or Modified by This One') }}
+                ({{ users_created_or_modified | length }})
+            </strong>
+        </div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th class="col-md-5">{{ _('Email') }}</th>
+                <th class="col-md-1">{{ _('Collections') }}</th>
+                <th class="col-md-1">{{ _('CatAdm') }}</th>
+                <th class="col-md-1">{{ _('Admin') }}</th>
+                <th class="col-md-2">{{ _('Last Login At') }}</th>
+                <th class="col-md-2">{{ _('Created At') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users_created_or_modified %}
+                <tr>
+                    <td class="word-break-all">
+                        <a href="{{ url_for('user.inspect', user_id=user.id) }}">
+                            {{ user.email }}
+                        </a>
+                    </td>
+                    <td>{{ user.permissions | length }}</td>
+                    <td class="{{ "bool-value-{}".format(user.is_cataloging_admin).lower() }}">
+                        {{ _('Yes') if user.is_cataloging_admin else _('No') }}
+                    </td>
+                    <td class="{{ "bool-value-{}".format(user.is_admin).lower() }}">
+                        {{ _('Yes') if user.is_admin else _('No') }}
+                    </td>
+                    <td>{{ '-' if not user.last_login_at else user.last_login_at.strftime('%y-%m-%d') }}</td>
+                    <td>
+                        {{ user.created_at.strftime('%y-%m-%d') }}, {{  _('by') }}
+                        <a href="{{ url_for('user.inspect', user_id=user.created_by.id) }}">
+                            {{ user.created_by.full_name }}
                         </a>
                     </td>
                 </tr>

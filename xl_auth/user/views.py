@@ -112,12 +112,21 @@ def inspect(user_id):
         return redirect(get_redirect_target())
     else:
         tokens = Token.query.filter_by(user=user).all()
+
         permissions_created = Permission.query.filter_by(created_by=user).count()
         permissions_modified = Permission.query.filter_by(modified_by=user).count()
+        permissions_created_or_modified = Permission.query.filter(
+            (Permission.created_by == user) | (Permission.modified_by == user)).all()
+
         collections_created = Collection.query.filter_by(created_by=user).count()
         collections_modified = Collection.query.filter_by(modified_by=user).count()
+
         users_created = User.query.filter_by(created_by=user).count()
         users_modified = User.query.filter_by(modified_by=user).count()
+        users_created_or_modified = User.query.filter(
+            ((User.created_by == user) | (User.modified_by == user)) & (User.id != user.id)
+        ).order_by(User.email).all()
+
         clients_created = Client.query.filter_by(created_by=user).count()
         clients_modified = Client.query.filter_by(modified_by=user).count()
 
@@ -126,10 +135,12 @@ def inspect(user_id):
                                tokens=tokens,
                                permissions_created=permissions_created,
                                permissions_modified=permissions_modified,
+                               permissions_created_or_modified=permissions_created_or_modified,
                                collections_created=collections_created,
                                collections_modified=collections_modified,
                                users_created=users_created,
                                users_modified=users_modified,
+                               users_created_or_modified=users_created_or_modified,
                                clients_created=clients_created,
                                clients_modified=clients_modified)
 
