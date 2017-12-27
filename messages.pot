@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 0.7.3\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-12-27 15:26+0100\n"
+"POT-Creation-Date: 2017-12-27 16:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1034,7 +1034,7 @@ msgid "CatAdm"
 msgstr ""
 
 #: xl_auth/templates/users/inspect.html:167
-msgid "Other Users Created or Modified by This One"
+msgid "Users Created or Modified by This One"
 msgstr ""
 
 #: xl_auth/templates/users/inspect.html:211
