@@ -62,7 +62,7 @@ def register(user_id, collection_id):
             flash_errors(register_permission_form)
 
     if request.referrer and url_for('user.register') in request.referrer:
-        user_id = User.query.order_by(-User.id).all()[0].id
+        user_id = User.query.filter_by(created_by=current_user).order_by(-User.id).all()[0].id
     register_permission_form.set_defaults(user_id, collection_id)
     return render_template('permissions/register.html',
                            register_permission_form=register_permission_form,
@@ -94,8 +94,8 @@ def edit(permission_id):
             flash_errors(edit_permission_form)
 
     if request.referrer and url_for('user.register') in request.referrer:
-        edit_permission_form.set_defaults(permission,
-                                          new_user_id=User.query.order_by(-User.id).all()[0].id)
+        new_user_id = User.query.filter_by(created_by=current_user).order_by(-User.id).all()[0].id
+        edit_permission_form.set_defaults(permission, new_user_id=new_user_id)
     else:
         edit_permission_form.set_defaults(permission)
     return render_template('permissions/edit.html', permission=permission,
