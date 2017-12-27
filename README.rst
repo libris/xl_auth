@@ -195,6 +195,13 @@ DB Models
 Changelog
 =========
 
+v. 0.7.3
+--------
+
+* UX enhancements (`#149 <https://github.com/libris/xl_auth/issues/149>`_,
+  `#146 <https://github.com/libris/xl_auth/issues/146>`_)
+
+
 v. 0.7.2
 --------
 

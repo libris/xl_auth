@@ -112,26 +112,37 @@ def inspect(user_id):
         return redirect(get_redirect_target())
     else:
         tokens = Token.query.filter_by(user=user).all()
-        permissions_created = Permission.query.filter_by(created_by=user).count()
-        permissions_modified = Permission.query.filter_by(modified_by=user).count()
-        collections_created = Collection.query.filter_by(created_by=user).count()
-        collections_modified = Collection.query.filter_by(modified_by=user).count()
-        users_created = User.query.filter_by(created_by=user).count()
-        users_modified = User.query.filter_by(modified_by=user).count()
-        clients_created = Client.query.filter_by(created_by=user).count()
-        clients_modified = Client.query.filter_by(modified_by=user).count()
+
+        num_permissions_created = Permission.query.filter_by(created_by=user).count()
+        num_permissions_modified = Permission.query.filter_by(modified_by=user).count()
+        permissions_created_or_modified = Permission.query.filter(
+            (Permission.created_by == user) | (Permission.modified_by == user)).all()
+
+        num_collections_created = Collection.query.filter_by(created_by=user).count()
+        num_collections_modified = Collection.query.filter_by(modified_by=user).count()
+
+        num_users_created = User.query.filter_by(created_by=user).count()
+        num_users_modified = User.query.filter_by(modified_by=user).count()
+        users_created_or_modified = User.query.filter(
+            ((User.created_by == user) | (User.modified_by == user)) & (User.id != user.id)
+        ).order_by(User.email).all()
+
+        num_clients_created = Client.query.filter_by(created_by=user).count()
+        num_clients_modified = Client.query.filter_by(modified_by=user).count()
 
         return render_template('users/inspect.html',
                                user=user,
                                tokens=tokens,
-                               permissions_created=permissions_created,
-                               permissions_modified=permissions_modified,
-                               collections_created=collections_created,
-                               collections_modified=collections_modified,
-                               users_created=users_created,
-                               users_modified=users_modified,
-                               clients_created=clients_created,
-                               clients_modified=clients_modified)
+                               num_permissions_created=num_permissions_created,
+                               num_permissions_modified=num_permissions_modified,
+                               permissions_created_or_modified=permissions_created_or_modified,
+                               num_collections_created=num_collections_created,
+                               num_collections_modified=num_collections_modified,
+                               num_users_created=num_users_created,
+                               num_users_modified=num_users_modified,
+                               users_created_or_modified=users_created_or_modified,
+                               num_clients_created=num_clients_created,
+                               num_clients_modified=num_clients_modified)
 
 
 @blueprint.route('/administer/<int:user_id>', methods=['GET', 'POST'])
