@@ -120,13 +120,14 @@ def test_cataloging_admin_can_edit_permission_from_user_view(user, permission, s
     assert res.status_code == 302
     assert url_for('permission.edit', permission_id=permission.id) in res.location
     other_user = User.get_by_email('other_user@ub.uu.se')
-    # Fills out the form to grant 'other_user' permissions on 'collection'
-    res = res.follow()
+    assert other_user is not None
+    # Saves the form to grant 'other_user' permissions on 'collection'
+    res = res.follow(headers={'Referer': res.request.referrer})  # FIXME: Webtest dropping referer.
     assert res.status_code == 200
     # Fills out the form, by changing to 'other_user''
     form = res.forms['editPermissionForm']
+    # New user is preset, ``form['user_id'] = other_user.id`` is redundant
     # Defaults are kept, setting ``form['collection_id'] = permission.collection.id`` is redundant
-    form['user_id'] = other_user.id
     # Submits
     res = form.submit()
     assert res.status_code == 302

@@ -75,11 +75,12 @@ def test_cataloging_admin_can_register_permission_from_collection_view(user, col
     assert res.status_code == 302
     assert url_for('permission.register', collection_id=collection.id) in res.location
     other_user = User.get_by_email('my_registrant@su.se')
-    # Fills out the form to grant 'other_user' permissions on 'collection'
-    res = res.follow()
+    assert other_user is not None
+    # Saves the form to grant 'other_user' permissions on 'collection'
+    res = res.follow(headers={'Referer': res.request.referrer})  # FIXME: Webtest dropping referer.
     assert res.status_code == 200
     register_permission_form = res.forms['registerPermissionForm']
-    register_permission_form['user_id'] = other_user.id
+    # New user is preset, ``register_permission_form['user_id'] = other_user.id`` is redundant
     # Defaults are kept, ``register_permission_form['collection_id'] = collection.id`` is redundant
     register_permission_form['registrant'].checked = True
     register_permission_form['cataloger'].checked = True
