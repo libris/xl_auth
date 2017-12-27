@@ -10,12 +10,28 @@ from xl_auth.permission.forms import RegisterForm
 from ..factories import PermissionFactory, UserFactory
 
 
+def test_validate_with_placeholder_user_id(superuser, collection):
+    """Attempt registering entry with the placeholder ID."""
+    form = RegisterForm(superuser, user_id='-1', collection_id=collection.id)
+
+    assert form.validate() is False
+    assert _('A user must be selected.') in form.user_id.errors
+
+
 def test_validate_without_user_id(superuser, collection):
     """Attempt registering entry with empty string for user ID."""
     form = RegisterForm(superuser, user_id='', collection_id=collection.id)
 
     assert form.validate() is False
     assert _('This field is required.') in form.user_id.errors
+
+
+def test_validate_with_placeholder_collection_id(superuser, user):
+    """Attempt registering entry with the placeholder ID."""
+    form = RegisterForm(superuser, user_id=user.id, collection_id='-1')
+
+    assert form.validate() is False
+    assert _('A collection must be selected.') in form.collection_id.errors
 
 
 def test_validate_without_collection_id(superuser, user):
