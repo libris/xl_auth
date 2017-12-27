@@ -3,7 +3,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from flask import Blueprint, abort, flash, redirect, render_template, request
+from flask import Blueprint, abort, flash, redirect, render_template, request, url_for
 from flask_babel import lazy_gettext as _
 from flask_login import current_user, login_required
 from sqlalchemy.orm import contains_eager
@@ -61,6 +61,8 @@ def register(user_id, collection_id):
         else:
             flash_errors(register_permission_form)
 
+    if request.referrer and url_for('user.register') in request.referrer:
+        user_id = User.query.order_by(-User.id).all()[0].id
     register_permission_form.set_defaults(user_id, collection_id)
     return render_template('permissions/register.html',
                            register_permission_form=register_permission_form,
@@ -91,7 +93,11 @@ def edit(permission_id):
         else:
             flash_errors(edit_permission_form)
 
-    edit_permission_form.set_defaults(permission)
+    if request.referrer and url_for('user.register') in request.referrer:
+        edit_permission_form.set_defaults(permission,
+                                          new_user_id=User.query.order_by(-User.id).all()[0].id)
+    else:
+        edit_permission_form.set_defaults(permission)
     return render_template('permissions/edit.html', permission=permission,
                            edit_permission_form=edit_permission_form,
                            full_path_quoted=quote(request.full_path),

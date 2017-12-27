@@ -110,10 +110,10 @@ class EditForm(PermissionForm):
         self.target_permission_id = target_permission_id
         self.permission_id.validators = [AnyOf([target_permission_id])]
 
-    def set_defaults(self, permission):
-        """Apply 'permission' attributes as field defaults."""
+    def set_defaults(self, permission, new_user_id=None):
+        """Apply 'permission' attributes as field defaults, maybe overridden by 'new_user_id'."""
         self.permission_id.default = permission.id
-        self.user_id.default = permission.user_id
+        self.user_id.default = new_user_id or permission.user_id
         self.collection_id.default = permission.collection_id
         self.registrant.default = permission.registrant
         self.cataloger.default = permission.cataloger
