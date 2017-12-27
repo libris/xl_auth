@@ -28,16 +28,17 @@ class PermissionForm(FlaskForm):
         """Create instance."""
         super(PermissionForm, self).__init__(*args, **kwargs)
         self.current_user = current_user
-        self.user_id.choices = [(user.id, user.email)
-                                for user in User.query.order_by('email').all()]
+        self.user_id.choices = [(-1, _('--- Select User ---'))] + [
+            (user.id, user.email) for user in User.query.order_by('email').all()]
 
+        self.collection_id.choices = [(-1, _('--- Select Collection ---'))]
         if current_user.is_admin:
-            self.collection_id.choices = [
+            self.collection_id.choices += [
                 (collection.id, collection.code)
                 for collection in Collection.query.filter_by(is_active=True).order_by('code').all()
             ]
         else:
-            self.collection_id.choices = sorted(
+            self.collection_id.choices += sorted(
                 [(permission.collection.id, permission.collection.code)
                  for permission in current_user.get_cataloging_admin_permissions()],
                 key=lambda _: _[1]
@@ -45,7 +46,9 @@ class PermissionForm(FlaskForm):
 
     # noinspection PyMethodMayBeStatic
     def validate_user_id(self, field):
-        """Validate user ID exists in 'users' table."""
+        """Validate user ID is selected and exists in 'users' table."""
+        if field.data == -1:
+            raise ValidationError(_('A user must be selected.'))
         if not User.get_by_id(field.data):
             raise ValidationError(_('User ID "%(user_id)s" does not exist', user_id=field.data))
 
@@ -61,6 +64,8 @@ class RegisterForm(PermissionForm):
 
     def validate_collection_id(self, field):
         """Validate collection ID exists and current user may register permissions on it."""
+        if field.data == -1:
+            raise ValidationError(_('A collection must be selected.'))
         collection = Collection.get_by_id(field.data)
         if collection:
             if not (self.current_user.is_cataloging_admin_for(collection) or
@@ -124,18 +129,16 @@ class EditForm(PermissionForm):
                                     permission_id=self.target_permission_id))
         current_collection = target_permission.collection
         form_collection = Collection.get_by_id(self.collection_id.data)
-        if not form_collection:
-            raise ValidationError(_('Collection ID "%(collection_id)s" does not exist',
-                                    collection_id=self.collection_id.data))
-
-        if not (self.current_user.is_cataloging_admin_for(
+        if form_collection and not (self.current_user.is_cataloging_admin_for(
                 current_collection, form_collection) or self.current_user.is_admin):
             raise ValidationError(_('You do not have sufficient privileges '
                                     'for this operation.'))
 
     # noinspection PyMethodMayBeStatic
     def validate_collection_id(self, field):
-        """Validate collection ID exists in 'collections' table."""
+        """Validate collection ID is selected and exists in 'collections' table."""
+        if field.data == -1:
+            raise ValidationError(_('A collection must be selected.'))
         if not Collection.get_by_id(field.data):
             raise ValidationError(_('Collection ID "%(collection_id)s" does not exist',
                                     collection_id=field.data))
