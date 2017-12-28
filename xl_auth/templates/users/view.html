@@ -40,9 +40,9 @@
             <dd>
                 {% for permission in user.get_cataloging_admin_permissions()
                         | sort(attribute='collection.code') %}
-                    <a href="{{ url_for('collection.view', collection_code=permission.collection.code) }}">
-                        {{ permission.collection.code }}
-                    </a>
+                    <a href="{{ url_for('collection.view', collection_code=permission.collection.code) }}"
+                    >{{ permission.collection.code }}</a>{{ _(' and ') if loop.revindex == 2
+                        else (', ' if not loop.last) }}
                 {% else %}
                     -
                 {% endfor %}
