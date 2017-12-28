@@ -198,7 +198,8 @@ Changelog
 v. 0.7.4
 --------
 
-* UX enhancements (`#128 <https://github.com/libris/xl_auth/issues/128>`_)
+* UX enhancements (`#128 <https://github.com/libris/xl_auth/issues/128>`_,
+  `#151 <https://github.com/libris/xl_auth/issues/151>`_)
 
 
 v. 0.7.3
