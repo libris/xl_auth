@@ -22,18 +22,14 @@
                 {{ edit_permission_form.collection_id(class_="form-control", autocomplete="off") }}
             </div>
             <div class="form-group">
-                <label class="checkbox">
-                    {{ edit_permission_form.registrant() }}
-                    {{ edit_permission_form.registrant.label }}
-                </label>
-                <label class="checkbox">
-                    {{ edit_permission_form.cataloger() }}
-                    {{ edit_permission_form.cataloger.label }}
-                </label>
-                <label class="checkbox">
-                    {{ edit_permission_form.cataloging_admin() }}
-                    {{ edit_permission_form.cataloging_admin.label }}
-                </label>
+                {{ edit_permission_form.registrant() }}
+                {{ edit_permission_form.registrant.label }}
+                <br/>
+                {{ edit_permission_form.cataloger() }}
+                {{ edit_permission_form.cataloger.label }}
+                <br/>
+                {{ edit_permission_form.cataloging_admin() }}
+                {{ edit_permission_form.cataloging_admin.label }}
             </div>
             <p><input class="btn btn-primary btn-submit" type="submit" value="{{ _('Save') }}"></p>
         </form>
