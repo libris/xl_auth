@@ -49,6 +49,8 @@ class PasswordReset(SurrogatePK, Model):
     modified_at = Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     created_at = Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
+    MAX_ALLOWED_ACTIVE_PASSWORD_RESETS = 2
+
     def __init__(self, user, **kwargs):
         """Create instance."""
         db.Model.__init__(self, user=user, code=self._get_rand_hex_str(32), **kwargs)
@@ -59,6 +61,15 @@ class PasswordReset(SurrogatePK, Model):
         user = User.get_by_email(email)
         if user:
             return PasswordReset.query.filter_by(code=code, user=user).first()
+
+    @staticmethod
+    def get_active_resets_for_email(email):
+        """Get active password resets for supplied email."""
+        user = User.get_by_email(email)
+        if user:
+            return PasswordReset.query.filter_by(is_active=True, user=user).all()
+        else:
+            return []
 
     def send_email(self):
         """Email password reset link to the user."""

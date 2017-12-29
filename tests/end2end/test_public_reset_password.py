@@ -141,3 +141,42 @@ def test_sees_error_message_if_attempting_to_use_reset_code_twice(password_reset
     # Sees error.
     assert escape(_('Reset code "%(code)s" already used (%(isoformat)s)', code=password_reset.code,
                     isoformat=password_reset.modified_at.isoformat() + 'Z')) in res
+
+
+def test_sees_error_message_if_too_many_active_password_resets(db, testapp):
+    """Show error if too many active password resets exist."""
+    inactive_user = UserFactory(is_active=False)
+    db.session.commit()
+    assert inactive_user.is_active is False
+
+    # Create active password resets
+    for _i in range(0, PasswordReset.MAX_ALLOWED_ACTIVE_PASSWORD_RESETS):
+        # Goes to homepage.
+        res = testapp.get('/')
+        # Clicks on 'Forgot password'.
+        res = res.click(_('Forgot password?'))
+        # Fills out ForgotPasswordForm.
+        username_with_different_casing = inactive_user.email.upper()
+        form = res.forms['forgotPasswordForm']
+        form['username'] = username_with_different_casing
+        # Submits.
+        res = form.submit().follow()
+        assert res.status_code == 200
+
+    active_resets = PasswordReset.get_active_resets_for_email(inactive_user.email)
+    assert len(active_resets) == PasswordReset.MAX_ALLOWED_ACTIVE_PASSWORD_RESETS
+
+    # Try to create one additional password reset
+    # Goes to homepage.
+    res = testapp.get('/')
+    # Clicks on 'Forgot password'.
+    res = res.click(_('Forgot password?'))
+    # Fills out ForgotPasswordForm.
+    username_with_different_casing = inactive_user.email.upper()
+    form = res.forms['forgotPasswordForm']
+    form['username'] = username_with_different_casing
+    # Submits.
+    res = form.submit()
+    assert res.status_code == 200
+    assert _('You already have an active password reset. Please check your email inbox (and your '
+             'Spam folder) or try again later.') in res
