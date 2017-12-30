@@ -1,0 +1,13 @@
+---
+
+- name: template sysctl elk-monitoring.conf
+  template: src=elk-monitoring.conf.j2 dest=/usr/lib/sysctl.d/elk-monitoring.conf
+  register: logging_sysconfig
+  tags: logging
+
+- name: apply sysctl system config
+  shell: sysctl --system
+  when: logging_sysconfig.changed
+  tags: logging
+
+...
