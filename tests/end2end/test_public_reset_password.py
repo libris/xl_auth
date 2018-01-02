@@ -9,7 +9,7 @@ from flask import url_for
 from flask_babel import gettext as _
 from jinja2 import escape
 
-from xl_auth.user.models import PasswordReset
+from xl_auth.user.models import PasswordReset, User
 
 from ..factories import UserFactory
 
@@ -143,28 +143,23 @@ def test_sees_error_message_if_attempting_to_use_reset_code_twice(password_reset
                     isoformat=password_reset.modified_at.isoformat() + 'Z')) in res
 
 
-def test_sees_error_message_if_too_many_active_password_resets(db, testapp):
+def test_sees_error_message_if_too_many_active_password_resets(user, testapp):
     """Show error if too many active password resets exist."""
-    inactive_user = UserFactory(is_active=False)
-    db.session.commit()
-    assert inactive_user.is_active is False
-
     # Create active password resets
-    for _i in range(0, PasswordReset.MAX_ALLOWED_ACTIVE_PASSWORD_RESETS):
+    for _i in range(0, User.MAX_ALLOWED_ACTIVE_PASSWORD_RESETS):
         # Goes to homepage.
         res = testapp.get('/')
         # Clicks on 'Forgot password'.
         res = res.click(_('Forgot password?'))
         # Fills out ForgotPasswordForm.
-        username_with_different_casing = inactive_user.email.upper()
         form = res.forms['forgotPasswordForm']
-        form['username'] = username_with_different_casing
+        form['username'] = user.email
         # Submits.
         res = form.submit().follow()
         assert res.status_code == 200
 
-    active_resets = PasswordReset.get_active_resets_for_email(inactive_user.email)
-    assert len(active_resets) == PasswordReset.MAX_ALLOWED_ACTIVE_PASSWORD_RESETS
+    active_resets = user.get_active_and_recent_password_resets()
+    assert len(active_resets) == User.MAX_ALLOWED_ACTIVE_PASSWORD_RESETS
 
     # Try to create one additional password reset
     # Goes to homepage.
@@ -172,9 +167,8 @@ def test_sees_error_message_if_too_many_active_password_resets(db, testapp):
     # Clicks on 'Forgot password'.
     res = res.click(_('Forgot password?'))
     # Fills out ForgotPasswordForm.
-    username_with_different_casing = inactive_user.email.upper()
     form = res.forms['forgotPasswordForm']
-    form['username'] = username_with_different_casing
+    form['username'] = user.email
     # Submits.
     res = form.submit()
     assert res.status_code == 200

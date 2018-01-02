@@ -49,8 +49,6 @@ class PasswordReset(SurrogatePK, Model):
     modified_at = Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     created_at = Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
-    MAX_ALLOWED_ACTIVE_PASSWORD_RESETS = 2
-
     def __init__(self, user, **kwargs):
         """Create instance."""
         db.Model.__init__(self, user=user, code=self._get_rand_hex_str(32), **kwargs)
@@ -62,14 +60,10 @@ class PasswordReset(SurrogatePK, Model):
         if user:
             return PasswordReset.query.filter_by(code=code, user=user).first()
 
-    @staticmethod
-    def get_active_resets_for_email(email):
-        """Get active password resets for supplied email."""
-        user = User.get_by_email(email)
-        if user:
-            return PasswordReset.query.filter_by(is_active=True, user=user).all()
-        else:
-            return []
+    @hybrid_property
+    def is_recent(self):
+        """Check if reset was created recently."""
+        return self.created_at > (datetime.utcnow() - timedelta(hours=2))
 
     def send_email(self):
         """Email password reset link to the user."""
@@ -142,6 +136,8 @@ class User(UserMixin, SurrogatePK, Model):
     created_at = Column(db.DateTime, default=datetime.utcnow, nullable=False)
     created_by_id = reference_col('users', nullable=False)
     created_by = relationship('User', remote_side=id, foreign_keys=created_by_id)
+
+    MAX_ALLOWED_ACTIVE_PASSWORD_RESETS = 2
 
     def __init__(self, email, full_name, password=None, **kwargs):
         """Create instance."""
@@ -231,6 +227,10 @@ class User(UserMixin, SurrogatePK, Model):
     def get_cataloging_admin_permissions(self):
         """Return all cataloging admin permissions for this user."""
         return [perm for perm in self.permissions if perm.cataloging_admin]
+
+    def get_active_and_recent_password_resets(self):
+        """Return a list of active and recent password resets for this user."""
+        return [reset for reset in self.password_resets if reset.is_active and reset.is_recent]
 
     def save_as(self, current_user, commit=True, preserve_modified=False):
         """Save instance as 'current_user'."""

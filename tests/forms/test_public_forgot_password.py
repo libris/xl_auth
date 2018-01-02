@@ -31,7 +31,7 @@ def test_validate_success(user):
 def test_validate_too_many_recent_active_resets(user):
     """Too many recent active resets."""
     old_active_reset = PasswordResetFactory(user=user)
-    old_active_reset.modified_at = datetime.utcnow() - timedelta(hours=3)
+    old_active_reset.created_at = datetime.utcnow() - timedelta(hours=3)
     PasswordResetFactory(user=user)
 
     form = ForgotPasswordForm(username=user.email)
