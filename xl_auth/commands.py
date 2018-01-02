@@ -497,7 +497,7 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
             if send_password_resets:  # Requires SERVER_NAME and PREFERRED_URL_SCHEME env vars.
                 with current_app.test_request_context():
                     password_reset = PasswordReset(user)
-                    password_reset.send_email()
+                    password_reset.send_email(account_registration_from_user=admin)
                     user.save_as(admin)
                     password_reset.save()
                 print('Added inactive user %r (password reset email sent).' % email)
