@@ -20,10 +20,8 @@ services:
     logging:
       driver: syslog
       options:
-        syslog-address: "udp://127.0.0.1:8080"
-        #mode: non-blocking
-    depends_on:
-      - filebeat
+        tag: postgres
+        mode: non-blocking
 
   xl_auth:
     image: mblomdahl/xl_auth:latest
@@ -38,17 +36,28 @@ services:
       - 5000:5000
     networks:
       - xl_auth
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
+        tag: xl_auth
+        mode: non-blocking
     depends_on:
       - postgres
 
-  elk_stack:
-    image: sebp/elk:611
-    container_name: elk_stack
-    hostname: elk_stack
+  elk:
+    build: ./ansible/roles/logging/files/elk/
+    image: elk-ext:611
+    container_name: elk
+    hostname: elk
     ports:
       - 5601:5601
       - 9200:9200
       - 5044:5044
+      - 12201:12201/udp
+    volumes:
+      - elk:/var/lib/elasticsearch
+      - ./ansible/roles/logging/files/elk/gelf-xl_auth.conf:/etc/logstash/conf.d/40-gelf-xl_auth.conf
     networks:
       - logging
 
@@ -60,19 +69,16 @@ services:
     user: root
     volumes:
       - /var/log:/mnt/log:ro
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - ./ansible/roles/logging/files/filebeat.yml:/usr/share/filebeat/filebeat.yml
-    ports:
-      - 8080:8080
+      - ./ansible/roles/logging/files/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
     networks:
-      - xl_auth
       - logging
     depends_on:
-      - elk_stack
+      - elk
 
 volumes:
   postgres:
+    driver: local
+  elk:
     driver: local
 
 networks:
