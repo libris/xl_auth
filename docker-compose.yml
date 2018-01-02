@@ -6,7 +6,7 @@ services:
     image: postgres:9.4-alpine
     container_name: postgres
     hostname: postgres
-    restart: always
+    restart: unless-stopped
     volumes:
       - postgres:/var/lib/postgresql/data
     ports:
@@ -51,23 +51,6 @@ services:
       - 5044:5044
     networks:
       - logging
-
-  metricbeat:
-    image: docker.elastic.co/beats/metricbeat:6.1.1
-    container_name: metricbeat
-    hostname: metricbeat
-    command: -e -system.hostfs=/hostfs -strict.perms=false
-    user: root
-    volumes:
-      - /:/hostfs:ro
-      - /proc:/hostfs/proc:ro
-      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./ansible/roles/logging/files/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
-    networks:
-      - logging
-    depends_on:
-      - elk_stack
 
   filebeat:
     image: docker.elastic.co/beats/filebeat:6.1.1
