@@ -67,7 +67,7 @@ def register():
                         full_name=register_user_form.full_name.data)
             if register_user_form.send_password_reset_email.data:
                 password_reset = PasswordReset(user)
-                password_reset.send_email()
+                password_reset.send_email(account_registration_from_user=current_user)
                 user.save_as(current_user)
                 password_reset.save()
                 flash(_('User "%(username)s" registered and emailed with a password reset link.',

@@ -60,6 +60,10 @@ class RegisterForm(PermissionForm):
         """Apply 'user_id' and 'collection_id' field defaults."""
         self.user_id.default = user_id
         self.collection_id.default = collection_id
+        if not self.current_user.is_admin:
+            self.cataloging_admin.render_kw = {'disabled': 'disabled',
+                                               'title': _('Cataloging admin rights can only be '
+                                                          'granted by system admins.')}
         self.process()
 
     def validate_collection_id(self, field):
@@ -118,6 +122,10 @@ class EditForm(PermissionForm):
         self.registrant.default = permission.registrant
         self.cataloger.default = permission.cataloger
         self.cataloging_admin.default = permission.cataloging_admin
+        if not self.current_user.is_admin and not permission.cataloging_admin:
+            self.cataloging_admin.render_kw = {'disabled': 'disabled',
+                                               'title': _('Cataloging admin rights can only be '
+                                                          'granted by system admins.')}
         self.process()
 
     # noinspection PyUnusedLocal

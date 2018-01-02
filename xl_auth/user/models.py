@@ -60,16 +60,55 @@ class PasswordReset(SurrogatePK, Model):
         if user:
             return PasswordReset.query.filter_by(code=code, user=user).first()
 
-    def send_email(self):
-        """Email password reset link to the user."""
+    def send_email(self, account_registration_from_user=None):
+        """Email password reset link to the user, possibly in wording of initial registration."""
         password_reset_url = url_for('public.reset_password', email=self.user.email,
                                      code=self.code, _external=True)
         service_name = current_app.config['SERVER_NAME'] or current_app.config['APP_NAME']
-        result = Message(
-            subject=_('Password reset for %(username)s at %(server_name)s',
-                      username=self.user.email, server_name=service_name),
-            mail_to=(self.user.full_name, self.user.email),
-            text=_(
+        if account_registration_from_user:
+            subject = _('Account activation and password reset for %(username)s '
+                        'at %(server_name)s', username=self.user.email, server_name=service_name)
+            body_text = _(
+                'Hello %(full_name)s,'
+                '\n\n'
+                'You have been granted a user account at %(server_name)s by %(current_user)s. '
+                'Use the secret link below to set a personal account password, and \
+thereby activating your account:'
+                '\n\n'
+                '%(password_reset_url)s'
+                '\n\n\n\n'
+                'P.S. If you received this mail for no obvious reason, please inform us about it \
+at libris@kb.se!'
+                '\n\n',
+                full_name=self.user.full_name, server_name=service_name,
+                current_user=account_registration_from_user.email,
+                password_reset_url=password_reset_url
+            )
+            body_html = _(
+                '<p>'
+                'Hello %(full_name)s,'
+                '<br/><br/>'
+                'You have been granted a user account at %(server_name)s by %(current_user)s. '
+                'Use the secret link below to set a personal password, and \
+thereby activating your account:'
+                '<br/><br/>'
+                '<a href="%(password_reset_url)s">%(password_reset_url)s</a>'
+                '<br/><br/>'
+                '</p>'
+                '<p><small>'
+                'P.S. If you received this mail for no obvious reason, please inform us about it '
+                'at <a href="mailto:libris@kb.se">libris@kb.se</a>!'
+                '</small></p>',
+                full_name=self.user.full_name, server_name=service_name,
+                current_user='<a href="mailto:{0}">{0}</a>'.format(
+                    account_registration_from_user.email),
+                password_reset_url=password_reset_url
+            )
+
+        else:
+            subject = _('Password reset for %(username)s at %(server_name)s',
+                        username=self.user.email, server_name=service_name)
+            body_text = _(
                 'Hello %(full_name)s,'
                 '\n\n'
                 'Here is the secret link for resetting your personal account password:'
@@ -79,8 +118,9 @@ class PasswordReset(SurrogatePK, Model):
                 'P.S. If you received this mail for no obvious reason, please inform us about it \
 at libris@kb.se!'
                 '\n\n',
-                full_name=self.user.full_name, password_reset_url=password_reset_url),
-            html=_(
+                full_name=self.user.full_name, password_reset_url=password_reset_url
+            )
+            body_html = _(
                 '<p>'
                 'Hello %(full_name)s,'
                 '<br/><br/>'
@@ -93,7 +133,14 @@ at libris@kb.se!'
                 'P.S. If you received this mail for no obvious reason, please inform us about it '
                 'at <a href="mailto:libris@kb.se">libris@kb.se</a>!'
                 '</small></p>',
-                full_name=self.user.full_name, password_reset_url=password_reset_url)
+                full_name=self.user.full_name, password_reset_url=password_reset_url
+            )
+
+        result = Message(
+            subject=subject,
+            mail_to=(self.user.full_name, self.user.email),
+            text=body_text,
+            html=body_html
         ).send()
 
         if not hasattr(result, 'status_code'):

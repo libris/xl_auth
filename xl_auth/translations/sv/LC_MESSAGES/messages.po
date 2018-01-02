@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2017-12-27 16:20+0100\n"
+"POT-Creation-Date: 2017-12-28 15:05+0100\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -346,7 +346,7 @@ msgstr "Epost-adressen är redan registrerad"
 msgid "View User '<a href=\"mailto:%(email)s\">%(email)s</a>'"
 msgstr "Användare '<a href=\"mailto:%(email)s\">%(email)s</a>'"
 
-#: tests/end2end/test_user_view.py:146 tests/models/test_user.py:264 xl_auth/user/models.py:200
+#: tests/end2end/test_user_view.py:146 tests/models/test_user.py:264 xl_auth/user/models.py:247
 msgid "You will only see permissions for those collections that you are cataloging admin for."
 msgstr "Du ser enbart behörigheter på de sigler du är katalogiseringsadmin för."
 
@@ -687,7 +687,8 @@ msgstr "Ersätter"
 msgid "Replaced By"
 msgstr "Ersatt av"
 
-#: xl_auth/templates/collections/view.html:40
+#: xl_auth/templates/collections/view.html:40 xl_auth/templates/users/simple_view.html:19
+#: xl_auth/templates/users/view.html:44
 msgid " and "
 msgstr " och "
 
@@ -1144,10 +1145,60 @@ msgstr "Maila ut lösenordsåterställningslänk"
 
 #: xl_auth/user/models.py:69
 #, python-format
+msgid "Account activation and password reset for %(username)s at %(server_name)s"
+msgstr "Din kontoaktivering för Libris Login (%(server_name)s)"
+
+#: xl_auth/user/models.py:71
+#, python-format
+msgid ""
+"Hello %(full_name)s,\n"
+"\n"
+"You have been granted a user account at %(server_name)s by %(current_user)s. Use the secret link "
+"below to set a personal account password, and thereby activating your account:\n"
+"\n"
+"%(password_reset_url)s\n"
+"\n"
+"\n"
+"\n"
+"P.S. If you received this mail for no obvious reason, please inform us about it at libris@kb.se!\n"
+"\n"
+msgstr ""
+"Hej %(full_name)s,\n"
+"\n"
+"Du har tilldelats ett användarkonto på %(server_name)s av %(current_user)s. Klicka på länken "
+"nedan för att skapa ditt personliga lösenord (och därmed aktivera kontot):\n"
+"\n"
+"%(password_reset_url)s\n"
+"\n"
+"\n"
+"\n"
+"P.S. Observera att du inte kan svara på detta mail. Vid frågor, vänligen kontakta kundservice på "
+"libris@kb.se!\n"
+"\n"
+
+#: xl_auth/user/models.py:103
+#, python-format
+msgid ""
+"<p>Hello %(full_name)s,<br/><br/>You have been granted a user account at %(server_name)s by "
+"%(current_user)s. Use the secret link below to set a personal password, and thereby activating "
+"your account:<br/><br/><a "
+"href=\"%(password_reset_url)s\">%(password_reset_url)s</a><br/><br/></p><p><small>P.S. If you "
+"received this mail for no obvious reason, please inform us about it at <a "
+"href=\"mailto:libris@kb.se\">libris@kb.se</a>!</small></p>"
+msgstr ""
+"<p>Hej %(full_name)s,<br/><br/>Du har tilldelats ett användarkonto på %(server_name)s av "
+"%(current_user)s. Klicka på länken nedan för att skapa ditt personliga lösenord (och därmed "
+"aktivera kontot):<br/><br/><a "
+"href=\"%(password_reset_url)s\">%(password_reset_url)s</a><br/><br/></p><p><small>P.S. Observera"
+"  att du inte kan svara på detta mail. Vid frågor, vänligen kontakta <a "
+"href=\"mailto:libris@kb.se\">Libris kundservice</a>!</small></p>"
+
+#: xl_auth/user/models.py:109
+#, python-format
 msgid "Password reset for %(username)s at %(server_name)s"
 msgstr "Lösenordsåterställning för %(username)s (%(server_name)s)"
 
-#: xl_auth/user/models.py:72
+#: xl_auth/user/models.py:111
 #, python-format
 msgid ""
 "Hello %(full_name)s,\n"
@@ -1169,10 +1220,11 @@ msgstr ""
 "\n"
 "\n"
 "\n"
-"P.S. Om du inte vet varför du mottagit detta mail, vänligen kontakta kundtjänst på libris@kb.se!\n"
+"P.S. Om du inte vet varför du mottagit detta mail, vänligen kontakta kundservice på libris@kb.se!"
+"\n"
 "\n"
 
-#: xl_auth/user/models.py:83
+#: xl_auth/user/models.py:123
 #, python-format
 msgid ""
 "<p>Hello %(full_name)s,<br/><br/>Here is the secret link for resetting your personal account "
@@ -1185,7 +1237,7 @@ msgstr ""
 "lösenord:<br/><br/><a "
 "href=\"%(password_reset_url)s\">%(password_reset_url)s</a><br/><br/></p><p><small>P.S. Om du inte"
 " vet varför du mottagit detta mail, vänligen kontakta <a href=\"mailto:libris@kb.se\">Libris "
-"kundtjänst</a>!</small></p>"
+"kundservice</a>!</small></p>"
 
 #: xl_auth/user/views.py:40
 msgid "ToS approved."
@@ -1210,7 +1262,4 @@ msgstr "Användarinställningar uppdaterade för \"%(username)s\"."
 #, python-format
 msgid "Thank you for changing password for \"%(username)s\"."
 msgstr "Lösenord för \"%(username)s\" har ändrats."
-
-#~ msgid "Inactive Collections"
-#~ msgstr "Inaktiva sigler"
 
