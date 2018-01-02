@@ -32,7 +32,7 @@ Run the following commands to bootstrap your environment ::
     export FLASK_APP=$(PWD)/autoapp.py
     export FLASK_DEBUG=1
     flask db upgrade
-    flask create_user --email me@example.com --is-admin
+    flask create_user --email me@example.com -p password --is-admin --is-active
     npm start  # run webpack dev server and flask server using concurrently
 
 You will see a pretty welcome screen.
