@@ -60,6 +60,11 @@ class PasswordReset(SurrogatePK, Model):
         if user:
             return PasswordReset.query.filter_by(code=code, user=user).first()
 
+    @hybrid_property
+    def is_recent(self):
+        """Check if reset was created recently."""
+        return self.created_at > (datetime.utcnow() - timedelta(hours=2))
+
     def send_email(self, account_registration_from_user=None):
         """Email password reset link to the user, possibly in wording of initial registration."""
         password_reset_url = url_for('public.reset_password', email=self.user.email,
@@ -267,6 +272,10 @@ class User(UserMixin, SurrogatePK, Model):
     def get_cataloging_admin_permissions(self):
         """Return all cataloging admin permissions for this user."""
         return [perm for perm in self.permissions if perm.cataloging_admin]
+
+    def get_active_and_recent_password_resets(self):
+        """Return a list of active and recent password resets for this user."""
+        return [reset for reset in self.password_resets if reset.is_active and reset.is_recent]
 
     def save_as(self, current_user, commit=True, preserve_modified=False):
         """Save instance as 'current_user'."""

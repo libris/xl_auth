@@ -34,6 +34,7 @@ class Config(object):
     EMAIL_TIMEOUT = int(os.environ.get('EMAIL_TIMEOUT', '5'))
     OAUTH2_PROVIDER_TOKEN_EXPIRES_IN = int(
         os.environ.get('OAUTH2_PROVIDER_TOKEN_EXPIRES_IN', 3600))
+    MAX_ALLOWED_ACTIVE_PASSWORD_RESETS = 2
 
 
 class ProdConfig(Config):
