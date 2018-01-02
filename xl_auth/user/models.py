@@ -184,8 +184,6 @@ class User(UserMixin, SurrogatePK, Model):
     created_by_id = reference_col('users', nullable=False)
     created_by = relationship('User', remote_side=id, foreign_keys=created_by_id)
 
-    MAX_ALLOWED_ACTIVE_PASSWORD_RESETS = 2
-
     def __init__(self, email, full_name, password=None, **kwargs):
         """Create instance."""
         db.Model.__init__(self, email=email, full_name=full_name, **kwargs)

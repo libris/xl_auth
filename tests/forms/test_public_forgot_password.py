@@ -28,7 +28,7 @@ def test_validate_success(user):
     assert form.validate() is True
 
 
-def test_validate_too_many_recent_active_resets(user):
+def test_validate_too_many_recent_active_resets(app, user):
     """Too many recent active resets."""
     old_active_reset = PasswordResetFactory(user=user)
     old_active_reset.created_at = datetime.utcnow() - timedelta(hours=3)

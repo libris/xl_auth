@@ -5,6 +5,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from datetime import datetime
 
+from flask import current_app
 from flask_babel import lazy_gettext as _
 from flask_wtf import FlaskForm
 from wtforms import HiddenField, PasswordField, StringField
@@ -62,7 +63,7 @@ class ForgotPasswordForm(FlaskForm):
         user = User.get_by_email(self.username.data)
         if user:
             active_resets = user.get_active_and_recent_password_resets()
-            if len(active_resets) >= User.MAX_ALLOWED_ACTIVE_PASSWORD_RESETS:
+            if len(active_resets) >= current_app.config['MAX_ALLOWED_ACTIVE_PASSWORD_RESETS']:
                 self.username.errors.append(_('You already have an active password reset. Please '
                                               'check your email inbox (and your Spam folder) or '
                                               'try again later.'))
