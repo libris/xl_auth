@@ -6,7 +6,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: xl_auth 0.7.3\n"
+"Project-Id-Version: xl_auth 0.7.4\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-12-29 09:19+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -1129,10 +1129,42 @@ msgstr ""
 
 #: xl_auth/user/models.py:78
 #, python-format
+msgid "Account activation and password reset for %(username)s at %(server_name)s"
+msgstr ""
+
+#: xl_auth/user/models.py:71
+#, python-format
+msgid ""
+"Hello %(full_name)s,\n"
+"\n"
+"You have been granted a user account at %(server_name)s by %(current_user)s. Use the secret link "
+"below to set a personal account password, and thereby activating your account:\n"
+"\n"
+"%(password_reset_url)s\n"
+"\n"
+"\n"
+"\n"
+"P.S. If you received this mail for no obvious reason, please inform us about it at libris@kb.se!\n"
+"\n"
+msgstr ""
+
+#: xl_auth/user/models.py:103
+#, python-format
+msgid ""
+"<p>Hello %(full_name)s,<br/><br/>You have been granted a user account at %(server_name)s by "
+"%(current_user)s. Use the secret link below to set a personal password, and thereby activating "
+"your account:<br/><br/><a "
+"href=\"%(password_reset_url)s\">%(password_reset_url)s</a><br/><br/></p><p><small>P.S. If you "
+"received this mail for no obvious reason, please inform us about it at <a "
+"href=\"mailto:libris@kb.se\">libris@kb.se</a>!</small></p>"
+msgstr ""
+
+#: xl_auth/user/models.py:109
+#, python-format
 msgid "Password reset for %(username)s at %(server_name)s"
 msgstr ""
 
-#: xl_auth/user/models.py:81
+#: xl_auth/user/models.py:111
 #, python-format
 msgid ""
 "Hello %(full_name)s,\n"
@@ -1147,7 +1179,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: xl_auth/user/models.py:92
+#: xl_auth/user/models.py:123
 #, python-format
 msgid ""
 "<p>Hello %(full_name)s,<br/><br/>Here is the secret link for resetting your personal account "
