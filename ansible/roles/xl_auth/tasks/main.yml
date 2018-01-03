@@ -16,6 +16,7 @@
 - name: start postgres
   docker_container:
     name: postgres
+    hostname: postgres
     image: postgres:9.4-alpine
     state: started
     restart_policy: unless-stopped
@@ -33,6 +34,7 @@
 - name: start xl_auth
   docker_container:
     name: xl_auth
+    hostname: "{{ inventory_hostname }}"
     image: "{{ xl_auth_docker }}"
     pull: yes
     command: run -h 0.0.0.0 -p 5000 --with-threads
@@ -55,6 +57,7 @@
 - name: run 'flask db upgrade'
   docker_container:
     name: xl_auth_db_upgrade
+    hostname: xl_auth
     image: "{{ xl_auth_docker }}"
     interactive: yes
     tty: yes
@@ -71,6 +74,7 @@
 - name: run 'flask create_user -e libris@kb.se -p <my-secret> --is-active --is-admin --force'
   docker_container:
     name: xl_auth_create_user
+    hostname: xl_auth
     image: "{{ xl_auth_docker }}"
     interactive: yes
     tty: yes
@@ -88,6 +92,7 @@
 - name: run 'flask import_data'
   docker_container:
     name: xl_auth_import_data
+    hostname: xl_auth
     image: "{{ xl_auth_docker }}"
     interactive: yes
     tty: yes
