@@ -10,4 +10,80 @@
   when: logging_sysconfig.changed
   tags: logging
 
+- name: create /opt/logging and /opt/logging/elk directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - /opt
+    - /opt/logging
+    - /opt/logging/elk
+  tags: logging
+
+- name: upload gelf-xl_auth logstash config to /opt/logging/elk/
+  copy:
+    src: elk/gelf-xl_auth.conf
+    dest: /opt/logging/elk/gelf-xl_auth.conf
+  register: logstash_gelf_xl_auth_config
+  tags: logging
+
+- name: upload elk dockerfile to /opt/logging/elk/
+  copy:
+    src: elk/Dockerfile
+    dest: /opt/logging/elk/Dockerfile
+  tags: logging
+
+- name: build extended elk image
+  docker_image:
+    path: /opt/logging/elk/
+    name: elk-ext:611
+    push: no
+    state: present
+  register: elk_ext_build
+  tags: logging
+
+- name: start elk
+  docker_container:
+    name: elk
+    hostname: elk
+    image: elk-ext:611
+    state: started
+    restart: "{{ logstash_gelf_xl_auth_config.changed or elk_ext_build.changed }}"
+    restart_policy: unless-stopped
+    volume_driver: local
+    volumes:
+      - elk:/var/lib/elasticsearch
+      - /opt/logging/elk/gelf-xl_auth.conf:/etc/logstash/conf.d/40-gelf-xl_auth.conf
+    ports:
+      - 5601:5601
+      - 9200:9200
+      - 5044:5044
+      - 12201:12201/udp
+  tags: logging
+
+- name: upload filebeat.yml to /opt/logging/
+  copy:
+    src: filebeat.yml
+    dest: /opt/logging/filebeat.yml
+  register: filebeat_config
+  tags: logging
+
+- name: start filebeat
+  docker_container:
+    name: filebeat
+    hostname: filebeat
+    image: docker.elastic.co/beats/filebeat:6.1.1
+    command: -e -strict.perms=false
+    user: root
+    state: started
+    restart: "{{ filebeat_config.changed }}"
+    restart_policy: unless-stopped
+    volume_driver: local
+    volumes:
+      - /var/log:/mnt/log:ro
+      - /opt/logging/filebeat.yml:/usr/share/filebeat/filebeat.yml
+    links:
+      - elk
+  tags: logging
+
 ...

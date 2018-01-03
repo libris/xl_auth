@@ -17,12 +17,12 @@ filebeat.modules:
 
 #-------------------------- Elasticsearch output -----------------------------
 output.elasticsearch:
-  hosts: ["elk_stack:9200"]
+  hosts: ["elk:9200"]
 
 
 #================================ Kibana =====================================
 setup.kibana:
-  host: "http://elk_stack:5601"
+  host: "http://elk:5601"
 
 
 #=============================== Logging =====================================
