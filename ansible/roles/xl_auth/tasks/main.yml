@@ -20,6 +20,10 @@
     image: postgres:9.4-alpine
     state: started
     restart_policy: unless-stopped
+    log_driver: syslog
+    log_options:
+      tag: postgres
+      mode: non-blocking
     volume_driver: local
     volumes:
       - postgres:/var/lib/postgresql/data
@@ -40,6 +44,11 @@
     command: run -h 0.0.0.0 -p 5000 --with-threads
     state: started
     restart_policy: unless-stopped
+    log_driver: gelf
+    log_options:
+      gelf-address: udp://localhost:12201
+      tag: xl_auth
+      mode: non-blocking
     links:
       - postgres
     ports:
@@ -99,6 +108,9 @@
     detach: no
     command: "import_data --verbose --admin-email libris@kb.se --wipe-permissions
              {{ '--send-password-resets' if inventory_hostname == 'login.libris.kb.se' else '' }}"
+    log_driver: syslog
+    log_options:
+      tag: xl_auth_import_data
     links:
       - postgres
     env:
@@ -106,6 +118,7 @@
       PREFERRED_URL_SCHEME: https
       FLASK_DEBUG: 0
       SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
+  ignore_errors: yes
   when: xl_auth_force_import or start_xl_auth.changed
   tags: xl_auth
 
