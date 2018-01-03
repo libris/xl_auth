@@ -2,7 +2,7 @@
 
 - name: set nginx_ssl_enabled fact
   set_fact:
-    nginx_ssl_enabled: "{{ '.kb.se' in inventory_hostname }}"
+    nginx_ssl_enabled: "{{ inventory_hostname == 'login.libris.kb.se' }}"
   tags: nginx
 
 - name: nginx repo
