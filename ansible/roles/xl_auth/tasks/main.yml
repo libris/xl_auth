@@ -3,7 +3,14 @@
 - name: read data for creating xl_auth secret
   shell: "cat /etc/pki/tls/private/{{ inventory_hostname }}.key"
   changed_when: no
+  ignore_errors: yes
   register: ssl_key_contents
+  tags: xl_auth
+
+- name: set xl_auth_secret from ssl key
+  set_fact:
+    xl_auth_secret: "{{ ssl_key_contents.stdout | hash('md5') }}"
+  when: ssl_key_contents | success
   tags: xl_auth
 
 - name: start postgres
@@ -37,7 +44,7 @@
       - 5000:5000
     env:
       SERVER_NAME: "{{ inventory_hostname }}"
-      XL_AUTH_SECRET: "{{ ssl_key_contents.stdout | hash('md5') }}"
+      XL_AUTH_SECRET: "{{ xl_auth_secret | default('not_secret, as fallback for `vagrant up`') }}"
       PREFERRED_URL_SCHEME: https
       FLASK_DEBUG: 0
       SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
@@ -86,7 +93,7 @@
     tty: yes
     detach: no
     command: "import_data --verbose --admin-email libris@kb.se --wipe-permissions
-             --send-password-resets"
+             {{ '--send-password-resets' if inventory_hostname == 'login.libris.kb.se' else '' }}"
     links:
       - postgres
     env:
