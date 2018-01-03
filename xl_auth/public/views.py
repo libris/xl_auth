@@ -3,7 +3,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from flask import Blueprint, current_app, flash, redirect, render_template, request, url_for
+from flask import Blueprint, abort, current_app, flash, redirect, render_template, request, url_for
 from flask_babel import lazy_gettext as _
 from flask_login import current_user, login_required, login_user, logout_user
 
@@ -11,8 +11,8 @@ from six.moves.urllib_parse import quote
 
 from ..extensions import login_manager
 from ..public.forms import ForgotPasswordForm, LoginForm, ResetPasswordForm
-from ..user.models import PasswordReset, User
-from ..utils import flash_errors, get_redirect_target
+from ..user.models import FailedLoginAttempt, PasswordReset, User
+from ..utils import flash_errors, get_redirect_target, get_remote_addr
 
 blueprint = Blueprint('public', __name__, static_folder='../static')
 
@@ -35,6 +35,9 @@ def home():
     login_form = LoginForm(request.form)
     # Handle logging in.
     if request.method == 'POST':
+        username = login_form.username.data
+        if username and FailedLoginAttempt.too_many_recent_failures_for(username):
+            abort(429)
         if login_form.validate_on_submit():
             redirect_url = get_redirect_target() or url_for('user.profile')
             login_user(login_form.user)
@@ -46,6 +49,8 @@ def home():
                 return redirect(
                     url_for('user.approve_tos') + '?next={}'.format(quote(redirect_url)))
         else:
+            if username:
+                FailedLoginAttempt(username, get_remote_addr()).save()
             flash_errors(login_form)
 
     return render_template('public/home.html', login_form=login_form,

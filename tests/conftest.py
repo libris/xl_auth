@@ -30,7 +30,7 @@ def app():
 @pytest.fixture(scope='function')
 def testapp(app):
     """A webtest app."""
-    return TestApp(app)
+    return TestApp(app, extra_environ={'REMOTE_ADDR': str('127.0.0.1')})
 
 
 # noinspection PyShadowingNames
