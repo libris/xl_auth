@@ -24,8 +24,8 @@
   changed_when: no
   tags: docker
 
-- name: install docker-compose-1.18.1
-  pip: name=docker-compose version=1.18.1 state=present
+- name: install docker-compose-1.18
+  pip: name=docker-compose version=1.18 state=present
   tags: docker
 
 - name: create /etc/docker directory
