@@ -52,7 +52,9 @@ services:
       - 12201:12201/udp
     volumes:
       - elk:/var/lib/elasticsearch
-      - ./ansible/roles/logging/files/elk/gelf-xl_auth.conf:/etc/logstash/conf.d/40-gelf-xl_auth.conf
+      - ./ansible/roles/logging/files/elk/02-beats-input.conf:/etc/logstash/conf.d/02-beats-input.conf
+      - ./ansible/roles/logging/files/elk/03-gelf-input.conf:/etc/logstash/conf.d/03-gelf-input.conf
+      - ./ansible/roles/logging/files/elk/11-nginx.conf:/etc/logstash/conf.d/11-nginx.conf
     networks:
       - logging
 

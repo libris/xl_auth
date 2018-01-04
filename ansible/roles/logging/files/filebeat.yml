@@ -15,9 +15,9 @@ filebeat.modules:
 
 #================================ Outputs ====================================
 
-#-------------------------- Elasticsearch output -----------------------------
-output.elasticsearch:
-  hosts: ["elk:9200"]
+#---------------------------- Logstash output --------------------------------
+output.logstash:
+  hosts: ["elk:5044"]
 
 
 #================================ Kibana =====================================
@@ -26,6 +26,8 @@ setup.kibana:
 
 
 #=============================== Logging =====================================
-logging.json: true
+#logging.level: debug
+logging.metrics.enabled: true
+logging.metrics.period: 60s
 
 ...
