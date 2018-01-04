@@ -5,10 +5,10 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from datetime import datetime
 
-from flask import url_for
+from flask import current_app, url_for
 from flask_babel import gettext as _
 
-from xl_auth.user.models import User
+from xl_auth.user.models import FailedLoginAttempt, User
 
 
 def test_can_log_in_returns_200(user, testapp):
@@ -137,7 +137,7 @@ def test_sees_error_message_if_username_doesnt_exist(user, testapp):
     """Show error if username doesn't exist."""
     # Goes to homepage.
     res = testapp.get('/')
-    # Fills out login form, password incorrect.
+    # Fills out login form, username incorrect.
     form = res.forms['loginForm']
     form['username'] = 'unknown@nowhere.com'
     form['password'] = 'myPrecious'
@@ -145,3 +145,40 @@ def test_sees_error_message_if_username_doesnt_exist(user, testapp):
     res = form.submit()
     # Sees error.
     assert _('Unknown username/email') in res
+
+
+def test_block_login_on_too_many_failed_attempts(user, testapp):
+    """Temporarily block login if too many failed attempts."""
+    current_app.config['XL_AUTH_FAILED_LOGIN_MAX_ATTEMPTS'] = 1
+    # Goes to homepage.
+    res = testapp.get('/')
+    # Fills out login form, password incorrect.
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'wrong'
+    # Submits.
+    res = form.submit()
+    # Sees error.
+    assert _('Invalid password') in res
+
+    # Goes to homepage a second time.
+    res = testapp.get('/')
+    # Fills out login form, password incorrect.
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'wrong'
+    # Submits and sees error.
+    res = form.submit(expect_errors=True)
+    assert res.status_code == 429
+
+    FailedLoginAttempt.purge_failed_for_username_and_ip(user.email, '127.0.0.1')
+
+    # Goes to homepage a third time.
+    res = testapp.get('/')
+    # Fills out login form, password incorrect.
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits.
+    res = form.submit().follow()
+    assert res.status_code == 200

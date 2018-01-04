@@ -146,7 +146,7 @@ def test_sees_error_message_if_attempting_to_use_reset_code_twice(password_reset
 def test_sees_error_message_if_too_many_active_password_resets(user, testapp):
     """Show error if too many active password resets exist."""
     # Create active password resets
-    for _i in range(0, current_app.config['MAX_ALLOWED_ACTIVE_PASSWORD_RESETS']):
+    for _i in range(0, current_app.config['XL_AUTH_MAX_ACTIVE_PASSWORD_RESETS']):
         # Goes to homepage.
         res = testapp.get('/')
         # Clicks on 'Forgot password'.
@@ -159,7 +159,7 @@ def test_sees_error_message_if_too_many_active_password_resets(user, testapp):
         assert res.status_code == 200
 
     active_resets = user.get_active_and_recent_password_resets()
-    assert len(active_resets) == current_app.config['MAX_ALLOWED_ACTIVE_PASSWORD_RESETS']
+    assert len(active_resets) == current_app.config['XL_AUTH_MAX_ACTIVE_PASSWORD_RESETS']
 
     # Try to create one additional password reset
     # Goes to homepage.
