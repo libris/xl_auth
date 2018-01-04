@@ -1,10 +1,11 @@
 ---
 
-version: '3.1'
+version: '3.4'
 services:
   postgres:
     image: postgres:9.4-alpine
     container_name: postgres
+    hostname: postgres
     restart: always
     volumes:
       - postgres:/var/lib/postgresql/data
@@ -16,10 +17,19 @@ services:
       POSTGRES_DB: prod
       POSTGRES_USER: xl_auth
       POSTGRES_PASSWORD: xl_auth
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "udp://127.0.0.1:8080"
+        #mode: non-blocking
+    depends_on:
+      - filebeat
 
   xl_auth:
     image: mblomdahl/xl_auth:latest
     container_name: xl_auth
+    domainname: logging-test.kb.se
+    hostname: xl_auth
     restart: always
     environment:
       FLASK_DEBUG: 0
@@ -31,11 +41,59 @@ services:
     depends_on:
       - postgres
 
+  elk_stack:
+    image: sebp/elk:611
+    container_name: elk_stack
+    hostname: elk_stack
+    ports:
+      - 5601:5601
+      - 9200:9200
+      - 5044:5044
+    networks:
+      - logging
+
+  metricbeat:
+    image: docker.elastic.co/beats/metricbeat:6.1.1
+    container_name: metricbeat
+    hostname: metricbeat
+    command: -e -system.hostfs=/hostfs -strict.perms=false
+    user: root
+    volumes:
+      - /:/hostfs:ro
+      - /proc:/hostfs/proc:ro
+      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./ansible/roles/logging/files/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
+    networks:
+      - logging
+    depends_on:
+      - elk_stack
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:6.1.1
+    container_name: filebeat
+    hostname: filebeat
+    command: -e -strict.perms=false
+    user: root
+    volumes:
+      - /var/log:/mnt/log:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - ./ansible/roles/logging/files/filebeat.yml:/usr/share/filebeat/filebeat.yml
+    ports:
+      - 8080:8080
+    networks:
+      - xl_auth
+      - logging
+    depends_on:
+      - elk_stack
+
 volumes:
   postgres:
     driver: local
 
 networks:
   xl_auth:
+  logging:
 
 ...

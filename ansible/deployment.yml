@@ -8,5 +8,5 @@
     - docker
     - nginx
     - xl_auth
-
+    - logging
 ...
