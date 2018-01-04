@@ -195,6 +195,14 @@ DB Models
 Changelog
 =========
 
+v. 0.7.5
+--------
+
+* Security improvements (`#154 <https://github.com/libris/xl_auth/issues/154>`_,
+  `#155 <https://github.com/libris/xl_auth/issues/155>`_)
+* UX enhancements (`#114 <https://github.com/libris/xl_auth/issues/114>`_)
+
+
 v. 0.7.4
 --------
 
