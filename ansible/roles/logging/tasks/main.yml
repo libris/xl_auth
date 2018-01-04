@@ -50,6 +50,9 @@
     state: started
     restart: "{{ logstash_gelf_xl_auth_config.changed or elk_ext_build.changed }}"
     restart_policy: unless-stopped
+    log_driver: syslog
+    log_options:
+      tag: elk
     volume_driver: local
     volumes:
       - elk:/var/lib/elasticsearch
@@ -78,6 +81,9 @@
     state: started
     restart: "{{ filebeat_config.changed }}"
     restart_policy: unless-stopped
+    log_driver: syslog
+    log_options:
+      tag: filebeat
     volume_driver: local
     volumes:
       - /var/log:/mnt/log:ro

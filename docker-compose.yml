@@ -17,11 +17,6 @@ services:
       POSTGRES_DB: prod
       POSTGRES_USER: xl_auth
       POSTGRES_PASSWORD: xl_auth
-    logging:
-      driver: syslog
-      options:
-        tag: postgres
-        mode: non-blocking
 
   xl_auth:
     image: mblomdahl/xl_auth:latest

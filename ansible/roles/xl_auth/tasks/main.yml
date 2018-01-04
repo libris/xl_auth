@@ -23,7 +23,6 @@
     log_driver: syslog
     log_options:
       tag: postgres
-      mode: non-blocking
     volume_driver: local
     volumes:
       - postgres:/var/lib/postgresql/data
@@ -68,10 +67,12 @@
     name: xl_auth_db_upgrade
     hostname: xl_auth
     image: "{{ xl_auth_docker }}"
+    recreate: yes
     interactive: yes
     tty: yes
     detach: no
     command: db upgrade
+    log_driver: json-file
     links:
       - postgres
     env:
@@ -85,11 +86,13 @@
     name: xl_auth_create_user
     hostname: xl_auth
     image: "{{ xl_auth_docker }}"
+    recreate: yes
     interactive: yes
     tty: yes
     detach: no
     command: "create_user -e libris@kb.se -n SuperAdmin -p {{ xl_auth_admin_pass }} --is-active
              --is-admin --force"
+    log_driver: json-file
     links:
       - postgres
     env:
@@ -103,6 +106,7 @@
     name: xl_auth_import_data
     hostname: xl_auth
     image: "{{ xl_auth_docker }}"
+    recreate: yes
     interactive: yes
     tty: yes
     detach: no
