@@ -1,3 +1,7 @@
 ---
 
+logging_filebeat_host: "elk:5044"
+
+logging_kibana_host: "http://elk:5601"
+
 ...

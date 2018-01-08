@@ -57,9 +57,9 @@
       - 12201:12201/udp
   tags: logging
 
-- name: upload filebeat.yml to /opt/logging/
-  copy:
-    src: filebeat.yml
+- name: template /opt/logging/filebeat.yml
+  template:
+    src: filebeat.yml.j2
     dest: /opt/logging/filebeat.yml
   register: filebeat_config
   tags: logging
