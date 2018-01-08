@@ -45,7 +45,7 @@
     restart_policy: unless-stopped
     log_driver: gelf
     log_options:
-      gelf-address: udp://localhost:12201
+      gelf-address: "{{ xl_auth_gelf_address }}"
       tag: xl_auth
       mode: non-blocking
     links:

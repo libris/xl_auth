@@ -1,0 +1,6 @@
+---
+
+logging_filebeat_host: "{{ (inventory_hostname == 'login.libris.kb.se') | ternary(
+                       'log01.kb.se:5044', 'elk:5044') }}"
+
+...
