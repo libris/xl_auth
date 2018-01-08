@@ -20,25 +20,16 @@
     - /opt/logging/elk
   tags: logging
 
-- name: upload 02-beats-input.conf to /opt/logging/elk/
+- name: upload logstash configs to /opt/logging/elk/
   copy:
-    src: elk/02-beats-input.conf
-    dest: /opt/logging/elk/02-beats-input.conf
-  register: logstash_beats_input_config
-  tags: logging
-
-- name: upload 03-gelf-input.conf to /opt/logging/elk/
-  copy:
-    src: elk/03-gelf-input.conf
-    dest: /opt/logging/elk/03-gelf-input.conf
-  register: logstash_gelf_input_config
-  tags: logging
-
-- name: upload 11-nginx.conf to /opt/logging/elk/
-  copy:
-    src: elk/11-nginx.conf
-    dest: /opt/logging/elk/11-nginx.conf
-  register: logstash_nginx_config
+    src: "elk/{{ item }}"
+    dest: "/opt/logging/elk/{{ item }}"
+  with_items:
+    - 02-beats-input.conf
+    - 03-gelf-input.conf
+    - 11-nginx.conf
+    - 30-output.conf
+  register: logstash_configs
   tags: logging
 
 - name: upload elk dockerfile to /opt/logging/elk/
@@ -56,14 +47,13 @@
   register: elk_ext_build
   tags: logging
 
-- name: start elk
+- name: (re-)start elk
   docker_container:
     name: elk
     hostname: elk
     image: elk-ext:611
     state: started
-    restart: "{{ logstash_beats_input_config.changed or logstash_gelf_input_config.changed
-             or logstash_nginx_config.changed or elk_ext_build.changed }}"
+    restart: "{{ logstash_configs.changed or elk_ext_build.changed }}"
     restart_policy: unless-stopped
     log_driver: syslog
     log_options:
@@ -74,6 +64,7 @@
       - /opt/logging/elk/02-beats-input.conf:/etc/logstash/conf.d/02-beats-input.conf
       - /opt/logging/elk/03-gelf-input.conf:/etc/logstash/conf.d/03-gelf-input.conf
       - /opt/logging/elk/11-nginx.conf:/etc/logstash/conf.d/11-nginx.conf
+      - /opt/logging/elk/30-output.conf:/etc/logstash/conf.d/30-output.conf
     ports:
       - 5601:5601
       - 9200:9200
@@ -88,7 +79,7 @@
   register: filebeat_config
   tags: logging
 
-- name: start filebeat
+- name: (re-)start filebeat
   docker_container:
     name: filebeat
     hostname: filebeat
