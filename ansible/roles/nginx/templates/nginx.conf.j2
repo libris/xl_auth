@@ -28,5 +28,9 @@ http {
 
     #gzip  on;
 
+    log_format  xl_auth  '$remote_addr - $sent_http_x_username [$time_local] '
+                         '"$request" $status $body_bytes_sent '
+                         '"$http_referer" "$http_user_agent"';
+
     include /etc/nginx/conf.d/*.conf;
 }
