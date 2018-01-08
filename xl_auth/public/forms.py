@@ -63,7 +63,7 @@ class ForgotPasswordForm(FlaskForm):
         user = User.get_by_email(self.username.data)
         if user:
             active_resets = user.get_active_and_recent_password_resets()
-            if len(active_resets) >= current_app.config['MAX_ALLOWED_ACTIVE_PASSWORD_RESETS']:
+            if len(active_resets) >= current_app.config['XL_AUTH_MAX_ACTIVE_PASSWORD_RESETS']:
                 self.username.errors.append(_('You already have an active password reset. Please '
                                               'check your email inbox (and your Spam folder) or '
                                               'try again later.'))

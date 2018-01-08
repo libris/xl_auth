@@ -64,7 +64,7 @@ def register_error_handlers(app):
         error_code = getattr(error, 'code', 500)
         return render_template('{0}.html'.format(error_code)), error_code
 
-    for errcode in [401, 403, 404, 500]:
+    for errcode in [401, 403, 404, 429, 500]:
         app.errorhandler(errcode)(render_error)
     return None
 

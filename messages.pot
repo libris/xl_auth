@@ -1,14 +1,14 @@
 # Translations template for xl_auth.
-# Copyright (C) 2017 National Library of Sweden
+# Copyright (C) 2018 National Library of Sweden
 # This file is distributed under the same license as the xl_auth project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: xl_auth 0.7.4\n"
+"Project-Id-Version: xl_auth 0.7.5\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-12-29 09:19+0100\n"
+"POT-Creation-Date: 2018-01-04 18:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -204,45 +204,46 @@ msgstr ""
 msgid "Collections"
 msgstr ""
 
-#: tests/end2end/test_public_logging_in.py:118 xl_auth/public/views.py:102
+#: tests/end2end/test_public_logging_in.py:118 xl_auth/public/views.py:107
 msgid "You are logged out."
 msgstr ""
 
-#: tests/end2end/test_public_logging_in.py:132 tests/forms/test_public_login.py:45
-#: xl_auth/public/forms.py:40
+#: tests/end2end/test_public_logging_in.py:132 tests/end2end/test_public_logging_in.py:162
+#: tests/forms/test_public_login.py:45 xl_auth/public/forms.py:41
 msgid "Invalid password"
 msgstr ""
 
 #: tests/end2end/test_public_logging_in.py:147 tests/end2end/test_public_reset_password.py:80
-#: tests/forms/test_public_forgot_password.py:17 tests/forms/test_public_login.py:35
-#: xl_auth/public/forms.py:36 xl_auth/public/forms.py:73
+#: tests/forms/test_public_forgot_password.py:21 tests/forms/test_public_login.py:35
+#: xl_auth/public/forms.py:37 xl_auth/public/forms.py:74
 msgid "Unknown username/email"
 msgstr ""
 
-#: tests/end2end/test_public_reset_password.py:30 tests/end2end/test_public_reset_password.py:157
-#: tests/end2end/test_public_reset_password.py:173 xl_auth/templates/public/home.html:45
+#: tests/end2end/test_public_reset_password.py:30 tests/end2end/test_public_reset_password.py:153
+#: tests/end2end/test_public_reset_password.py:168 xl_auth/templates/public/home.html:45
 msgid "Forgot password?"
 msgstr ""
 
 #: tests/end2end/test_public_reset_password.py:101 tests/forms/test_public_reset_password.py:20
-#: xl_auth/public/forms.py:108
+#: xl_auth/public/forms.py:109
 #, python-format
 msgid "Reset code \"%(code)s\" does not exit"
 msgstr ""
 
 #: tests/end2end/test_public_reset_password.py:119 tests/forms/test_public_reset_password.py:32
-#: xl_auth/public/forms.py:99
+#: xl_auth/public/forms.py:100
 #, python-format
 msgid "Reset code \"%(code)s\" expired at %(isoformat)s"
 msgstr ""
 
 #: tests/end2end/test_public_reset_password.py:143 tests/forms/test_public_reset_password.py:44
-#: xl_auth/public/forms.py:104
+#: xl_auth/public/forms.py:105
 #, python-format
 msgid "Reset code \"%(code)s\" already used (%(isoformat)s)"
 msgstr ""
 
-#: tests/end2end/test_public_reset_password.py:181 xl_auth/public/forms.py:66
+#: tests/end2end/test_public_reset_password.py:175 tests/forms/test_public_forgot_password.py:48
+#: xl_auth/public/forms.py:67
 msgid ""
 "You already have an active password reset. Please check your email inbox (and your Spam folder) "
 "or try again later."
@@ -299,7 +300,7 @@ msgid "No"
 msgstr ""
 
 #: tests/end2end/test_user_editing.py:124 tests/end2end/test_user_editing.py:148
-#: xl_auth/public/forms.py:53 xl_auth/public/forms.py:81 xl_auth/templates/users/home.html:26
+#: xl_auth/public/forms.py:54 xl_auth/public/forms.py:82 xl_auth/templates/users/home.html:26
 #: xl_auth/templates/users/home.html:90 xl_auth/templates/users/inspect.html:124
 #: xl_auth/templates/users/inspect.html:174 xl_auth/user/forms.py:13
 msgid "Email"
@@ -352,7 +353,7 @@ msgstr ""
 msgid "View User '<a href=\"mailto:%(email)s\">%(email)s</a>'"
 msgstr ""
 
-#: tests/end2end/test_user_view.py:146 tests/models/test_user.py:264 xl_auth/user/models.py:209
+#: tests/end2end/test_user_view.py:146 tests/models/test_user.py:264 xl_auth/user/models.py:295
 msgid "You will only see permissions for those collections that you are cataloging admin for."
 msgstr ""
 
@@ -411,7 +412,7 @@ msgstr ""
 msgid "Cataloging admin rights can only be granted by system admins."
 msgstr ""
 
-#: tests/forms/test_public_login.py:56 xl_auth/public/forms.py:44
+#: tests/forms/test_public_login.py:56 xl_auth/public/forms.py:45
 msgid "User not activated"
 msgstr ""
 
@@ -551,34 +552,34 @@ msgstr ""
 msgid "--- Select Collection ---"
 msgstr ""
 
-#: xl_auth/public/forms.py:19 xl_auth/templates/public/home.html:39
+#: xl_auth/public/forms.py:20 xl_auth/templates/public/home.html:39
 msgid "Username"
 msgstr ""
 
-#: xl_auth/public/forms.py:20 xl_auth/public/forms.py:82 xl_auth/templates/public/home.html:41
+#: xl_auth/public/forms.py:21 xl_auth/public/forms.py:83 xl_auth/templates/public/home.html:41
 #: xl_auth/templates/public/reset_password.html:16 xl_auth/templates/users/change_password.html:16
 #: xl_auth/user/forms.py:168
 msgid "Password"
 msgstr ""
 
-#: xl_auth/public/forms.py:83 xl_auth/user/forms.py:169
+#: xl_auth/public/forms.py:84 xl_auth/user/forms.py:169
 msgid "Verify password"
 msgstr ""
 
-#: xl_auth/public/forms.py:85 xl_auth/user/forms.py:170
+#: xl_auth/public/forms.py:86 xl_auth/user/forms.py:170
 msgid "Passwords must match"
 msgstr ""
 
-#: xl_auth/public/views.py:43
+#: xl_auth/public/views.py:46
 msgid "You are logged in."
 msgstr ""
 
-#: xl_auth/public/views.py:65
+#: xl_auth/public/views.py:70
 #, python-format
 msgid "Password reset link sent to %(email)s."
 msgstr ""
 
-#: xl_auth/public/views.py:87
+#: xl_auth/public/views.py:92
 #, python-format
 msgid "Password for \"%(username)s\" has been reset."
 msgstr ""
@@ -593,6 +594,14 @@ msgstr ""
 
 #: xl_auth/templates/404.html:4
 msgid "Page Not Found"
+msgstr ""
+
+#: xl_auth/templates/429.html:4
+msgid "Too many requests"
+msgstr ""
+
+#: xl_auth/templates/429.html:10
+msgid "You have made too many requests. Please try again later."
 msgstr ""
 
 #: xl_auth/templates/500.html:4
@@ -615,7 +624,7 @@ msgstr ""
 msgid "xl_auth"
 msgstr ""
 
-#: xl_auth/templates/nav.html:38
+#: xl_auth/templates/nav.html:38 xl_auth/templates/nav.html:39
 msgid "Log out"
 msgstr ""
 
@@ -1127,12 +1136,12 @@ msgstr ""
 msgid "Send password reset email"
 msgstr ""
 
-#: xl_auth/user/models.py:78
+#: xl_auth/user/models.py:75
 #, python-format
 msgid "Account activation and password reset for %(username)s at %(server_name)s"
 msgstr ""
 
-#: xl_auth/user/models.py:71
+#: xl_auth/user/models.py:77
 #, python-format
 msgid ""
 "Hello %(full_name)s,\n"
@@ -1148,7 +1157,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: xl_auth/user/models.py:103
+#: xl_auth/user/models.py:109
 #, python-format
 msgid ""
 "<p>Hello %(full_name)s,<br/><br/>You have been granted a user account at %(server_name)s by "
@@ -1159,12 +1168,12 @@ msgid ""
 "href=\"mailto:libris@kb.se\">libris@kb.se</a>!</small></p>"
 msgstr ""
 
-#: xl_auth/user/models.py:109
+#: xl_auth/user/models.py:115
 #, python-format
 msgid "Password reset for %(username)s at %(server_name)s"
 msgstr ""
 
-#: xl_auth/user/models.py:111
+#: xl_auth/user/models.py:117
 #, python-format
 msgid ""
 "Hello %(full_name)s,\n"
@@ -1179,7 +1188,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: xl_auth/user/models.py:123
+#: xl_auth/user/models.py:129
 #, python-format
 msgid ""
 "<p>Hello %(full_name)s,<br/><br/>Here is the secret link for resetting your personal account "
