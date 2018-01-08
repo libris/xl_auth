@@ -1,61 +1,18 @@
 ---
 
-- name: template sysctl elk-monitoring.conf
-  template: src=elk-monitoring.conf.j2 dest=/usr/lib/sysctl.d/elk-monitoring.conf
-  register: logging_sysconfig
-  tags: logging
-
-- name: apply sysctl system config
-  shell: sysctl --system
-  when: logging_sysconfig.changed
-  tags: logging
-
-- name: create /opt/logging and /opt/logging/elk directories
+- name: create /opt/logging directory
   file:
     path: "{{ item }}"
     state: directory
   with_items:
     - /opt
     - /opt/logging
-    - /opt/logging/elk
   tags: logging
 
-- name: upload logstash configs to /opt/logging/elk/
-  copy:
-    src: "elk/{{ item }}"
-    dest: "/opt/logging/elk/{{ item }}"
-  with_items:
-    - 02-beats-input.conf
-    - 03-gelf-input.conf
-    - 11-nginx.conf
-    - 30-output.conf
-  register: logstash_configs
-  tags: logging
-
-- name: (re-)start elk
-  docker_container:
-    name: elk
-    hostname: elk
-    image: sebp/elk:611
-    state: started
-    restart: "{{ logstash_configs.changed }}"
-    restart_policy: unless-stopped
-    log_driver: syslog
-    log_options:
-      tag: elk
-    volume_driver: local
-    volumes:
-      - elk:/var/lib/elasticsearch
-      - /opt/logging/elk/02-beats-input.conf:/etc/logstash/conf.d/02-beats-input.conf
-      - /opt/logging/elk/03-gelf-input.conf:/etc/logstash/conf.d/03-gelf-input.conf
-      - /opt/logging/elk/11-nginx.conf:/etc/logstash/conf.d/11-nginx.conf
-      - /opt/logging/elk/30-output.conf:/etc/logstash/conf.d/30-output.conf
-    ports:
-      - 5601:5601
-      - 9200:9200
-      - 5044:5044
-      - 12201:12201/udp
-  tags: logging
+- name: deploy host-local elk stack
+  import_tasks: local-elk-setup.yml
+  when: inventory_hostname != 'login.libris.kb.se'
+  tags: logging, elk
 
 - name: template /opt/logging/filebeat.yml
   template:
@@ -81,8 +38,7 @@
     volumes:
       - /var/log:/mnt/log:ro
       - /opt/logging/filebeat.yml:/usr/share/filebeat/filebeat.yml
-    links:
-      - elk
+    links: "{{ ['elk'] if logging_filebeat_host == 'elk:5044' else [] }}"
   tags: logging
 
 ...
