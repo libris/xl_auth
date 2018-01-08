@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 0.7.5\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-01-04 18:01+0100\n"
+"POT-Creation-Date: 2018-01-08 15:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -155,8 +155,9 @@ msgstr ""
 #: tests/forms/test_user_edit_details.py:34 tests/forms/test_user_register.py:44
 #: xl_auth/collection/forms.py:41 xl_auth/collection/forms.py:73 xl_auth/oauth/client/forms.py:40
 #: xl_auth/oauth/client/forms.py:67 xl_auth/permission/forms.py:78 xl_auth/permission/forms.py:142
-#: xl_auth/permission/forms.py:165 xl_auth/permission/forms.py:217 xl_auth/user/forms.py:77
-#: xl_auth/user/forms.py:126 xl_auth/user/forms.py:160 xl_auth/user/forms.py:179
+#: xl_auth/permission/forms.py:165 xl_auth/permission/forms.py:217 xl_auth/templates/403.html:10
+#: xl_auth/user/forms.py:77 xl_auth/user/forms.py:126 xl_auth/user/forms.py:160
+#: xl_auth/user/forms.py:179
 msgid "You do not have sufficient privileges for this operation."
 msgstr ""
 
@@ -584,10 +585,6 @@ msgstr ""
 msgid "Password for \"%(username)s\" has been reset."
 msgstr ""
 
-#: xl_auth/templates/401.html:4
-msgid "Unauthorized"
-msgstr ""
-
 #: xl_auth/templates/403.html:4
 msgid "Forbidden"
 msgstr ""
@@ -596,8 +593,18 @@ msgstr ""
 msgid "Page Not Found"
 msgstr ""
 
+#: xl_auth/templates/404.html:10
+#, python-format
+msgid "The page \"%(url)s\" doesn't exist."
+msgstr ""
+
+#: xl_auth/templates/404.html:11
+#, python-format
+msgid "Want to <a href=\"%(url)s\">go home</a> instead?"
+msgstr ""
+
 #: xl_auth/templates/429.html:4
-msgid "Too many requests"
+msgid "Too Many Requests"
 msgstr ""
 
 #: xl_auth/templates/429.html:10
@@ -605,7 +612,15 @@ msgid "You have made too many requests. Please try again later."
 msgstr ""
 
 #: xl_auth/templates/500.html:4
-msgid "Server error"
+msgid "Server Error"
+msgstr ""
+
+#: xl_auth/templates/500.html:10
+msgid "Sorry, something went wrong in our system."
+msgstr ""
+
+#: xl_auth/templates/500.html:11
+msgid "Please let us know and try again later."
 msgstr ""
 
 #: xl_auth/templates/footer.html:5
