@@ -32,28 +32,13 @@
   register: logstash_configs
   tags: logging
 
-- name: upload elk dockerfile to /opt/logging/elk/
-  copy:
-    src: elk/Dockerfile
-    dest: /opt/logging/elk/Dockerfile
-  tags: logging
-
-- name: build extended elk image
-  docker_image:
-    path: /opt/logging/elk/
-    name: elk-ext:611
-    push: no
-    state: present
-  register: elk_ext_build
-  tags: logging
-
 - name: (re-)start elk
   docker_container:
     name: elk
     hostname: elk
-    image: elk-ext:611
+    image: sebp/elk:611
     state: started
-    restart: "{{ logstash_configs.changed or elk_ext_build.changed }}"
+    restart: "{{ logstash_configs.changed }}"
     restart_policy: unless-stopped
     log_driver: syslog
     log_options:
