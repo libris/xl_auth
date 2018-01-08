@@ -25,6 +25,32 @@ def test_can_log_in_returns_200(user, testapp):
     assert res.status_code == 200
 
 
+def test_x_username_header_is_applied_upon_login(user, testapp):
+    """X-Username header is set when logged in."""
+    # Goes to homepage.
+    res = testapp.get('/')
+    # No X-Username unless authenticated.
+    assert 'X-Username' not in res.headers
+    # Fills out login form.
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits.
+    res = form.submit()
+    assert res.status_code == 302
+    # X-Username matches username after successful login.
+    assert res.headers['X-Username'] == user.email
+    # Goes to some other page.
+    res = testapp.get(url_for('collection.home'))
+    assert res.status_code == 200
+    # X-Username still set.
+    assert res.headers['X-Username'] == user.email
+    # Logs out again.
+    res = testapp.get(url_for('public.logout')).follow()
+    # Again no X-Username header set.
+    assert 'X-Username' not in res.headers
+
+
 def test_user_must_approve_tos_on_login_if_unset(user, testapp):
     """After login, the user is requested to approve ToS if not done already."""
     user.tos_approved_at = None
