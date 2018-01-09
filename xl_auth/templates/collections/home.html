@@ -29,7 +29,7 @@
                 <th class="col-md-1">{{ _('Code') }}</th>
                 <th class="col-md-7">{{ _('Friendly Name') }}</th>
                 <th class="hidden-xs col-md-1">{{ _('Category') }}</th>
-                <th class="col-md-1">{{ _('Users') }}</th>
+                <th class="hidden-xs col-md-1">{{ _('Users') }}</th>
                 <th class="hidden-xs min-width-90px">{{ _('Created At') }}</th>
                 {% if current_user.is_admin %}
                     <th class="col-md-1"></th>
@@ -49,7 +49,7 @@
                     </td>
                     <td>{{ collection.friendly_name }}</td>
                     <td class="hidden-xs">{{ _(collection.category.capitalize()) if collection.category in ['bibliography', 'library'] else _('No category') }}</td>
-                    <td>{{ collection.permissions | length }}</td>
+                    <td class="hidden-xs">{{ collection.permissions | length }}</td>
                     <td class="hidden-xs">{{ collection.created_at.strftime('%y-%m-%d') }}</td>
                     {% if current_user.is_admin %}
                         <td class="actions">
@@ -92,7 +92,7 @@
                 <th class="col-md-1">{{ _('Code') }}</th>
                 <th class="col-md-7">{{ _('Friendly Name') }}</th>
                 <th class="hidden-xs col-md-1">{{ _('Category') }}</th>
-                <th class="col-md-1">{{ _('Users') }}</th>
+                <th class="hidden-xs col-md-1">{{ _('Users') }}</th>
                 <th class="hidden-xs min-width-90px">{{ _('Created At') }}</th>
                 {% if current_user.is_admin %}
                     <th class="col-md-1"></th>
@@ -112,7 +112,7 @@
                     </td>
                     <td>{{ collection.friendly_name }}</td>
                     <td class="hidden-xs">{{ _(collection.category.capitalize()) if collection.category in ['bibliography', 'library'] else _('No category') }}</td>
-                    <td>{{ collection.permissions | length }}</td>
+                    <td class="hidden-xs">{{ collection.permissions | length }}</td>
                     <td class="hidden-xs">{{ collection.created_at.strftime('%y-%m-%d') }}</td>
                     {% if current_user.is_admin %}
                         <td class="actions">
