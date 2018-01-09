@@ -18,7 +18,7 @@
                 {{ _('Active Collections with Users') }}
                 ({{ active_collections_with_users | length }})
             </strong>
-            {% if current_user.is_admin %}
+            {% if current_user.is_admin and 'login.libris.kb.se' not in request.host %}
                 <a class="btn btn-xs btn-primary pull-right"
                    href="{{ url_for('collection.register') }}">{{ _('New Collection') }}</a>
             {% endif %}
@@ -81,7 +81,7 @@
                 {{ _('Active Collections without Users') }}
                 ({{ active_collections_without_users | length }})
             </strong>
-            {% if current_user.is_admin %}
+            {% if current_user.is_admin and 'login.libris.kb.se' not in request.host %}
                 <a class="btn btn-xs btn-primary pull-right"
                    href="{{ url_for('collection.register') }}">{{ _('New Collection') }}</a>
             {% endif %}
