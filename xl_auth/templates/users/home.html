@@ -24,7 +24,7 @@
             <thead>
             <tr>
                 <th class="col-md-4">{{ _('Email') }}</th>
-                <th class="col-md-3">{{ _('Name') }}</th>
+                <th class="hidden-xs col-md-3">{{ _('Name') }}</th>
                 <th class="col-md-1">{{ _('Collections') }}</th>
                 <th class="col-md-1">{{ _('Admin') }}</th>
                 <th class="hidden-xs min-width-90px">{{ _('Last Login At') }}</th>
@@ -42,7 +42,7 @@
                             {{ user.email }}
                         </a>
                     </td>
-                    <td>{{ user.full_name }}</td>
+                    <td class="hidden-xs">{{ user.full_name }}</td>
                     <td>{{ user.permissions | length }}</td>
                     <td class="{{ "bool-value-{}".format(user.is_admin).lower() }}">{{ _('Yes') if user.is_admin else _('No') }}</td>
                     <td class="hidden-xs">{{ '-' if not user.last_login_at else user.last_login_at.strftime('%y-%m-%d') }}</td>
