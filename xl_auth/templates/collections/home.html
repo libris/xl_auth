@@ -2,7 +2,7 @@
 {% extends "layout.html" %}
 {% block content %}
     <h1>{{ _('Collections') }}</h1>
-    <br/>
+    <br>
     {{ _('Go to') }}:
     <ul>
         <li>
@@ -10,7 +10,7 @@
             ({{ active_collections_without_users | length }})
         </li>
     </ul>
-    <hr/>
+    <hr>
     <div class="panel panel-default">
         <a class="anchor" id="active-collections-with-users"></a>
         <div class="panel-heading">
@@ -64,8 +64,8 @@
             </tbody>
         </table>
     </div>
-    <hr/>
-    <br/>
+    <hr>
+    <br>
     {{ _('Go to') }}:
     <ul>
         <li>
@@ -73,7 +73,7 @@
             ({{ active_collections_with_users | length }})
         </li>
     </ul>
-    <hr/>
+    <hr>
     <div class="panel panel-default">
         <a class="anchor" id="active-collections-without-users"></a>
         <div class="panel-heading">
@@ -127,7 +127,7 @@
             </tbody>
         </table>
     </div>
-    <hr/>
+    <hr>
     {{ _('Go to') }}: <a href="#">{{ _('Top of page') }}</a>
-    <br/>
+    <br>
 {% endblock %}

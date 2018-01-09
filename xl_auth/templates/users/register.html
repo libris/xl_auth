@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container-narrow">
         <h1>{{ _('Register New User') }}</h1>
-        <br/>
+        <br>
         <form id="registerUserForm" class="form form-register" method="POST" action="" role="form">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             {{ register_user_form.next_redirect(value=next_redirect_url or "") }}

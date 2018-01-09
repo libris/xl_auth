@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container-narrow">
         <h1>{{ _('Register New Permission') }}</h1>
-        <br/>
+        <br>
         <form id="registerPermissionForm" autocomplete="off" class="form form-register"
               method="POST" action="" role="form">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
@@ -23,10 +23,10 @@
             <div class="form-group">
                 {{ register_permission_form.registrant() }}
                 {{ register_permission_form.registrant.label }}
-                <br/>
+                <br>
                 {{ register_permission_form.cataloger() }}
                 {{ register_permission_form.cataloger.label }}
-                <br/>
+                <br>
                 {{ register_permission_form.cataloging_admin() }}
                 {{ register_permission_form.cataloging_admin.label }}
             </div>
