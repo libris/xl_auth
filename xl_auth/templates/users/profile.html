@@ -73,9 +73,9 @@
                 <tr>
                     <th>{{ _('Code') }}</th>
                     <th>{{ _('Friendly Name') }}</th>
-                    <th>{{ _('Registrant') }}</th>
-                    <th>{{ _('Cataloger') }}</th>
-                    <th>{{ _('Cataloging Admin') }}</th>
+                    <th class="hidden-xs">{{ _('Registrant') }}</th>
+                    <th class="hidden-xs">{{ _('Cataloger') }}</th>
+                    <th class="hidden-xs">{{ _('Cataloging Admin') }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -88,13 +88,13 @@
                             </a>
                         </td>
                         <td>{{ permission.collection.friendly_name }}</td>
-                        <td class="{{ "bool-value-{}".format(permission.registrant).lower() }}">
+                        <td class="hidden-xs {{ "bool-value-{}".format(permission.registrant).lower() }}">
                             {{ _('Yes') if permission.registrant else _('No') }}
                         </td>
-                        <td class="{{ "bool-value-{}".format(permission.cataloger).lower() }}">
+                        <td class="hidden-xs {{ "bool-value-{}".format(permission.cataloger).lower() }}">
                             {{ _('Yes') if permission.cataloger else _('No') }}
                         </td>
-                        <td class="{{ "bool-value-{}".format(permission.cataloging_admin).lower() }}">
+                        <td class="hidden-xs {{ "bool-value-{}".format(permission.cataloging_admin).lower() }}">
                             {{ _('Yes') if permission.cataloging_admin else _('No') }}
                         </td>
                     </tr>

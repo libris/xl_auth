@@ -27,8 +27,8 @@
                 <th class="col-md-3">{{ _('Name') }}</th>
                 <th class="col-md-1">{{ _('Collections') }}</th>
                 <th class="col-md-1">{{ _('Admin') }}</th>
-                <th class="min-width-90px">{{ _('Last Login At') }}</th>
-                <th class="min-width-90px">{{ _('Created At') }}</th>
+                <th class="hidden-xs min-width-90px">{{ _('Last Login At') }}</th>
+                <th class="hidden-xs min-width-90px">{{ _('Created At') }}</th>
                 {% if current_user.is_admin %}
                     <th class="min-width-100px"></th>
                 {% endif %}
@@ -45,8 +45,8 @@
                     <td>{{ user.full_name }}</td>
                     <td>{{ user.permissions | length }}</td>
                     <td class="{{ "bool-value-{}".format(user.is_admin).lower() }}">{{ _('Yes') if user.is_admin else _('No') }}</td>
-                    <td>{{ '-' if not user.last_login_at else user.last_login_at.strftime('%y-%m-%d') }}</td>
-                    <td>{{ user.created_at.strftime('%y-%m-%d') }}</td>
+                    <td class="hidden-xs">{{ '-' if not user.last_login_at else user.last_login_at.strftime('%y-%m-%d') }}</td>
+                    <td class="hidden-xs">{{ user.created_at.strftime('%y-%m-%d') }}</td>
                     {% if current_user.is_admin %}
                         <td class="actions">
                             <a class="btn btn-xs btn-default" title="{{ _('Inspect') }}"
@@ -91,8 +91,8 @@
                 <th class="col-md-3">{{ _('Name') }}</th>
                 <th class="col-md-1">{{ _('Collections') }}</th>
                 <th class="col-md-1">{{ _('Admin') }}</th>
-                <th class="min-width-90px">{{ _('Last Login At') }}</th>
-                <th class="min-width-90px">{{ _('Created At') }}</th>
+                <th class="hidden-xs min-width-90px">{{ _('Last Login At') }}</th>
+                <th class="hidden-xs min-width-90px">{{ _('Created At') }}</th>
                 {% if current_user.is_admin %}
                     <th class="min-width-100px"></th>
                 {% endif %}
@@ -109,8 +109,8 @@
                     <td>{{ user.full_name }}</td>
                     <td>{{ user.permissions | length }}</td>
                     <td class="{{ "bool-value-{}".format(user.is_admin).lower() }}">{{ _('Yes') if user.is_admin else _('No') }}</td>
-                    <td>{{ '-' if not user.last_login_at else user.last_login_at.strftime('%y-%m-%d') }}</td>
-                    <td>{{ user.created_at.strftime('%y-%m-%d') }}</td>
+                    <td class="hidden-xs">{{ '-' if not user.last_login_at else user.last_login_at.strftime('%y-%m-%d') }}</td>
+                    <td class="hidden-xs">{{ user.created_at.strftime('%y-%m-%d') }}</td>
                     {% if current_user.is_admin %}
                         <td class="actions">
                             <a class="btn btn-xs btn-default" title="{{ _('Inspect') }}"
