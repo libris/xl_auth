@@ -1,11 +1,12 @@
 <!-- 404.html -->
 {% extends "layout.html" %}
 
-{% block page_title %}{{ _('Page Not Found') }}{% endblock %}
+{% block page_title %}404: {{ _('Page Not Found') }}{% endblock %}
 
 {% block content %}
     <div class="panel">
-        <br><img class="img-responsive center-block" src="https://http.cat/404"><br><br>
+        <br><img class="img-responsive center-block" src="https://http.cat/404"
+                 alt="404: {{ _('Page Not Found') }}"><br><br>
         <div class="text-center">
             <p>{{ _('The page "%(url)s" doesn\'t exist.', url=request.url) }}</p>
             <p>{{ _('Want to <a href="%(url)s">go home</a> instead?', url=url_for('public.home')) }}</p>

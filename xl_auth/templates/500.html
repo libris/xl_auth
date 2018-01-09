@@ -1,11 +1,12 @@
 <!-- 500.html -->
 {% extends "layout.html" %}
 
-{% block page_title %}{{ _('Server Error') }}{% endblock %}
+{% block page_title %}500: {{ _('Server Error') }}{% endblock %}
 
 {% block content %}
     <div class="panel">
-        <br><img class="img-responsive center-block" src="https://http.cat/500"><br><br>
+        <br><img class="img-responsive center-block" src="https://http.cat/500"
+                 alt="500: {{ _('Server Error') }}"><br><br>
         <div class="text-center">
             <p>{{ _('Sorry, something went wrong in our system.') }}</p>
             <p>{{ _('Please let us know and try again later.') }}</p>

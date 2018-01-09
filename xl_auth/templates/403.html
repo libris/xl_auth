@@ -1,11 +1,12 @@
 <!-- 403.html -->
 {% extends "layout.html" %}
 
-{% block page_title %}{{ _('Forbidden') }}{% endblock %}
+{% block page_title %}403: {{ _('Forbidden') }}{% endblock %}
 
 {% block content %}
     <div class="panel">
-        <br><img class="img-responsive center-block" src="https://http.cat/403"><br><br>
+        <br><img class="img-responsive center-block" src="https://http.cat/403"
+                 alt="403: {{ _('Forbidden') }}"><br><br>
         <div class="text-center">
             <p>{{ _('You do not have sufficient privileges for this operation.') }}</p>
         </div>
