@@ -50,4 +50,15 @@
       - 5044:5044
       - 12201:12201/udp
 
+- name: wait for elasticsearch to be online
+  wait_for: host=localhost port=9200
+
+- name: insert filebeat.template.json
+  uri:
+    url: "http://localhost:9200/_template/filebeat"
+    method: PUT
+    body: "{{ lookup('file','filebeat.template.json') }}"
+    body_format: json
+    status_code: 200
+
 ...
