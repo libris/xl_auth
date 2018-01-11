@@ -3,13 +3,13 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import pytest
 from flask_babel import gettext as _
 
 from xl_auth.permission.models import Permission
-from xl_auth.user.models import PasswordReset, Role, User
+from xl_auth.user.models import FailedLoginAttempt, PasswordReset, Role, User
 
 from ..factories import CollectionFactory, PermissionFactory, UserFactory
 
@@ -320,3 +320,52 @@ def test_removing_password_reset():
     password_reset.delete()
 
     assert password_reset not in user.password_resets
+
+
+@pytest.mark.usefixtures('db')
+def test_login_attempt_too_many_recent_failures(app):
+    """Ensure login attempt is not allowed after too many failed attempts."""
+    username = 'foo'
+    remote_addr = '127.0.0.1'
+    app.config['XL_AUTH_FAILED_LOGIN_MAX_ATTEMPTS'] = 1
+    app.config['XL_AUTH_FAILED_LOGIN_TIMEFRAME'] = 5 * 60
+
+    assert FailedLoginAttempt.too_many_recent_failures_for(username) is False
+
+    login_attempt = FailedLoginAttempt(username, remote_addr)
+    login_attempt.save()
+
+    assert FailedLoginAttempt.too_many_recent_failures_for(username) is True
+
+    login_attempt.created_at = datetime.utcnow() - timedelta(seconds=10 * 60)
+    login_attempt.save()
+
+    assert FailedLoginAttempt.too_many_recent_failures_for(username) is False
+
+
+@pytest.mark.usefixtures('db')
+def test_login_attempt_purge():
+    """Test purging login attempts for username/IP combo."""
+    foo_login_attempt = FailedLoginAttempt('foo', '127.0.0.1')
+    foo_login_attempt.save()
+    bar_login_attempt = FailedLoginAttempt('bar', '127.0.0.1')
+    bar_login_attempt.save()
+
+    attempts = FailedLoginAttempt.query.all()
+    assert len(attempts) == 2
+
+    FailedLoginAttempt.purge_failed_for_username_and_ip('foo', '127.0.0.1')
+
+    attempts = FailedLoginAttempt.query.all()
+    assert len(attempts) == 1
+    assert bar_login_attempt in attempts
+
+
+@pytest.mark.usefixtures('db')
+def test_login_attempt_repr():
+    """Check repr output."""
+    FailedLoginAttempt('foo', '127.0.0.1').save()
+
+    attempt = FailedLoginAttempt.query.first()
+    repr = '<FailedLoginAttempt({id}:{username!r})>'
+    assert attempt.__repr__() == repr.format(id=attempt.id, username=attempt.username)

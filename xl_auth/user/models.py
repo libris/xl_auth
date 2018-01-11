@@ -16,6 +16,7 @@ from sqlalchemy.ext.hybrid import hybrid_property
 
 from ..database import Column, Model, SurrogatePK, db, reference_col, relationship
 from ..extensions import bcrypt
+from ..utils import get_remote_addr
 
 
 class Role(SurrogatePK, Model):
@@ -59,6 +60,11 @@ class PasswordReset(SurrogatePK, Model):
         user = User.get_by_email(email)
         if user:
             return PasswordReset.query.filter_by(code=code, user=user).first()
+
+    @hybrid_property
+    def is_recent(self):
+        """Check if reset was created recently."""
+        return self.created_at > (datetime.utcnow() - timedelta(hours=2))
 
     def send_email(self, account_registration_from_user=None):
         """Email password reset link to the user, possibly in wording of initial registration."""
@@ -153,6 +159,46 @@ at libris@kb.se!'
         return '<PasswordReset({email!r})>'.format(email=self.user.email)
 
 
+class FailedLoginAttempt(SurrogatePK, Model):
+    """A failed login attempt."""
+
+    __tablename__ = 'failed_login_attempts'
+    username = Column(db.String(255), unique=False, nullable=False)
+    remote_addr = Column(db.String(255), unique=False, nullable=False)
+
+    created_at = Column(db.DateTime, default=datetime.utcnow, nullable=False)
+
+    def __init__(self, username, remote_addr):
+        """Create instance."""
+        db.Model.__init__(self, username=username, remote_addr=remote_addr)
+
+    @staticmethod
+    def too_many_recent_failures_for(username):
+        """Determine if a login attempt is allowed or not."""
+        timeframe = current_app.config['XL_AUTH_FAILED_LOGIN_TIMEFRAME']
+        from_timestamp = datetime.utcnow() - timedelta(seconds=timeframe)
+        attempts = FailedLoginAttempt.query.filter(
+            FailedLoginAttempt.username.ilike(username),
+            FailedLoginAttempt.created_at >= from_timestamp).all()
+        if len(attempts) >= current_app.config['XL_AUTH_FAILED_LOGIN_MAX_ATTEMPTS']:
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def purge_failed_for_username_and_ip(username, remote_addr, commit=True):
+        """Remote failed login attempts for username/IP."""
+        (FailedLoginAttempt.query.filter(FailedLoginAttempt.username.ilike(username),
+                                         FailedLoginAttempt.remote_addr == remote_addr)
+                                 .delete(synchronize_session=False))
+        if commit:
+            db.session.commit()
+
+    def __repr__(self):
+        """Represent instance as a unique string."""
+        return '<FailedLoginAttempt({id}:{username!r})>'.format(id=self.id, username=self.username)
+
+
 class User(UserMixin, SurrogatePK, Model):
     """A user of the app."""
 
@@ -224,6 +270,8 @@ class User(UserMixin, SurrogatePK, Model):
 
     def update_last_login(self, commit=True):
         """Set 'last_login_at' to current datetime."""
+        FailedLoginAttempt.purge_failed_for_username_and_ip(self.email, get_remote_addr(),
+                                                            commit=commit)
         self.last_login_at = datetime.utcnow()
         if commit:
             self.save(commit=True, preserve_modified=True)
@@ -267,6 +315,10 @@ class User(UserMixin, SurrogatePK, Model):
     def get_cataloging_admin_permissions(self):
         """Return all cataloging admin permissions for this user."""
         return [perm for perm in self.permissions if perm.cataloging_admin]
+
+    def get_active_and_recent_password_resets(self):
+        """Return a list of active and recent password resets for this user."""
+        return [reset for reset in self.password_resets if reset.is_active and reset.is_recent]
 
     def save_as(self, current_user, commit=True, preserve_modified=False):
         """Save instance as 'current_user'."""

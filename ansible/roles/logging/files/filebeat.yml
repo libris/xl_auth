@@ -1,0 +1,33 @@
+########################### Filebeat Configuration ###########################
+
+#==========================  Modules configuration ===========================
+filebeat.modules:
+
+#-------------------------------- Nginx Module -------------------------------
+- module: nginx
+  access:
+    enabled: true
+    var.paths: ["/mnt/log/nginx/access.log*"]
+  error:
+    enabled: true
+    var.paths: ["/mnt/log/nginx/error.log*"]
+
+
+#================================ Outputs ====================================
+
+#---------------------------- Logstash output --------------------------------
+output.logstash:
+  hosts: ["elk:5044"]
+
+
+#================================ Kibana =====================================
+setup.kibana:
+  host: "http://elk:5601"
+
+
+#=============================== Logging =====================================
+#logging.level: debug
+logging.metrics.enabled: true
+logging.metrics.period: 60s
+
+...

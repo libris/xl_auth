@@ -171,6 +171,16 @@ def test_verify_success_response(token, testapp):
             assert permission['friendly_name'] == permission2.collection.friendly_name
 
 
+def test_x_username_header_is_applied_when_oauthenticated(token, testapp):
+    """X-Username header is set on OAuth'enticated response."""
+    res = testapp.get(url_for('oauth.verify'),
+                      headers={'Authorization': str('Bearer ' + token.access_token)})
+
+    assert res.status_code == 200
+    # X-Username matches username when successfully authenticated.
+    assert res.headers['X-Username'] == token.user.email
+
+
 def test_verify_returns_permissions_on_active_collections_only(token, testapp):
     """Get user details and token expiry."""
     inactive_collection = CollectionFactory(is_active=False)

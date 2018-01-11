@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from datetime import datetime, timedelta
 
-from flask import url_for
+from flask import current_app, url_for
 from flask_babel import gettext as _
 from jinja2 import escape
 
@@ -141,3 +141,36 @@ def test_sees_error_message_if_attempting_to_use_reset_code_twice(password_reset
     # Sees error.
     assert escape(_('Reset code "%(code)s" already used (%(isoformat)s)', code=password_reset.code,
                     isoformat=password_reset.modified_at.isoformat() + 'Z')) in res
+
+
+def test_sees_error_message_if_too_many_active_password_resets(user, testapp):
+    """Show error if too many active password resets exist."""
+    # Create active password resets
+    for _i in range(0, current_app.config['XL_AUTH_MAX_ACTIVE_PASSWORD_RESETS']):
+        # Goes to homepage.
+        res = testapp.get('/')
+        # Clicks on 'Forgot password'.
+        res = res.click(_('Forgot password?'))
+        # Fills out ForgotPasswordForm.
+        form = res.forms['forgotPasswordForm']
+        form['username'] = user.email
+        # Submits.
+        res = form.submit().follow()
+        assert res.status_code == 200
+
+    active_resets = user.get_active_and_recent_password_resets()
+    assert len(active_resets) == current_app.config['XL_AUTH_MAX_ACTIVE_PASSWORD_RESETS']
+
+    # Try to create one additional password reset
+    # Goes to homepage.
+    res = testapp.get('/')
+    # Clicks on 'Forgot password'.
+    res = res.click(_('Forgot password?'))
+    # Fills out ForgotPasswordForm.
+    form = res.forms['forgotPasswordForm']
+    form['username'] = user.email
+    # Submits.
+    res = form.submit()
+    assert res.status_code == 200
+    assert _('You already have an active password reset. Please check your email inbox (and your '
+             'Spam folder) or try again later.') in res

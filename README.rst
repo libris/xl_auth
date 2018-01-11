@@ -32,7 +32,7 @@ Run the following commands to bootstrap your environment ::
     export FLASK_APP=$(PWD)/autoapp.py
     export FLASK_DEBUG=1
     flask db upgrade
-    flask create_user --email me@example.com --is-admin
+    flask create_user --email me@example.com -p password --is-admin --is-active
     npm start  # run webpack dev server and flask server using concurrently
 
 You will see a pretty welcome screen.
@@ -194,6 +194,15 @@ DB Models
 
 Changelog
 =========
+
+v. 0.7.5
+--------
+
+* Security improvements (`#154 <https://github.com/libris/xl_auth/issues/154>`_,
+  `#155 <https://github.com/libris/xl_auth/issues/155>`_)
+* UX enhancements (`#114 <https://github.com/libris/xl_auth/issues/114>`_)
+* Monitoring of Nginx logs (`#157 <https://github.com/libris/xl_auth/issues/157>`_)
+
 
 v. 0.7.4
 --------

@@ -1,0 +1,6 @@
+---
+
+xl_auth_gelf_address: "{{ (inventory_hostname == 'login.libris.kb.se') | ternary(
+                      'udp://log01.kb.se:12201', 'udp://localhost:12201') }}"
+
+...

@@ -31,3 +31,11 @@ def get_redirect_target():
             return target
     else:
         return ''
+
+
+def get_remote_addr():
+    """Return remote IP address for current request."""
+    if 'X-Real-IP' in request.headers:
+        return request.headers['X-Real-IP']
+    else:
+        return request.remote_addr

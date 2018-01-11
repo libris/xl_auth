@@ -1,8 +1,10 @@
 <!-- users/view.html -->
 {% extends "layout.html" %}
 {% block content %}
-    <h1>{{ _('View User \'<a href="mailto:%(email)s">%(email)s</a>\'', email=user.email) }}</h1>
-    <br/>
+    <h1 class="word-break-all">
+        {{ _('View User \'<a href="mailto:%(email)s">%(email)s</a>\'', email=user.email) }}
+    </h1>
+    <br>
     <div class="panel panel-default">
         <dl class="dl-horizontal">
             <dt>{{ _('Full name') }}:</dt>
@@ -70,7 +72,7 @@
                 <th class="col-md-3 word-break-all">{{ _('Registrant') }}</th>
                 <th class="col-md-2 word-break-all">{{ _('Cataloger') }}</th>
                 <th class="col-md-3 word-break-all">{{ _('Cataloging Admin') }}</th>
-                <th class="col-md-1">{{ _('Active Collection') }}</th>
+                <th class="hidden-xs col-md-1">{{ _('Active Collection') }}</th>
                 <th class="col-md-2">{{ _('Last Modified') }}</th>
                 <th class="min-width-70px"></th>
             </tr>
@@ -93,7 +95,7 @@
                     <td class="{{ "bool-value-{}".format(permission.cataloging_admin).lower() }}">
                         {{ _('Yes') if permission.cataloging_admin else _('No') }}
                     </td>
-                    <td class="{{ "bool-value-{}".format(permission.collection.is_active).lower() }}">
+                    <td class="hidden-xs {{ "bool-value-{}".format(permission.collection.is_active).lower() }}">
                         {{ _('Yes') if permission.collection.is_active else _('No') }}
                     </td>
                     <td>{{ permission.modified_at.strftime('%y-%m-%d') }}, {{ _('by') }}
