@@ -61,4 +61,12 @@
     body_format: json
     status_code: 200
 
+- name: insert "catch-all" template
+  uri:
+    url: "http://localhost:9200/_template/all"
+    method: PUT
+    body: '{"index_patterns": ["*"], "settings" : {"number_of_shards": 1, "number_of_replicas": 0}}'
+    body_format: json
+    status_code: 200
+
 ...
