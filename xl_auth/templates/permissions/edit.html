@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container-narrow">
         <h1>{{ _('Edit Existing Permission') }}</h1>
-        <br/>
+        <br>
         <form id="editPermissionForm" autocomplete="off" class="form form-edit" method="POST"
               action="" role="form">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
@@ -24,10 +24,10 @@
             <div class="form-group">
                 {{ edit_permission_form.registrant() }}
                 {{ edit_permission_form.registrant.label }}
-                <br/>
+                <br>
                 {{ edit_permission_form.cataloger() }}
                 {{ edit_permission_form.cataloger.label }}
-                <br/>
+                <br>
                 {{ edit_permission_form.cataloging_admin() }}
                 {{ edit_permission_form.cataloging_admin.label }}
             </div>

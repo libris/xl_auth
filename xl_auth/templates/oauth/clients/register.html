@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container-narrow">
         <h1>{{ _('Register New OAuth2 Client') }}</h1>
-        <br/>
+        <br>
         <form id="registerForm" class="form form-register" method="POST" action="" role="form">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <div class="form-group">

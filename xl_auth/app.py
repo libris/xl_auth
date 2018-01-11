@@ -3,7 +3,8 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+from flask_login import current_user
 
 from . import collection, commands, oauth, permission, public, user
 from .extensions import (babel, bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager,
@@ -21,6 +22,7 @@ def create_app(config_object=ProdConfig):
     register_extensions(app)
     register_blueprints(app)
     register_error_handlers(app)
+    register_after_request_funcs(app)
     register_shell_context(app)
     register_commands(app)
     return app
@@ -62,9 +64,23 @@ def register_error_handlers(app):
         error_code = getattr(error, 'code', 500)
         return render_template('{0}.html'.format(error_code)), error_code
 
-    for errcode in [401, 403, 404, 429, 500]:
+    for errcode in [403, 404, 429, 500]:
         app.errorhandler(errcode)(render_error)
     return None
+
+
+def register_after_request_funcs(app):
+    """Register after-request functions."""
+    def add_x_username_header(response):
+        """Add X-Username header when authenticated."""
+        if current_user.is_authenticated:
+            response.headers['X-Username'] = current_user.email
+        elif hasattr(request, 'oauth') and hasattr(request.oauth, 'user'):
+            response.headers['X-Username'] = request.oauth.user.email
+        return response
+
+    app.after_request_funcs.setdefault(None, [])
+    app.after_request_funcs[None].append(add_x_username_header)
 
 
 def register_shell_context(app):

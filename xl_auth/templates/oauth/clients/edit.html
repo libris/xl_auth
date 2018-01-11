@@ -3,17 +3,17 @@
 {% block content %}
     <div class="container-narrow">
         <h1>{{ _('Edit OAuth2 Client') }}</h1>
-        <br/>
+        <br>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <strong>{{ _('OAuth2 Client Credentials') }}</strong>
             </div>
             <p>
-                {{ _('Client ID') }}:<br/>
+                {{ _('Client ID') }}:<br>
                 <code>{{ client.client_id }}</code>
             </p>
             <p>
-                {{ _('Client Secret') }}:<br/>
+                {{ _('Client Secret') }}:<br>
                 <code style="word-break: break-all;">{{ client.client_secret }}</code>
             </p>
         </div>

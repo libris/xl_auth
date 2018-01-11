@@ -2,8 +2,8 @@
 {% extends "layout.html" %}
 {% block content %}
     <div class="container-narrow">
-        <h1>{{ _('Edit User Details') }}</h1>
-        <br/>
+        <h1 class="word-break-all">{{ _('Edit User Details') }}</h1>
+        <br>
         <form id="editDetailsForm" class="form form-edit" method="POST" action="" role="form">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             {{ edit_details_form.next_redirect(value=next_redirect_url or "") }}
