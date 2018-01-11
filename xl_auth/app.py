@@ -3,7 +3,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_login import current_user
 
 from . import collection, commands, oauth, permission, public, user
@@ -75,6 +75,8 @@ def register_after_request_funcs(app):
         """Add X-Username header when authenticated."""
         if current_user.is_authenticated:
             response.headers['X-Username'] = current_user.email
+        elif hasattr(request, 'oauth') and hasattr(request.oauth, 'user'):
+            response.headers['X-Username'] = request.oauth.user.email
         return response
 
     app.after_request_funcs.setdefault(None, [])
