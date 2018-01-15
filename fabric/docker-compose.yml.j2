@@ -1,0 +1,54 @@
+---
+
+version: '3.4'
+services:
+  postgres:
+    image: postgres:9.4-alpine
+    container_name: postgres
+    hostname: postgres
+    restart: unless-stopped
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - xl_auth
+    environment:
+      POSTGRES_DB: prod
+      POSTGRES_USER: xl_auth
+      POSTGRES_PASSWORD: xl_auth
+
+  xl_auth:
+    image: mblomdahl/xl_auth:next
+    container_name: xl_auth
+    domainname: {{ inventory_hostname }}
+    hostname: xl_auth
+    restart: unless-stopped
+    environment:
+      SERVER_NAME: {{ server_name }}
+      XL_AUTH_SECRET: {{ xl_auth_secret | default('not_secret, as fallback during testing') }}
+      PREFERRED_URL_SCHEME: https
+      FLASK_DEBUG: 0
+      SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
+      OAUTH2_PROVIDER_TOKEN_EXPIRES_IN: 3600
+    ports:
+      - 5000:5000
+    networks:
+      - xl_auth
+    logging:
+      driver: gelf
+      options:
+        gelf-address: {{ xl_auth_gelf_address }}
+        tag: xl_auth
+        mode: non-blocking
+    depends_on:
+      - postgres
+
+volumes:
+  postgres:
+    driver: local
+
+networks:
+  xl_auth:
+
+...
