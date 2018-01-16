@@ -23,7 +23,8 @@ Flask-WTF==0.14.2
 git+https://github.com/mblomdahl/wtforms.git
 
 # Deployment
-gunicorn>=19.1.1
+gunicorn==19.7.1
+setproctitle==1.1.10
 
 # Webpack
 flask-webpack==0.1.0
