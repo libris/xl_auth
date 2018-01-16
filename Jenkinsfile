@@ -21,20 +21,24 @@ pipeline {
                             return [fullBranchName, fullBranchName]
                         }
 
-                        if (fullBranchName.matches(/(feature|bugfix)\/[.\d\-\w]+$/)) {
+                        if (fullBranchName.matches(/^(feature|bugfix)\/[.\d\-\w]+$/)) {
                             return [fullBranchName.split('/')[0],
                                     fullBranchName.split('/')[1].toLowerCase().replaceAll(/[^.\da-z]/, '.')]
                         }
 
-                        if (fullBranchName.matches(/hotfix\/\d+(\.\d+){1,2}p\d+$/)) {
+                        if (fullBranchName.matches(/^hotfix\/\d+(\.\d+){1,2}p\d+$/)) {
                             return fullBranchName.split('/') as List
                         }
 
-                        if (fullBranchName.matches(/release\/\d+(\.\d+){1,2}([ab]\d+)?$/)) {
+                        if (fullBranchName.matches(/^release\/\d+(\.\d+){1,2}([ab]\d+)?$/)) {
                             return fullBranchName.split('/') as List
                         }
 
-                        throw new AssertionError("Enforcing Gitflow Workflow and SemVer. Ha!")
+                        if (fullBranchName.matches(/^PR-\d+-?(merge|head)?$/)) {
+                            return ['PR', fullBranchName.split('-', 2)[1].replaceAll(/-/, '.')]
+                        }
+
+                        error "Enforcing Gitflow Workflow and SemVer on '${fullBranchName}'. Ha!"
                     }
 
                     def getBuildVersion = { String fullBranchName, buildNumber ->
@@ -55,8 +59,10 @@ pipeline {
                             case 'release':
                                 assert branchTypeAndName[1] == projectVersion
                                 return "${projectVersion}-rc.${buildNumber}"
+                            case 'PR':
+                                return "${projectVersion}+PR.${branchTypeAndName[1]}.${buildNumber}"
                             default:
-                                throw new AssertionError("Oops, Mats messed up! :(")
+                                error "Oops, we messed up! :("
                         }
                     }
 
@@ -81,6 +87,9 @@ pipeline {
                     }
 
                     stash 'pre_install_git_checkout'
+
+                    env.VENV_ROOT = "/tmp/xl_auth/${env.BUILD_VERSION}"
+                    sh 'mkdir -p $VENV_ROOT'
                 }
             }
         }
@@ -93,20 +102,18 @@ pipeline {
                         sh 'npm run build'
                     },
                     'Create virtualenv (py27)': {
-                        sh 'mkdir -p /tmp/xl_auth'
-                        sh 'scl enable python27 "virtualenv /tmp/xl_auth/py27venv"'
-                        sh 'scl enable python27 "/tmp/xl_auth/py27venv/bin/pip install -r requirements/dev.txt"'
+                        sh 'scl enable python27 "virtualenv $VENV_ROOT/py27venv"'
+                        sh 'scl enable python27 "$VENV_ROOT/py27venv/bin/pip install -r requirements/dev.txt"'
                     },
                     'Create virtualenv (py35)': {
-                        sh 'mkdir -p /tmp/xl_auth'
-                        sh 'scl enable rh-python35 "virtualenv /tmp/xl_auth/py35venv"'
-                        sh 'scl enable rh-python35 "/tmp/xl_auth/py35venv/bin/pip install -r requirements/dev.txt"'
+                        sh 'scl enable rh-python35 "virtualenv $VENV_ROOT/py35venv"'
+                        sh 'scl enable rh-python35 "$VENV_ROOT/py35venv/bin/pip install -r requirements/dev.txt"'
                     }
                 )
             }
             post {
                 success {
-                    sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && \
+                    sh 'scl enable python27 ". $VENV_ROOT/py27venv/bin/activate && \
 FLASK_APP=autoapp.py flask translate"'
                 }
             }
@@ -124,13 +131,13 @@ FLASK_APP=autoapp.py flask translate"'
                     'flake8 (py27,py35)': {
                         script {
                             try {
-                                sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && \
+                                sh 'scl enable python27 ". $VENV_ROOT/py27venv/bin/activate && \
 flask lint" | tee flake8.log && ( exit $PIPESTATUS )'
-                                sh 'scl enable rh-python35 ". /tmp/xl_auth/py35venv/bin/activate && \
+                                sh 'scl enable rh-python35 ". $VENV_ROOT/py35venv/bin/activate && \
 flask lint" | tee flake8.log && ( exit $PIPESTATUS )'
                             }
                             catch (Throwable e) {
-                                sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && \
+                                sh 'scl enable python27 ". $VENV_ROOT/py27venv/bin/activate && \
 flake8_junit flake8.log flake8-junit.xml"'
                                 junit 'flake8-junit.xml'
                                 throw e
@@ -140,7 +147,7 @@ flake8_junit flake8.log flake8-junit.xml"'
                     'pytest (py27)': {
                         script {
                             try {
-                                sh 'scl enable python27 ". /tmp/xl_auth/py27venv/bin/activate && \
+                                sh 'scl enable python27 ". $VENV_ROOT/py27venv/bin/activate && \
 flask test --junit-xml=py27test-junit.xml"'
                             }
                             finally {
@@ -151,7 +158,7 @@ flask test --junit-xml=py27test-junit.xml"'
                     'pytest (py35)': {
                         script {
                             try {
-                                sh 'scl enable rh-python35 ". /tmp/xl_auth/py35venv/bin/activate && \
+                                sh 'scl enable rh-python35 ". $VENV_ROOT/py35venv/bin/activate && \
 flask test --junit-xml=py35test-junit.xml"'
                             }
                             finally {
@@ -188,7 +195,7 @@ flask test --junit-xml=py35test-junit.xml"'
     }
     post {
         always {
-            sh 'rm -rf /tmp/xl_auth'
+            sh 'rm -rf $VENV_ROOT'
             deleteDir()
         }
         success {
