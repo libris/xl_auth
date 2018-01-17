@@ -195,6 +195,14 @@ DB Models
 Changelog
 =========
 
+v. 0.7.6
+--------
+
+* Production hardening (`#179 <https://github.com/libris/xl_auth/issues/179>`_,
+  `#175 <https://github.com/libris/xl_auth/issues/175>`_,
+  `#174 <https://github.com/libris/xl_auth/issues/174>`_)
+
+
 v. 0.7.5
 --------
 
