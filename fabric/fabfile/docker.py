@@ -30,7 +30,6 @@ def setup():
     _setup_docker_compose()
 
 
-@task
 def _add_docker_repo():
     put(use_sudo=True, remote_path='/etc/yum.repos.d/docker-ce-stable.repo',
         local_path=StringIO("""[docker-ce-stable]
@@ -40,12 +39,10 @@ name = Docker CE Stable - $basearch
 """, name='docker-ce-stable.repo'))
 
 
-@task
 def _install_docker():
     sudo('yum -q install -y docker-ce-17.09.1.ce')
 
 
-@task
 def _configure_docker():
     sudo('mkdir -p /etc/docker')
     put(use_sudo=True, remote_path='/etc/docker/daemon.json',
@@ -53,12 +50,10 @@ def _configure_docker():
     sudo('systemctl enable docker')
 
 
-@task
 def _restart_docker():
     sudo('systemctl restart docker')
 
 
-@task
 def _add_epel_repo():
     put(use_sudo=True, remote_path='/etc/yum.repos.d/epel.repo',
         local_path=StringIO("""[epel]
@@ -69,7 +64,6 @@ name: EPEL YUM repo
     sudo('yum -q install -y epel-release')
 
 
-@task
 def _setup_docker_compose():
     sudo('yum -q install -y python-pip')
     sudo('pip -q install pip==9.0.1')

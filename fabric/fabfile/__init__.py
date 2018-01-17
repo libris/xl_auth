@@ -52,20 +52,17 @@ def setup(inventory_hostname=None, xl_auth_admin_pass=None, xl_auth_import_data=
         _import_data_from_bibdb_and_voyager()
 
 
-@task
 def _get_eth0_ip_addr():
     return run('echo $(ip addr show eth0 | grep "inet\\b" | awk \'{print $2}\' | '
                'cut -d/ -f1)').splitlines()[0]
 
 
-@task
 def _upload_docker_compose_yml():
     sudo('mkdir -p /opt/xl_auth')
     upload_template('docker-compose.yml.j2', '/opt/xl_auth/docker-compose.yml', context=env,
                     use_jinja=True, use_sudo=True)
 
 
-@task
 def _pull_and_start_containers():
     with cd('/opt/xl_auth'):
         sudo('docker-compose pull')
@@ -73,18 +70,15 @@ def _pull_and_start_containers():
         sudo('docker-compose restart && sleep 10')
 
 
-@task
 def _run_db_upgrade():
     sudo('docker exec -it xl_auth /usr/local/bin/flask db upgrade')
 
 
-@task
 def _set_libris_at_kb_se_admin_pass(password):
     sudo('docker exec -it xl_auth /usr/local/bin/flask create_user -e libris@kb.se -p"%s" --force '
          '--is-admin --is-active' % password)
 
 
-@task
 def _import_data_from_bibdb_and_voyager():
     sudo('docker exec -it xl_auth /usr/local/bin/flask import_data --admin-email=libris@kb.se -v '
          '--wipe-permissions')
