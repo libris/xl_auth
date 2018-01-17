@@ -3,13 +3,11 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import multiprocessing
-
 from click import echo
 
 bind = '0.0.0.0:5000'
 
-workers = multiprocessing.cpu_count() * 2 + 1
+workers = 3
 
 
 def on_starting(_):
