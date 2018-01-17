@@ -614,7 +614,6 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
 @click.command()
 def prod_run():
     """Run application with production setup."""
-    from sh import Command
-    flask_cmd = Command('flask')
-    click.echo(flask_cmd('db', 'upgrade').stderr)
-    execlp('gunicorn', 'gunicorn', '-c', 'gunicorn_conf.py', 'autoapp:app')
+    from xl_auth import __name__, __version__
+    execlp('gunicorn', 'gunicorn', '-c', 'gunicorn_conf.py', '-n', __name__ + '-' + __version__,
+           'autoapp:app')
