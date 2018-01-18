@@ -3,13 +3,16 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import multiprocessing
-
 from click import echo
+
+preload_app = True
 
 bind = '0.0.0.0:5000'
 
-workers = multiprocessing.cpu_count() * 2 + 1
+#: See #175 for rationale.
+worker_class = 'gthread'
+workers = 4
+threads = 2
 
 
 def on_starting(_):
