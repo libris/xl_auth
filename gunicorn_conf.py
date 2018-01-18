@@ -5,14 +5,13 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from click import echo
 
-bind = '0.0.0.0:5000'
-
 preload_app = True
 
-workers = 4
+bind = '0.0.0.0:5000'
 
+#: See #175 for rationale.
 worker_class = 'gthread'
-
+workers = 4
 threads = 2
 
 
