@@ -15,6 +15,7 @@ worker_class = 'gthread'
 
 threads = 2
 
+
 def on_starting(_):
     """Master process initializing."""
     echo(_run_alembic_upgrade())
