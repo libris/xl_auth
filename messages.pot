@@ -1,14 +1,14 @@
 # Translations template for xl_auth.
-# Copyright (C) 2017 National Library of Sweden
+# Copyright (C) 2018 National Library of Sweden
 # This file is distributed under the same license as the xl_auth project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: xl_auth 0.7.5\n"
+"Project-Id-Version: xl_auth 0.7.6\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-01-08 15:35+0100\n"
+"POT-Creation-Date: 2018-01-17 16:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,7 +77,7 @@ msgstr ""
 #: tests/end2end/test_collection_editing.py:164 tests/end2end/test_user_editing.py:212
 #: tests/end2end/test_user_editing.py:238 xl_auth/templates/collections/home.html:56
 #: xl_auth/templates/collections/home.html:119 xl_auth/templates/collections/view.html:121
-#: xl_auth/templates/permissions/home.html:46 xl_auth/templates/users/view.html:107
+#: xl_auth/templates/permissions/home.html:46 xl_auth/templates/users/view.html:109
 msgid "Edit"
 msgstr ""
 
@@ -104,7 +104,7 @@ msgstr ""
 #: tests/end2end/test_permission_registering.py:188 tests/end2end/test_user_editing.py:206
 #: tests/end2end/test_user_view.py:73 tests/end2end/test_user_view.py:99
 #: xl_auth/templates/collections/view.html:70 xl_auth/templates/permissions/home.html:4
-#: xl_auth/templates/users/view.html:54
+#: xl_auth/templates/users/view.html:56
 msgid "Permissions"
 msgstr ""
 
@@ -155,7 +155,7 @@ msgstr ""
 #: tests/forms/test_user_edit_details.py:34 tests/forms/test_user_register.py:44
 #: xl_auth/collection/forms.py:41 xl_auth/collection/forms.py:73 xl_auth/oauth/client/forms.py:40
 #: xl_auth/oauth/client/forms.py:67 xl_auth/permission/forms.py:78 xl_auth/permission/forms.py:142
-#: xl_auth/permission/forms.py:165 xl_auth/permission/forms.py:217 xl_auth/templates/403.html:10
+#: xl_auth/permission/forms.py:165 xl_auth/permission/forms.py:217 xl_auth/templates/403.html:11
 #: xl_auth/user/forms.py:77 xl_auth/user/forms.py:126 xl_auth/user/forms.py:160
 #: xl_auth/user/forms.py:179
 msgid "You do not have sufficient privileges for this operation."
@@ -185,7 +185,7 @@ msgstr ""
 #: tests/end2end/test_permission_registering.py:31 tests/end2end/test_permission_registering.py:66
 #: tests/end2end/test_permission_registering.py:125 tests/end2end/test_permission_registering.py:161
 #: xl_auth/templates/collections/view.html:81 xl_auth/templates/permissions/home.html:11
-#: xl_auth/templates/users/view.html:62
+#: xl_auth/templates/users/view.html:64
 msgid "New Permission"
 msgstr ""
 
@@ -195,26 +195,26 @@ msgstr ""
 msgid "Added permissions for \"%(username)s\" on collection \"%(code)s\"."
 msgstr ""
 
-#: tests/end2end/test_public_logging_in.py:45 xl_auth/templates/users/approve_tos.html:5
+#: tests/end2end/test_public_logging_in.py:71 xl_auth/templates/users/approve_tos.html:5
 msgid "Approve ToS"
 msgstr ""
 
-#: tests/end2end/test_public_logging_in.py:54 xl_auth/templates/collections/home.html:4
+#: tests/end2end/test_public_logging_in.py:80 xl_auth/templates/collections/home.html:4
 #: xl_auth/templates/nav.html:25 xl_auth/templates/users/home.html:28
 #: xl_auth/templates/users/home.html:92 xl_auth/templates/users/inspect.html:175
 msgid "Collections"
 msgstr ""
 
-#: tests/end2end/test_public_logging_in.py:118 xl_auth/public/views.py:107
+#: tests/end2end/test_public_logging_in.py:144 xl_auth/public/views.py:114
 msgid "You are logged out."
 msgstr ""
 
-#: tests/end2end/test_public_logging_in.py:132 tests/end2end/test_public_logging_in.py:162
+#: tests/end2end/test_public_logging_in.py:158 tests/end2end/test_public_logging_in.py:192
 #: tests/forms/test_public_login.py:45 xl_auth/public/forms.py:41
 msgid "Invalid password"
 msgstr ""
 
-#: tests/end2end/test_public_logging_in.py:147 tests/end2end/test_public_reset_password.py:80
+#: tests/end2end/test_public_logging_in.py:175 tests/end2end/test_public_reset_password.py:80
 #: tests/forms/test_public_forgot_password.py:21 tests/forms/test_public_login.py:35
 #: xl_auth/public/forms.py:37 xl_auth/public/forms.py:74
 msgid "Unknown username/email"
@@ -271,11 +271,11 @@ msgstr ""
 #: xl_auth/templates/users/inspect.html:192 xl_auth/templates/users/inspect.html:195
 #: xl_auth/templates/users/inspect.html:228 xl_auth/templates/users/inspect.html:262
 #: xl_auth/templates/users/profile.html:92 xl_auth/templates/users/profile.html:95
-#: xl_auth/templates/users/profile.html:98 xl_auth/templates/users/simple_view.html:12
-#: xl_auth/templates/users/view.html:31 xl_auth/templates/users/view.html:34
-#: xl_auth/templates/users/view.html:37 xl_auth/templates/users/view.html:88
-#: xl_auth/templates/users/view.html:91 xl_auth/templates/users/view.html:94
-#: xl_auth/templates/users/view.html:97
+#: xl_auth/templates/users/profile.html:98 xl_auth/templates/users/simple_view.html:14
+#: xl_auth/templates/users/view.html:33 xl_auth/templates/users/view.html:36
+#: xl_auth/templates/users/view.html:39 xl_auth/templates/users/view.html:90
+#: xl_auth/templates/users/view.html:93 xl_auth/templates/users/view.html:96
+#: xl_auth/templates/users/view.html:99
 msgid "Yes"
 msgstr ""
 
@@ -292,11 +292,11 @@ msgstr ""
 #: xl_auth/templates/users/inspect.html:192 xl_auth/templates/users/inspect.html:195
 #: xl_auth/templates/users/inspect.html:228 xl_auth/templates/users/inspect.html:262
 #: xl_auth/templates/users/profile.html:92 xl_auth/templates/users/profile.html:95
-#: xl_auth/templates/users/profile.html:98 xl_auth/templates/users/simple_view.html:12
-#: xl_auth/templates/users/view.html:31 xl_auth/templates/users/view.html:34
-#: xl_auth/templates/users/view.html:37 xl_auth/templates/users/view.html:88
-#: xl_auth/templates/users/view.html:91 xl_auth/templates/users/view.html:94
-#: xl_auth/templates/users/view.html:97
+#: xl_auth/templates/users/profile.html:98 xl_auth/templates/users/simple_view.html:14
+#: xl_auth/templates/users/view.html:33 xl_auth/templates/users/view.html:36
+#: xl_auth/templates/users/view.html:39 xl_auth/templates/users/view.html:90
+#: xl_auth/templates/users/view.html:93 xl_auth/templates/users/view.html:96
+#: xl_auth/templates/users/view.html:99
 msgid "No"
 msgstr ""
 
@@ -314,7 +314,7 @@ msgid "Email cannot be modified"
 msgstr ""
 
 #: tests/end2end/test_user_editing.py:169 xl_auth/templates/users/inspect.html:8
-#: xl_auth/templates/users/simple_view.html:8 xl_auth/templates/users/view.html:8
+#: xl_auth/templates/users/simple_view.html:10 xl_auth/templates/users/view.html:10
 #: xl_auth/user/forms.py:14
 msgid "Full name"
 msgstr ""
@@ -344,17 +344,17 @@ msgid "Your Responsibilities as Cataloging Admin"
 msgstr ""
 
 #: tests/end2end/test_user_registering.py:209 tests/forms/test_user_register.py:26
-#: tests/forms/test_user_register.py:36 xl_auth/commands.py:483 xl_auth/user/forms.py:67
+#: tests/forms/test_user_register.py:36 xl_auth/commands.py:484 xl_auth/user/forms.py:67
 msgid "Email already registered"
 msgstr ""
 
-#: tests/end2end/test_user_view.py:29 xl_auth/templates/users/simple_view.html:4
-#: xl_auth/templates/users/view.html:4
+#: tests/end2end/test_user_view.py:29 xl_auth/templates/users/simple_view.html:5
+#: xl_auth/templates/users/view.html:5
 #, python-format
 msgid "View User '<a href=\"mailto:%(email)s\">%(email)s</a>'"
 msgstr ""
 
-#: tests/end2end/test_user_view.py:146 tests/models/test_user.py:264 xl_auth/user/models.py:295
+#: tests/end2end/test_user_view.py:146 tests/models/test_user.py:272 xl_auth/user/models.py:295
 msgid "You will only see permissions for those collections that you are cataloging admin for."
 msgstr ""
 
@@ -520,28 +520,28 @@ msgstr ""
 
 #: xl_auth/permission/forms.py:20 xl_auth/templates/permissions/home.html:18
 #: xl_auth/templates/users/inspect.html:74 xl_auth/templates/users/inspect.html:123
-#: xl_auth/templates/users/view.html:69
+#: xl_auth/templates/users/view.html:71
 msgid "Collection"
 msgstr ""
 
 #: xl_auth/permission/forms.py:22 xl_auth/templates/collections/view.html:89
 #: xl_auth/templates/permissions/home.html:19 xl_auth/templates/users/inspect.html:75
 #: xl_auth/templates/users/inspect.html:125 xl_auth/templates/users/profile.html:76
-#: xl_auth/templates/users/view.html:70
+#: xl_auth/templates/users/view.html:72
 msgid "Registrant"
 msgstr ""
 
 #: xl_auth/permission/forms.py:23 xl_auth/templates/collections/view.html:90
 #: xl_auth/templates/permissions/home.html:20 xl_auth/templates/users/inspect.html:76
 #: xl_auth/templates/users/inspect.html:126 xl_auth/templates/users/profile.html:77
-#: xl_auth/templates/users/view.html:71
+#: xl_auth/templates/users/view.html:73
 msgid "Cataloger"
 msgstr ""
 
 #: xl_auth/permission/forms.py:24 xl_auth/templates/collections/view.html:91
 #: xl_auth/templates/permissions/home.html:21 xl_auth/templates/users/inspect.html:23
 #: xl_auth/templates/users/inspect.html:77 xl_auth/templates/users/profile.html:78
-#: xl_auth/templates/users/view.html:36 xl_auth/templates/users/view.html:72
+#: xl_auth/templates/users/view.html:38 xl_auth/templates/users/view.html:74
 msgid "Cataloging Admin"
 msgstr ""
 
@@ -571,34 +571,34 @@ msgstr ""
 msgid "Passwords must match"
 msgstr ""
 
-#: xl_auth/public/views.py:46
+#: xl_auth/public/views.py:49
 msgid "You are logged in."
 msgstr ""
 
-#: xl_auth/public/views.py:70
+#: xl_auth/public/views.py:77
 #, python-format
 msgid "Password reset link sent to %(email)s."
 msgstr ""
 
-#: xl_auth/public/views.py:92
+#: xl_auth/public/views.py:99
 #, python-format
 msgid "Password for \"%(username)s\" has been reset."
 msgstr ""
 
-#: xl_auth/templates/403.html:4
+#: xl_auth/templates/403.html:4 xl_auth/templates/403.html:9
 msgid "Forbidden"
 msgstr ""
 
-#: xl_auth/templates/404.html:4
+#: xl_auth/templates/404.html:4 xl_auth/templates/404.html:9
 msgid "Page Not Found"
 msgstr ""
 
-#: xl_auth/templates/404.html:10
+#: xl_auth/templates/404.html:11
 #, python-format
 msgid "The page \"%(url)s\" doesn't exist."
 msgstr ""
 
-#: xl_auth/templates/404.html:11
+#: xl_auth/templates/404.html:12
 #, python-format
 msgid "Want to <a href=\"%(url)s\">go home</a> instead?"
 msgstr ""
@@ -611,15 +611,15 @@ msgstr ""
 msgid "You have made too many requests. Please try again later."
 msgstr ""
 
-#: xl_auth/templates/500.html:4
+#: xl_auth/templates/500.html:4 xl_auth/templates/500.html:9
 msgid "Server Error"
 msgstr ""
 
-#: xl_auth/templates/500.html:10
+#: xl_auth/templates/500.html:11
 msgid "Sorry, something went wrong in our system."
 msgstr ""
 
-#: xl_auth/templates/500.html:11
+#: xl_auth/templates/500.html:12
 msgid "Please let us know and try again later."
 msgstr ""
 
@@ -639,7 +639,7 @@ msgstr ""
 msgid "xl_auth"
 msgstr ""
 
-#: xl_auth/templates/nav.html:38 xl_auth/templates/nav.html:39
+#: xl_auth/templates/nav.html:38 xl_auth/templates/nav.html:40
 msgid "Log out"
 msgstr ""
 
@@ -678,7 +678,7 @@ msgstr ""
 #: xl_auth/templates/permissions/home.html:22 xl_auth/templates/users/home.html:31
 #: xl_auth/templates/users/home.html:95 xl_auth/templates/users/inspect.html:58
 #: xl_auth/templates/users/inspect.html:128 xl_auth/templates/users/inspect.html:179
-#: xl_auth/templates/users/inspect.html:220 xl_auth/templates/users/view.html:22
+#: xl_auth/templates/users/inspect.html:220 xl_auth/templates/users/view.html:24
 msgid "Created At"
 msgstr ""
 
@@ -716,8 +716,8 @@ msgstr ""
 msgid "Replaced By"
 msgstr ""
 
-#: xl_auth/templates/collections/view.html:40 xl_auth/templates/users/simple_view.html:19
-#: xl_auth/templates/users/view.html:44
+#: xl_auth/templates/collections/view.html:40 xl_auth/templates/users/simple_view.html:21
+#: xl_auth/templates/users/view.html:46
 msgid " and "
 msgstr ""
 
@@ -727,7 +727,7 @@ msgstr ""
 
 #: xl_auth/templates/collections/view.html:48 xl_auth/templates/users/inspect.html:50
 #: xl_auth/templates/users/inspect.html:79 xl_auth/templates/users/inspect.html:219
-#: xl_auth/templates/users/view.html:14 xl_auth/templates/users/view.html:74
+#: xl_auth/templates/users/view.html:16 xl_auth/templates/users/view.html:76
 msgid "Last Modified"
 msgstr ""
 
@@ -735,13 +735,13 @@ msgstr ""
 #: xl_auth/templates/collections/view.html:114 xl_auth/templates/users/inspect.html:52
 #: xl_auth/templates/users/inspect.html:60 xl_auth/templates/users/inspect.html:103
 #: xl_auth/templates/users/inspect.html:154 xl_auth/templates/users/inspect.html:199
-#: xl_auth/templates/users/view.html:16 xl_auth/templates/users/view.html:24
-#: xl_auth/templates/users/view.html:99
+#: xl_auth/templates/users/view.html:18 xl_auth/templates/users/view.html:26
+#: xl_auth/templates/users/view.html:101
 msgid "by"
 msgstr ""
 
 #: xl_auth/templates/collections/view.html:128 xl_auth/templates/permissions/home.html:51
-#: xl_auth/templates/users/view.html:113
+#: xl_auth/templates/users/view.html:115
 msgid "Delete Permission"
 msgstr ""
 
@@ -992,7 +992,7 @@ msgstr ""
 
 #: xl_auth/templates/users/home.html:30 xl_auth/templates/users/home.html:94
 #: xl_auth/templates/users/inspect.html:11 xl_auth/templates/users/inspect.html:178
-#: xl_auth/templates/users/view.html:11
+#: xl_auth/templates/users/view.html:13
 msgid "Last Login At"
 msgstr ""
 
@@ -1008,12 +1008,12 @@ msgstr ""
 msgid "ToS Approved"
 msgstr ""
 
-#: xl_auth/templates/users/inspect.html:17 xl_auth/templates/users/simple_view.html:11
-#: xl_auth/templates/users/view.html:30
+#: xl_auth/templates/users/inspect.html:17 xl_auth/templates/users/simple_view.html:13
+#: xl_auth/templates/users/view.html:32
 msgid "Active Account"
 msgstr ""
 
-#: xl_auth/templates/users/inspect.html:20 xl_auth/templates/users/view.html:33
+#: xl_auth/templates/users/inspect.html:20 xl_auth/templates/users/view.html:35
 #: xl_auth/user/forms.py:142
 msgid "System Administrator"
 msgstr ""
@@ -1054,7 +1054,7 @@ msgstr ""
 msgid "Own Permissions"
 msgstr ""
 
-#: xl_auth/templates/users/inspect.html:78 xl_auth/templates/users/view.html:73
+#: xl_auth/templates/users/inspect.html:78 xl_auth/templates/users/view.html:75
 msgid "Active Collection"
 msgstr ""
 
@@ -1143,7 +1143,7 @@ msgstr ""
 msgid "First Last"
 msgstr ""
 
-#: xl_auth/templates/users/simple_view.html:14 xl_auth/templates/users/view.html:39
+#: xl_auth/templates/users/simple_view.html:16 xl_auth/templates/users/view.html:41
 msgid "Cataloging Admin for"
 msgstr ""
 

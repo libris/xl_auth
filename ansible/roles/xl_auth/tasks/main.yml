@@ -40,7 +40,7 @@
     hostname: "{{ inventory_hostname }}"
     image: "{{ xl_auth_docker }}"
     pull: yes
-    command: run -h 0.0.0.0 -p 5000 --with-threads
+    command: prod_run
     state: started
     restart_policy: unless-stopped
     log_driver: gelf
@@ -60,25 +60,6 @@
       SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
       OAUTH2_PROVIDER_TOKEN_EXPIRES_IN: 3600
   register: start_xl_auth
-  tags: xl_auth
-
-- name: run 'flask db upgrade'
-  docker_container:
-    name: xl_auth_db_upgrade
-    hostname: xl_auth
-    image: "{{ xl_auth_docker }}"
-    recreate: yes
-    interactive: yes
-    tty: yes
-    detach: no
-    command: db upgrade
-    log_driver: json-file
-    links:
-      - postgres
-    env:
-      FLASK_DEBUG: 0
-      SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
-  when: start_xl_auth.changed
   tags: xl_auth
 
 - name: run 'flask create_user -e libris@kb.se -p <my-secret> --is-active --is-admin --force'

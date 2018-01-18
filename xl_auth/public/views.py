@@ -3,7 +3,8 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from flask import Blueprint, abort, current_app, flash, redirect, render_template, request, url_for
+from flask import (Blueprint, current_app, flash, make_response, redirect, render_template, request,
+                   url_for)
 from flask_babel import lazy_gettext as _
 from flask_login import current_user, login_required, login_user, logout_user
 
@@ -33,11 +34,13 @@ def redirect_unauthorized():
 def home():
     """Root path with login form."""
     login_form = LoginForm(request.form)
+    username = login_form.username.data
     # Handle logging in.
     if request.method == 'POST':
-        username = login_form.username.data
         if username and FailedLoginAttempt.too_many_recent_failures_for(username):
-            abort(429)
+            response = make_response(render_template('429.html'), 429)
+            response.headers['X-Username'] = username
+            return response
         if login_form.validate_on_submit():
             redirect_url = get_redirect_target() or url_for('user.profile')
             login_user(login_form.user)
@@ -53,8 +56,12 @@ def home():
                 FailedLoginAttempt(username, get_remote_addr()).save()
             flash_errors(login_form)
 
-    return render_template('public/home.html', login_form=login_form,
-                           next_redirect_url=get_redirect_target())
+    response = make_response(render_template('public/home.html', login_form=login_form,
+                                             next_redirect_url=get_redirect_target()))
+    if username:
+        response.headers['X-Username'] = username
+
+    return response
 
 
 @blueprint.route('/forgot_password/', methods=['GET', 'POST'])
