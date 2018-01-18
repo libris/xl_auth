@@ -7,8 +7,13 @@ from click import echo
 
 bind = '0.0.0.0:5000'
 
-workers = 3
+preload_app = True
 
+workers = 4
+
+worker_class = 'gthread'
+
+threads = 2
 
 def on_starting(_):
     """Master process initializing."""
