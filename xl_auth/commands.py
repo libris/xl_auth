@@ -8,6 +8,7 @@ import json
 import os
 from copy import deepcopy
 from glob import glob
+from os import execlp
 from subprocess import call
 
 import click
@@ -608,3 +609,9 @@ def import_data(verbose, admin_email, wipe_permissions, send_password_resets):
                   % (permission.user.email, permission.collection.code, wipe_permissions))
             if wipe_permissions:
                 permission.delete()
+
+
+@click.command()
+def prod_run():
+    """Run application with production setup."""
+    execlp('gunicorn', 'gunicorn', '-c', 'gunicorn_conf.py', 'autoapp:app')

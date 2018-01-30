@@ -88,6 +88,14 @@ def test_password_defaults_to_a_random_one(superuser):
     assert user.password is not None
 
 
+def test_password_can_contain_utf8_chars(superuser):
+    """Test that passwords can contain utf-8 characters."""
+    password = '▨☺♪∈∀∃' * 40  # test a really long password, just to make sure.
+    user = User(email='foo@bar.com', full_name='Foo Bar', password=password)
+    user.save_as(superuser)
+    assert user.check_password(password)
+
+
 @pytest.mark.usefixtures('db')
 def test_factory(db):
     """Test user factory."""

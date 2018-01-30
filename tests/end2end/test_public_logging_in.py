@@ -156,6 +156,8 @@ def test_sees_error_message_if_password_is_incorrect(user, testapp):
     res = form.submit()
     # Sees error.
     assert _('Invalid password') in res
+    # Also traceable in Nginx logs:
+    assert res.headers['X-Username'] == user.email
 
 
 # noinspection PyUnusedLocal
@@ -165,12 +167,14 @@ def test_sees_error_message_if_username_doesnt_exist(user, testapp):
     res = testapp.get('/')
     # Fills out login form, username incorrect.
     form = res.forms['loginForm']
-    form['username'] = 'unknown@nowhere.com'
+    form['username'] = 'unknown@example.com'
     form['password'] = 'myPrecious'
     # Submits.
     res = form.submit()
     # Sees error.
     assert _('Unknown username/email') in res
+    # Also traceable in Nginx logs:
+    assert res.headers['X-Username'] == 'unknown@example.com'
 
 
 def test_block_login_on_too_many_failed_attempts(user, testapp):
@@ -196,6 +200,9 @@ def test_block_login_on_too_many_failed_attempts(user, testapp):
     # Submits and sees error.
     res = form.submit(expect_errors=True)
     assert res.status_code == 429
+
+    # Also traceable in Nginx logs:
+    assert res.headers['X-Username'] == user.email
 
     FailedLoginAttempt.purge_failed_for_username_and_ip(user.email, '127.0.0.1')
 
