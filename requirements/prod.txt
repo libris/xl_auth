@@ -18,9 +18,10 @@ alembic==0.9.5
 # Migrations
 Flask-Migrate==2.1.1
 
-# Forms
+# Forms (omitting version for WTForms for hacky-technical reasons)
 Flask-WTF==0.14.2
-git+https://github.com/mblomdahl/wtforms.git
+WTForms
+git+https://github.com/libris/wtforms.git
 
 # Deployment
 gunicorn==19.7.1
