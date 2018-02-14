@@ -49,9 +49,11 @@
       - 9200:9200
       - 5044:5044
       - 12201:12201/udp
+  register: elk_docker_started
 
 - name: wait for elasticsearch to be online
-  wait_for: host=localhost port=9200
+  wait_for: host=localhost port=9200 delay=30
+  when: elk_docker_started.changed
 
 - name: wait for elasticsearch health status 'green'
   uri:
