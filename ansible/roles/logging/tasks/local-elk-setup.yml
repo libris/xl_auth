@@ -53,6 +53,14 @@
 - name: wait for elasticsearch to be online
   wait_for: host=localhost port=9200
 
+- name: wait for elasticsearch health status 'green'
+  uri:
+    url: "http://localhost:9200/_cluster/health"
+    return_content: yes
+  register: elasticsearch_cluster_health
+  until: elasticsearch_cluster_health.json.status == 'green'
+  retries: 30
+
 - name: insert filebeat.template.json
   uri:
     url: "http://localhost:9200/_template/filebeat"
