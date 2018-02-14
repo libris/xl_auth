@@ -16,4 +16,6 @@ galaxy_info:
     - docker
     - xl_auth
 
-dependencies: []
+dependencies:
+  - docker
+  - nodejs
