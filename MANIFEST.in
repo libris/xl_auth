@@ -1,0 +1,7 @@
+recursive-include migrations *.ini *.py
+
+recursive-include xl_auth/static/build *
+recursive-include xl_auth/translations *.mo *.po
+recursive-include xl_auth/templates *.html
+
+include autoapp.py package.json requirements.txt requirements/*.txt README.rst LICENSE

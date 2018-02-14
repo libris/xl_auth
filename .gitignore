@@ -47,6 +47,11 @@ node_modules/
 xl_auth/static/build/
 xl_auth/webpack/manifest.json
 
+# Setuptools-built files
+xl_auth.egg-info/
+build/
+dist/
+
 # Localization
 *.mo
 
