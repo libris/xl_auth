@@ -61,26 +61,6 @@
       OAUTH2_PROVIDER_TOKEN_EXPIRES_IN: 3600
   tags: xl_auth
 
-- name: run 'flask create_user -e libris@kb.se -p <my-secret> --is-active --is-admin --force'
-  docker_container:
-    name: xl_auth_create_user
-    hostname: xl_auth
-    image: "{{ xl_auth_docker }}"
-    recreate: yes
-    interactive: yes
-    tty: yes
-    detach: no
-    command: "create_user -e libris@kb.se -n SuperAdmin -p {{ xl_auth_admin_pass }} --is-active
-             --is-admin --force"
-    log_driver: json-file
-    links:
-      - postgres
-    env:
-      FLASK_DEBUG: 0
-      SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
-  when: xl_auth_admin_pass | length
-  tags: xl_auth
-
 - name: deploy xl_auth from github
   import_tasks: xl_auth_install.yml
   tags: xl_auth
