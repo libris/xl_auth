@@ -1,0 +1,58 @@
+---
+
+- name: install virtualenv 15.1.0
+  pip: name=virtualenv version=15.1.0 state=present
+
+- name: checkout xl_auth repo as /opt/xl_auth
+  git:
+    repo: https://github.com/libris/xl_auth.git
+    dest: /opt/xl_auth
+    accept_hostkey: yes
+    force: yes
+  register: xl_auth_git_clone
+
+- name: install xl_auth requirements.txt
+  pip:
+    requirements: /opt/xl_auth/requirements.txt
+    virtualenv: /opt/xl_auth/venv
+
+- name: install npm dependencies and run xl_auth npm build
+  shell: npm install && npm run build && git checkout -- package-lock.json
+  args:
+    chdir: /opt/xl_auth
+  when: xl_auth_git_clone.changed
+
+- name: compile xl_auth translations
+  shell: . venv/bin/activate && FLASK_APP=autoapp.py flask translate -c
+  args:
+    chdir: /opt/xl_auth
+  when: xl_auth_git_clone.changed
+
+- name: create 'xl_auth' user
+  user: name=xl_auth home=/opt/xl_auth shell=/sbin/nologin
+        comment='xl_auth systemd service'
+
+- name: template xl_auth systemd service
+  template:
+    src: xl_auth.service.j2
+    dest: /usr/lib/systemd/system/xl_auth.service
+  register: xl_auth_service
+
+- name: reload systemd daemons
+  systemd: daemon_reload=yes
+  when: xl_auth_service.changed
+
+- name: xl_auth service (re)started and enabled
+  service: name=xl_auth
+           state={{ 're' if xl_auth_service.changed or xl_auth_git_clone.changed else '' }}started
+           enabled=yes
+
+- name: run 'flask create_user -e libris@kb.se -p <my-secret> --is-active --is-admin --force'
+  shell: ". venv/bin/activate && SQLALCHEMY_DATABASE_URI=postgresql://xl_auth:xl_auth@localhost/prod
+         FLASK_APP=autoapp.py flask create_user -e libris@kb.se -n SuperAdmin
+         -p {{ xl_auth_admin_pass }} --is-active --is-admin --force"
+  args:
+    chdir: /opt/xl_auth
+  when: xl_auth_admin_pass | length
+
+...

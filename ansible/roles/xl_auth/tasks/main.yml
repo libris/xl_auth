@@ -37,11 +37,11 @@
 - name: start xl_auth
   docker_container:
     name: xl_auth
-    hostname: "{{ inventory_hostname }}"
+    hostname: "{{ xl_auth_server_name }}"
     image: "{{ xl_auth_docker }}"
     pull: yes
     command: prod_run
-    state: started
+    state: stopped
     restart_policy: unless-stopped
     log_driver: gelf
     log_options:
@@ -53,7 +53,7 @@
     ports:
       - 5000:5000
     env:
-      SERVER_NAME: "{{ inventory_hostname }}"
+      SERVER_NAME: "{{ xl_auth_server_name }}"
       XL_AUTH_SECRET: "{{ xl_auth_secret | default('not_secret, as fallback for `vagrant up`') }}"
       PREFERRED_URL_SCHEME: https
       FLASK_DEBUG: 0
@@ -79,6 +79,10 @@
       FLASK_DEBUG: 0
       SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
   when: xl_auth_admin_pass | length
+  tags: xl_auth
+
+- name: deploy xl_auth from github
+  import_tasks: xl_auth_install.yml
   tags: xl_auth
 
 ...
