@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-md-4">
                         <h2>{{ _('Log in') }}</h2>
-                        <form id="loginForm" method="POST" class="" action="/" role="login">
+                        <form id="loginForm" method="POST" class="" action="/" role="form">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                             {{ login_form.next_redirect(value=next_redirect_url or "") }}
                             <div class="form-group login-form">
