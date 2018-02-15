@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 0.7.6\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-01-17 16:23+0100\n"
+"POT-Creation-Date: 2018-02-15 10:18+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -221,7 +221,7 @@ msgid "Unknown username/email"
 msgstr ""
 
 #: tests/end2end/test_public_reset_password.py:30 tests/end2end/test_public_reset_password.py:153
-#: tests/end2end/test_public_reset_password.py:168 xl_auth/templates/public/home.html:45
+#: tests/end2end/test_public_reset_password.py:168 xl_auth/templates/public/home.html:39
 msgid "Forgot password?"
 msgstr ""
 
@@ -553,11 +553,11 @@ msgstr ""
 msgid "--- Select Collection ---"
 msgstr ""
 
-#: xl_auth/public/forms.py:20 xl_auth/templates/public/home.html:39
+#: xl_auth/public/forms.py:20 xl_auth/templates/public/home.html:33
 msgid "Username"
 msgstr ""
 
-#: xl_auth/public/forms.py:21 xl_auth/public/forms.py:83 xl_auth/templates/public/home.html:41
+#: xl_auth/public/forms.py:21 xl_auth/public/forms.py:83 xl_auth/templates/public/home.html:35
 #: xl_auth/templates/public/reset_password.html:16 xl_auth/templates/users/change_password.html:16
 #: xl_auth/user/forms.py:168
 msgid "Password"
@@ -635,11 +635,11 @@ msgstr ""
 msgid "Contact"
 msgstr ""
 
-#: xl_auth/templates/layout.html:13 xl_auth/templates/nav.html:19 xl_auth/templates/public/home.html:23
+#: xl_auth/templates/layout.html:13 xl_auth/templates/nav.html:19 xl_auth/templates/public/home.html:20
 msgid "xl_auth"
 msgstr ""
 
-#: xl_auth/templates/nav.html:38 xl_auth/templates/nav.html:40
+#: xl_auth/templates/nav.html:39 xl_auth/templates/nav.html:41
 msgid "Log out"
 msgstr ""
 
@@ -878,7 +878,7 @@ msgstr ""
 msgid "Request Password Reset"
 msgstr ""
 
-#: xl_auth/templates/public/forgot_password.html:11 xl_auth/templates/public/home.html:40
+#: xl_auth/templates/public/forgot_password.html:11 xl_auth/templates/public/home.html:34
 #: xl_auth/templates/users/register.html:12
 msgid "user@example.com"
 msgstr ""
@@ -891,39 +891,35 @@ msgstr ""
 msgid "Welcome to xl_auth"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:10 xl_auth/templates/public/home.html:27
-msgid "This is a beta release of Libris authorization service."
+#: xl_auth/templates/public/home.html:10 xl_auth/templates/public/home.html:24
+msgid "xl_auth is a service that enables access to Libris XL for catalogers."
 msgstr ""
 
-#: xl_auth/templates/public/home.html:13 xl_auth/templates/public/home.html:30
-msgid "See email from customer service for instructions."
-msgstr ""
-
-#: xl_auth/templates/public/home.html:34 xl_auth/templates/public/home.html:43
+#: xl_auth/templates/public/home.html:28 xl_auth/templates/public/home.html:37
 msgid "Log in"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:53
+#: xl_auth/templates/public/home.html:47
 msgid "The Libris blog"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:54
+#: xl_auth/templates/public/home.html:48
 msgid "Read the latest news about the Libris collaboration."
 msgstr ""
 
-#: xl_auth/templates/public/home.html:55
+#: xl_auth/templates/public/home.html:49
 msgid "Go to the blog"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:58
+#: xl_auth/templates/public/home.html:52
 msgid "Support forum"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:59
+#: xl_auth/templates/public/home.html:53
 msgid "Get help, ask questions and report errors."
 msgstr ""
 
-#: xl_auth/templates/public/home.html:60
+#: xl_auth/templates/public/home.html:54
 msgid "Go to kundo"
 msgstr ""
 
