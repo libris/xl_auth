@@ -904,9 +904,8 @@ msgstr "Välkommen till Libris Login"
 #: xl_auth/templates/public/home.html:10 xl_auth/templates/public/home.html:24
 msgid "xl_auth is a service that enables access to Libris XL for catalogers."
 msgstr ""
-"Libris Login är en tjänst för katalogisatörerer där man kan logga in i Libris "
-"katalogiseringstjänst med ett personligt användarnamn, samt där katalogiseringsansvariga kan "
-"administrera användare, behörigheter och sigel."
+"Libris Login ger behörighet att arbeta i Libris katalogiseringstjänst. Här administreras även "
+"användare, behörigheter och sigel av katalogiseringsanvariga."
 
 #: xl_auth/templates/public/home.html:28 xl_auth/templates/public/home.html:37
 msgid "Log in"
