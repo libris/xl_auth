@@ -16,4 +16,9 @@ galaxy_info:
     - docker
     - xl_auth
 
-dependencies: []
+dependencies:
+  - role: docker
+  - role: nodejs
+  - role: postgresql
+    postgresql_db: prod
+    postgresql_user: postgres

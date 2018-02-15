@@ -1,5 +1,8 @@
 ---
 
+xl_auth_server_name: "{{ (inventory_hostname == 'default') | ternary(
+                     ansible_eth1['ipv4']['address'], inventory_hostname) }}"
+
 xl_auth_gelf_address: "{{ (inventory_hostname == 'login.libris.kb.se') | ternary(
                       'udp://log01.kb.se:12201', 'udp://localhost:12201') }}"
 
