@@ -701,7 +701,7 @@ msgstr "Sidtopp"
 
 #: xl_auth/templates/collections/register.html:5
 msgid "Register New Collection"
-msgstr "Registrera nytt sigel"
+msgstr "Lägg till nytt sigel"
 
 #: xl_auth/templates/collections/register.html:26 xl_auth/templates/oauth/clients/register.html:31
 #: xl_auth/templates/permissions/register.html:33 xl_auth/templates/users/register.html:22
@@ -863,7 +863,7 @@ msgstr "Befintliga behörigheter"
 
 #: xl_auth/templates/permissions/register.html:5
 msgid "Register New Permission"
-msgstr "Registrera ny behörighet"
+msgstr "Lägg till ny behörighet"
 
 #: xl_auth/templates/public/about.html:7
 msgid ""
@@ -1163,7 +1163,7 @@ msgstr "Dina behörigheter"
 
 #: xl_auth/templates/users/register.html:5
 msgid "Register New User"
-msgstr "Registrera ny användare"
+msgstr "Lägg till ny användare"
 
 #: xl_auth/templates/users/register.html:16
 msgid "First Last"
