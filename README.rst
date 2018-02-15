@@ -195,6 +195,15 @@ DB Models
 Changelog
 =========
 
+v. 0.7.7
+--------
+
+* Replace Docker container runtimes with local installs of xl_auth and Postgres
+  (`#178 <https://github.com/libris/xl_auth/issues/178>`_)
+* Copy improvements / UX (`#176 <https://github.com/libris/xl_auth/issues/176>`_,
+  `#173 <https://github.com/libris/xl_auth/issues/173>`_)
+
+
 v. 0.7.6
 --------
 
