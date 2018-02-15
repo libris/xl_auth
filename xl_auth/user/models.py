@@ -14,7 +14,7 @@ from flask_emails import Message
 from flask_login import UserMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 
-from ..database import Column, Model, SurrogatePK, db, reference_col, relationship
+from ..database import Column, Model, SurrogatePK, db, or_, reference_col, relationship
 from ..extensions import bcrypt
 from ..utils import get_remote_addr
 
@@ -60,6 +60,11 @@ class PasswordReset(SurrogatePK, Model):
         user = User.get_by_email(email)
         if user:
             return PasswordReset.query.filter_by(code=code, user=user).first()
+
+    @staticmethod
+    def delete_all_by_user(user):
+        """Delete all password resets for specified user."""
+        PasswordReset.query.filter_by(user=user).delete()
 
     @hybrid_property
     def is_recent(self):
@@ -194,6 +199,16 @@ class FailedLoginAttempt(SurrogatePK, Model):
         if commit:
             db.session.commit()
 
+    @staticmethod
+    def get_all_by_user(user):
+        """Get all failed login attempts for specified user."""
+        return FailedLoginAttempt.query.filter_by(username=user.email).all()
+
+    @staticmethod
+    def delete_all_by_user(user):
+        """Delete all failed login attempts for specified user."""
+        FailedLoginAttempt.query.filter_by(username=user.email).delete()
+
     def __repr__(self):
         """Represent instance as a unique string."""
         return '<FailedLoginAttempt({id}:{username!r})>'.format(id=self.id, username=self.username)
@@ -237,6 +252,12 @@ class User(UserMixin, SurrogatePK, Model):
     def get_by_email(email):
         """Get by email."""
         return User.query.filter(User.email.ilike(email)).first()
+
+    @staticmethod
+    def get_modified_and_created_by_user(user):
+        """Get all users created or modified by specified user."""
+        return User.query.filter(or_(User.created_by == user,
+                                     User.modified_by == user)).all()
 
     @hybrid_property
     def is_cataloging_admin(self):

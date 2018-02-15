@@ -33,6 +33,34 @@ def test_factory(db):
     assert grant.scopes == ['read', 'write']
 
 
+def test_get_all_by_user(db, user, client):
+    """Get all grants issued for a specific user."""
+    grant = Grant(user=user, client=client, code='temp-secret', redirect_uri='http://example.com',
+                  scopes='read write')
+    grant.save()
+    other_grant = GrantFactory()
+    db.session.commit()
+
+    grants = Grant.get_all_by_user(user)
+    assert other_grant not in grants
+    assert [grant] == grants
+
+
+def test_delete_all_by_user(db, user, client):
+    """Delete all grants issued for a specific user."""
+    grant = Grant(user=user, client=client, code='temp-secret', redirect_uri='http://example.com',
+                  scopes='read write')
+    grant.save()
+    other_grant = GrantFactory()
+    db.session.commit()
+
+    Grant.delete_all_by_user(user)
+    db.session.commit()
+    grants = Grant.query.all()
+    assert grant not in grants
+    assert [other_grant] == grants
+
+
 @pytest.mark.usefixtures('db')
 def test_scopes():
     """Test scopes."""
