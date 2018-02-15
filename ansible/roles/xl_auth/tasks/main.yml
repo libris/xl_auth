@@ -13,12 +13,12 @@
   when: ssl_key_contents | success
   tags: xl_auth
 
-- name: start postgres
+- name: stop postgres
   docker_container:
     name: postgres
     hostname: postgres
     image: postgres:9.4-alpine
-    state: started
+    state: stopped
     restart_policy: unless-stopped
     log_driver: syslog
     log_options:
@@ -34,7 +34,7 @@
       POSTGRES_PASSWORD: xl_auth
   tags: xl_auth
 
-- name: start xl_auth
+- name: stop xl_auth
   docker_container:
     name: xl_auth
     hostname: "{{ xl_auth_server_name }}"
@@ -57,7 +57,7 @@
       XL_AUTH_SECRET: "{{ xl_auth_secret | default('not_secret, as fallback for `vagrant up`') }}"
       PREFERRED_URL_SCHEME: https
       FLASK_DEBUG: 0
-      SQLALCHEMY_DATABASE_URI: postgresql://xl_auth:xl_auth@postgres/prod
+      SQLALCHEMY_DATABASE_URI: "postgresql://{{ postgresql_user }}:{{ postgresql_password }}@postgres/{{ postgresql_db }}"
       OAUTH2_PROVIDER_TOKEN_EXPIRES_IN: 3600
   tags: xl_auth
 
