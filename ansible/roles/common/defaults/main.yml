@@ -1,5 +1,5 @@
 ---
 
-selinux_enabled: False
+selinux_enabled: True
 
 ...

@@ -1,6 +1,6 @@
 galaxy_info:
   author: Mats Blomdahl
-  description: Add monitoring for server logs
+  description: Copied from https://github.com/mblomdahl/jenkins-up/tree/master/roles/nodejs
   company: National Library of Sweden
 
   license: Apache-2.0
@@ -13,8 +13,6 @@ galaxy_info:
         - 7
 
   galaxy_tags:
-    - docker
-    - logging
+    - nodejs
 
-dependencies:
-  - docker
+dependencies: []

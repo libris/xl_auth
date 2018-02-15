@@ -1,6 +1,6 @@
 {
   "name": "xl_auth",
-  "version": "0.7.6",
+  "version": "0.7.7",
   "author": "National Library of Sweden",
   "license": "Apache-2.0",
   "description": "Authorization and OAuth2 provider for LibrisXL",
@@ -22,7 +22,6 @@
   "keywords": [
     "kb",
     "libris",
-    "bibdb",
     "oauth2"
   ],
   "engines": {
