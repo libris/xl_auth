@@ -169,29 +169,6 @@ flask test --junit-xml=py35test-junit.xml"'
                 )
             }
         }
-        stage('Build and Publish') {
-            when {
-                expression { env.BUILD_TYPE in ['next', 'latest'] }
-            }
-            environment {
-                DOCKER_LOGIN = credentials('mblomdahl_docker')
-            }
-            steps {
-                dir('_docker-build') {
-                    unstash 'pre_install_git_checkout'
-                    sh 'docker login -u $DOCKER_LOGIN_USR -p $DOCKER_LOGIN_PSW'
-                    sh 'docker build -t mblomdahl/xl_auth:$DOCKER_TAG .'
-                    sh 'docker save mblomdahl/xl_auth:$DOCKER_TAG | gzip - > xl_auth-$BUILD_VERSION.docker.tar.gz'
-                    archiveArtifacts "xl_auth-${BUILD_VERSION}.docker.tar.gz"
-
-                    sh 'docker push mblomdahl/xl_auth:$DOCKER_TAG'
-                    sh 'docker tag mblomdahl/xl_auth:$DOCKER_TAG mblomdahl/xl_auth:$DOCKER_TAG_ALIAS'
-                    sh 'docker push mblomdahl/xl_auth:$DOCKER_TAG_ALIAS'
-                    sh 'docker logout'
-                    deleteDir()
-                }
-            }
-        }
     }
     post {
         always {
