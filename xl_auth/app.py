@@ -99,6 +99,7 @@ def register_commands(app):
     app.cli.add_command(commands.lint)
     app.cli.add_command(commands.clean)
     app.cli.add_command(commands.create_user)
+    app.cli.add_command(commands.forget_user)
     app.cli.add_command(commands.urls)
     app.cli.add_command(commands.import_data)
     app.cli.add_command(commands.prod_run)

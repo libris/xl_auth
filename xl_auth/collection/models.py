@@ -7,7 +7,7 @@ from datetime import datetime
 
 from flask_babel import lazy_gettext as _
 
-from ..database import Column, Model, SurrogatePK, db, reference_col, relationship
+from ..database import Column, Model, SurrogatePK, db, or_, reference_col, relationship
 
 
 class Collection(SurrogatePK, Model):
@@ -48,6 +48,12 @@ class Collection(SurrogatePK, Model):
                      'cataloging admin for.')
         else:
             return ''
+
+    @staticmethod
+    def get_modified_and_created_by_user(user):
+        """Get all collections created or modified by specified user."""
+        return Collection.query.filter(or_(Collection.created_by == user,
+                                           Collection.modified_by == user)).all()
 
     def get_permissions_as_seen_by(self, current_user):
         """Return subset of permissions viewable by 'current_user'."""

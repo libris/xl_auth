@@ -36,6 +36,16 @@ class Token(SurrogatePK, Model):
         db.Model.__init__(self, **kwargs)
         self.scopes = scopes
 
+    @staticmethod
+    def get_all_by_user(user):
+        """Get all tokens for specified user."""
+        return Token.query.filter_by(user=user).all()
+
+    @staticmethod
+    def delete_all_by_user(user):
+        """Delete all tokens for specified user."""
+        Token.query.filter_by(user=user).delete()
+
     @hybrid_property
     def expires(self):
         """Return 'expires_at'."""

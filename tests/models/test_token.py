@@ -22,6 +22,32 @@ def test_get_by_id(user, client):
     assert retrieved == token
 
 
+def test_get_all_by_user(db, user, client):
+    """Get all tokens issued for a specific user."""
+    token = Token(user=user, client=client, access_token='abc', refresh_token='def', scopes='read')
+    token.save()
+    other_token = TokenFactory()
+    db.session.commit()
+
+    user_tokens = Token.get_all_by_user(user)
+    assert other_token not in user_tokens
+    assert [token] == user_tokens
+
+
+def test_delete_all_by_user(db, user, client):
+    """Delete all tokens issued for a specific user."""
+    token = Token(user=user, client=client, access_token='abc', refresh_token='def', scopes='read')
+    token.save()
+    other_token = TokenFactory()
+    db.session.commit()
+
+    Token.delete_all_by_user(user)
+    db.session.commit()
+    tokens = Token.query.all()
+    assert token not in tokens
+    assert [other_token] == tokens
+
+
 @pytest.mark.usefixtures('db')
 def test_factory(db):
     """Test token factory."""

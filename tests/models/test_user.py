@@ -330,6 +330,22 @@ def test_removing_password_reset():
     assert password_reset not in user.password_resets
 
 
+def test_delete_all_password_resets_by_user(db, user):
+    """Delete all password resets issued for specified user."""
+    other_user = UserFactory()
+    db.session.commit()
+    password_reset = PasswordReset(user)
+    password_reset.save()
+
+    other_password_reset = PasswordReset(other_user)
+    other_password_reset.save()
+
+    PasswordReset.delete_all_by_user(user)
+    password_resets = PasswordReset.query.all()
+    assert password_reset not in password_resets
+    assert [other_password_reset] == password_resets
+
+
 @pytest.mark.usefixtures('db')
 def test_login_attempt_too_many_recent_failures(app):
     """Ensure login attempt is not allowed after too many failed attempts."""
@@ -367,6 +383,32 @@ def test_login_attempt_purge():
     attempts = FailedLoginAttempt.query.all()
     assert len(attempts) == 1
     assert bar_login_attempt in attempts
+
+
+def test_get_all_failed_login_attempts_by_user(db, user):
+    """Get all failed login attempts for a specific user."""
+    failed_login_attempt = FailedLoginAttempt(user.email, '127.0.0.1')
+    failed_login_attempt.save()
+    other_failed_login_attempt = FailedLoginAttempt('foo', '127.0.0.1')
+    other_failed_login_attempt.save()
+
+    attempts = FailedLoginAttempt.get_all_by_user(user)
+    assert other_failed_login_attempt not in attempts
+    assert [failed_login_attempt] == attempts
+
+
+def test_delete_all_failed_login_attempts_by_user(db, user):
+    """Delete all failed login attempts for a specific user."""
+    failed_login_attempt = FailedLoginAttempt(user.email, '127.0.0.1')
+    failed_login_attempt.save()
+    other_failed_login_attempt = FailedLoginAttempt('foo', '127.0.0.1')
+    other_failed_login_attempt.save()
+
+    FailedLoginAttempt.delete_all_by_user(user)
+    db.session.commit()
+    attempts = FailedLoginAttempt.query.all()
+    assert failed_login_attempt not in attempts
+    assert [other_failed_login_attempt] == attempts
 
 
 @pytest.mark.usefixtures('db')

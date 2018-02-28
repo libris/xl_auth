@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from datetime import datetime
 
-from ..database import Column, Model, SurrogatePK, db, reference_col, relationship
+from ..database import Column, Model, SurrogatePK, db, or_, reference_col, relationship
 
 
 class Permission(SurrogatePK, Model):
@@ -31,6 +31,17 @@ class Permission(SurrogatePK, Model):
     created_at = Column(db.DateTime, default=datetime.utcnow, nullable=False)
     created_by_id = reference_col('users', nullable=False)
     created_by = relationship('User', foreign_keys=created_by_id)
+
+    @staticmethod
+    def get_modified_and_created_by_user(user):
+        """Get all permissions created or modified by specified user."""
+        return Permission.query.filter(or_(Permission.created_by == user,
+                                           Permission.modified_by == user)).all()
+
+    @staticmethod
+    def delete_all_by_user(user):
+        """Delete all permissions for specified user."""
+        Permission.query.filter_by(user=user).delete()
 
     def __init__(self, **kwargs):
         """Create instance."""

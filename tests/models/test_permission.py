@@ -81,6 +81,20 @@ def test_factory(db):
     assert isinstance(permission.created_by, User)
 
 
+def test_delete_all_by_user(db, user, superuser, collection):
+    """Delete all permissions for a specific user."""
+    permission = Permission(user=user, collection=collection)
+    permission.save_as(superuser)
+
+    other_permission = PermissionFactory()
+    db.session.commit()
+
+    Permission.delete_all_by_user(user)
+    permissions = Permission.query.all()
+    assert permission not in permissions
+    assert [other_permission] == permissions
+
+
 def test_repr(user, collection):
     """Check repr output."""
     permission = PermissionFactory(user=user, collection=collection)
