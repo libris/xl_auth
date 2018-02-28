@@ -195,6 +195,14 @@ DB Models
 Changelog
 =========
 
+v. 0.7.8
+--------
+
+* Add CLI tool for purging a user from the system (`#148
+  <https://github.com/libris/xl_auth/issues/148>`_)
+* Clean up Jenkinsfile
+
+
 v. 0.7.7
 --------
 
