@@ -18,6 +18,7 @@ except NameError:
 # Alias common SQLAlchemy names.
 Column = db.Column
 relationship = db.relationship
+or_ = db.or_
 
 
 class CRUDMixin(object):

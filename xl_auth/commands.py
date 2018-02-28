@@ -6,6 +6,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import datetime as dt
 import json
 import os
+import sys
 from copy import deepcopy
 from glob import glob
 from os import execlp
@@ -16,7 +17,11 @@ from flask import current_app
 from flask.cli import with_appcontext
 from werkzeug.exceptions import MethodNotAllowed, NotFound
 
-from xl_auth.user.models import User
+from xl_auth.collection.models import Collection
+from xl_auth.oauth.grant.models import Grant
+from xl_auth.oauth.token.models import Token
+from xl_auth.permission.models import Permission
+from xl_auth.user.models import FailedLoginAttempt, PasswordReset, User
 
 # Disable warnings on discouraged Py3 use (http://click.pocoo.org/python3/).
 click.disable_unicode_literals_warning = True
@@ -126,6 +131,60 @@ def create_user(email, full_name, password, admin_email, is_active, is_admin, fo
                               email=email, full_name=full_name or email, password=password,
                               is_active=is_active, is_admin=is_admin)
         click.echo('Created account with login {0}:{1}'.format(user.email, password))
+
+
+@click.command()
+@click.option('-e', '--email', required=True, default=None, help='Email for user')
+@click.option('-d', '--dry-run', default=False, is_flag=True,
+              help="Show what would be deleted, but don't actually delete anything.")
+@with_appcontext
+def forget_user(email, dry_run):
+    """Remove all traces of a user from the system."""
+    user = User.get_by_email(email)
+    if user:
+        if user.is_admin:
+            click.echo('User "{}" is a sysadmin, refusing to delete.'.format(user))
+            sys.exit(1)
+
+        if len(User.get_modified_and_created_by_user(user)) > 0:
+            click.echo('User "{}" has created or modified users, refusing to delete.'.format(user))
+            sys.exit(1)
+
+        if len(Collection.get_modified_and_created_by_user(user)) > 0:
+            click.echo('User "{}" has created or modified collections, '
+                       'refusing to delete.'.format(user))
+            sys.exit(1)
+
+        if len(Permission.get_modified_and_created_by_user(user)) > 0:
+            click.echo('User "{}" has created or modified permissions, '
+                       'refusing to delete.'.format(user))
+            sys.exit(1)
+
+        if dry_run:
+            tokens = Token.get_all_by_user(user)
+            grants = Grant.get_all_by_user(user)
+            failed_login_attempts = FailedLoginAttempt.get_all_by_user(user)
+            permissions = user.permissions
+            password_resets = user.password_resets
+            click.echo('These tokens would be deleted: {}'.format(tokens))
+            click.echo('These grants would be deleted: {}'.format(grants))
+            click.echo('These failed login attempts would be deleted: {}'.format(
+                failed_login_attempts))
+            click.echo('These permissions would be deleted: {}'.format(permissions))
+            click.echo('These password_resets would be deleted: {}'.format(password_resets))
+        else:
+            if click.confirm('Are you sure you want to delete all information '
+                             'related to user "{}"?'.format(user)):
+                Token.delete_all_by_user(user)
+                Grant.delete_all_by_user(user)
+                Permission.delete_all_by_user(user)
+                PasswordReset.delete_all_by_user(user)
+                FailedLoginAttempt.delete_all_by_user(user)
+                user.delete()
+
+    else:
+        click.echo('User "{}" not found. Aborting...'.format(email))
+        sys.exit(1)
 
 
 @click.command()
