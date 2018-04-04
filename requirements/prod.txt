@@ -20,8 +20,7 @@ Flask-Migrate==2.1.1
 
 # Forms (omitting version for WTForms for hacky-technical reasons)
 Flask-WTF==0.14.2
-WTForms
-WTForms-fork-20180213
+git+https://github.com/libris/wtforms.git
 
 # Deployment
 gunicorn==19.7.1
