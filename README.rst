@@ -195,6 +195,11 @@ DB Models
 Changelog
 =========
 
+v. 0.8.0
+--------
+
+* Add support for OAuth2 implicit flow
+
 v. 0.7.8
 --------
 
