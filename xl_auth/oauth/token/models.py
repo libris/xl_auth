@@ -24,7 +24,7 @@ class Token(SurrogatePK, Model):
     token_type = Column(db.String(40), nullable=False, default='Bearer')
 
     access_token = Column(db.String(256), nullable=False, unique=True)
-    refresh_token = Column(db.String(256), nullable=False, unique=True)
+    refresh_token = Column(db.String(256), unique=True)
 
     expires_at = Column(db.DateTime, nullable=False,
                         default=lambda: datetime.utcnow() + timedelta(seconds=3600))
