@@ -22,7 +22,7 @@ def test_oauth_authorize_success(user, client, testapp):
                       params={'client_id': client.client_id,
                               'response_type': 'code',
                               'redirect_uri': client.default_redirect_uri,
-                              'scopes': client.default_scopes})
+                              'scope': ' '.join(client.default_scopes)})
     # Redirected to homepage
     res = res.follow()
     # Fills out login form

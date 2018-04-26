@@ -11,7 +11,6 @@ requesting access to your account details.', name=client.name, description=clien
             <div class="col-md-12">
                 <form id="authorizeForm" class="form" method="POST" action="" role="form">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                    {{ authorize_form.scope(value=' '.join(scopes)) }}
                     {{ authorize_form.confirm() }}
                     <input class="btn btn-lg btn-primary btn-success" type="submit"
                            value="{{ _('Authorize') }}">
