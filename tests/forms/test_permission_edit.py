@@ -131,9 +131,7 @@ def test_validate_add_cataloging_admin_permission_as_cataloging_admin(user, perm
                     collection_id=permission.collection.id,
                     cataloging_admin=True)
 
-    assert form.validate() is False
-    assert _('Cataloging admin rights can only be granted by system admins.') in \
-        form.cataloging_admin.errors
+    assert form.validate() is True
 
 
 def test_validate_success_as_cataloging_admin(user, permission, superuser):
