@@ -60,10 +60,6 @@ class RegisterForm(PermissionForm):
         """Apply 'user_id' and 'collection_id' field defaults."""
         self.user_id.default = user_id
         self.collection_id.default = collection_id
-        if not self.current_user.is_admin:
-            self.cataloging_admin.render_kw = {'disabled': 'disabled',
-                                               'title': _('Cataloging admin rights can only be '
-                                                          'granted by system admins.')}
         self.process()
 
     def validate_collection_id(self, field):
@@ -79,12 +75,6 @@ class RegisterForm(PermissionForm):
         else:
             raise ValidationError(_('Collection ID "%(collection_id)s" does not exist',
                                     collection_id=field.data))
-
-    def validate_cataloging_admin(self, field):
-        """Validate cataloging admin permissions is not set by non-admins."""
-        if not self.current_user.is_admin and field.data:
-            raise ValidationError(
-                _('Cataloging admin rights can only be granted by system admins.'))
 
     def validate(self):
         """Validate the form."""
@@ -122,10 +112,6 @@ class EditForm(PermissionForm):
         self.registrant.default = permission.registrant
         self.cataloger.default = permission.cataloger
         self.cataloging_admin.default = permission.cataloging_admin
-        if not self.current_user.is_admin and not permission.cataloging_admin:
-            self.cataloging_admin.render_kw = {'disabled': 'disabled',
-                                               'title': _('Cataloging admin rights can only be '
-                                                          'granted by system admins.')}
         self.process()
 
     # noinspection PyUnusedLocal
@@ -164,12 +150,6 @@ class EditForm(PermissionForm):
                 current_collection, form_collection) or self.current_user.is_admin):
             self.permission_id.errors.append(_('You do not have sufficient privileges '
                                                'for this operation.'))
-            return False
-
-        if self.cataloging_admin.data and target_permission.cataloging_admin is False \
-                and not self.current_user.is_admin:
-            self.cataloging_admin.errors.append(_('Cataloging admin rights can only be granted by '
-                                                  'system admins.'))
             return False
 
         other_permission = Permission.query.filter(
