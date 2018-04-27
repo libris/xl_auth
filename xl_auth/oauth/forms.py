@@ -11,7 +11,6 @@ from wtforms import HiddenField
 class AuthorizeForm(FlaskForm):
     """OAuth2'orize form."""
 
-    scope = HiddenField(_('Scope'))
     confirm = HiddenField(_('Confirm'), default='y')
 
     def __init__(self, *args, **kwargs):
