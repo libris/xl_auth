@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from datetime import datetime, timedelta
 
-from flask import Blueprint, current_app, jsonify, render_template, request
+from flask import Blueprint, current_app, jsonify, render_template, request, session
 from flask_login import current_user, login_required
 
 from ..extensions import csrf_protect, oauth_provider
@@ -101,9 +101,16 @@ def authorize(*_, **kwargs):
         client_id = kwargs.get('client_id')
         client = Client.query.filter_by(client_id=client_id).first()
         kwargs['client'] = client
-        return render_template('oauth/authorize.html', authorize_form=authorize_form, **kwargs)
+        has_authorized_scopes = session.get('has_authorized_scopes', False)
+        if has_authorized_scopes:
+            return True
+        else:
+            return render_template('oauth/authorize.html', authorize_form=authorize_form, **kwargs)
 
     confirm = authorize_form['confirm'].data == 'y'
+    if confirm:
+        # TODO https://jira.kb.se/browse/LXL-1319
+        session['has_authorized_scopes'] = True
     return confirm
 
 

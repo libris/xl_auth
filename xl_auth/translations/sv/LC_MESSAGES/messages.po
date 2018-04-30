@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2018-02-15 10:18+0100\n"
+"POT-Creation-Date: 2018-04-27 12:44+0200\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -155,8 +155,8 @@ msgstr "Behörighet borttagen för \"%(username)s\" på sigel \"%(code)s\"."
 #: tests/forms/test_user_administer.py:53 tests/forms/test_user_change_password.py:45
 #: tests/forms/test_user_edit_details.py:34 tests/forms/test_user_register.py:44
 #: xl_auth/collection/forms.py:41 xl_auth/collection/forms.py:73 xl_auth/oauth/client/forms.py:40
-#: xl_auth/oauth/client/forms.py:67 xl_auth/permission/forms.py:78 xl_auth/permission/forms.py:142
-#: xl_auth/permission/forms.py:165 xl_auth/permission/forms.py:217 xl_auth/templates/403.html:11
+#: xl_auth/oauth/client/forms.py:67 xl_auth/permission/forms.py:74 xl_auth/permission/forms.py:128
+#: xl_auth/permission/forms.py:151 xl_auth/permission/forms.py:197 xl_auth/templates/403.html:11
 #: xl_auth/user/forms.py:77 xl_auth/user/forms.py:126 xl_auth/user/forms.py:160
 #: xl_auth/user/forms.py:179
 msgid "You do not have sufficient privileges for this operation."
@@ -178,7 +178,7 @@ msgstr "Lägg till ny användare"
 
 #: tests/end2end/test_permission_editing.py:170 tests/end2end/test_permission_registering.py:170
 #: tests/forms/test_permission_edit.py:78 tests/forms/test_permission_register.py:51
-#: xl_auth/permission/forms.py:98 xl_auth/permission/forms.py:181
+#: xl_auth/permission/forms.py:88 xl_auth/permission/forms.py:161
 #, python-format
 msgid "Permissions for user \"%(username)s\" on collection \"%(code)s\" already registered"
 msgstr "En behörighet för användare \"%(username)s\" på sigel \"%(code)s\" finns redan registrerad"
@@ -206,7 +206,7 @@ msgstr "Godkänn tjänstevillkor"
 msgid "Collections"
 msgstr "Sigler"
 
-#: tests/end2end/test_public_logging_in.py:144 xl_auth/public/views.py:114
+#: tests/end2end/test_public_logging_in.py:144 xl_auth/public/views.py:115
 msgid "You are logged out."
 msgstr "Du är utloggad."
 
@@ -347,7 +347,7 @@ msgid "Your Responsibilities as Cataloging Admin"
 msgstr "Ditt ansvar som katalogiseringsadmin"
 
 #: tests/end2end/test_user_registering.py:209 tests/forms/test_user_register.py:26
-#: tests/forms/test_user_register.py:36 xl_auth/commands.py:484 xl_auth/user/forms.py:67
+#: tests/forms/test_user_register.py:36 xl_auth/commands.py:543 xl_auth/user/forms.py:67
 msgid "Email already registered"
 msgstr "Epost-adressen är redan registrerad"
 
@@ -357,7 +357,7 @@ msgstr "Epost-adressen är redan registrerad"
 msgid "View User '<a href=\"mailto:%(email)s\">%(email)s</a>'"
 msgstr "Användare '<a href=\"mailto:%(email)s\">%(email)s</a>'"
 
-#: tests/end2end/test_user_view.py:146 tests/models/test_user.py:272 xl_auth/user/models.py:295
+#: tests/end2end/test_user_view.py:146 tests/models/test_user.py:272 xl_auth/user/models.py:316
 msgid "You will only see permissions for those collections that you are cataloging admin for."
 msgstr "Du ser enbart behörigheter på de sigler du är katalogiseringsadmin för."
 
@@ -382,7 +382,7 @@ msgid "Field must be between 1 and 5 characters long."
 msgstr "Fältet måste vara mellan 1 och 5 tecken långt."
 
 #: tests/forms/test_permission_delete.py:20 tests/forms/test_permission_edit.py:20
-#: xl_auth/permission/forms.py:136 xl_auth/permission/forms.py:221 xl_auth/permission/views.py:82
+#: xl_auth/permission/forms.py:122 xl_auth/permission/forms.py:201 xl_auth/permission/views.py:82
 #: xl_auth/permission/views.py:116
 #, python-format
 msgid "Permission ID \"%(permission_id)s\" does not exist"
@@ -400,23 +400,15 @@ msgid "A user must be selected."
 msgstr "En användare måste väljas."
 
 #: tests/forms/test_permission_edit.py:58 tests/forms/test_permission_register.py:34
-#: xl_auth/permission/forms.py:72 xl_auth/permission/forms.py:149
+#: xl_auth/permission/forms.py:68 xl_auth/permission/forms.py:135
 msgid "A collection must be selected."
 msgstr "Ett sigel måste väljas."
 
 #: tests/forms/test_permission_edit.py:101 tests/forms/test_permission_register.py:72
-#: xl_auth/permission/forms.py:80 xl_auth/permission/forms.py:151
+#: xl_auth/permission/forms.py:76 xl_auth/permission/forms.py:137
 #, python-format
 msgid "Collection ID \"%(collection_id)s\" does not exist"
 msgstr "Sigel med databas-ID \"%(collection_id)s\" existerar inte"
-
-#: tests/forms/test_permission_edit.py:135 tests/forms/test_permission_register.py:95
-#: xl_auth/permission/forms.py:65 xl_auth/permission/forms.py:87 xl_auth/permission/forms.py:127
-#: xl_auth/permission/forms.py:171
-msgid "Cataloging admin rights can only be granted by system admins."
-msgstr ""
-"I nuläget kan endast systemadministratörer utse katalogiseringsadmins, vänligen kontakta "
-"kundservice."
 
 #: tests/forms/test_public_login.py:56 xl_auth/public/forms.py:45
 msgid "User not activated"
@@ -440,17 +432,17 @@ msgstr "Tjänstevillkor redan godkända sedan %(isoformat)s."
 msgid "Field must be between 3 and 255 characters long."
 msgstr "Fältet måste vara mellan 3 och 255 tecken långt."
 
-#: tests/models/test_collection.py:156 xl_auth/collection/models.py:64
+#: tests/models/test_collection.py:156 xl_auth/collection/models.py:70
 #, python-format
 msgid "Replaces %(replaces_code)s, then replaced by %(replaced_by_code)s"
 msgstr "Ersätter %(replaces_code)s, därefter ersatt av sigel %(replaced_by_code)s"
 
-#: tests/models/test_collection.py:159 xl_auth/collection/models.py:67
+#: tests/models/test_collection.py:159 xl_auth/collection/models.py:73
 #, python-format
 msgid "Replaces %(replaces_code)s"
 msgstr "Ersätter sigel %(replaces_code)s"
 
-#: tests/models/test_collection.py:162 xl_auth/collection/models.py:69
+#: tests/models/test_collection.py:162 xl_auth/collection/models.py:75
 #, python-format
 msgid "Replaced by %(replaced_by_code)s"
 msgstr "Ersatt av sigel %(replaced_by_code)s"
@@ -472,11 +464,7 @@ msgstr "Nytt sigel registrerat."
 msgid "Thank you for editing collection \"%(code)s\"."
 msgstr "Sigel \"%(code)s\" har uppdaterats."
 
-#: xl_auth/oauth/forms.py:14
-msgid "Scope"
-msgstr "Scope"
-
-#: xl_auth/oauth/forms.py:15 xl_auth/templates/permissions/delete.html:19
+#: xl_auth/oauth/forms.py:14 xl_auth/templates/permissions/delete.html:19
 msgid "Confirm"
 msgstr "Bekräfta"
 
@@ -763,7 +751,7 @@ msgstr "\"%(name)s\" (<em>%(description)s</em>) begär tillgång till dina anvä
 msgid "Press \"Authorize\" to approve and get redirected back to the service."
 msgstr "Klicka på \"Auktorisera\" för att godkänna och återvända till tjänsten."
 
-#: xl_auth/templates/oauth/authorize.html:17
+#: xl_auth/templates/oauth/authorize.html:16
 msgid "Authorize"
 msgstr "Auktorisera"
 
@@ -1175,12 +1163,12 @@ msgstr "Ansvarig för"
 msgid "Send password reset email"
 msgstr "Maila ut lösenordsåterställningslänk"
 
-#: xl_auth/user/models.py:75
+#: xl_auth/user/models.py:80
 #, python-format
 msgid "Account activation and password reset for %(username)s at %(server_name)s"
 msgstr "Din kontoaktivering för Libris Login (%(server_name)s)"
 
-#: xl_auth/user/models.py:77
+#: xl_auth/user/models.py:82
 #, python-format
 msgid ""
 "Hello %(full_name)s,\n"
@@ -1208,7 +1196,7 @@ msgstr ""
 "libris@kb.se!\n"
 "\n"
 
-#: xl_auth/user/models.py:109
+#: xl_auth/user/models.py:114
 #, python-format
 msgid ""
 "<p>Hello %(full_name)s,<br/><br/>You have been granted a user account at %(server_name)s by "
@@ -1225,12 +1213,12 @@ msgstr ""
 "  att du inte kan svara på detta mail. Vid frågor, vänligen kontakta <a "
 "href=\"mailto:libris@kb.se\">Libris kundservice</a>!</small></p>"
 
-#: xl_auth/user/models.py:115
+#: xl_auth/user/models.py:120
 #, python-format
 msgid "Password reset for %(username)s at %(server_name)s"
 msgstr "Lösenordsåterställning för %(username)s (%(server_name)s)"
 
-#: xl_auth/user/models.py:117
+#: xl_auth/user/models.py:122
 #, python-format
 msgid ""
 "Hello %(full_name)s,\n"
@@ -1256,7 +1244,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: xl_auth/user/models.py:129
+#: xl_auth/user/models.py:134
 #, python-format
 msgid ""
 "<p>Hello %(full_name)s,<br/><br/>Here is the secret link for resetting your personal account "

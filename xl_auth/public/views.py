@@ -4,7 +4,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 from flask import (Blueprint, current_app, flash, make_response, redirect, render_template, request,
-                   url_for)
+                   session, url_for)
 from flask_babel import lazy_gettext as _
 from flask_login import current_user, login_required, login_user, logout_user
 
@@ -110,6 +110,7 @@ def reset_password(email, code):
 @login_required
 def logout():
     """Logout."""
+    session.pop('has_authorized_scopes', None)
     logout_user()
     flash(_('You are logged out.'), 'info')
     return redirect(url_for('public.home'))
