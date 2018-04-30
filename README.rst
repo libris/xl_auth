@@ -195,6 +195,13 @@ DB Models
 Changelog
 =========
 
+v. 1.0.0
+--------
+
+* Allow cataloging admins to create and edit cataloging admin permissions
+* Save scope authorization in user session
+* Allow CORS requests
+
 v. 0.8.0
 --------
 
