@@ -24,6 +24,22 @@
         </div>
     </div>
 
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>{{ _('Information About GDPR') }}</h3>
+        </div>
+        <div class="panel-body">
+            <p>
+                {{ _('The National Library of Sweden processes personal data in accordance '
+                     'with the European Union General Data Protection Regulation (2018), GDRP, '
+                     '<a href="https://www.kb.se/omoss/dataskydd.html">find out more here</a>. '
+                     'This is how the National Library of Sweden processes your personal data '
+                     '<a href="https://www.kb.se/omoss/dataskydd.html#XLkat">while using '
+                     'login.libris.kb.se</a>.') }}
+            </p>
+        </div>
+    </div>
+
     {% if current_user.email != 'test@kb.se' %}
         <div class="panel panel-default">
             <div class="panel-heading">
