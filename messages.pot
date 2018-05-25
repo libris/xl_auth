@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: xl_auth 1.0.0\n"
+"Project-Id-Version: xl_auth 1.1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-04-27 12:44+0200\n"
+"POT-Creation-Date: 2018-05-25 13:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr ""
 
 #: tests/end2end/test_collection_editing.py:86 tests/end2end/test_collection_registering.py:82
 #: xl_auth/collection/forms.py:17 xl_auth/templates/collections/home.html:29
-#: xl_auth/templates/collections/home.html:92 xl_auth/templates/users/profile.html:74
+#: xl_auth/templates/collections/home.html:92 xl_auth/templates/users/profile.html:90
 msgid "Code"
 msgstr ""
 
@@ -171,7 +171,7 @@ msgstr ""
 #: tests/end2end/test_user_registering.py:27 tests/end2end/test_user_registering.py:64
 #: tests/end2end/test_user_registering.py:102 tests/end2end/test_user_registering.py:142
 #: xl_auth/templates/permissions/edit.html:17 xl_auth/templates/permissions/register.html:16
-#: xl_auth/templates/users/home.html:20 xl_auth/templates/users/profile.html:60
+#: xl_auth/templates/users/home.html:20 xl_auth/templates/users/profile.html:76
 msgid "New User"
 msgstr ""
 
@@ -221,7 +221,7 @@ msgid "Unknown username/email"
 msgstr ""
 
 #: tests/end2end/test_public_reset_password.py:30 tests/end2end/test_public_reset_password.py:153
-#: tests/end2end/test_public_reset_password.py:168 xl_auth/templates/public/home.html:39
+#: tests/end2end/test_public_reset_password.py:168 xl_auth/templates/public/home.html:47
 msgid "Forgot password?"
 msgstr ""
 
@@ -270,8 +270,8 @@ msgstr ""
 #: xl_auth/templates/users/inspect.html:148 xl_auth/templates/users/inspect.html:151
 #: xl_auth/templates/users/inspect.html:192 xl_auth/templates/users/inspect.html:195
 #: xl_auth/templates/users/inspect.html:228 xl_auth/templates/users/inspect.html:262
-#: xl_auth/templates/users/profile.html:92 xl_auth/templates/users/profile.html:95
-#: xl_auth/templates/users/profile.html:98 xl_auth/templates/users/simple_view.html:14
+#: xl_auth/templates/users/profile.html:108 xl_auth/templates/users/profile.html:111
+#: xl_auth/templates/users/profile.html:114 xl_auth/templates/users/simple_view.html:14
 #: xl_auth/templates/users/view.html:33 xl_auth/templates/users/view.html:36
 #: xl_auth/templates/users/view.html:39 xl_auth/templates/users/view.html:90
 #: xl_auth/templates/users/view.html:93 xl_auth/templates/users/view.html:96
@@ -291,8 +291,8 @@ msgstr ""
 #: xl_auth/templates/users/inspect.html:148 xl_auth/templates/users/inspect.html:151
 #: xl_auth/templates/users/inspect.html:192 xl_auth/templates/users/inspect.html:195
 #: xl_auth/templates/users/inspect.html:228 xl_auth/templates/users/inspect.html:262
-#: xl_auth/templates/users/profile.html:92 xl_auth/templates/users/profile.html:95
-#: xl_auth/templates/users/profile.html:98 xl_auth/templates/users/simple_view.html:14
+#: xl_auth/templates/users/profile.html:108 xl_auth/templates/users/profile.html:111
+#: xl_auth/templates/users/profile.html:114 xl_auth/templates/users/simple_view.html:14
 #: xl_auth/templates/users/view.html:33 xl_auth/templates/users/view.html:36
 #: xl_auth/templates/users/view.html:39 xl_auth/templates/users/view.html:90
 #: xl_auth/templates/users/view.html:93 xl_auth/templates/users/view.html:96
@@ -339,7 +339,7 @@ msgid "Inspect User '%(email)s'"
 msgstr ""
 
 #: tests/end2end/test_user_registering.py:100 tests/end2end/test_user_registering.py:140
-#: xl_auth/templates/users/profile.html:47
+#: xl_auth/templates/users/profile.html:63
 msgid "Your Responsibilities as Cataloging Admin"
 msgstr ""
 
@@ -516,21 +516,21 @@ msgstr ""
 
 #: xl_auth/permission/forms.py:22 xl_auth/templates/collections/view.html:89
 #: xl_auth/templates/permissions/home.html:19 xl_auth/templates/users/inspect.html:75
-#: xl_auth/templates/users/inspect.html:125 xl_auth/templates/users/profile.html:76
+#: xl_auth/templates/users/inspect.html:125 xl_auth/templates/users/profile.html:92
 #: xl_auth/templates/users/view.html:72
 msgid "Registrant"
 msgstr ""
 
 #: xl_auth/permission/forms.py:23 xl_auth/templates/collections/view.html:90
 #: xl_auth/templates/permissions/home.html:20 xl_auth/templates/users/inspect.html:76
-#: xl_auth/templates/users/inspect.html:126 xl_auth/templates/users/profile.html:77
+#: xl_auth/templates/users/inspect.html:126 xl_auth/templates/users/profile.html:93
 #: xl_auth/templates/users/view.html:73
 msgid "Cataloger"
 msgstr ""
 
 #: xl_auth/permission/forms.py:24 xl_auth/templates/collections/view.html:91
 #: xl_auth/templates/permissions/home.html:21 xl_auth/templates/users/inspect.html:23
-#: xl_auth/templates/users/inspect.html:77 xl_auth/templates/users/profile.html:78
+#: xl_auth/templates/users/inspect.html:77 xl_auth/templates/users/profile.html:94
 #: xl_auth/templates/users/view.html:38 xl_auth/templates/users/view.html:74
 msgid "Cataloging Admin"
 msgstr ""
@@ -543,11 +543,11 @@ msgstr ""
 msgid "--- Select Collection ---"
 msgstr ""
 
-#: xl_auth/public/forms.py:20 xl_auth/templates/public/home.html:33
+#: xl_auth/public/forms.py:20 xl_auth/templates/public/home.html:41
 msgid "Username"
 msgstr ""
 
-#: xl_auth/public/forms.py:21 xl_auth/public/forms.py:83 xl_auth/templates/public/home.html:35
+#: xl_auth/public/forms.py:21 xl_auth/public/forms.py:83 xl_auth/templates/public/home.html:43
 #: xl_auth/templates/public/reset_password.html:16 xl_auth/templates/users/change_password.html:16
 #: xl_auth/user/forms.py:168
 msgid "Password"
@@ -659,7 +659,7 @@ msgid "Active Collections with Users"
 msgstr ""
 
 #: xl_auth/templates/collections/home.html:30 xl_auth/templates/collections/home.html:93
-#: xl_auth/templates/users/profile.html:75
+#: xl_auth/templates/users/profile.html:91
 msgid "Friendly Name"
 msgstr ""
 
@@ -676,7 +676,7 @@ msgstr ""
 #: xl_auth/templates/collections/view.html:14 xl_auth/templates/collections/view.html:26
 #: xl_auth/templates/permissions/home.html:30 xl_auth/templates/permissions/home.html:36
 #: xl_auth/templates/users/home.html:41 xl_auth/templates/users/home.html:105
-#: xl_auth/templates/users/profile.html:85
+#: xl_auth/templates/users/profile.html:101
 msgid "View"
 msgstr ""
 
@@ -868,7 +868,7 @@ msgstr ""
 msgid "Request Password Reset"
 msgstr ""
 
-#: xl_auth/templates/public/forgot_password.html:11 xl_auth/templates/public/home.html:34
+#: xl_auth/templates/public/forgot_password.html:11 xl_auth/templates/public/home.html:42
 #: xl_auth/templates/users/register.html:12
 msgid "user@example.com"
 msgstr ""
@@ -885,31 +885,40 @@ msgstr ""
 msgid "xl_auth is a service that enables access to Libris XL for catalogers."
 msgstr ""
 
-#: xl_auth/templates/public/home.html:28 xl_auth/templates/public/home.html:37
+#: xl_auth/templates/public/home.html:27 xl_auth/templates/users/profile.html:33
+msgid ""
+"The National Library of Sweden processes personal data in accordance with the European Union "
+"General Data Protection Regulation (2018), GDRP, <a "
+"href=\"https://www.kb.se/omoss/dataskydd.html\">find out more here</a>. This is how the National "
+"Library of Sweden processes your personal data <a "
+"href=\"https://www.kb.se/omoss/dataskydd.html#XLkat\">while using login.libris.kb.se</a>."
+msgstr ""
+
+#: xl_auth/templates/public/home.html:36 xl_auth/templates/public/home.html:45
 msgid "Log in"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:47
+#: xl_auth/templates/public/home.html:55
 msgid "The Libris blog"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:48
+#: xl_auth/templates/public/home.html:56
 msgid "Read the latest news about the Libris collaboration."
 msgstr ""
 
-#: xl_auth/templates/public/home.html:49
+#: xl_auth/templates/public/home.html:57
 msgid "Go to the blog"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:52
+#: xl_auth/templates/public/home.html:60
 msgid "Support forum"
 msgstr ""
 
-#: xl_auth/templates/public/home.html:53
+#: xl_auth/templates/public/home.html:61
 msgid "Get help, ask questions and report errors."
 msgstr ""
 
-#: xl_auth/templates/public/home.html:54
+#: xl_auth/templates/public/home.html:62
 msgid "Go to kundo"
 msgstr ""
 
@@ -1080,17 +1089,21 @@ msgstr ""
 msgid "Edit Display Name"
 msgstr ""
 
-#: xl_auth/templates/users/profile.html:30
+#: xl_auth/templates/users/profile.html:29
+msgid "Information About GDPR"
+msgstr ""
+
+#: xl_auth/templates/users/profile.html:46
 msgid "Information About Your Permissions"
 msgstr ""
 
-#: xl_auth/templates/users/profile.html:33
+#: xl_auth/templates/users/profile.html:49
 msgid ""
 "If you are missing a permission or any of the permissions below are incorrect, please contact the"
 " cataloging admin for that collection."
 msgstr ""
 
-#: xl_auth/templates/users/profile.html:35
+#: xl_auth/templates/users/profile.html:51
 #, python-format
 msgid ""
 "You can find the collection administrator contact information by following the collection link "
@@ -1098,26 +1111,26 @@ msgid ""
 " the collection there."
 msgstr ""
 
-#: xl_auth/templates/users/profile.html:38
+#: xl_auth/templates/users/profile.html:54
 msgid ""
 "For any other questions or concerns, please contact customer service at <a "
 "href=\"mailto:libris@kb.se\">libris@kb.se</a>."
 msgstr ""
 
-#: xl_auth/templates/users/profile.html:51
+#: xl_auth/templates/users/profile.html:67
 msgid ""
 "You are a cataloging admin in Libris Login. This means that you are responsible for managing "
 "other users' access to your collections. You manage permissions by going to your collection's "
 "detail view and use the add/edit/delete buttons."
 msgstr ""
 
-#: xl_auth/templates/users/profile.html:57
+#: xl_auth/templates/users/profile.html:73
 msgid ""
 "When attempting to grant a new permission, you might find that the intended user does not exist. "
 "In this event, you may register the user account by following this link:"
 msgstr ""
 
-#: xl_auth/templates/users/profile.html:68
+#: xl_auth/templates/users/profile.html:84
 msgid "Your Permissions"
 msgstr ""
 
