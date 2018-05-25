@@ -195,6 +195,11 @@ DB Models
 Changelog
 =========
 
+v. 1.1.0
+--------
+
+* Add GDPR information
+
 v. 1.0.0
 --------
 
