@@ -195,6 +195,11 @@ DB Models
 Changelog
 =========
 
+v. 1.2.0
+--------
+
+* Update ToS page
+
 v. 1.1.0
 --------
 
