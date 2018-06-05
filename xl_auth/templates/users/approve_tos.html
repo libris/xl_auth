@@ -2,18 +2,22 @@
 {% extends "layout.html" %}
 {% block content %}
     <div class="container-narrow">
-        <h1>{{ _('Approve ToS') }}</h1>
+        <h1>{{ _('Information about the service') }}</h1>
         <p class="lead">
-            {{ _('To use this service you are required approve our Terms of Service.') }}
+            {{ _('Before you start using Libris Login, here is some important imformation:') }}
         </p>
-        <p>{{ _('You agree that:') }}</p>
         <ol>
             <li>{{ _('Your name, email address, permissions and other account details is visible to other users') }}</li>
-            <li>{{ _('The National Library of Sweden will store your personal information in accordance with Swedish law (PuL)') }}</li>
+            <li>
+                {{ _('The National Library of Sweden processes personal data in accordance '
+                     'with the European Union General Data Protection Regulation (2018), GDRP, '
+                     '<a href="https://www.kb.se/omoss/dataskydd.html">find out more here</a>. '
+                     'This is how the National Library of Sweden processes your personal data '
+                     '<a href="https://www.kb.se/omoss/dataskydd.html#XLkat">while using '
+                     'login.libris.kb.se</a>.') }}
+            </li>
             <li>{{ _('You assume full responsibility for your account and actions performed under your authentication') }}</li>
         </ol>
-        <p>{{ _('Press "I Approve" to register this agreement and get redirected to the next page.') }}</p>
-        <br>
         <div class="row">
             <div class="col-md-12">
                 <form id="approveForm" class="form" method="POST" action="" role="form">
@@ -21,11 +25,11 @@
                     {{ approve_tos_form.next_redirect(value=next_redirect_url or "") }}
                     {{ approve_tos_form.tos_approved(value=approve_tos_form.tos_approved.default) }}
                     <input class="btn btn-lg btn-primary btn-success" type="submit"
-                           value="{{ _('I Approve') }}">
+                           value="{{ _('To the service') }}">
                 </form>
             </div>
         </div>
         <br>
-        <p>{{ _('(If you do not agree to the ToS, please press the logout button in top-right corner.)') }}</p>
+        <p>{{ _('(If you log out now, no further personal data will be registered. The button is in the top right corner.)') }}</p>
     </div>
 {% endblock %}

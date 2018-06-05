@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: xl_auth 1.1.0\n"
+"Project-Id-Version: xl_auth 1.2.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-05-25 13:30+0200\n"
+"POT-Creation-Date: 2018-06-05 13:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -195,8 +195,8 @@ msgstr ""
 msgid "Added permissions for \"%(username)s\" on collection \"%(code)s\"."
 msgstr ""
 
-#: tests/end2end/test_public_logging_in.py:71 xl_auth/templates/users/approve_tos.html:5
-msgid "Approve ToS"
+#: tests/end2end/test_public_logging_in.py:71 xl_auth/templates/users/approve_tos.html:28
+msgid "To the service"
 msgstr ""
 
 #: tests/end2end/test_public_logging_in.py:80 xl_auth/templates/collections/home.html:4
@@ -885,7 +885,8 @@ msgstr ""
 msgid "xl_auth is a service that enables access to Libris XL for catalogers."
 msgstr ""
 
-#: xl_auth/templates/public/home.html:27 xl_auth/templates/users/profile.html:33
+#: xl_auth/templates/public/home.html:27 xl_auth/templates/users/approve_tos.html:12
+#: xl_auth/templates/users/profile.html:33
 msgid ""
 "The National Library of Sweden processes personal data in accordance with the European Union "
 "General Data Protection Regulation (2018), GDRP, <a "
@@ -934,38 +935,26 @@ msgstr ""
 msgid "Edit User Details"
 msgstr ""
 
+#: xl_auth/templates/users/approve_tos.html:5
+msgid "Information about the service"
+msgstr ""
+
 #: xl_auth/templates/users/approve_tos.html:7
-msgid "To use this service you are required approve our Terms of Service."
+msgid "Before you start using Libris Login, here is some important imformation:"
 msgstr ""
 
-#: xl_auth/templates/users/approve_tos.html:9
-msgid "You agree that:"
-msgstr ""
-
-#: xl_auth/templates/users/approve_tos.html:11
+#: xl_auth/templates/users/approve_tos.html:10
 msgid "Your name, email address, permissions and other account details is visible to other users"
 msgstr ""
 
-#: xl_auth/templates/users/approve_tos.html:12
-msgid ""
-"The National Library of Sweden will store your personal information in accordance with Swedish "
-"law (PuL)"
-msgstr ""
-
-#: xl_auth/templates/users/approve_tos.html:13
+#: xl_auth/templates/users/approve_tos.html:19
 msgid "You assume full responsibility for your account and actions performed under your authentication"
 msgstr ""
 
-#: xl_auth/templates/users/approve_tos.html:15
-msgid "Press \"I Approve\" to register this agreement and get redirected to the next page."
-msgstr ""
-
-#: xl_auth/templates/users/approve_tos.html:24
-msgid "I Approve"
-msgstr ""
-
-#: xl_auth/templates/users/approve_tos.html:29
-msgid "(If you do not agree to the ToS, please press the logout button in top-right corner.)"
+#: xl_auth/templates/users/approve_tos.html:33
+msgid ""
+"(If you log out now, no further personal data will be registered. The button is in the top right "
+"corner.)"
 msgstr ""
 
 #: xl_auth/templates/users/change_password.html:5
