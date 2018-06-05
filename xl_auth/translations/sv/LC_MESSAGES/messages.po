@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2018-06-05 09:15+0200\n"
+"POT-Creation-Date: 2018-06-05 13:25+0200\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -196,9 +196,9 @@ msgstr "Lägg till behörighet"
 msgid "Added permissions for \"%(username)s\" on collection \"%(code)s\"."
 msgstr "Behörighet tillagd för användare \"%(username)s\" på sigel \"%(code)s\"."
 
-#: tests/end2end/test_public_logging_in.py:71
-msgid "Approve ToS"
-msgstr "Godkänn tjänstevillkor"
+#: tests/end2end/test_public_logging_in.py:71 xl_auth/templates/users/approve_tos.html:28
+msgid "To the service"
+msgstr "Vidare till tjänsten"
 
 #: tests/end2end/test_public_logging_in.py:80 xl_auth/templates/collections/home.html:4
 #: xl_auth/templates/nav.html:25 xl_auth/templates/users/home.html:28
@@ -967,15 +967,13 @@ msgstr ""
 msgid "You assume full responsibility for your account and actions performed under your authentication"
 msgstr "Du ansvarar för ditt konto och de handlingar som utförs via din autentisering"
 
-#: xl_auth/templates/users/approve_tos.html:28
-msgid "To the service"
-msgstr "Vidare till tjänsten"
-
 #: xl_auth/templates/users/approve_tos.html:33
 msgid ""
 "(If you log out now, no further personal data will be registered. The button is in the top right "
 "corner.)"
-msgstr "(Om du loggar ut nu så registreras inga ytterligare personuppgifter om dig, knappen finns uppe till höger.)"
+msgstr ""
+"(Om du loggar ut nu så registreras inga ytterligare personuppgifter om dig, knappen finns uppe "
+"till höger.)"
 
 #: xl_auth/templates/users/change_password.html:5
 msgid "Change User Password"
