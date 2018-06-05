@@ -68,7 +68,7 @@ def test_user_must_approve_tos_on_login_if_unset(user, testapp):
     assert '/users/approve_tos' in res.location
     res = res.follow()
     assert res.status_code == 200
-    assert _('Approve ToS') in res
+    assert _('To the service') in res
     form = res.forms['approveForm']
     form['tos_approved'] = 'y'
     res = form.submit()
