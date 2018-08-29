@@ -18,6 +18,9 @@ class Client(Model):
     client_id = Column(db.String(32), primary_key=True)
     client_secret = Column(db.String(256), unique=True, nullable=False)
 
+    user_id = reference_col('users', nullable=True)
+    user = relationship('User', foreign_keys=user_id)
+
     is_confidential = Column(db.Boolean(), default=True, nullable=False)
 
     _redirect_uris = Column(db.Text(), nullable=False)
