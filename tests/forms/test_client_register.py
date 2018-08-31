@@ -16,6 +16,7 @@ def test_user_cannot_register_client(user):
     """Attempt to register a client as regular user."""
     form = RegisterForm(user, name='Client',
                         description='OAuth2 Client',
+                        user_id=-1,
                         is_confidential=choice([True, False]),
                         redirect_uris='http://localhost/',
                         default_scopes='read write')
@@ -29,11 +30,38 @@ def test_validate_success(superuser):
     """Register client."""
     form = RegisterForm(superuser, name='Client',
                         description='OAuth2 Client',
+                        user_id=-1,
                         is_confidential=choice([True, False]),
                         redirect_uris='http://localhost/',
                         default_scopes='read write')
 
     assert form.validate() is True
+
+
+def test_validate_success_with_user_id(superuser, user):
+    """Register client with user_id."""
+    form = RegisterForm(superuser, name='Client',
+                        description='OAuth2 Client',
+                        user_id=user.id,
+                        is_confidential=choice([True, False]),
+                        redirect_uris='http://localhost/',
+                        default_scopes='read write')
+
+    assert form.validate() is True
+
+
+def test_invalid_user_id(superuser):
+    """Attempt to register client with invalid user_id."""
+    bad_user_id = 42000000
+    form = RegisterForm(superuser, name='Client',
+                        description='OAuth2 Client',
+                        user_id=bad_user_id,
+                        is_confidential=choice([True, False]),
+                        redirect_uris='http://localhost/',
+                        default_scopes='read write')
+
+    assert form.validate() is False
+    assert _('User ID "%(user_id)s" does not exist', user_id=bad_user_id) in form.user_id.errors
 
 
 def test_missing_name(superuser):

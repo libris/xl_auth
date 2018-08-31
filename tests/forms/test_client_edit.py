@@ -14,6 +14,7 @@ def test_user_cannot_edit_client(user, client):
     """Attempt to edit a client as regular user."""
     form = EditForm(user, name=client.name,
                     description=client.description,
+                    user_id=-1,
                     is_confidential=not client.is_confidential,
                     redirect_uris='http://localhost/',
                     default_scopes='read write')
@@ -27,11 +28,38 @@ def test_validate_success(superuser, client):
     """Edit entry with success."""
     form = EditForm(superuser, name=client.name,
                     description=client.description,
+                    user_id=-1,
                     is_confidential=not client.is_confidential,
                     redirect_uris='http://localhost/',
                     default_scopes='read write')
 
     assert form.validate() is True
+
+
+def test_validate_success_with_user_id(superuser, user, client):
+    """Edit entry with user_id with success."""
+    form = EditForm(superuser, name=client.name,
+                    description=client.description,
+                    user_id=user.id,
+                    is_confidential=not client.is_confidential,
+                    redirect_uris='http://localhost/',
+                    default_scopes='read write')
+
+    assert form.validate() is True
+
+
+def test_invalid_user_id(superuser, client):
+    """Attempt to edit client with invalid user_id."""
+    bad_user_id = 42000000
+    form = EditForm(superuser, name=client.name,
+                    description=client.description,
+                    user_id=bad_user_id,
+                    is_confidential=not client.is_confidential,
+                    redirect_uris='http://localhost/',
+                    default_scopes='read write')
+
+    assert form.validate() is False
+    assert _('User ID "%(user_id)s" does not exist', user_id=bad_user_id) in form.user_id.errors
 
 
 def test_missing_name(superuser, client):
