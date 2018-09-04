@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 
 from flask import Blueprint, current_app, jsonify, render_template, request, session
 from flask_login import current_user, login_required
+from oauthlib.oauth2 import OAuth2Error
 
 from ..extensions import csrf_protect, oauth_provider
 from ..user.models import User
@@ -52,7 +53,7 @@ def set_token(new_token, request_, **_):
     if request_.body:
         request_params.update(request_.body)
 
-    user_id = request_.user.id if request_.user else current_user.id
+    user_id = _get_user_id(request_)
 
     if 'grant_type' in request_params and request_params['grant_type'] == 'refresh_token':
         token = Token.query.filter_by(client_id=request_.client.client_id,
@@ -61,6 +62,20 @@ def set_token(new_token, request_, **_):
         token.access_token = new_token['access_token']
         token.refresh_token = new_token['refresh_token']
         token.expires_at = expires_at
+    elif 'grant_type' in request_params and request_params['grant_type'] == 'client_credentials':
+        if not user_id:
+            # TODO: this should ideally happen before the call to set_token.
+            raise OAuth2Error(status_code=400, description='No user bound to client')
+
+        token = Token(
+            access_token=new_token['access_token'],
+            refresh_token=new_token.get('refresh_token', None),
+            token_type=new_token['token_type'],
+            scopes=new_token['scope'],
+            expires_at=expires_at,
+            client_id=request_.client.client_id,
+            user_id=user_id
+        )
     else:  # if request_params['grant_type'] == 'code':
         token = Token(
             access_token=new_token['access_token'],
@@ -73,6 +88,15 @@ def set_token(new_token, request_, **_):
         )
 
     return token.save()
+
+
+def _get_user_id(request_):
+    if request_.user and request_.user.id:
+        return request_.user.id
+    elif hasattr(current_user, 'id'):
+        return current_user.id
+    else:
+        return None
 
 
 @oauth_provider.tokengetter

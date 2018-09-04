@@ -36,9 +36,13 @@ def register():
 
     register_form = RegisterForm(current_user, request.form)
     if register_form.validate_on_submit():
+        user_id = None
+        if register_form.user_id.data != -1:
+            user_id = register_form.user_id.data
         Client.create_as(current_user,
                          name=register_form.name.data,
                          description=register_form.description.data,
+                         user_id=user_id,
                          is_confidential=register_form.is_confidential.data,
                          redirect_uris=register_form.redirect_uris.data,
                          default_scopes=register_form.default_scopes.data,
@@ -80,8 +84,13 @@ def edit(client_id):
 
     edit_form = EditForm(current_user, request.form)
     if edit_form.validate_on_submit():
+        user_id = None
+        if edit_form.user_id.data != -1:
+            user_id = edit_form.user_id.data
+
         client.update_as(current_user,
                          name=edit_form.name.data, description=edit_form.description.data,
+                         user_id=user_id,
                          is_confidential=edit_form.is_confidential.data,
                          redirect_uris=edit_form.redirect_uris.data,
                          default_scopes=edit_form.default_scopes.data).save()

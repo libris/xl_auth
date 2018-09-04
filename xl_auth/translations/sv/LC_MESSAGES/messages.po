@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2018-06-05 13:25+0200\n"
+"POT-Creation-Date: 2018-08-29 13:49+0200\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -40,7 +40,7 @@ msgid "Code cannot be modified"
 msgstr "Koden kan inte ändras"
 
 #: tests/end2end/test_collection_editing.py:108 tests/end2end/test_collection_registering.py:105
-#: xl_auth/collection/forms.py:18 xl_auth/oauth/client/forms.py:14
+#: xl_auth/collection/forms.py:18 xl_auth/oauth/client/forms.py:16
 #: xl_auth/templates/oauth/clients/home.html:18 xl_auth/templates/users/home.html:27
 #: xl_auth/templates/users/home.html:91
 msgid "Name"
@@ -48,10 +48,10 @@ msgstr "Namn"
 
 #: tests/end2end/test_collection_editing.py:108 tests/end2end/test_collection_registering.py:82
 #: tests/end2end/test_collection_registering.py:105 tests/end2end/test_user_editing.py:169
-#: tests/forms/test_client_edit.py:46 tests/forms/test_client_edit.py:69
-#: tests/forms/test_client_edit.py:92 tests/forms/test_client_edit.py:103
-#: tests/forms/test_client_register.py:48 tests/forms/test_client_register.py:71
-#: tests/forms/test_client_register.py:94 tests/forms/test_client_register.py:105
+#: tests/forms/test_client_edit.py:74 tests/forms/test_client_edit.py:97
+#: tests/forms/test_client_edit.py:120 tests/forms/test_client_edit.py:131
+#: tests/forms/test_client_register.py:76 tests/forms/test_client_register.py:99
+#: tests/forms/test_client_register.py:122 tests/forms/test_client_register.py:133
 #: tests/forms/test_collection_edit.py:20 tests/forms/test_collection_register.py:21
 #: tests/forms/test_permission_edit.py:49 tests/forms/test_permission_edit.py:67
 #: tests/forms/test_permission_register.py:26 tests/forms/test_permission_register.py:42
@@ -120,7 +120,7 @@ msgstr "Administratörer"
 msgid "You will only see all permissions for those collections that you are cataloging admin for."
 msgstr "Du ser enbart samtliga behörigheter för de sigler du är katalogiseringsadmin för."
 
-#: tests/end2end/test_oauth_deleting_client.py:34 xl_auth/oauth/client/views.py:66
+#: tests/end2end/test_oauth_deleting_client.py:34 xl_auth/oauth/client/views.py:70
 #, python-format
 msgid "Successfully deleted OAuth2 Client \"%(name)s\"."
 msgstr "Raderade OAuth2-klient \"%(name)s\"."
@@ -148,14 +148,14 @@ msgstr "Ta bort behörigheter för \"%(username)s\" på sigel \"%(code)s\"?"
 msgid "Successfully deleted permissions for \"%(username)s\" on collection \"%(code)s\"."
 msgstr "Behörighet borttagen för \"%(username)s\" på sigel \"%(code)s\"."
 
-#: tests/end2end/test_permission_deleting.py:118 tests/forms/test_client_edit.py:23
-#: tests/forms/test_client_register.py:25 tests/forms/test_collection_edit.py:67
+#: tests/end2end/test_permission_deleting.py:118 tests/forms/test_client_edit.py:24
+#: tests/forms/test_client_register.py:26 tests/forms/test_collection_edit.py:67
 #: tests/forms/test_collection_register.py:79 tests/forms/test_permission_delete.py:50
 #: tests/forms/test_permission_edit.py:114 tests/forms/test_permission_register.py:82
 #: tests/forms/test_user_administer.py:53 tests/forms/test_user_change_password.py:45
 #: tests/forms/test_user_edit_details.py:34 tests/forms/test_user_register.py:44
-#: xl_auth/collection/forms.py:41 xl_auth/collection/forms.py:73 xl_auth/oauth/client/forms.py:40
-#: xl_auth/oauth/client/forms.py:67 xl_auth/permission/forms.py:74 xl_auth/permission/forms.py:128
+#: xl_auth/collection/forms.py:41 xl_auth/collection/forms.py:73 xl_auth/oauth/client/forms.py:51
+#: xl_auth/oauth/client/forms.py:86 xl_auth/permission/forms.py:74 xl_auth/permission/forms.py:128
 #: xl_auth/permission/forms.py:151 xl_auth/permission/forms.py:197 xl_auth/templates/403.html:11
 #: xl_auth/user/forms.py:77 xl_auth/user/forms.py:126 xl_auth/user/forms.py:160
 #: xl_auth/user/forms.py:179
@@ -324,9 +324,11 @@ msgstr "Fullständigt namn"
 
 #: tests/end2end/test_user_editing.py:187 tests/end2end/test_user_editing.py:191
 #: tests/end2end/test_user_inspection.py:63 tests/end2end/test_user_view.py:49
+#: tests/forms/test_client_edit.py:62 tests/forms/test_client_register.py:64
 #: tests/forms/test_permission_edit.py:90 tests/forms/test_permission_register.py:62
-#: xl_auth/permission/forms.py:53 xl_auth/user/views.py:92 xl_auth/user/views.py:111
-#: xl_auth/user/views.py:157 xl_auth/user/views.py:185 xl_auth/user/views.py:210
+#: xl_auth/oauth/client/forms.py:41 xl_auth/oauth/client/forms.py:76 xl_auth/permission/forms.py:53
+#: xl_auth/user/views.py:92 xl_auth/user/views.py:111 xl_auth/user/views.py:157
+#: xl_auth/user/views.py:185 xl_auth/user/views.py:210
 #, python-format
 msgid "User ID \"%(user_id)s\" does not exist"
 msgstr "Användare med databas-ID \"%(user_id)s\" existerar inte"
@@ -361,11 +363,11 @@ msgstr "Användare '<a href=\"mailto:%(email)s\">%(email)s</a>'"
 msgid "You will only see permissions for those collections that you are cataloging admin for."
 msgstr "Du ser enbart behörigheter på de sigler du är katalogiseringsadmin för."
 
-#: tests/forms/test_client_edit.py:58 tests/forms/test_client_register.py:60
+#: tests/forms/test_client_edit.py:86 tests/forms/test_client_register.py:88
 msgid "Field must be between 3 and 64 characters long."
 msgstr "Fältet måste vara mellan 3 och 64 tecken långt."
 
-#: tests/forms/test_client_edit.py:81 tests/forms/test_client_register.py:83
+#: tests/forms/test_client_edit.py:109 tests/forms/test_client_register.py:111
 msgid "Field must be between 3 and 350 characters long."
 msgstr "Fältet måste vara mellan 3 och 350 tecken långt."
 
@@ -468,29 +470,39 @@ msgstr "Sigel \"%(code)s\" har uppdaterats."
 msgid "Confirm"
 msgstr "Bekräfta"
 
-#: xl_auth/oauth/client/forms.py:11 xl_auth/templates/oauth/clients/edit.html:38
-#: xl_auth/templates/oauth/clients/register.html:25
+#: xl_auth/oauth/client/forms.py:13 xl_auth/templates/oauth/clients/edit.html:45
+#: xl_auth/templates/oauth/clients/register.html:32
 msgid "Redirect URIs"
 msgstr "Redirect URIs"
 
-#: xl_auth/oauth/client/forms.py:12
+#: xl_auth/oauth/client/forms.py:14
 msgid "Default scopes"
 msgstr "Default scopes"
 
-#: xl_auth/oauth/client/forms.py:13
+#: xl_auth/oauth/client/forms.py:15
 msgid "Confidential"
 msgstr "Konfidentiell"
 
-#: xl_auth/oauth/client/forms.py:15 xl_auth/templates/oauth/clients/home.html:19
+#: xl_auth/oauth/client/forms.py:17 xl_auth/templates/oauth/clients/home.html:19
 msgid "Description"
 msgstr "Beskrivning"
 
-#: xl_auth/oauth/client/views.py:46
+#: xl_auth/oauth/client/forms.py:18 xl_auth/permission/forms.py:19
+#: xl_auth/templates/collections/view.html:88 xl_auth/templates/oauth/grants/home.html:14
+#: xl_auth/templates/oauth/tokens/home.html:14 xl_auth/templates/permissions/home.html:17
+msgid "User"
+msgstr "Användare"
+
+#: xl_auth/oauth/client/forms.py:35 xl_auth/oauth/client/forms.py:70 xl_auth/permission/forms.py:31
+msgid "--- Select User ---"
+msgstr "--- Välj användare ---"
+
+#: xl_auth/oauth/client/views.py:50
 #, python-format
 msgid "Client \"%(name)s\" created."
 msgstr "Klient \"%(name)s\" skapad."
 
-#: xl_auth/oauth/client/views.py:88
+#: xl_auth/oauth/client/views.py:97
 #, python-format
 msgid "Thank you for updating client details for \"%(client_id)s\"."
 msgstr "Inställningar för \"%(client_id)s\" uppdaterade."
@@ -504,12 +516,6 @@ msgstr "OAuth2 Grant token \"%(grant_id)s\" har raderats."
 #, python-format
 msgid "Successfully deleted OAuth2 Bearer token \"%(token_id)s\"."
 msgstr "OAuth2 Bearer token \"%(token_id)s\" har raderats."
-
-#: xl_auth/permission/forms.py:19 xl_auth/templates/collections/view.html:88
-#: xl_auth/templates/oauth/grants/home.html:14 xl_auth/templates/oauth/tokens/home.html:14
-#: xl_auth/templates/permissions/home.html:17
-msgid "User"
-msgstr "Användare"
 
 #: xl_auth/permission/forms.py:20 xl_auth/templates/permissions/home.html:18
 #: xl_auth/templates/users/inspect.html:74 xl_auth/templates/users/inspect.html:123
@@ -537,10 +543,6 @@ msgstr "Katalogisatör"
 #: xl_auth/templates/users/view.html:38 xl_auth/templates/users/view.html:74
 msgid "Cataloging Admin"
 msgstr "Katalogiseringsadmin"
-
-#: xl_auth/permission/forms.py:31
-msgid "--- Select User ---"
-msgstr "--- Välj användare ---"
 
 #: xl_auth/permission/forms.py:34
 msgid "--- Select Collection ---"
@@ -640,7 +642,7 @@ msgstr "Logga ut"
 msgid "Edit Existing Collection"
 msgstr "Ändra befintligt sigel"
 
-#: xl_auth/templates/collections/edit.html:29 xl_auth/templates/oauth/clients/edit.html:44
+#: xl_auth/templates/collections/edit.html:29 xl_auth/templates/oauth/clients/edit.html:51
 #: xl_auth/templates/permissions/edit.html:34 xl_auth/templates/public/reset_password.html:22
 #: xl_auth/templates/users/administer.html:26 xl_auth/templates/users/change_password.html:22
 #: xl_auth/templates/users/edit_details.html:18
@@ -691,7 +693,7 @@ msgstr "Sidtopp"
 msgid "Register New Collection"
 msgstr "Lägg till nytt sigel"
 
-#: xl_auth/templates/collections/register.html:26 xl_auth/templates/oauth/clients/register.html:31
+#: xl_auth/templates/collections/register.html:26 xl_auth/templates/oauth/clients/register.html:38
 #: xl_auth/templates/permissions/register.html:33 xl_auth/templates/users/register.html:22
 msgid "Register"
 msgstr "Registrera"
@@ -783,6 +785,10 @@ msgstr "Klientnamn"
 #: xl_auth/templates/oauth/clients/edit.html:28 xl_auth/templates/oauth/clients/register.html:15
 msgid "Client description"
 msgstr "Beskrivning"
+
+#: xl_auth/templates/oauth/clients/edit.html:33 xl_auth/templates/oauth/clients/register.html:20
+msgid "This should only be set for clients that will use backend application flow."
+msgstr "Detta ska enbart sättas för klienter som kommer använda backend application flow."
 
 #: xl_auth/templates/oauth/clients/home.html:4 xl_auth/templates/oauth/clients/home.html:8
 msgid "OAuth2 Clients"
