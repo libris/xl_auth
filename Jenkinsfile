@@ -2,7 +2,7 @@
 
 //noinspection GroovyAssignabilityCheck
 pipeline {
-    agent any
+    agent { label 'build-agent-01' }
     stages {
         stage('Set Build Variables') {
             steps {
