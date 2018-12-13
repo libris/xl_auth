@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 1.3.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-08-29 13:49+0200\n"
+"POT-Creation-Date: 2018-12-18 15:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -738,20 +738,22 @@ msgid "Delete Permission"
 msgstr ""
 
 #: xl_auth/templates/oauth/authorize.html:5
-msgid "Authorization Request"
+msgid "Share account details"
 msgstr ""
 
 #: xl_auth/templates/oauth/authorize.html:6
 #, python-format
-msgid "OAuth2 client \"%(name)s (%(description)s)\" is requesting access to your account details."
+msgid "%(name)s %(description)s needs access to your account details."
 msgstr ""
 
 #: xl_auth/templates/oauth/authorize.html:8
-msgid "Press \"Authorize\" to approve and get redirected back to the service."
+msgid ""
+"This is necessary for the service to be able to, among other things, display your email and your "
+"permissions."
 msgstr ""
 
 #: xl_auth/templates/oauth/authorize.html:16
-msgid "Authorize"
+msgid "Accept"
 msgstr ""
 
 #: xl_auth/templates/oauth/errors.html:7

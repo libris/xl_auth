@@ -2,10 +2,10 @@
 {% extends "layout.html" %}
 {% block content %}
     <div class="container-narrow">
-        <h1>{{ _('Authorization Request') }}</h1>
-        <p class="lead">{{ _('OAuth2 client "%(name)s (%(description)s)" is \
-requesting access to your account details.', name=client.name, description=client.description) }}</p>
-        <p>{{ _('Press "Authorize" to approve and get redirected back to the service.') }}</p>
+        <h1>{{ _('Share account details') }}</h1>
+        <p class="lead">{{ _('%(name)s %(description)s needs access to your account details.',
+            name=client.name, description=client.description) }}
+        {{ _('This is necessary for the service to be able to, among other things, display your email and your permissions.') }}</p>
         <br>
         <div class="row">
             <div class="col-md-12">
@@ -13,7 +13,7 @@ requesting access to your account details.', name=client.name, description=clien
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     {{ authorize_form.confirm() }}
                     <input class="btn btn-lg btn-primary btn-success" type="submit"
-                           value="{{ _('Authorize') }}">
+                           value="{{ _('Accept') }}">
                 </form>
             </div>
         </div>

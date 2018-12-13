@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2018-08-29 13:49+0200\n"
+"POT-Creation-Date: 2018-12-18 15:20+0100\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -741,21 +741,23 @@ msgid "Delete Permission"
 msgstr "🙀 Ta bort behörighet"
 
 #: xl_auth/templates/oauth/authorize.html:5
-msgid "Authorization Request"
-msgstr "Auktoriseringsbegäran"
+msgid "Share account details"
+msgstr "Dela uppgifter"
 
 #: xl_auth/templates/oauth/authorize.html:6
 #, python-format
-msgid "OAuth2 client \"%(name)s (%(description)s)\" is requesting access to your account details."
-msgstr "\"%(name)s\" (<em>%(description)s</em>) begär tillgång till dina användaruppgifter."
+msgid "%(name)s %(description)s needs access to your account details."
+msgstr "Om du vill fortsätta behöver %(name)s %(description)s tillgång till dina uppgifter."
 
 #: xl_auth/templates/oauth/authorize.html:8
-msgid "Press \"Authorize\" to approve and get redirected back to the service."
-msgstr "Klicka på \"Auktorisera\" för att godkänna och återvända till tjänsten."
+msgid ""
+"This is necessary for the service to be able to, among other things, display your email and your "
+"permissions."
+msgstr "Detta för att bland annat kunna visa din e-postadress och dina sigel."
 
 #: xl_auth/templates/oauth/authorize.html:16
-msgid "Authorize"
-msgstr "Auktorisera"
+msgid "Accept"
+msgstr "Godkänn"
 
 #: xl_auth/templates/oauth/errors.html:7
 msgid "OAuth Error"
