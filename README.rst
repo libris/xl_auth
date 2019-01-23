@@ -195,6 +195,11 @@ DB Models
 Changelog
 =========
 
+v. 1.4.0
+--------
+
+* Clarify copy
+
 v. 1.3.0
 --------
 
