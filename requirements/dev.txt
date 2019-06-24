@@ -6,7 +6,7 @@ pytest==3.2.2
 WebTest==2.0.28
 factory-boy==2.9.2
 coverage==4.4.1
-flask-shell-ipython==0.3.0
+flask-shell-ipython==0.3.1
 ansible==2.4.0.0
 lxml==4.1.1
 
