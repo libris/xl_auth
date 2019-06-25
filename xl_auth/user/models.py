@@ -267,6 +267,14 @@ class User(UserMixin, SurrogatePK, Model):
                 return True
         return False
 
+    @hybrid_property
+    def is_super_collection_user(self):
+        """Return 'is_super_collection_user' status."""
+        return any(
+            permission.collection.is_super and permission.collection.is_active
+            for permission in self.permissions
+        )
+
     def is_cataloging_admin_for(self, *collections):
         """Check if user has 'cataloging_admin' permissions for all 'collections'."""
         collections = set(collections)

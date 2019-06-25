@@ -7,7 +7,12 @@
         <dl class="dl-horizontal">
             <dt>{{ _('Active') }}:</dt>
             <dd>{{ _('Yes') if collection.is_active else _('No') }}</dd>
-
+        
+            {% if current_user.is_admin %}
+            <dt>{{ _('Super Collection') }}:</dt>
+            <dd>{{ _('Yes') if collection.is_super else _('No') }}</dd>
+            {% endif %}
+	    
             <dt>{{ _('Replaces') }}:</dt>
             <dd>
                 {% if collection.replaces %}
@@ -19,7 +24,7 @@
                     -
                 {% endif %}
             </dd>
-
+	    
             <dt>{{ _('Replaced By') }}:</dt>
             <dd>
                 {% if collection.replaced_by %}

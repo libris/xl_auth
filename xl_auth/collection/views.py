@@ -77,7 +77,8 @@ def edit(collection_code):
     if edit_collection_form.validate_on_submit():
         collection.update_as(current_user,
                              friendly_name=edit_collection_form.friendly_name.data,
-                             category=edit_collection_form.category.data).save()
+                             category=edit_collection_form.category.data,
+                             is_super=edit_collection_form.is_super.data).save()
         flash(_('Thank you for editing collection "%(code)s".', code=collection.code), 'success')
         return redirect(url_for('collection.home'))
     else:

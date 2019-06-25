@@ -35,6 +35,11 @@
             <dt>{{ _('System Administrator') }}:</dt>
             <dd>{{ _('Yes') if user.is_admin else _('No') }}</dd>
 
+            {% if current_user.is_admin %}
+            <dt>{{ _('Super Collection User') }}:</dt>
+            <dd>{{ _('Yes') if user.is_super_collection_user else _('No') }}</dd>
+            {% endif %}
+
             <dt>{{ _('Cataloging Admin') }}:</dt>
             <dd>{{ _('Yes') if user.is_cataloging_admin else _('No') }}</dd>
 

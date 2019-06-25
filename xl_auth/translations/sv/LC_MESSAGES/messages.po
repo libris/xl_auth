@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2018-12-18 15:20+0100\n"
+"POT-Creation-Date: 2019-06-25 15:58+0200\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -35,7 +35,7 @@ msgid "Code"
 msgstr "Sigel"
 
 #: tests/end2end/test_collection_editing.py:86 tests/forms/test_collection_edit.py:38
-#: xl_auth/collection/forms.py:63
+#: xl_auth/collection/forms.py:64
 msgid "Code cannot be modified"
 msgstr "Koden kan inte ändras"
 
@@ -77,8 +77,8 @@ msgstr "Sigel \"%(code)s\" existerar inte"
 
 #: tests/end2end/test_collection_editing.py:164 tests/end2end/test_user_editing.py:212
 #: tests/end2end/test_user_editing.py:238 xl_auth/templates/collections/home.html:56
-#: xl_auth/templates/collections/home.html:119 xl_auth/templates/collections/view.html:121
-#: xl_auth/templates/permissions/home.html:46 xl_auth/templates/users/view.html:109
+#: xl_auth/templates/collections/home.html:119 xl_auth/templates/collections/view.html:126
+#: xl_auth/templates/permissions/home.html:46 xl_auth/templates/users/view.html:114
 msgid "Edit"
 msgstr "Ändra"
 
@@ -88,7 +88,7 @@ msgid "New Collection"
 msgstr "Lägg till nytt sigel"
 
 #: tests/end2end/test_collection_registering.py:156 tests/forms/test_collection_register.py:39
-#: tests/forms/test_collection_register.py:50 xl_auth/collection/forms.py:46
+#: tests/forms/test_collection_register.py:50 xl_auth/collection/forms.py:47
 #, python-format
 msgid "Code \"%(code)s\" already registered"
 msgstr "Koden \"%(code)s\" är redan registrerad"
@@ -104,19 +104,19 @@ msgstr "Sigel '%(code)s'"
 #: tests/end2end/test_permission_deleting.py:104 tests/end2end/test_permission_editing.py:188
 #: tests/end2end/test_permission_registering.py:188 tests/end2end/test_user_editing.py:206
 #: tests/end2end/test_user_view.py:73 tests/end2end/test_user_view.py:99
-#: xl_auth/templates/collections/view.html:70 xl_auth/templates/permissions/home.html:4
-#: xl_auth/templates/users/view.html:56
+#: xl_auth/templates/collections/view.html:75 xl_auth/templates/permissions/home.html:4
+#: xl_auth/templates/users/view.html:61
 msgid "Permissions"
 msgstr "Behörigheter"
 
 #: tests/end2end/test_collection_view.py:123 tests/end2end/test_collection_view.py:152
-#: tests/end2end/test_collection_view.py:181 xl_auth/templates/collections/view.html:35
+#: tests/end2end/test_collection_view.py:181 xl_auth/templates/collections/view.html:40
 msgid "Cataloging Admins"
 msgstr "Administratörer"
 
 #: tests/end2end/test_collection_view.py:125 tests/end2end/test_collection_view.py:154
 #: tests/end2end/test_collection_view.py:185 tests/models/test_collection.py:145
-#: xl_auth/collection/models.py:47
+#: xl_auth/collection/models.py:48
 msgid "You will only see all permissions for those collections that you are cataloging admin for."
 msgstr "Du ser enbart samtliga behörigheter för de sigler du är katalogiseringsadmin för."
 
@@ -154,7 +154,7 @@ msgstr "Behörighet borttagen för \"%(username)s\" på sigel \"%(code)s\"."
 #: tests/forms/test_permission_edit.py:114 tests/forms/test_permission_register.py:82
 #: tests/forms/test_user_administer.py:53 tests/forms/test_user_change_password.py:45
 #: tests/forms/test_user_edit_details.py:34 tests/forms/test_user_register.py:44
-#: xl_auth/collection/forms.py:41 xl_auth/collection/forms.py:73 xl_auth/oauth/client/forms.py:51
+#: xl_auth/collection/forms.py:42 xl_auth/collection/forms.py:74 xl_auth/oauth/client/forms.py:51
 #: xl_auth/oauth/client/forms.py:86 xl_auth/permission/forms.py:74 xl_auth/permission/forms.py:128
 #: xl_auth/permission/forms.py:151 xl_auth/permission/forms.py:197 xl_auth/templates/403.html:11
 #: xl_auth/user/forms.py:77 xl_auth/user/forms.py:126 xl_auth/user/forms.py:160
@@ -185,8 +185,8 @@ msgstr "En behörighet för användare \"%(username)s\" på sigel \"%(code)s\" f
 
 #: tests/end2end/test_permission_registering.py:31 tests/end2end/test_permission_registering.py:66
 #: tests/end2end/test_permission_registering.py:125 tests/end2end/test_permission_registering.py:161
-#: xl_auth/templates/collections/view.html:81 xl_auth/templates/permissions/home.html:11
-#: xl_auth/templates/users/view.html:64
+#: xl_auth/templates/collections/view.html:86 xl_auth/templates/permissions/home.html:11
+#: xl_auth/templates/users/view.html:69
 msgid "New Permission"
 msgstr "Lägg till behörighet"
 
@@ -262,44 +262,46 @@ msgid "Users"
 msgstr "Användare"
 
 #: tests/end2end/test_user_editing.py:56 xl_auth/templates/collections/view.html:9
-#: xl_auth/templates/collections/view.html:106 xl_auth/templates/collections/view.html:109
-#: xl_auth/templates/collections/view.html:112 xl_auth/templates/permissions/home.html:41
-#: xl_auth/templates/permissions/home.html:42 xl_auth/templates/permissions/home.html:43
-#: xl_auth/templates/users/home.html:47 xl_auth/templates/users/home.html:111
-#: xl_auth/templates/users/inspect.html:18 xl_auth/templates/users/inspect.html:21
-#: xl_auth/templates/users/inspect.html:24 xl_auth/templates/users/inspect.html:91
-#: xl_auth/templates/users/inspect.html:94 xl_auth/templates/users/inspect.html:97
-#: xl_auth/templates/users/inspect.html:100 xl_auth/templates/users/inspect.html:145
-#: xl_auth/templates/users/inspect.html:148 xl_auth/templates/users/inspect.html:151
-#: xl_auth/templates/users/inspect.html:192 xl_auth/templates/users/inspect.html:195
-#: xl_auth/templates/users/inspect.html:228 xl_auth/templates/users/inspect.html:262
-#: xl_auth/templates/users/profile.html:108 xl_auth/templates/users/profile.html:111
-#: xl_auth/templates/users/profile.html:114 xl_auth/templates/users/simple_view.html:14
-#: xl_auth/templates/users/view.html:33 xl_auth/templates/users/view.html:36
-#: xl_auth/templates/users/view.html:39 xl_auth/templates/users/view.html:90
-#: xl_auth/templates/users/view.html:93 xl_auth/templates/users/view.html:96
-#: xl_auth/templates/users/view.html:99
+#: xl_auth/templates/collections/view.html:13 xl_auth/templates/collections/view.html:111
+#: xl_auth/templates/collections/view.html:114 xl_auth/templates/collections/view.html:117
+#: xl_auth/templates/permissions/home.html:41 xl_auth/templates/permissions/home.html:42
+#: xl_auth/templates/permissions/home.html:43 xl_auth/templates/users/home.html:47
+#: xl_auth/templates/users/home.html:111 xl_auth/templates/users/inspect.html:18
+#: xl_auth/templates/users/inspect.html:21 xl_auth/templates/users/inspect.html:24
+#: xl_auth/templates/users/inspect.html:91 xl_auth/templates/users/inspect.html:94
+#: xl_auth/templates/users/inspect.html:97 xl_auth/templates/users/inspect.html:100
+#: xl_auth/templates/users/inspect.html:145 xl_auth/templates/users/inspect.html:148
+#: xl_auth/templates/users/inspect.html:151 xl_auth/templates/users/inspect.html:192
+#: xl_auth/templates/users/inspect.html:195 xl_auth/templates/users/inspect.html:228
+#: xl_auth/templates/users/inspect.html:262 xl_auth/templates/users/profile.html:108
+#: xl_auth/templates/users/profile.html:111 xl_auth/templates/users/profile.html:114
+#: xl_auth/templates/users/simple_view.html:14 xl_auth/templates/users/view.html:33
+#: xl_auth/templates/users/view.html:36 xl_auth/templates/users/view.html:40
+#: xl_auth/templates/users/view.html:44 xl_auth/templates/users/view.html:95
+#: xl_auth/templates/users/view.html:98 xl_auth/templates/users/view.html:101
+#: xl_auth/templates/users/view.html:104
 msgid "Yes"
 msgstr "Ja"
 
 #: tests/end2end/test_user_editing.py:56 xl_auth/templates/collections/view.html:9
-#: xl_auth/templates/collections/view.html:106 xl_auth/templates/collections/view.html:109
-#: xl_auth/templates/collections/view.html:112 xl_auth/templates/permissions/home.html:41
-#: xl_auth/templates/permissions/home.html:42 xl_auth/templates/permissions/home.html:43
-#: xl_auth/templates/users/home.html:47 xl_auth/templates/users/home.html:111
-#: xl_auth/templates/users/inspect.html:18 xl_auth/templates/users/inspect.html:21
-#: xl_auth/templates/users/inspect.html:24 xl_auth/templates/users/inspect.html:91
-#: xl_auth/templates/users/inspect.html:94 xl_auth/templates/users/inspect.html:97
-#: xl_auth/templates/users/inspect.html:100 xl_auth/templates/users/inspect.html:145
-#: xl_auth/templates/users/inspect.html:148 xl_auth/templates/users/inspect.html:151
-#: xl_auth/templates/users/inspect.html:192 xl_auth/templates/users/inspect.html:195
-#: xl_auth/templates/users/inspect.html:228 xl_auth/templates/users/inspect.html:262
-#: xl_auth/templates/users/profile.html:108 xl_auth/templates/users/profile.html:111
-#: xl_auth/templates/users/profile.html:114 xl_auth/templates/users/simple_view.html:14
-#: xl_auth/templates/users/view.html:33 xl_auth/templates/users/view.html:36
-#: xl_auth/templates/users/view.html:39 xl_auth/templates/users/view.html:90
-#: xl_auth/templates/users/view.html:93 xl_auth/templates/users/view.html:96
-#: xl_auth/templates/users/view.html:99
+#: xl_auth/templates/collections/view.html:13 xl_auth/templates/collections/view.html:111
+#: xl_auth/templates/collections/view.html:114 xl_auth/templates/collections/view.html:117
+#: xl_auth/templates/permissions/home.html:41 xl_auth/templates/permissions/home.html:42
+#: xl_auth/templates/permissions/home.html:43 xl_auth/templates/users/home.html:47
+#: xl_auth/templates/users/home.html:111 xl_auth/templates/users/inspect.html:18
+#: xl_auth/templates/users/inspect.html:21 xl_auth/templates/users/inspect.html:24
+#: xl_auth/templates/users/inspect.html:91 xl_auth/templates/users/inspect.html:94
+#: xl_auth/templates/users/inspect.html:97 xl_auth/templates/users/inspect.html:100
+#: xl_auth/templates/users/inspect.html:145 xl_auth/templates/users/inspect.html:148
+#: xl_auth/templates/users/inspect.html:151 xl_auth/templates/users/inspect.html:192
+#: xl_auth/templates/users/inspect.html:195 xl_auth/templates/users/inspect.html:228
+#: xl_auth/templates/users/inspect.html:262 xl_auth/templates/users/profile.html:108
+#: xl_auth/templates/users/profile.html:111 xl_auth/templates/users/profile.html:114
+#: xl_auth/templates/users/simple_view.html:14 xl_auth/templates/users/view.html:33
+#: xl_auth/templates/users/view.html:36 xl_auth/templates/users/view.html:40
+#: xl_auth/templates/users/view.html:44 xl_auth/templates/users/view.html:95
+#: xl_auth/templates/users/view.html:98 xl_auth/templates/users/view.html:101
+#: xl_auth/templates/users/view.html:104
 msgid "No"
 msgstr "Nej"
 
@@ -359,7 +361,7 @@ msgstr "Epost-adressen är redan registrerad"
 msgid "View User '<a href=\"mailto:%(email)s\">%(email)s</a>'"
 msgstr "Användare '<a href=\"mailto:%(email)s\">%(email)s</a>'"
 
-#: tests/end2end/test_user_view.py:146 tests/models/test_user.py:272 xl_auth/user/models.py:316
+#: tests/end2end/test_user_view.py:146 tests/models/test_user.py:272 xl_auth/user/models.py:325
 msgid "You will only see permissions for those collections that you are cataloging admin for."
 msgstr "Du ser enbart behörigheter på de sigler du är katalogiseringsadmin för."
 
@@ -371,7 +373,7 @@ msgstr "Fältet måste vara mellan 3 och 64 tecken långt."
 msgid "Field must be between 3 and 350 characters long."
 msgstr "Fältet måste vara mellan 3 och 350 tecken långt."
 
-#: tests/forms/test_collection_edit.py:29 xl_auth/collection/forms.py:77
+#: tests/forms/test_collection_edit.py:29 xl_auth/collection/forms.py:78
 msgid "Code does not exist"
 msgstr "Koden existerar ej"
 
@@ -434,17 +436,17 @@ msgstr "Tjänstevillkor redan godkända sedan %(isoformat)s."
 msgid "Field must be between 3 and 255 characters long."
 msgstr "Fältet måste vara mellan 3 och 255 tecken långt."
 
-#: tests/models/test_collection.py:156 xl_auth/collection/models.py:70
+#: tests/models/test_collection.py:156 xl_auth/collection/models.py:71
 #, python-format
 msgid "Replaces %(replaces_code)s, then replaced by %(replaced_by_code)s"
 msgstr "Ersätter %(replaces_code)s, därefter ersatt av sigel %(replaced_by_code)s"
 
-#: tests/models/test_collection.py:159 xl_auth/collection/models.py:73
+#: tests/models/test_collection.py:159 xl_auth/collection/models.py:74
 #, python-format
 msgid "Replaces %(replaces_code)s"
 msgstr "Ersätter sigel %(replaces_code)s"
 
-#: tests/models/test_collection.py:162 xl_auth/collection/models.py:75
+#: tests/models/test_collection.py:162 xl_auth/collection/models.py:76
 #, python-format
 msgid "Replaced by %(replaced_by_code)s"
 msgstr "Ersatt av sigel %(replaced_by_code)s"
@@ -457,11 +459,15 @@ msgstr "Bibliografi"
 msgid "Library"
 msgstr "Bibliotek"
 
+#: xl_auth/collection/forms.py:22 xl_auth/templates/collections/view.html:12
+msgid "Super Collection"
+msgstr "Supersigel"
+
 #: xl_auth/collection/views.py:44
 msgid "Thank you for registering a new collection."
 msgstr "Nytt sigel registrerat."
 
-#: xl_auth/collection/views.py:81
+#: xl_auth/collection/views.py:82
 #, python-format
 msgid "Thank you for editing collection \"%(code)s\"."
 msgstr "Sigel \"%(code)s\" har uppdaterats."
@@ -488,7 +494,7 @@ msgid "Description"
 msgstr "Beskrivning"
 
 #: xl_auth/oauth/client/forms.py:18 xl_auth/permission/forms.py:19
-#: xl_auth/templates/collections/view.html:88 xl_auth/templates/oauth/grants/home.html:14
+#: xl_auth/templates/collections/view.html:93 xl_auth/templates/oauth/grants/home.html:14
 #: xl_auth/templates/oauth/tokens/home.html:14 xl_auth/templates/permissions/home.html:17
 msgid "User"
 msgstr "Användare"
@@ -519,28 +525,28 @@ msgstr "OAuth2 Bearer token \"%(token_id)s\" har raderats."
 
 #: xl_auth/permission/forms.py:20 xl_auth/templates/permissions/home.html:18
 #: xl_auth/templates/users/inspect.html:74 xl_auth/templates/users/inspect.html:123
-#: xl_auth/templates/users/view.html:71
+#: xl_auth/templates/users/view.html:76
 msgid "Collection"
 msgstr "Sigel"
 
-#: xl_auth/permission/forms.py:22 xl_auth/templates/collections/view.html:89
+#: xl_auth/permission/forms.py:22 xl_auth/templates/collections/view.html:94
 #: xl_auth/templates/permissions/home.html:19 xl_auth/templates/users/inspect.html:75
 #: xl_auth/templates/users/inspect.html:125 xl_auth/templates/users/profile.html:92
-#: xl_auth/templates/users/view.html:72
+#: xl_auth/templates/users/view.html:77
 msgid "Registrant"
 msgstr "Beståndsregistrerare"
 
-#: xl_auth/permission/forms.py:23 xl_auth/templates/collections/view.html:90
+#: xl_auth/permission/forms.py:23 xl_auth/templates/collections/view.html:95
 #: xl_auth/templates/permissions/home.html:20 xl_auth/templates/users/inspect.html:76
 #: xl_auth/templates/users/inspect.html:126 xl_auth/templates/users/profile.html:93
-#: xl_auth/templates/users/view.html:73
+#: xl_auth/templates/users/view.html:78
 msgid "Cataloger"
 msgstr "Katalogisatör"
 
-#: xl_auth/permission/forms.py:24 xl_auth/templates/collections/view.html:91
+#: xl_auth/permission/forms.py:24 xl_auth/templates/collections/view.html:96
 #: xl_auth/templates/permissions/home.html:21 xl_auth/templates/users/inspect.html:23
 #: xl_auth/templates/users/inspect.html:77 xl_auth/templates/users/profile.html:94
-#: xl_auth/templates/users/view.html:38 xl_auth/templates/users/view.html:74
+#: xl_auth/templates/users/view.html:43 xl_auth/templates/users/view.html:79
 msgid "Cataloging Admin"
 msgstr "Katalogiseringsadmin"
 
@@ -642,7 +648,7 @@ msgstr "Logga ut"
 msgid "Edit Existing Collection"
 msgstr "Ändra befintligt sigel"
 
-#: xl_auth/templates/collections/edit.html:29 xl_auth/templates/oauth/clients/edit.html:51
+#: xl_auth/templates/collections/edit.html:34 xl_auth/templates/oauth/clients/edit.html:51
 #: xl_auth/templates/permissions/edit.html:34 xl_auth/templates/public/reset_password.html:22
 #: xl_auth/templates/users/administer.html:26 xl_auth/templates/users/change_password.html:22
 #: xl_auth/templates/users/edit_details.html:18
@@ -669,7 +675,7 @@ msgid "Friendly Name"
 msgstr "Namn"
 
 #: xl_auth/templates/collections/home.html:33 xl_auth/templates/collections/home.html:96
-#: xl_auth/templates/collections/view.html:56 xl_auth/templates/collections/view.html:92
+#: xl_auth/templates/collections/view.html:61 xl_auth/templates/collections/view.html:97
 #: xl_auth/templates/permissions/home.html:22 xl_auth/templates/users/home.html:31
 #: xl_auth/templates/users/home.html:95 xl_auth/templates/users/inspect.html:58
 #: xl_auth/templates/users/inspect.html:128 xl_auth/templates/users/inspect.html:179
@@ -678,7 +684,7 @@ msgid "Created At"
 msgstr "Skapad"
 
 #: xl_auth/templates/collections/home.html:45 xl_auth/templates/collections/home.html:108
-#: xl_auth/templates/collections/view.html:14 xl_auth/templates/collections/view.html:26
+#: xl_auth/templates/collections/view.html:19 xl_auth/templates/collections/view.html:31
 #: xl_auth/templates/permissions/home.html:30 xl_auth/templates/permissions/home.html:36
 #: xl_auth/templates/users/home.html:41 xl_auth/templates/users/home.html:105
 #: xl_auth/templates/users/profile.html:101
@@ -703,40 +709,40 @@ msgstr "Registrera"
 msgid "Active"
 msgstr "Aktiv"
 
-#: xl_auth/templates/collections/view.html:11
+#: xl_auth/templates/collections/view.html:16
 msgid "Replaces"
 msgstr "Ersätter"
 
-#: xl_auth/templates/collections/view.html:23
+#: xl_auth/templates/collections/view.html:28
 msgid "Replaced By"
 msgstr "Ersatt av"
 
-#: xl_auth/templates/collections/view.html:40 xl_auth/templates/users/simple_view.html:21
-#: xl_auth/templates/users/view.html:46
+#: xl_auth/templates/collections/view.html:45 xl_auth/templates/users/simple_view.html:21
+#: xl_auth/templates/users/view.html:51
 msgid " and "
 msgstr " och "
 
-#: xl_auth/templates/collections/view.html:43
+#: xl_auth/templates/collections/view.html:48
 msgid "None registered, please contact libris@kb.se to create one."
 msgstr "Ej registrerad, kontakta libris@kb.se för information."
 
-#: xl_auth/templates/collections/view.html:48 xl_auth/templates/users/inspect.html:50
+#: xl_auth/templates/collections/view.html:53 xl_auth/templates/users/inspect.html:50
 #: xl_auth/templates/users/inspect.html:79 xl_auth/templates/users/inspect.html:219
-#: xl_auth/templates/users/view.html:16 xl_auth/templates/users/view.html:76
+#: xl_auth/templates/users/view.html:16 xl_auth/templates/users/view.html:81
 msgid "Last Modified"
 msgstr "Ändrad"
 
-#: xl_auth/templates/collections/view.html:50 xl_auth/templates/collections/view.html:58
-#: xl_auth/templates/collections/view.html:114 xl_auth/templates/users/inspect.html:52
+#: xl_auth/templates/collections/view.html:55 xl_auth/templates/collections/view.html:63
+#: xl_auth/templates/collections/view.html:119 xl_auth/templates/users/inspect.html:52
 #: xl_auth/templates/users/inspect.html:60 xl_auth/templates/users/inspect.html:103
 #: xl_auth/templates/users/inspect.html:154 xl_auth/templates/users/inspect.html:199
 #: xl_auth/templates/users/view.html:18 xl_auth/templates/users/view.html:26
-#: xl_auth/templates/users/view.html:101
+#: xl_auth/templates/users/view.html:106
 msgid "by"
 msgstr "av"
 
-#: xl_auth/templates/collections/view.html:128 xl_auth/templates/permissions/home.html:51
-#: xl_auth/templates/users/view.html:115
+#: xl_auth/templates/collections/view.html:133 xl_auth/templates/permissions/home.html:51
+#: xl_auth/templates/users/view.html:120
 msgid "Delete Permission"
 msgstr "🙀 Ta bort behörighet"
 
@@ -1064,7 +1070,7 @@ msgstr "OAuth2-klienter ändrade"
 msgid "Own Permissions"
 msgstr "Egna behörigheter"
 
-#: xl_auth/templates/users/inspect.html:78 xl_auth/templates/users/view.html:75
+#: xl_auth/templates/users/inspect.html:78 xl_auth/templates/users/view.html:80
 msgid "Active Collection"
 msgstr "Sigel aktivt"
 
@@ -1171,9 +1177,13 @@ msgstr "Lägg till ny användare"
 msgid "First Last"
 msgstr "Förnamn Efternamn"
 
-#: xl_auth/templates/users/simple_view.html:16 xl_auth/templates/users/view.html:41
+#: xl_auth/templates/users/simple_view.html:16 xl_auth/templates/users/view.html:46
 msgid "Cataloging Admin for"
 msgstr "Ansvarig för"
+
+#: xl_auth/templates/users/view.html:39
+msgid "Super Collection User"
+msgstr "Supersigelanvändare"
 
 #: xl_auth/user/forms.py:54
 msgid "Send password reset email"

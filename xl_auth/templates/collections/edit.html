@@ -26,6 +26,11 @@
                     </label>
                 {% endfor %}
             </div>
+	    <div class="form-group">
+              {{ edit_collection_form.is_super(checked=collection.is_super) }}
+              {{ edit_collection_form.is_super.label }}
+            </div>
+	    
             <p><input class="btn btn-primary btn-submit" type="submit" value="{{ _('Save') }}"></p>
         </form>
     </div>

@@ -147,7 +147,8 @@ def test_verify_success_response(token, testapp):
     permission1 = PermissionFactory(user=token.user, registrant=True, cataloger=False)
     permission1.save()
 
-    permission2 = PermissionFactory(user=token.user, registrant=False, cataloger=True)
+    permission2 = PermissionFactory(user=token.user, registrant=False, cataloger=True,
+                                    collection=CollectionFactory(is_super=True))
     permission2.save()
 
     res = testapp.get(url_for('oauth.verify'),
@@ -165,10 +166,12 @@ def test_verify_success_response(token, testapp):
             assert permission['registrant'] is True
             assert permission['cataloger'] is False
             assert permission['friendly_name'] == permission1.collection.friendly_name
+            assert permission['super_collection'] is False
         if permission['code'] == permission2.collection.code:
             assert permission['registrant'] is False
             assert permission['cataloger'] is True
             assert permission['friendly_name'] == permission2.collection.friendly_name
+            assert permission['super_collection'] is True
 
 
 def test_x_username_header_is_applied_when_oauthenticated(token, testapp):
@@ -183,7 +186,7 @@ def test_x_username_header_is_applied_when_oauthenticated(token, testapp):
 
 def test_verify_returns_permissions_on_active_collections_only(token, testapp):
     """Get user details and token expiry."""
-    inactive_collection = CollectionFactory(is_active=False)
+    inactive_collection = CollectionFactory(is_active=False, is_super=True)
     permission1 = PermissionFactory(user=token.user, collection=inactive_collection,
                                     registrant=True, cataloger=False)
     permission1.save()
@@ -202,6 +205,7 @@ def test_verify_returns_permissions_on_active_collections_only(token, testapp):
     assert returned_permission['registrant'] == permission2.registrant
     assert returned_permission['cataloger'] == permission2.cataloger
     assert returned_permission['friendly_name'] == active_collection.friendly_name
+    assert returned_permission['super_collection'] == active_collection.is_super
 
 
 def test_verify_without_bearer(testapp):

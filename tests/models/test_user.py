@@ -273,6 +273,21 @@ def test_get_permissions_label_help_text(user, superuser):
               'cataloging admin for.'))
 
 
+def test_is_super_collection_user(user, superuser):
+    """Test that user is super collection user if user has permission on super collection."""
+    collection = CollectionFactory()
+    PermissionFactory(user=user, collection=collection)
+    assert user.is_super_collection_user is False
+
+    collection.is_super = True
+    collection.save_as(superuser)
+    assert user.is_super_collection_user is True
+
+    collection.is_active = False
+    collection.save_as(superuser)
+    assert user.is_super_collection_user is False
+
+
 @pytest.mark.usefixtures('db')
 def test_get_gravatar_url():
     """Check get_gravatar_url output."""

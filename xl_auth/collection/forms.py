@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from flask_babel import lazy_gettext as _
 from flask_wtf import FlaskForm
-from wtforms import RadioField, StringField
+from wtforms import BooleanField, RadioField, StringField
 from wtforms.validators import DataRequired, Length, ValidationError
 
 from .models import Collection
@@ -19,6 +19,7 @@ class CollectionForm(FlaskForm):
     category = RadioField(_('Category'), choices=[('bibliography', _('Bibliography')),
                                                   ('library', _('Library')),
                                                   ('uncategorized', _('No category'))])
+    is_super = BooleanField(_('Super Collection'))
 
     def __init__(self, active_user, *args, **kwargs):
         """Create instance."""

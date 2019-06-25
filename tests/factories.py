@@ -85,6 +85,7 @@ class CollectionFactory(BaseFactory):
     friendly_name = Sequence(lambda _: 'friendly_name{0}'.format(_))
     category = choice(['bibliography', 'library', 'uncategorized'])
     is_active = True
+    is_super = False
 
     modified_by = LazyFunction(UserFactory)
     created_by = LazyFunction(UserFactory)

@@ -71,6 +71,7 @@ def test_validate_success(superuser, collection):
     """Edit entry with success."""
     form = EditForm(superuser, collection.code, code=collection.code,
                     friendly_name='National Library',
-                    category=choice(['bibliography', 'library', 'uncategorized']))
+                    category=choice(['bibliography', 'library', 'uncategorized']),
+                    is_super=False)
 
     assert form.validate() is True

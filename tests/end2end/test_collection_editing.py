@@ -36,6 +36,7 @@ def test_superuser_can_edit_existing_collection(superuser, collection, testapp):
     form['friendly_name'] = 'New friendly-name for {}'.format(collection.code)
     form['category'] = choice(list(
         {'uncategorized', 'bibliography', 'library'} - {collection.category}))
+    form['is_super'] = not collection.is_super
     # Submits
     res = form.submit().follow()
     assert res.status_code == 200
@@ -43,6 +44,7 @@ def test_superuser_can_edit_existing_collection(superuser, collection, testapp):
     edited_collection = Collection.query.filter(Collection.code == collection.code).first()
     assert edited_collection.friendly_name == form['friendly_name'].value
     assert edited_collection.category == form['category'].value
+    assert edited_collection.is_super == form['is_super'].checked
     # 'modified_by' is updated to reflect change, with 'created_by' intact
     assert edited_collection.created_by == collection_creator
     assert edited_collection.modified_by == superuser
