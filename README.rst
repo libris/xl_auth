@@ -189,8 +189,8 @@ Technology choices:
 DB Models
 ---------
 
-.. image:: https://user-images.githubusercontent.com/786326/33126887-7b6c746e-cf86-11e7-9176-1d500739adf7.png
-   :alt: screen shot 2017-11-22 at 12 24 37 pm
+.. image:: https://user-images.githubusercontent.com/51744858/60274493-6bd5dd00-98f8-11e9-889f-e7527add8745.png
+   :alt: DB model
 
 
 Changelog

@@ -48,7 +48,6 @@ class PermissionForm(FlaskForm):
         if not current_user.is_admin:
             del self.global_registrant
 
-
     # noinspection PyMethodMayBeStatic
     def validate_user_id(self, field):
         """Validate user ID is selected and exists in 'users' table."""
