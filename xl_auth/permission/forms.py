@@ -22,6 +22,7 @@ class PermissionForm(FlaskForm):
     registrant = BooleanField(_('Registrant'))
     cataloger = BooleanField(_('Cataloger'))
     cataloging_admin = BooleanField(_('Cataloging Admin'))
+    global_registrant = BooleanField(_('Global Registrant'))
     next_redirect = HiddenField('next_redirect')
 
     def __init__(self, current_user, *args, **kwargs):
@@ -43,6 +44,10 @@ class PermissionForm(FlaskForm):
                  for permission in current_user.get_cataloging_admin_permissions()],
                 key=lambda _: _[1]
             )
+
+        if not current_user.is_admin:
+            del self.global_registrant
+
 
     # noinspection PyMethodMayBeStatic
     def validate_user_id(self, field):
@@ -112,6 +117,8 @@ class EditForm(PermissionForm):
         self.registrant.default = permission.registrant
         self.cataloger.default = permission.cataloger
         self.cataloging_admin.default = permission.cataloging_admin
+        if self.global_registrant:
+            self.global_registrant.default = permission.global_registrant
         self.process()
 
     # noinspection PyUnusedLocal

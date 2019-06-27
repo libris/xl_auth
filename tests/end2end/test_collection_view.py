@@ -59,6 +59,7 @@ def test_superuser_can_view_all_permissions_on_collection(superuser, permission,
     assert res.status_code is 200
     # Sees all permissions.
     assert _('Permissions') in res
+    assert _('Global Registrant') in res
     assert permission.user.email in res
 
 
@@ -87,6 +88,7 @@ def test_cataloging_admin_can_view_all_permissions_on_own_collection(user, colle
     assert res.status_code is 200
     # Sees all permissions.
     assert _('Permissions') in res
+    assert _('Global Registrant') not in res
     assert cataloging_admin_permission.user.email in res
     assert other_users_non_cataloging_admin_permission.user.email in res
 

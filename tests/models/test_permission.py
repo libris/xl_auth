@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 """Unit tests for Permission model."""
 
@@ -74,6 +75,7 @@ def test_factory(db):
     assert permission.registrant is False
     assert permission.cataloger is False
     assert permission.cataloging_admin is False
+    assert permission.global_registrant is False
 
     assert isinstance(permission.modified_at, datetime)
     assert isinstance(permission.modified_by, User)

@@ -126,6 +126,7 @@ def test_cataloging_admin_can_edit_permission_from_user_view(user, permission, s
     assert res.status_code == 200
     # Fills out the form, by changing to 'other_user''
     form = res.forms['editPermissionForm']
+    assert 'global_registrant' not in form.fields
     # New user is preset, ``form['user_id'] = other_user.id`` is redundant
     # Defaults are kept, setting ``form['collection_id'] = permission.collection.id`` is redundant
     # Submits

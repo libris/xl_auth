@@ -29,6 +29,11 @@
                 <br>
                 {{ register_permission_form.cataloging_admin() }}
                 {{ register_permission_form.cataloging_admin.label }}
+                {% if register_permission_form.global_registrant %}
+                    <br>
+                    {{ register_permission_form.global_registrant() }}
+                    {{ register_permission_form.global_registrant.label }}
+                {% endif %}
             </div>
             <p><input class="btn btn-default btn-submit" type="submit" value="{{ _('Register') }}">
             </p>

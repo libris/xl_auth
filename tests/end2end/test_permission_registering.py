@@ -33,6 +33,7 @@ def test_superuser_can_register_new_permission(superuser, collection, testapp):
     form = res.forms['registerPermissionForm']
     form['user_id'] = superuser.id
     form['collection_id'] = collection.id
+    assert 'global_registrant' in form.fields
     # Submits
     res = form.submit()
     assert res.status_code == 302
@@ -84,6 +85,7 @@ def test_cataloging_admin_can_register_permission_from_collection_view(user, col
     # Defaults are kept, ``register_permission_form['collection_id'] = collection.id`` is redundant
     register_permission_form['registrant'].checked = True
     register_permission_form['cataloger'].checked = True
+    assert 'global_registrant' not in register_permission_form.fields
     # Submits
     res = register_permission_form.submit()
     assert res.status_code == 302
@@ -129,6 +131,7 @@ def test_cataloging_admin_can_register_permission_from_user_view(user, collectio
     form['collection_id'] = collection.id
     form['registrant'].checked = True
     form['cataloger'].checked = True
+    assert 'global_registrant' not in form.fields
     # Submits
     res = form.submit()
     assert res.status_code == 302

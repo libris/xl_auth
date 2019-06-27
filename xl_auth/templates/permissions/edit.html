@@ -30,6 +30,11 @@
                 <br>
                 {{ edit_permission_form.cataloging_admin() }}
                 {{ edit_permission_form.cataloging_admin.label }}
+                {% if edit_permission_form.global_registrant %}
+                    <br>
+                    {{ edit_permission_form.global_registrant() }}
+                    {{ edit_permission_form.global_registrant.label }}
+                {% endif %}
             </div>
             <p><input class="btn btn-primary btn-submit" type="submit" value="{{ _('Save') }}"></p>
         </form>

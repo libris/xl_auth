@@ -23,6 +23,9 @@
             <dt>{{ _('Cataloging Admin') }}:</dt>
             <dd>{{ _('Yes') if user.is_cataloging_admin else _('No') }}</dd>
 
+            <dt>{{ _('Global Registrant') }}:</dt>
+            <dd>{{ _('Yes') if user.is_global_registrant else _('No') }}</dd>
+
             <dt>{{ _('Users Created') }}:</dt>
             <dd>{{ num_users_created }}</dd>
 
@@ -75,6 +78,7 @@
                 <th class="col-md-3 word-break-all">{{ _('Registrant') }}</th>
                 <th class="col-md-2 word-break-all">{{ _('Cataloger') }}</th>
                 <th class="col-md-3 word-break-all">{{ _('Cataloging Admin') }}</th>
+                <th class="col-md-2 word-break-all">{{ _('Global Registrant') }}</th>
                 <th class="col-md-1">{{ _('Active Collection') }}</th>
                 <th class="col-md-2">{{ _('Last Modified') }}</th>
             </tr>
@@ -95,6 +99,9 @@
                     </td>
                     <td class="{{ "bool-value-{}".format(permission.cataloging_admin).lower() }}">
                         {{ _('Yes') if permission.cataloging_admin else _('No') }}
+                    </td>
+                    <td class="{{ "bool-value-{}".format(permission.global_registrant).lower() }}">
+                        {{ _('Yes') if permission.global_registrant else _('No') }}
                     </td>
                     <td class="{{ "bool-value-{}".format(permission.collection.is_active).lower() }}">
                         {{ _('Yes') if permission.collection.is_active else _('No') }}
@@ -125,6 +132,7 @@
                 <th class="col-md-3 word-break-all">{{ _('Registrant') }}</th>
                 <th class="col-md-2 word-break-all">{{ _('Cataloger') }}</th>
                 <th class="col-md-1">{{ _('CatAdm') }}</th>
+                <th class="col-md-1">{{ _('GlobReg') }}</th>
                 <th class="col-md-2">{{ _('Created At') }}</th>
             </tr>
             </thead>
@@ -149,6 +157,9 @@
                     </td>
                     <td class="{{ "bool-value-{}".format(permission.cataloging_admin).lower() }}">
                         {{ _('Yes') if permission.cataloging_admin else _('No') }}
+                    </td>
+                    <td class="{{ "bool-value-{}".format(permission.global_registrant).lower() }}">
+                        {{ _('Yes') if permission.global_registrant else _('No') }}
                     </td>
                     <td>
                         {{ permission.created_at.strftime('%y-%m-%d') }}, {{  _('by') }}

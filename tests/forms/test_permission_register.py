@@ -117,16 +117,44 @@ def test_validate_success_as_cataloging_admin(user, collection, superuser):
     }
 
 
+def test_cataloging_admin_cannot_set_global_registrant(user, collection, superuser):
+    """Try to manipulate the form and add global_registrant as cataloging admin."""
+    PermissionFactory(user=user, collection=collection, cataloging_admin=True).save_as(superuser)
+    assert user.is_cataloging_admin_for(collection) is True
+    other_user = UserFactory().save_as(user)
+    form = RegisterForm(user,
+                        user_id=other_user.id,
+                        collection_id=collection.id,
+                        global_registrant=True)
+
+    assert form.validate() is True
+    assert form.data == {
+        'user_id': other_user.id,
+        'collection_id': collection.id,
+        'registrant': False,
+        'cataloger': False,
+        'cataloging_admin': False,
+        'next_redirect': None
+    }
+
+
 def test_validate_success_as_superuser(superuser, user, collection):
     """Register new permission with success as superuser."""
-    form = RegisterForm(superuser, user_id=user.id, collection_id=collection.id)
+    form = RegisterForm(superuser,
+                        user_id=user.id,
+                        collection_id=collection.id,
+                        registrant=True,
+                        cataloger=True,
+                        cataloging_admin=True,
+                        global_registrant=True)
 
     assert form.validate() is True
     assert form.data == {
         'user_id': user.id,
         'collection_id': collection.id,
-        'registrant': False,
-        'cataloger': False,
-        'cataloging_admin': False,
+        'registrant': True,
+        'cataloger': True,
+        'cataloging_admin': True,
+        'global_registrant': True,
         'next_redirect': None
     }
