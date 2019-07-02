@@ -48,8 +48,6 @@ def register(user_id, collection_id):
     register_permission_form = RegisterForm(current_user, request.form)
     if request.method == 'POST':
         if register_permission_form.validate_on_submit():
-            global_registrant = (register_permission_form.global_registrant and
-                                 register_permission_form.global_registrant.data)
             permission = Permission.create_as(
                 current_user,
                 user_id=register_permission_form.user_id.data,
@@ -57,7 +55,7 @@ def register(user_id, collection_id):
                 registrant=register_permission_form.registrant.data,
                 cataloger=register_permission_form.cataloger.data,
                 cataloging_admin=register_permission_form.cataloging_admin.data,
-                global_registrant=global_registrant)
+                global_registrant=register_permission_form.global_registrant.data)
             flash(_('Added permissions for "%(username)s" on collection "%(code)s".',
                     username=permission.user.email, code=permission.collection.code), 'success')
             return redirect(get_redirect_target())

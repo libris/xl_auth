@@ -113,7 +113,8 @@ def test_validate_success_as_cataloging_admin(user, collection, superuser):
         'registrant': True,
         'cataloger': True,
         'cataloging_admin': False,
-        'next_redirect': None
+        'next_redirect': None,
+        'global_registrant': False
     }
 
 
@@ -127,15 +128,7 @@ def test_cataloging_admin_cannot_set_global_registrant(user, collection, superus
                         collection_id=collection.id,
                         global_registrant=True)
 
-    assert form.validate() is True
-    assert form.data == {
-        'user_id': other_user.id,
-        'collection_id': collection.id,
-        'registrant': False,
-        'cataloger': False,
-        'cataloging_admin': False,
-        'next_redirect': None
-    }
+    assert form.validate() is False
 
 
 def test_validate_success_as_superuser(superuser, user, collection):

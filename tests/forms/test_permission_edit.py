@@ -160,6 +160,7 @@ def test_validate_success_as_cataloging_admin(user, permission, superuser):
         'registrant': not permission.registrant,
         'cataloger': not permission.cataloger,
         'cataloging_admin': permission.cataloging_admin,
+        'global_registrant': False,
         'next_redirect': None
     }
 
@@ -172,27 +173,41 @@ def test_cataloging_admin_cannot_set_global_registrant(user, permission, superus
     other_collection = CollectionFactory().save_as(superuser)
     PermissionFactory(user=user, collection=other_collection,
                       cataloging_admin=True).save_as(superuser)
-    other_user = UserFactory().save_as(user)
     assert user.is_cataloging_admin_for(permission.collection) is True
     form = EditForm(user, permission.id,
                     permission_id=permission.id,
-                    user_id=other_user.id,
-                    collection_id=other_collection.id,
-                    cataloging_admin=permission.cataloging_admin,  # Must remain unchanged.
-                    registrant=not permission.registrant,
-                    cataloger=not permission.cataloger,
-                    global_registrant=True)
+                    user_id=user.id,
+                    collection_id=permission.collection.id,
+                    cataloging_admin=permission.cataloging_admin,
+                    registrant=permission.registrant,
+                    cataloger=permission.cataloger,
+                    global_registrant=not permission.global_registrant)
 
-    assert form.validate() is True
-    assert form.data == {
-        'permission_id': permission.id,
-        'user_id': other_user.id,
-        'collection_id': other_collection.id,
-        'registrant': not permission.registrant,
-        'cataloger': not permission.cataloger,
-        'cataloging_admin': permission.cataloging_admin,
-        'next_redirect': None
-    }
+    assert form.validate() is False
+
+
+def test_cataloging_admin_cannot_move_global_registrant_to_other_user(user, superuser):
+    """Try to move global_registrant to other user as cataloging admin."""
+    user1 = UserFactory().save_as(user)
+    permission = PermissionFactory(user=user1,
+                                   global_registrant=True).save_as(superuser)
+
+    # Make user cataloging admin for 'permission.collection' and 'other_collection'.
+    PermissionFactory(user=user, collection=permission.collection,
+                      cataloging_admin=True).save_as(superuser)
+
+    user2 = UserFactory().save_as(user)
+    assert user.is_cataloging_admin_for(permission.collection) is True
+    form = EditForm(user, permission.id,
+                    permission_id=permission.id,
+                    user_id=user2.id,
+                    collection_id=permission.collection.id,
+                    cataloging_admin=permission.cataloging_admin,
+                    registrant=permission.registrant,
+                    cataloger=permission.cataloger,
+                    global_registrant=permission.global_registrant)
+
+    assert form.validate() is False
 
 
 def test_validate_success_as_superuser(superuser, permission, user, collection):

@@ -120,7 +120,6 @@ def test_cataloging_admin_can_view_global_registrant_on_themselves(user, testapp
     res = testapp.get(url_for('user.view', user_id=user.id))
     assert res.status_code is 200
     # Sees Global Registrant status.
-    print(res)
     assert _('Permissions') in res
     assert _('Global Registrant') in res
 
@@ -143,7 +142,6 @@ def test_user_can_view_global_registrant_on_themselves(user, testapp):
     res = testapp.get(url_for('user.view', user_id=user.id))
     assert res.status_code is 200
     # Sees Global Registrant status.
-    print(res)
     assert _('Global Registrant') in res
 
 
