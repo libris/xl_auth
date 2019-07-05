@@ -33,6 +33,7 @@ def test_superuser_can_register_new_permission(superuser, collection, testapp):
     form = res.forms['registerPermissionForm']
     form['user_id'] = superuser.id
     form['collection_id'] = collection.id
+    form['global_registrant'] = True
     # Submits
     res = form.submit()
     assert res.status_code == 302

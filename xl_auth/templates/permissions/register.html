@@ -29,6 +29,9 @@
                 <br>
                 {{ register_permission_form.cataloging_admin() }}
                 {{ register_permission_form.cataloging_admin.label }}
+                <br>
+                {{ register_permission_form.global_registrant(value = register_permission_form.global_registrant.data) }}
+                {{ register_permission_form.global_registrant.label }}
             </div>
             <p><input class="btn btn-default btn-submit" type="submit" value="{{ _('Register') }}">
             </p>

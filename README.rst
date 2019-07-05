@@ -25,14 +25,15 @@ Run the following commands to bootstrap your environment ::
 
     git clone https://github.com/libris/xl_auth
     cd xl_auth
-    virtualenv venv && source venv/bin/activate
+    python3 -m venv venv && source venv/bin/activate
+    pip install wheel
     pip install -r requirements/dev.txt
     npm install
     npm run build
-    export FLASK_APP=$(PWD)/autoapp.py
+    export FLASK_APP=$(pwd)/autoapp.py
     export FLASK_DEBUG=1
     flask db upgrade
-    flask create_user --email me@example.com -p password --is-admin --is-active
+    flask create-user --email me@example.com -p password --is-admin --is-active
     npm start  # run webpack dev server and flask server using concurrently
 
 You will see a pretty welcome screen.
@@ -188,8 +189,8 @@ Technology choices:
 DB Models
 ---------
 
-.. image:: https://user-images.githubusercontent.com/786326/33126887-7b6c746e-cf86-11e7-9176-1d500739adf7.png
-   :alt: screen shot 2017-11-22 at 12 24 37 pm
+.. image:: https://user-images.githubusercontent.com/51744858/60274493-6bd5dd00-98f8-11e9-889f-e7527add8745.png
+   :alt: DB model
 
 
 Changelog

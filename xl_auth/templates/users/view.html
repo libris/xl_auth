@@ -35,6 +35,11 @@
             <dt>{{ _('System Administrator') }}:</dt>
             <dd>{{ _('Yes') if user.is_admin else _('No') }}</dd>
 
+            {% if current_user.can_see_global_registrant %}
+                <dt>{{ _('Global Registrant') }}:</dt>
+                <dd>{{ _('Yes') if user.is_global_registrant else _('No') }}</dd>
+            {% endif %}
+
             <dt>{{ _('Cataloging Admin') }}:</dt>
             <dd>{{ _('Yes') if user.is_cataloging_admin else _('No') }}</dd>
 
@@ -72,6 +77,9 @@
                 <th class="col-md-3 word-break-all">{{ _('Registrant') }}</th>
                 <th class="col-md-2 word-break-all">{{ _('Cataloger') }}</th>
                 <th class="col-md-3 word-break-all">{{ _('Cataloging Admin') }}</th>
+                {% if current_user.can_see_global_registrant %}
+                    <th class="col-md-2 word-break-all">{{ _('Global Registrant') }}</th>
+                {% endif %}
                 <th class="hidden-xs col-md-1">{{ _('Active Collection') }}</th>
                 <th class="col-md-2">{{ _('Last Modified') }}</th>
                 <th class="min-width-70px"></th>
@@ -95,6 +103,11 @@
                     <td class="{{ "bool-value-{}".format(permission.cataloging_admin).lower() }}">
                         {{ _('Yes') if permission.cataloging_admin else _('No') }}
                     </td>
+                    {% if current_user.can_see_global_registrant %}
+                        <td class="{{ "bool-value-{}".format(permission.global_registrant).lower() }}">
+                            {{ _('Yes') if permission.global_registrant else _('No') }}
+                        </td>
+                    {% endif %}
                     <td class="hidden-xs {{ "bool-value-{}".format(permission.collection.is_active).lower() }}">
                         {{ _('Yes') if permission.collection.is_active else _('No') }}
                     </td>

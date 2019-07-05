@@ -71,6 +71,7 @@ def test_superuser_can_view_all_permissions_on_other_user(superuser, user, testa
     assert res.status_code is 200
     # Sees all permissions.
     assert _('Permissions') in res
+    assert _('Global Registrant') in res
     assert cataloging_admin_permission.collection.code in res
     assert non_cataloging_admin_permission.collection.code in res
 
@@ -99,6 +100,71 @@ def test_user_can_view_all_permissions_on_thyself(user, testapp):
     assert _('Permissions') in res
     assert cataloging_admin_permission.collection.code in res
     assert non_cataloging_admin_permission.collection.code in res
+
+
+def test_cataloging_admin_can_view_global_registrant_on_themselves(user, testapp):
+    """Can see that yourself is Global Registrant."""
+    # Add permission.
+    permission = PermissionFactory(user=user, cataloging_admin=True, global_registrant=True)
+    permission.save()
+    # Goes to homepage.
+    res = testapp.get('/')
+    # Fills out login form.
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits.
+    res = form.submit().follow()
+    assert res.status_code is 200
+    # Cleverly figures out the right URL for the view page.
+    res = testapp.get(url_for('user.view', user_id=user.id))
+    assert res.status_code is 200
+    # Sees Global Registrant status.
+    assert _('Permissions') in res
+    assert _('Global Registrant') in res
+
+
+def test_user_can_view_global_registrant_on_themselves(user, testapp):
+    """Can see that yourself is Global Registrant."""
+    # Add permission.
+    permission = PermissionFactory(user=user, global_registrant=True)
+    permission.save()
+    # Goes to homepage.
+    res = testapp.get('/')
+    # Fills out login form.
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits.
+    res = form.submit().follow()
+    assert res.status_code is 200
+    # Cleverly figures out the right URL for the view page.
+    res = testapp.get(url_for('user.view', user_id=user.id))
+    assert res.status_code is 200
+    # Sees Global Registrant status.
+    assert _('Global Registrant') in res
+
+
+def test_cannot_see_global_registrant_status_if_not_global_registrant(user, testapp):
+    """Can see that yourself is Global Registrant."""
+    # Add permission.
+    permission = PermissionFactory(user=user, cataloging_admin=True)
+    permission.save()
+    # Goes to homepage.
+    res = testapp.get('/')
+    # Fills out login form.
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits.
+    res = form.submit().follow()
+    assert res.status_code is 200
+    # Cleverly figures out the right URL for the view page.
+    res = testapp.get(url_for('user.view', user_id=user.id))
+    assert res.status_code is 200
+    # Does not see Global Registrant status.
+    assert _('Permissions') in res
+    assert _('Global Registrant') not in res
 
 
 def test_user_can_only_view_cataloging_admin_permissions_on_others_when_not_admin(user, testapp):

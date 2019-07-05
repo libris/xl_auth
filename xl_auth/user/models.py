@@ -267,6 +267,20 @@ class User(UserMixin, SurrogatePK, Model):
                 return True
         return False
 
+    @hybrid_property
+    def is_global_registrant(self):
+        """Return 'global_registrant' status."""
+        return any(
+            permission.global_registrant and
+            permission.collection.is_active
+            for permission in self.permissions
+        )
+
+    @hybrid_property
+    def can_see_global_registrant(self):
+        """Check if the user is allowed to see 'global_registrant' status."""
+        return self.is_admin or self.is_global_registrant
+
     def is_cataloging_admin_for(self, *collections):
         """Check if user has 'cataloging_admin' permissions for all 'collections'."""
         collections = set(collections)
