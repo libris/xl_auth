@@ -47,10 +47,10 @@
            state={{ 're' if xl_auth_service.changed or xl_auth_git_clone.changed else '' }}started
            enabled=yes
 
-- name: run 'flask create_user -e libris@kb.se -p <my-secret> --is-active --is-admin --force'
+- name: run 'flask create-user -e libris@kb.se -p <my-secret> --is-active --is-admin --force'
   shell: "sleep 5 && . venv/bin/activate &&
          SQLALCHEMY_DATABASE_URI=postgresql://{{ postgresql_user }}:{{ postgresql_password }}@127.0.0.1/{{ postgresql_db }}
-         FLASK_APP=autoapp.py flask create_user -e libris@kb.se -n SuperAdmin
+         FLASK_APP=autoapp.py flask create-user -e libris@kb.se -n SuperAdmin
          -p {{ xl_auth_admin_pass }} --is-active --is-admin --force"
   args:
     chdir: /opt/xl_auth

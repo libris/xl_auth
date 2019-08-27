@@ -161,14 +161,14 @@ Docker images built by Jenkins can be tried out locally by executing the followi
 
     docker run -itp 5000:5000 --rm --name xl_auth mblomdahl/xl_auth:next
     # Above command does not detach, so, in another terminal:
-    docker exec -it xl_auth /usr/local/bin/flask create_user -e me@kb.se -p 1234 --force \
+    docker exec -it xl_auth /usr/local/bin/flask create-user -e me@kb.se -p 1234 --force \
         --is-admin --is-active
     # Now open localhost:5000 in the browser and login as me@kb.se
 
 
 To import users, collections and permissions into the Docker container, run ::
 
-    docker exec -it xl_auth /usr/local/bin/flask import_data --admin-email=libris@kb.se
+    docker exec -it xl_auth /usr/local/bin/flask import-data --admin-email=libris@kb.se
 
 
 Project Notes
@@ -464,7 +464,7 @@ v. 0.4.1
 v. 0.4.0
 --------
 
-* Added ``flask import_data`` CLI tool for pulling data from legacy systems
+* Added ``flask import-data`` CLI tool for pulling data from legacy systems
   (`#38 <https://github.com/libris/xl_auth/issues/38>`_,
   `#43 <https://github.com/libris/xl_auth/issues/43>`_)
 * Styling and usability improvements (`#6 <https://github.com/libris/xl_auth/issues/6>`_,
