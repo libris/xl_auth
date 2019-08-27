@@ -101,7 +101,7 @@ pipeline {
                         sh 'npm install'
                         sh 'npm run build'
                     },
-                    // use different pip cache dir per worker and parallel step
+                    // use separate pip cache dir per worker and parallel step
                     // https://github.com/pypa/pip/issues/5345
                     'Create virtualenv (py27)': {
                         sh 'scl enable python27 "virtualenv $VENV_ROOT/py27venv"'
