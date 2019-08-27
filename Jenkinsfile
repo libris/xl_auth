@@ -105,7 +105,7 @@ pipeline {
                     // https://github.com/pypa/pip/issues/5345
                     'Create virtualenv (py27)': {
                         sh 'scl enable python27 "virtualenv $VENV_ROOT/py27venv"'
-                        sh 'scl enable python27 "$VENV_ROOT/py27venv/bin/pip --cache-dir ~/.cache/pip35/$EXECUTOR_NUMBER install -r requirements/dev.txt"'
+                        sh 'scl enable python27 "$VENV_ROOT/py27venv/bin/pip --cache-dir ~/.cache/pip27/$EXECUTOR_NUMBER install -r requirements/dev.txt"'
                     },
                     'Create virtualenv (py35)': {
                         sh 'scl enable rh-python35 "virtualenv $VENV_ROOT/py35venv"'
