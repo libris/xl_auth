@@ -17,5 +17,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends git \
 
 EXPOSE 5000
 
-CMD ["prod_run"]
+CMD ["prod-run"]
 ENTRYPOINT ["flask"]

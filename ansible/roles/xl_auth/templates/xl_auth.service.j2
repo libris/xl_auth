@@ -14,7 +14,7 @@ Environment="PREFERRED_URL_SCHEME=https"
 Environment="FLASK_DEBUG=0"
 Environment="SQLALCHEMY_DATABASE_URI=postgresql://{{ postgresql_user }}:{{ postgresql_password }}@127.0.0.1/{{ postgresql_db }}"
 Environment="OAUTH2_PROVIDER_TOKEN_EXPIRES_IN=3600"
-ExecStart=/opt/xl_auth/venv/bin/flask prod_run
+ExecStart=/opt/xl_auth/venv/bin/flask prod-run
 TimeoutStopSec=30
 
 [Install]
