@@ -44,6 +44,7 @@ In general, before running flask shell commands, set the ``FLASK_APP`` and
     export FLASK_APP=/path/to/autoapp.py
     export FLASK_DEBUG=1
 
+Setting FLASK_DEBUG=1 will tell the application to use ``DevConfig`` as specified in ./xl_auth/settings.py. This configuration sets up a SQLite db for development and points the SQLALCHEMY_DATABASE_URI environment variable to this db.
 
 Deployment
 ==========
