@@ -101,13 +101,15 @@ pipeline {
                         sh 'npm install'
                         sh 'npm run build'
                     },
+                    // use separate pip cache dir per worker and parallel step
+                    // https://github.com/pypa/pip/issues/5345
                     'Create virtualenv (py27)': {
                         sh 'scl enable python27 "virtualenv $VENV_ROOT/py27venv"'
-                        sh 'scl enable python27 "$VENV_ROOT/py27venv/bin/pip install -r requirements/dev.txt"'
+                        sh 'scl enable python27 "$VENV_ROOT/py27venv/bin/pip --cache-dir ~/.cache/pip27/$EXECUTOR_NUMBER install -r requirements/dev.txt"'
                     },
                     'Create virtualenv (py35)': {
                         sh 'scl enable rh-python35 "virtualenv $VENV_ROOT/py35venv"'
-                        sh 'scl enable rh-python35 "$VENV_ROOT/py35venv/bin/pip install -r requirements/dev.txt"'
+                        sh 'scl enable rh-python35 "$VENV_ROOT/py35venv/bin/pip --cache-dir ~/.cache/pip35/$EXECUTOR_NUMBER install -r requirements/dev.txt"'
                     }
                 )
             }
