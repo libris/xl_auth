@@ -49,6 +49,7 @@ class PermissionForm(FlaskForm):
         if not current_user.is_admin:
             self.global_registrant.label.text = ''
             self.global_registrant.widget = HiddenInput()
+            self.global_registrant.flags.hidden = True
 
     # noinspection PyMethodMayBeStatic
     def validate_user_id(self, field):
