@@ -40,7 +40,7 @@
     hostname: "{{ xl_auth_server_name }}"
     image: "{{ xl_auth_docker }}"
     pull: yes
-    command: prod_run
+    command: prod-run
     state: stopped
     restart_policy: unless-stopped
     log_driver: gelf

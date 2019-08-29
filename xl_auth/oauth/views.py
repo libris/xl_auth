@@ -163,7 +163,8 @@ def verify():
             'permissions': [{'code': permission.collection.code,
                              'friendly_name': permission.collection.friendly_name,
                              'cataloger': permission.cataloger,
-                             'registrant': permission.registrant}
+                             'registrant': permission.registrant,
+                             'global_registrant': permission.global_registrant}
                             for permission in oauth.user.permissions
                             if permission.collection.is_active]
         }

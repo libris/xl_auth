@@ -54,7 +54,8 @@ def register(user_id, collection_id):
                 collection_id=register_permission_form.collection_id.data,
                 registrant=register_permission_form.registrant.data,
                 cataloger=register_permission_form.cataloger.data,
-                cataloging_admin=register_permission_form.cataloging_admin.data)
+                cataloging_admin=register_permission_form.cataloging_admin.data,
+                global_registrant=register_permission_form.global_registrant.data)
             flash(_('Added permissions for "%(username)s" on collection "%(code)s".',
                     username=permission.user.email, code=permission.collection.code), 'success')
             return redirect(get_redirect_target())

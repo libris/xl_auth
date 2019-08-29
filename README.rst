@@ -25,14 +25,15 @@ Run the following commands to bootstrap your environment ::
 
     git clone https://github.com/libris/xl_auth
     cd xl_auth
-    virtualenv venv && source venv/bin/activate
+    python3 -m venv venv && source venv/bin/activate
+    pip install wheel
     pip install -r requirements/dev.txt
     npm install
     npm run build
-    export FLASK_APP=$(PWD)/autoapp.py
+    export FLASK_APP=$(pwd)/autoapp.py
     export FLASK_DEBUG=1
     flask db upgrade
-    flask create_user --email me@example.com -p password --is-admin --is-active
+    flask create-user --email me@example.com -p password --is-admin --is-active
     npm start  # run webpack dev server and flask server using concurrently
 
 You will see a pretty welcome screen.
@@ -43,6 +44,7 @@ In general, before running flask shell commands, set the ``FLASK_APP`` and
     export FLASK_APP=/path/to/autoapp.py
     export FLASK_DEBUG=1
 
+Setting FLASK_DEBUG=1 will tell the application to use ``DevConfig`` as specified in ./xl_auth/settings.py. This configuration sets up a SQLite db for development and points the SQLALCHEMY_DATABASE_URI environment variable to this db.
 
 Deployment
 ==========
@@ -160,14 +162,14 @@ Docker images built by Jenkins can be tried out locally by executing the followi
 
     docker run -itp 5000:5000 --rm --name xl_auth mblomdahl/xl_auth:next
     # Above command does not detach, so, in another terminal:
-    docker exec -it xl_auth /usr/local/bin/flask create_user -e me@kb.se -p 1234 --force \
+    docker exec -it xl_auth /usr/local/bin/flask create-user -e me@kb.se -p 1234 --force \
         --is-admin --is-active
     # Now open localhost:5000 in the browser and login as me@kb.se
 
 
 To import users, collections and permissions into the Docker container, run ::
 
-    docker exec -it xl_auth /usr/local/bin/flask import_data --admin-email=libris@kb.se
+    docker exec -it xl_auth /usr/local/bin/flask import-data --admin-email=libris@kb.se
 
 
 Project Notes
@@ -188,12 +190,17 @@ Technology choices:
 DB Models
 ---------
 
-.. image:: https://user-images.githubusercontent.com/786326/33126887-7b6c746e-cf86-11e7-9176-1d500739adf7.png
-   :alt: screen shot 2017-11-22 at 12 24 37 pm
+.. image:: https://user-images.githubusercontent.com/51744858/60274493-6bd5dd00-98f8-11e9-889f-e7527add8745.png
+   :alt: DB model
 
 
 Changelog
 =========
+
+v. 1.5.0
+--------
+
+* Add 'Global Registrant' permission type
 
 v. 1.4.0
 --------
@@ -463,7 +470,7 @@ v. 0.4.1
 v. 0.4.0
 --------
 
-* Added ``flask import_data`` CLI tool for pulling data from legacy systems
+* Added ``flask import-data`` CLI tool for pulling data from legacy systems
   (`#38 <https://github.com/libris/xl_auth/issues/38>`_,
   `#43 <https://github.com/libris/xl_auth/issues/43>`_)
 * Styling and usability improvements (`#6 <https://github.com/libris/xl_auth/issues/6>`_,

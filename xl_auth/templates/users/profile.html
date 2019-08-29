@@ -92,6 +92,9 @@
                     <th class="hidden-xs">{{ _('Registrant') }}</th>
                     <th class="hidden-xs">{{ _('Cataloger') }}</th>
                     <th class="hidden-xs">{{ _('Cataloging Admin') }}</th>
+                    {% if current_user.can_see_global_registrant %}
+                        <th class="hidden-xs">{{ _('Global Registrant') }}</th>
+                    {% endif %}
                 </tr>
                 </thead>
                 <tbody>
@@ -113,6 +116,11 @@
                         <td class="hidden-xs {{ "bool-value-{}".format(permission.cataloging_admin).lower() }}">
                             {{ _('Yes') if permission.cataloging_admin else _('No') }}
                         </td>
+                        {% if current_user.can_see_global_registrant %}
+                            <td class="hidden-xs {{ "bool-value-{}".format(permission.global_registrant).lower() }}">
+                                {{ _('Yes') if permission.global_registrant else _('No') }}
+                            </td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
                 </tbody>

@@ -7,6 +7,7 @@ from flask_babel import lazy_gettext as _
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, HiddenField, SelectField
 from wtforms.validators import AnyOf, DataRequired, ValidationError
+from wtforms.widgets import HiddenInput
 
 from ..collection.models import Collection
 from ..user.models import User
@@ -22,6 +23,7 @@ class PermissionForm(FlaskForm):
     registrant = BooleanField(_('Registrant'))
     cataloger = BooleanField(_('Cataloger'))
     cataloging_admin = BooleanField(_('Cataloging Admin'))
+    global_registrant = BooleanField(_('Global Registrant'))
     next_redirect = HiddenField('next_redirect')
 
     def __init__(self, current_user, *args, **kwargs):
@@ -44,6 +46,11 @@ class PermissionForm(FlaskForm):
                 key=lambda _: _[1]
             )
 
+        if not current_user.is_admin:
+            self.global_registrant.label.text = ''
+            self.global_registrant.widget = HiddenInput()
+            self.global_registrant.flags.hidden = True
+
     # noinspection PyMethodMayBeStatic
     def validate_user_id(self, field):
         """Validate user ID is selected and exists in 'users' table."""
@@ -60,6 +67,7 @@ class RegisterForm(PermissionForm):
         """Apply 'user_id' and 'collection_id' field defaults."""
         self.user_id.default = user_id
         self.collection_id.default = collection_id
+        self.global_registrant.default = False
         self.process()
 
     def validate_collection_id(self, field):
@@ -75,6 +83,12 @@ class RegisterForm(PermissionForm):
         else:
             raise ValidationError(_('Collection ID "%(collection_id)s" does not exist',
                                     collection_id=field.data))
+
+    def validate_global_registrant(self, field):
+        """Validate that user is admin if global_registrant is set."""
+        if (not self.current_user.is_admin) and self.global_registrant.data is True:
+            raise ValidationError(
+                _('You do not have sufficient privileges for this operation.'))
 
     def validate(self):
         """Validate the form."""
@@ -112,6 +126,7 @@ class EditForm(PermissionForm):
         self.registrant.default = permission.registrant
         self.cataloger.default = permission.cataloger
         self.cataloging_admin.default = permission.cataloging_admin
+        self.global_registrant.default = permission.global_registrant
         self.process()
 
     # noinspection PyUnusedLocal
@@ -136,6 +151,22 @@ class EditForm(PermissionForm):
         if not Collection.get_by_id(field.data):
             raise ValidationError(_('Collection ID "%(collection_id)s" does not exist',
                                     collection_id=field.data))
+
+    def validate_global_registrant(self, field):
+        """Validate that user is admin if global_registrant is changed."""
+        if self.current_user.is_admin:
+            return
+
+        target_permission = Permission.get_by_id(self.target_permission_id)
+        if not target_permission:
+            return  # handled elsewhere
+
+        value_changed = target_permission.global_registrant != field.data
+        user_changed = field.data and (target_permission.user_id != self.user_id.data)
+
+        if value_changed or user_changed:
+            raise ValidationError(_('You do not have sufficient privileges '
+                                    'for this operation.'))
 
     def validate(self):
         """Validate the form."""

@@ -22,6 +22,7 @@ class Permission(SurrogatePK, Model):
     registrant = Column(db.Boolean(), default=False, nullable=False)
     cataloger = Column(db.Boolean(), default=False, nullable=False)
     cataloging_admin = Column(db.Boolean(), default=False, nullable=False)
+    global_registrant = Column(db.Boolean(), default=False, nullable=False)
 
     modified_at = Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow,
                          nullable=False)

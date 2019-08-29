@@ -13,6 +13,11 @@
             <dt>{{ _('Active Account') }}:</dt>
             <dd>{{ _('Yes') if user.is_active else _('No') }}</dd>
 
+            {% if current_user.can_see_global_registrant %}
+                <dt>{{ _('Global Registrant') }}:</dt>
+                <dd>{{ _('Yes') if user.is_global_registrant else _('No') }}</dd>
+            {% endif %}
+
             <dt>{{ _('Cataloging Admin for') }}:</dt>
             <dd>
                 {% for permission in user.get_cataloging_admin_permissions()
