@@ -197,6 +197,11 @@ DB Models
 Changelog
 =========
 
+v. 1.5.0
+--------
+
+* Add 'Global Registrant' permission type
+
 v. 1.4.0
 --------
 

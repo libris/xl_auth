@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2019-07-03 17:25+0200\n"
+"POT-Creation-Date: 2019-08-29 15:13+0200\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -167,9 +167,9 @@ msgstr "Behörighet borttagen för \"%(username)s\" på sigel \"%(code)s\"."
 #: tests/forms/test_user_administer.py:53 tests/forms/test_user_change_password.py:45
 #: tests/forms/test_user_edit_details.py:34 tests/forms/test_user_register.py:44
 #: xl_auth/collection/forms.py:41 xl_auth/collection/forms.py:73 xl_auth/oauth/client/forms.py:51
-#: xl_auth/oauth/client/forms.py:86 xl_auth/permission/forms.py:81 xl_auth/permission/forms.py:90
-#: xl_auth/permission/forms.py:142 xl_auth/permission/forms.py:167 xl_auth/permission/forms.py:181
-#: xl_auth/permission/forms.py:227 xl_auth/templates/403.html:11 xl_auth/user/forms.py:77
+#: xl_auth/oauth/client/forms.py:86 xl_auth/permission/forms.py:82 xl_auth/permission/forms.py:91
+#: xl_auth/permission/forms.py:143 xl_auth/permission/forms.py:168 xl_auth/permission/forms.py:182
+#: xl_auth/permission/forms.py:228 xl_auth/templates/403.html:11 xl_auth/user/forms.py:77
 #: xl_auth/user/forms.py:126 xl_auth/user/forms.py:160 xl_auth/user/forms.py:179
 msgid "You do not have sufficient privileges for this operation."
 msgstr "Du har inte tillräcklig behörighet för att utföra denna operation."
@@ -190,7 +190,7 @@ msgstr "Lägg till ny användare"
 
 #: tests/end2end/test_permission_editing.py:170 tests/end2end/test_permission_registering.py:171
 #: tests/forms/test_permission_edit.py:78 tests/forms/test_permission_register.py:51
-#: xl_auth/permission/forms.py:101 xl_auth/permission/forms.py:191
+#: xl_auth/permission/forms.py:102 xl_auth/permission/forms.py:192
 #, python-format
 msgid "Permissions for user \"%(username)s\" on collection \"%(code)s\" already registered"
 msgstr "En behörighet för användare \"%(username)s\" på sigel \"%(code)s\" finns redan registrerad"
@@ -346,7 +346,7 @@ msgstr "Fullständigt namn"
 #: tests/end2end/test_user_inspection.py:63 tests/end2end/test_user_view.py:49
 #: tests/forms/test_client_edit.py:62 tests/forms/test_client_register.py:64
 #: tests/forms/test_permission_edit.py:90 tests/forms/test_permission_register.py:62
-#: xl_auth/oauth/client/forms.py:41 xl_auth/oauth/client/forms.py:76 xl_auth/permission/forms.py:59
+#: xl_auth/oauth/client/forms.py:41 xl_auth/oauth/client/forms.py:76 xl_auth/permission/forms.py:60
 #: xl_auth/user/views.py:92 xl_auth/user/views.py:111 xl_auth/user/views.py:157
 #: xl_auth/user/views.py:185 xl_auth/user/views.py:210
 #, python-format
@@ -404,7 +404,7 @@ msgid "Field must be between 1 and 5 characters long."
 msgstr "Fältet måste vara mellan 1 och 5 tecken långt."
 
 #: tests/forms/test_permission_delete.py:20 tests/forms/test_permission_edit.py:20
-#: xl_auth/permission/forms.py:136 xl_auth/permission/forms.py:231 xl_auth/permission/views.py:83
+#: xl_auth/permission/forms.py:137 xl_auth/permission/forms.py:232 xl_auth/permission/views.py:83
 #: xl_auth/permission/views.py:117
 #, python-format
 msgid "Permission ID \"%(permission_id)s\" does not exist"
@@ -417,17 +417,17 @@ msgid "Invalid value, must be one of: %(values)s."
 msgstr "Felaktigt värde, måste vara ett av: %(values)s."
 
 #: tests/forms/test_permission_edit.py:40 tests/forms/test_permission_register.py:18
-#: xl_auth/permission/forms.py:57
+#: xl_auth/permission/forms.py:58
 msgid "A user must be selected."
 msgstr "En användare måste väljas."
 
 #: tests/forms/test_permission_edit.py:58 tests/forms/test_permission_register.py:34
-#: xl_auth/permission/forms.py:75 xl_auth/permission/forms.py:149
+#: xl_auth/permission/forms.py:76 xl_auth/permission/forms.py:150
 msgid "A collection must be selected."
 msgstr "Ett sigel måste väljas."
 
 #: tests/forms/test_permission_edit.py:101 tests/forms/test_permission_register.py:72
-#: xl_auth/permission/forms.py:83 xl_auth/permission/forms.py:151
+#: xl_auth/permission/forms.py:84 xl_auth/permission/forms.py:152
 #, python-format
 msgid "Collection ID \"%(collection_id)s\" does not exist"
 msgstr "Sigel med databas-ID \"%(collection_id)s\" existerar inte"
@@ -663,7 +663,7 @@ msgid "Edit Existing Collection"
 msgstr "Ändra befintligt sigel"
 
 #: xl_auth/templates/collections/edit.html:29 xl_auth/templates/oauth/clients/edit.html:51
-#: xl_auth/templates/permissions/edit.html:42 xl_auth/templates/public/reset_password.html:22
+#: xl_auth/templates/permissions/edit.html:45 xl_auth/templates/public/reset_password.html:22
 #: xl_auth/templates/users/administer.html:26 xl_auth/templates/users/change_password.html:22
 #: xl_auth/templates/users/edit_details.html:18
 msgid "Save"
