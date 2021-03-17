@@ -197,6 +197,11 @@ DB Models
 Changelog
 =========
 
+v. 1.6.0
+--------
+
+* Update/remove links related to GDPR/Libris info and support
+
 v. 1.5.0
 --------
 
