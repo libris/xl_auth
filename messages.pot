@@ -1,14 +1,14 @@
 # Translations template for xl_auth.
-# Copyright (C) 2019 National Library of Sweden
+# Copyright (C) 2021 National Library of Sweden
 # This file is distributed under the same license as the xl_auth project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: xl_auth 1.5.0\n"
+"Project-Id-Version: xl_auth 1.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-08-29 15:13+0200\n"
+"POT-Creation-Date: 2021-03-16 09:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -635,15 +635,11 @@ msgstr ""
 msgid "Please let us know and try again later."
 msgstr ""
 
-#: xl_auth/templates/footer.html:5
-msgid "National Library of Sweden"
-msgstr ""
-
-#: xl_auth/templates/footer.html:10 xl_auth/templates/public/about.html:5
+#: xl_auth/templates/footer.html:6 xl_auth/templates/public/about.html:5
 msgid "About"
 msgstr ""
 
-#: xl_auth/templates/footer.html:12
+#: xl_auth/templates/footer.html:8
 msgid "Contact"
 msgstr ""
 
@@ -880,8 +876,8 @@ msgstr ""
 
 #: xl_auth/templates/public/about.html:7
 msgid ""
-"Under construction. Please refer to our <a "
-"href=\"https://github.com/libris/xl_auth/issues\">GitHub repo</a> for ongoing progress."
+"Please refer to our <a href=\"https://github.com/libris/xl_auth\">GitHub repo</a> for ongoing "
+"progress."
 msgstr ""
 
 #: xl_auth/templates/public/about.html:11
@@ -917,38 +913,14 @@ msgstr ""
 #: xl_auth/templates/users/profile.html:33
 msgid ""
 "The National Library of Sweden processes personal data in accordance with the European Union "
-"General Data Protection Regulation (2018), GDRP, <a "
-"href=\"https://www.kb.se/omoss/dataskydd.html\">find out more here</a>. This is how the National "
-"Library of Sweden processes your personal data <a "
-"href=\"https://www.kb.se/omoss/dataskydd.html#XLkat\">while using login.libris.kb.se</a>."
+"General Data Protection Regulation (2018), GDRP, <a href=\"https://www.kb.se/om-oss/hantering-av-"
+"personuppgifter.html\">find out more here</a>. This is how the National Library of Sweden "
+"processes your personal data <a href=\"https://www.kb.se/om-oss/hantering-av-"
+"personuppgifter.html#XLkat\">while using login.libris.kb.se</a>."
 msgstr ""
 
 #: xl_auth/templates/public/home.html:36 xl_auth/templates/public/home.html:45
 msgid "Log in"
-msgstr ""
-
-#: xl_auth/templates/public/home.html:55
-msgid "The Libris blog"
-msgstr ""
-
-#: xl_auth/templates/public/home.html:56
-msgid "Read the latest news about the Libris collaboration."
-msgstr ""
-
-#: xl_auth/templates/public/home.html:57
-msgid "Go to the blog"
-msgstr ""
-
-#: xl_auth/templates/public/home.html:60
-msgid "Support forum"
-msgstr ""
-
-#: xl_auth/templates/public/home.html:61
-msgid "Get help, ask questions and report errors."
-msgstr ""
-
-#: xl_auth/templates/public/home.html:62
-msgid "Go to kundo"
 msgstr ""
 
 #: xl_auth/templates/public/reset_password.html:5

@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
-"Report-Msgid-Bugs-To: mats.blomdahl@gmail.com\n"
-"POT-Creation-Date: 2019-08-29 15:13+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-16 09:08+0100\n"
 "PO-Revision-Date: 2017-09-19 12:23+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
@@ -638,15 +638,11 @@ msgstr "Ursäkta, något gick fel i vårt system."
 msgid "Please let us know and try again later."
 msgstr "Låt oss veta vad som hände och försök igen senare."
 
-#: xl_auth/templates/footer.html:5
-msgid "National Library of Sweden"
-msgstr "Kungliga Biblioteket"
-
-#: xl_auth/templates/footer.html:10 xl_auth/templates/public/about.html:5
+#: xl_auth/templates/footer.html:6 xl_auth/templates/public/about.html:5
 msgid "About"
 msgstr "Om webbplatsen"
 
-#: xl_auth/templates/footer.html:12
+#: xl_auth/templates/footer.html:8
 msgid "Contact"
 msgstr "Kontakt"
 
@@ -883,11 +879,11 @@ msgstr "Lägg till ny behörighet"
 
 #: xl_auth/templates/public/about.html:7
 msgid ""
-"Under construction. Please refer to our <a "
-"href=\"https://github.com/libris/xl_auth/issues\">GitHub repo</a> for ongoing progress."
+"Please refer to our <a href=\"https://github.com/libris/xl_auth\">GitHub repo</a> for ongoing "
+"progress."
 msgstr ""
-"Tjänsten är under konstruktion. Vänligen se vårt <a "
-"href=\"https://github.com/libris/xl_auth/issues\">GitHub-repo</a> för löpande utveckling."
+"Vänligen se vårt <a href=\"https://github.com/libris/xl_auth\">GitHub-repo</a> för löpande "
+"utveckling."
 
 #: xl_auth/templates/public/about.html:11
 #, python-format
@@ -921,49 +917,25 @@ msgstr "Välkommen till Libris Login"
 msgid "xl_auth is a service that enables access to Libris XL for catalogers."
 msgstr ""
 "Libris Login ger behörighet att arbeta i Libris katalogiseringstjänst. Här administreras även "
-"användare, behörigheter och sigel av katalogiseringsanvariga."
+"användare, behörigheter och sigel av katalogiseringsansvariga."
 
 #: xl_auth/templates/public/home.html:27 xl_auth/templates/users/approve_tos.html:12
 #: xl_auth/templates/users/profile.html:33
 msgid ""
 "The National Library of Sweden processes personal data in accordance with the European Union "
-"General Data Protection Regulation (2018), GDRP, <a "
-"href=\"https://www.kb.se/omoss/dataskydd.html\">find out more here</a>. This is how the National "
-"Library of Sweden processes your personal data <a "
-"href=\"https://www.kb.se/omoss/dataskydd.html#XLkat\">while using login.libris.kb.se</a>."
+"General Data Protection Regulation (2018), GDRP, <a href=\"https://www.kb.se/om-oss/hantering-av-"
+"personuppgifter.html\">find out more here</a>. This is how the National Library of Sweden "
+"processes your personal data <a href=\"https://www.kb.se/om-oss/hantering-av-"
+"personuppgifter.html#XLkat\">while using login.libris.kb.se</a>."
 msgstr ""
 "Kungliga biblioteket hanterar dina personuppgifter i enlighet med EU:s dataskyddsförordning "
-"(2018), GDPR. <a href=\"https://www.kb.se/omoss/dataskydd.html\">Läs mer om hur det funkar "
-"här</a>. Så här hanterar KB dina uppgifter vid <a "
-"href=\"https://www.kb.se/omoss/dataskydd.html#XLkat\">användning av denna tjänst</a>."
+"(2018), GDPR. <a href=\"https://www.kb.se/om-oss/hantering-av-personuppgifter.html\">Läs mer om "
+"hur det funkar här</a>. Så här hanterar KB dina uppgifter vid <a href=\"https://www.kb.se/om-oss"
+"/hantering-av-personuppgifter.html#XLkat\">användning av denna tjänst</a>."
 
 #: xl_auth/templates/public/home.html:36 xl_auth/templates/public/home.html:45
 msgid "Log in"
 msgstr "Logga in"
-
-#: xl_auth/templates/public/home.html:55
-msgid "The Libris blog"
-msgstr "Librisbloggen"
-
-#: xl_auth/templates/public/home.html:56
-msgid "Read the latest news about the Libris collaboration."
-msgstr "Läs senaste nytt om Libris-samarbetet."
-
-#: xl_auth/templates/public/home.html:57
-msgid "Go to the blog"
-msgstr "Gå till bloggen"
-
-#: xl_auth/templates/public/home.html:60
-msgid "Support forum"
-msgstr "Supportforum"
-
-#: xl_auth/templates/public/home.html:61
-msgid "Get help, ask questions and report errors."
-msgstr "Få hjälp, ställ frågor och rapportera fel."
-
-#: xl_auth/templates/public/home.html:62
-msgid "Go to kundo"
-msgstr "Gå till supportforum"
 
 #: xl_auth/templates/public/reset_password.html:5
 msgid "Reset Password"
