@@ -221,7 +221,7 @@ class User(UserMixin, SurrogatePK, Model):
     id = db.Column(db.Integer, primary_key=True)
     email = Column(db.String(255), unique=True, nullable=False)
     full_name = Column(db.String(255), unique=False, nullable=False)
-    password = Column(db.BINARY(128), nullable=False)
+    password = Column(db.LargeBinary(128), nullable=False)
     last_login_at = Column(db.DateTime, default=None)
     tos_approved_at = Column(db.DateTime, default=None)
     is_active = Column(db.Boolean(), default=False, nullable=False)
