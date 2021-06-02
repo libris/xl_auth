@@ -10,13 +10,13 @@ click==7.0
 sh==1.12.14
 
 # Database
-# Flask-SQLAlchemy==2.2 Only Compatible with SQLAlchemy 0.8+ or 1.0.10+ w/ Python 3.7 (https://flask-sqlalchemy.palletsprojects.com/en/2.x/)
-psycopg2==2.7.3.1
+Flask-SQLAlchemy==2.2 # Only Compatible with SQLAlchemy 0.8+ or 1.0.10+ w/ Python 3.7 (https://flask-sqlalchemy.palletsprojects.com/en/2.x/)?
+psycopg2==2.8.6
 SQLAlchemy==1.4.17
-alembic==0.9.5
+alembic==1.6.5
 
 # Migrations
-Flask-Migrate==2.1.1
+Flask-Migrate==3.0.1
 
 # Forms (omitting version for WTForms for hacky-technical reasons)
 Flask-WTF==0.14.2
