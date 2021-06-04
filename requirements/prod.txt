@@ -52,4 +52,4 @@ Babel==2.5.1
 pytz==2017.2
 
 # CLI commands
-requests==2.18.4
+requests==2.25.1
