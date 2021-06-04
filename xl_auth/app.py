@@ -18,12 +18,14 @@ def create_app(config_object=ProdConfig):
     :param config_object: The configuration object to use.
     """
     app = Flask(__name__.split('.')[0])
+    print("initializing app....")
     app.config.from_object(config_object)
     register_extensions(app)
     register_blueprints(app)
     register_error_handlers(app)
     register_after_request_funcs(app)
     register_shell_context(app)
+    print("Before register commands")
     register_commands(app)
     return app
 
@@ -103,3 +105,4 @@ def register_commands(app):
     app.cli.add_command(commands.urls)
     app.cli.add_command(commands.import_data)
     app.cli.add_command(commands.prod_run)
+    print("After register commands")
