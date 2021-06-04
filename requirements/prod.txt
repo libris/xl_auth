@@ -48,7 +48,7 @@ flask-emails==0.4
 
 # Localization
 Flask-Babel==2.0.0
-Babel==7.10.4
+Babel==2.7.0
 pytz==2017.2
 
 # CLI commands
