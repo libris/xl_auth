@@ -6,7 +6,7 @@ MarkupSafe==1.0
 Werkzeug==1.0.1
 Jinja2==2.11.3
 itsdangerous==0.24
-click==7.0
+click==8.0.1
 sh==1.12.14
 
 # Database
