@@ -47,8 +47,8 @@ six==1.10.0
 flask-emails==0.4
 
 # Localization
-Flask-Babel==0.11.2
-Babel==2.5.1
+Flask-Babel==2.0.0
+Babel==7.10.4
 pytz==2017.2
 
 # CLI commands
