@@ -19,7 +19,7 @@ alembic==1.6.5
 Flask-Migrate==3.0.1
 
 # Forms (omitting version for WTForms for hacky-technical reasons)
-Flask-WTF==0.14.2
+Flask-WTF==0.15.1
 git+https://github.com/libris/wtforms.git
 
 # Deployment
@@ -30,7 +30,7 @@ futures==3.1.1
 flask-webpack==0.1.0
 
 # Auth
-Flask-Login==0.4.0
+Flask-Login==0.5.0
 Flask-Bcrypt==0.7.1
 flask-oauthlib==0.9.5
 
