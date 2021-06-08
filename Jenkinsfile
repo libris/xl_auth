@@ -101,21 +101,15 @@ pipeline {
                         sh 'npm install'
                         sh 'npm run build'
                     },
-                    // use separate pip cache dir per worker and parallel step
-                    // https://github.com/pypa/pip/issues/5345
-                    'Create virtualenv (py27)': {
-                        sh 'scl enable python27 "virtualenv $VENV_ROOT/py27venv"'
-                        sh 'scl enable python27 "$VENV_ROOT/py27venv/bin/pip --cache-dir ~/.cache/pip27/$EXECUTOR_NUMBER install -r requirements/dev.txt"'
-                    },
-                    'Create virtualenv (py35)': {
-                        sh 'scl enable rh-python35 "virtualenv $VENV_ROOT/py35venv"'
-                        sh 'scl enable rh-python35 "$VENV_ROOT/py35venv/bin/pip --cache-dir ~/.cache/pip35/$EXECUTOR_NUMBER install -r requirements/dev.txt"'
+                    'Create virtualenv (py36)': {
+                        sh 'scl enable rh-python36 "virtualenv $VENV_ROOT/py36venv"'
+                        sh 'scl enable rh-python36 "$VENV_ROOT/py36venv/bin/pip --cache-dir ~/.cache/pip36/$EXECUTOR_NUMBER install -r requirements/dev.txt"'
                     }
                 )
             }
             post {
                 success {
-                    sh 'scl enable python27 ". $VENV_ROOT/py27venv/bin/activate && \
+                    sh 'scl enable python36 ". $VENV_ROOT/py36venv/bin/activate && \
 FLASK_APP=autoapp.py flask translate"'
                 }
             }
@@ -130,41 +124,26 @@ FLASK_APP=autoapp.py flask translate"'
                     'ESLint': {
                         sh 'npm run lint'
                     },
-                    'flake8 (py27,py35)': {
+                    'flake8 (py27,py36)': {
                         script {
                             try {
-                                sh 'scl enable python27 ". $VENV_ROOT/py27venv/bin/activate && \
-flask lint" | tee flake8.log && ( exit $PIPESTATUS )'
-                                sh 'scl enable rh-python35 ". $VENV_ROOT/py35venv/bin/activate && \
+                                sh 'scl enable rh-python36 ". $VENV_ROOT/py36venv/bin/activate && \
 flask lint" | tee flake8.log && ( exit $PIPESTATUS )'
                             }
                             catch (Throwable e) {
-                                sh 'scl enable python27 ". $VENV_ROOT/py27venv/bin/activate && \
-flake8_junit flake8.log flake8-junit.xml"'
                                 junit 'flake8-junit.xml'
                                 throw e
                             }
                         }
                     },
-                    'pytest (py27)': {
+                    'pytest (py36)': {
                         script {
                             try {
-                                sh 'scl enable python27 ". $VENV_ROOT/py27venv/bin/activate && \
-flask test --junit-xml=py27test-junit.xml"'
+                                sh 'scl enable rh-python36 ". $VENV_ROOT/py36venv/bin/activate && \
+flask test --junit-xml=py36test-junit.xml"'
                             }
                             finally {
-                                junit 'py27test-junit.xml'
-                            }
-                        }
-                    },
-                    'pytest (py35)': {
-                        script {
-                            try {
-                                sh 'scl enable rh-python35 ". $VENV_ROOT/py35venv/bin/activate && \
-flask test --junit-xml=py35test-junit.xml"'
-                            }
-                            finally {
-                                junit 'py35test-junit.xml'
+                                junit 'py36test-junit.xml'
                             }
                         }
                     }
