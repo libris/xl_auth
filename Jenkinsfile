@@ -103,7 +103,7 @@ pipeline {
                     },
                     'Create virtualenv (py36)': {
                         sh 'scl enable rh-python36 "virtualenv $VENV_ROOT/py36venv"'
-                        sh 'scl enable rh-python36 "$VENV_ROOT/py36venv/bin/pip --cache-dir ~/.cache/pip36/$EXECUTOR_NUMBER install -r requirements/dev.txt"'
+                        sh 'scl enable rh-python36 "$VENV_ROOT/py36venv/bin/pip3.6 --cache-dir ~/.cache/pip36/$EXECUTOR_NUMBER install -r requirements/dev.txt"'
                     }
                 )
             }
