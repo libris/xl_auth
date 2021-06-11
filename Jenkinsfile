@@ -110,7 +110,7 @@ pipeline {
             }
             post {
                 success {
-                    sh 'scl enable python36 ". $VENV_ROOT/py36venv/bin/activate && \
+                    sh 'scl enable rh-python36 ". $VENV_ROOT/py36venv/bin/activate && \
 FLASK_APP=autoapp.py flask translate"'
                 }
             }
