@@ -40,7 +40,7 @@ def test_oauth_authorize_success(user, client, testapp):
     res = authorize_form.submit().follow()
     grant = Grant.query.filter_by(client_id=client.client_id, user_id=user.id).first()
     assert grant is not None
-    assert res.status_code == 301
+    assert res.status_code == 308
     assert res.location == client.default_redirect_uri + '/?code={}'.format(grant.code)
 
 
