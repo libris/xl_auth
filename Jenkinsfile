@@ -125,18 +125,18 @@ FLASK_APP=autoapp.py flask translate"'
                     'ESLint': {
                         sh 'npm run lint'
                     },
-                    'flake8 (py36)': {
-                        script {
-                            try {
-                                sh 'scl enable rh-python36 ". $VENV_ROOT/py36venv/bin/activate && \
-flask lint" | tee flake8.log && ( exit $PIPESTATUS )'
-                            }
-                            catch (Throwable e) {
-                                junit 'flake8-junit.xml'
-                                throw e
-                            }
-                        }
-                    },
+//                     'flake8 (py36)': {
+//                         script {
+//                             try {
+//                                 sh 'scl enable rh-python36 ". $VENV_ROOT/py36venv/bin/activate && \
+// flask lint" | tee flake8.log && ( exit $PIPESTATUS )'
+//                             }
+//                             catch (Throwable e) {
+//                                 junit 'flake8-junit.xml'
+//                                 throw e
+//                             }
+//                         }
+//                     },
                     'pytest (py36)': {
                         script {
                             try {
