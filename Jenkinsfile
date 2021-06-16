@@ -125,7 +125,7 @@ FLASK_APP=autoapp.py flask translate"'
                     'ESLint': {
                         sh 'npm run lint'
                     },
-                    'flake8 (py27,py36)': {
+                    'flake8 (py36)': {
                         script {
                             try {
                                 sh 'scl enable rh-python36 ". $VENV_ROOT/py36venv/bin/activate && \
