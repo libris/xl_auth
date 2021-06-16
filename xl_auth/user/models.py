@@ -191,15 +191,6 @@ class FailedLoginAttempt(SurrogatePK, Model):
             return False
 
     @staticmethod
-    def purge_failed_for_username_and_ip(username, remote_addr, commit=True):
-        """Remote failed login attempts for username/IP."""
-        (FailedLoginAttempt.query.filter(FailedLoginAttempt.username.ilike(username),
-                                         FailedLoginAttempt.remote_addr == remote_addr)
-                                 .delete(synchronize_session=False))
-        if commit:
-            db.session.commit()
-
-    @staticmethod
     def get_all_by_user(user):
         """Get all failed login attempts for specified user."""
         return FailedLoginAttempt.query.filter_by(username=user.email).all()
@@ -303,10 +294,16 @@ class User(UserMixin, SurrogatePK, Model):
         """Check password."""
         return bcrypt.check_password_hash(self.password, value)
 
-    def update_last_login(self, commit=True):
+    def update_last_login(self):
+        self.update_last_login_internal(remote_address=get_remote_addr())
+
+    def update_last_login_internal(self, remote_address, commit=True):
+        """Remove failed login attempts for username/IP."""
+        (FailedLoginAttempt.query.filter(FailedLoginAttempt.username.ilike(self.email),
+                                         FailedLoginAttempt.remote_addr == remote_address)
+                                 .delete(synchronize_session=False))
+
         """Set 'last_login_at' to current datetime."""
-        FailedLoginAttempt.purge_failed_for_username_and_ip(self.email, get_remote_addr(),
-                                                            commit=commit)
         self.last_login_at = datetime.utcnow()
         if commit:
             self.save(commit=True, preserve_modified=True)

@@ -68,7 +68,7 @@ def test_update_last_login_does_not_update_modified_at(superuser):
     first_modified_at = user.modified_at
 
     # Update 'last_login_at' timestamp.
-    user.update_last_login(commit=True)
+    user.update_last_login()
 
     # Initial 'modified_at' is still the same.
     assert first_modified_at == user.modified_at
@@ -368,17 +368,19 @@ def test_login_attempt_too_many_recent_failures(app):
 
 
 @pytest.mark.usefixtures('db')
-def test_login_attempt_purge():
+def test_login_attempt_purge(superuser):
     """Test purging login attempts for username/IP combo."""
-    foo_login_attempt = FailedLoginAttempt('foo', '127.0.0.1')
+    user = User('foo@kb.se', 'Foo fooson')
+    user.save_as(superuser)
+
+    foo_login_attempt = FailedLoginAttempt('foo@kb.se', '127.0.0.1')
     foo_login_attempt.save()
     bar_login_attempt = FailedLoginAttempt('bar', '127.0.0.1')
     bar_login_attempt.save()
 
     attempts = FailedLoginAttempt.query.all()
     assert len(attempts) == 2
-
-    FailedLoginAttempt.purge_failed_for_username_and_ip('foo', '127.0.0.1')
+    user.update_last_login_internal(commit=True, remote_address='127.0.0.1')
 
     attempts = FailedLoginAttempt.query.all()
     assert len(attempts) == 1
