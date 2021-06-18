@@ -14,7 +14,7 @@ from .factories import (ClientFactory, CollectionFactory, GrantFactory, Password
                         PermissionFactory, SuperUserFactory, TokenFactory, UserFactory)
 
 
-@pytest.yield_fixture(scope='function')
+@pytest.fixture(scope='function')
 def app():
     """An application for the tests."""
     _app = create_app(TestConfig)
@@ -34,7 +34,7 @@ def testapp(app):
 
 
 # noinspection PyShadowingNames
-@pytest.yield_fixture(scope='function')
+@pytest.fixture(scope='function')
 def db(app):
     """A database for the tests."""
     _db.app = app
