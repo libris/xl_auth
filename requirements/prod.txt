@@ -10,7 +10,7 @@ click==7.1.2
 sh==1.12.14
 
 # Database
-Flask-SQLAlchemy==2.2
+Flask-SQLAlchemy==2.5.1
 psycopg2-binary==2.8.6
 SQLAlchemy==1.4.17
 alembic==1.6.5
