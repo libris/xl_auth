@@ -8,7 +8,7 @@ from datetime import datetime
 from flask import current_app, url_for
 from flask_babel import gettext as _
 
-from xl_auth.user.models import FailedLoginAttempt, User
+from xl_auth.user.models import User
 
 
 def test_can_log_in_returns_200(user, testapp):
@@ -204,7 +204,7 @@ def test_block_login_on_too_many_failed_attempts(user, testapp):
     # Also traceable in Nginx logs:
     assert res.headers['X-Username'] == user.email
 
-    FailedLoginAttempt.purge_failed_for_username_and_ip(user.email, '127.0.0.1')
+    user.update_last_login_internal(commit=True, remote_address='127.0.0.1')
 
     # Goes to homepage a third time.
     res = testapp.get('/')

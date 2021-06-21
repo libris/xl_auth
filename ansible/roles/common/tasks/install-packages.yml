@@ -42,8 +42,8 @@
     - multitail
     - python-pip
 
-- name: install pip 9.0.1
-  pip: name=pip version=9.0.1 state=present
+#- name: install pip 9.0.1
+#  pip: name=pip version=9.0.1 state=present
 
 - name: install bash-completion-extras
   yum: name=bash-completion-extras state=present

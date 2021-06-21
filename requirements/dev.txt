@@ -2,8 +2,8 @@
 -r prod.txt
 
 # Testing and stuff
-pytest==3.2.2
-WebTest==2.0.28
+pytest==6.2.4
+WebTest==2.0.35
 factory-boy==2.9.2
 coverage==4.4.1
 flask-shell-ipython==0.3.1

@@ -18,7 +18,7 @@ from alembic import op
 from flask_bcrypt import Bcrypt
 from flask_login import UserMixin
 from six import string_types
-from sqlalchemy import (Binary, Boolean, Column, DateTime, ForeignKey, Integer, String, Text,
+from sqlalchemy import (LargeBinary, Boolean, Column, DateTime, ForeignKey, Integer, String, Text,
                         UniqueConstraint)
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_property
@@ -151,7 +151,7 @@ def upgrade():
         id = Column(Integer, primary_key=True)
         email = Column(String(255), unique=True, nullable=False)
         full_name = Column(String(255), unique=False, nullable=False)
-        password = Column(Binary(128), nullable=False)
+        password = Column(LargeBinary(128), nullable=False)
         last_login_at = Column(DateTime, default=None)
         is_active = Column(Boolean(), default=False, nullable=False)
         is_admin = Column(Boolean(), default=False, nullable=False)

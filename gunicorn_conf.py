@@ -26,6 +26,10 @@ def on_reload(_):
 
 
 def _run_alembic_upgrade():
+    import sh
     from sh import Command
-    flask_cmd = Command('flask')
-    return flask_cmd('db', 'upgrade').stderr
+    try:
+        flask_cmd = Command('flask')
+        flask_cmd('db', 'upgrade')
+    except sh.ErrorReturnCode as e:
+        print(e.stderr)
