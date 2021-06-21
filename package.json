@@ -9,7 +9,7 @@
     "url": "https://github.com/libris/xl_auth/issues"
   },
   "scripts": {
-    "build": "rm -f assets/.DS_Store && NODE_ENV=production ./node_modules/.bin/webpack --progress --color",
+    "build": "NODE_ENV=production webpack --progress --color --optimization-minimize && flask digest compile",
     "start": "./node_modules/.bin/concurrently -n \"WEBPACK,FLASK\" -c \"bgBlue.bold,bgMagenta.bold\" \"npm run webpack-dev-server\" \"npm run flask-server\"",
     "webpack-dev-server": "NODE_ENV=debug ./node_modules/.bin/webpack-dev-server --port 2992 --hot --inline",
     "flask-server": "FLASK_APP=$PWD/autoapp.py FLASK_DEBUG=1 flask run",

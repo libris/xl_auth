@@ -20,7 +20,7 @@
     <!-- Mobile viewport optimized: h5bp.com/viewport -->
     <meta name="viewport" content="width=device-width">
 
-    {{ stylesheet_tag('main_css') | safe }}
+    {{ static_url_for('static', filename='css/main.css') }}
 
     {% block css %}{% endblock %}
 
@@ -62,7 +62,7 @@
     {% include "footer.html" %}
 
     <!-- JavaScript at the bottom for fast page loading -->
-    {{ javascript_tag('main_js') | safe }}
+    {{ static_url_for('static', filename='js/main.js') }}
     {% block js %}{% endblock %}
     <!-- end scripts -->
 {% endblock %}

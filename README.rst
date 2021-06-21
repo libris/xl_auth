@@ -136,7 +136,7 @@ like ``static/build/img/favicon.fec40b1d14528bf9179da3b6b78079ad.ico``.
 
 You can then put this line into your header ::
 
-    <link rel="shortcut icon" href="{{ asset_url_for('img/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ static_url_for('static', 'filename=img/favicon.ico') }}">
 
 to refer to it inside your HTML page.  If all of your static files are managed this way, then
 their filenames will change whenever their contents do, and you can ask Flask to tell web browsers

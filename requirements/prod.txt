@@ -26,8 +26,8 @@ git+https://github.com/libris/wtforms.git
 gunicorn==19.7.1
 futures==3.1.1
 
-# Webpack
-flask-webpack==0.1.0
+# Flask Static Digest
+Flask-Static-Digest==0.2.1
 
 # Auth
 Flask-Login==0.5.0
