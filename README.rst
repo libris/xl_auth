@@ -197,6 +197,12 @@ DB Models
 Changelog
 =========
 
+v. 1.7.0
+--------
+
+* Adaptions to run with Python 3 and Postgres 13
+* Bump dependencies and fix security warnings
+
 v. 1.6.0
 --------
 
