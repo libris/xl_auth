@@ -45,7 +45,7 @@ node_modules/
 
 # webpack-built files
 xl_auth/static/build/
-xl_auth/webpack/manifest.json
+xl_auth/static/cache_manifest.json
 
 # Localization
 *.mo

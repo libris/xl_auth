@@ -18,7 +18,7 @@ server {
     gzip           on;
 
     ssl                  on;
-    ssl_certificate      /etc/pki/tls/certs/{{ inventory_hostname }}.pem;
+    ssl_certificate      /etc/ssl/certs/{{ inventory_hostname }}_nginx.crt;
     ssl_certificate_key  /etc/pki/tls/private/{{ inventory_hostname }}.key;
 
     proxy_set_header  Host $host;

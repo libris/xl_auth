@@ -1,6 +1,6 @@
 {
   "name": "xl_auth",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "author": "National Library of Sweden",
   "license": "Apache-2.0",
   "description": "Authorization and OAuth2 provider for LibrisXL",
@@ -9,9 +9,9 @@
     "url": "https://github.com/libris/xl_auth/issues"
   },
   "scripts": {
-    "build": "rm -f assets/.DS_Store && NODE_ENV=production ./node_modules/.bin/webpack --progress --colors -p",
-    "start": "./node_modules/.bin/concurrently -n \"WEBPACK,FLASK\" -c \"bgBlue.bold,bgMagenta.bold\" \"npm run webpack-dev-server\" \"npm run flask-server\"",
-    "webpack-dev-server": "NODE_ENV=debug ./node_modules/.bin/webpack-dev-server --port 2992 --hot --inline",
+    "build": "NODE_ENV=production webpack --progress --color --optimization-minimize && flask digest compile",
+    "start": "concurrently -n \"WEBPACK,FLASK\" -c \"bgBlue.bold,bgMagenta.bold\" \"npm run webpack-watch\" \"npm run flask-server\"",
+    "webpack-watch": "NODE_ENV=debug webpack --mode development --watch",
     "flask-server": "FLASK_APP=$PWD/autoapp.py FLASK_DEBUG=1 flask run",
     "lint": "eslint \"assets/js/*.js\""
   },
@@ -25,35 +25,38 @@
     "oauth2"
   ],
   "engines": {
-    "node": ">=7.6.0",
-    "npm": ">=5.3.0"
+    "node": ">=14.17.0",
+    "npm": ">=6.14.13"
   },
   "devDependencies": {
-    "babel-core": "^6.25.0",
-    "babel-eslint": "^7.2.3",
-    "babel-loader": "^7.0.0",
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.5",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.2",
     "babel-preset-es2015": "^6.24.1",
-    "concurrently": "^3.5.0",
-    "css-loader": "^0.28.4",
-    "eslint": "^4.2.0",
+    "concurrently": "^3.6.1",
+    "css-loader": "^5.2.6",
+    "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
-    "eslint-plugin-import": "^2.3.0",
-    "extract-text-webpack-plugin": "^2.1.2",
-    "file-loader": "^0.11.2",
-    "font-awesome-webpack": "0.0.5-beta.2",
-    "kungbib-styles": "^1.2.4",
-    "less": "^2.7.2",
-    "less-loader": "^4.0.4",
-    "manifest-revision-webpack-plugin": "^0.4.0",
+    "eslint-plugin-import": "^2.23.4",
+    "file-loader": "^6.2.0",
+    "kungbib-styles": "^1.3.3",
+    "less": "^4.1.1",
+    "less-loader": "^10.0.0",
+    "mini-css-extract-plugin": "^1.6.0",
     "raw-loader": "^0.5.1",
     "style-loader": "^0.18.2",
-    "url-loader": "^0.5.9",
-    "webpack": "^2.6.1",
-    "webpack-dev-server": "^2.4.5"
+    "url-loader": "^4.1.1",
+    "webpack": "^5.39.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
-    "bootstrap": "^3.3.7",
+    "@fortawesome/fontawesome-free": "^5.15.3",
+    "bootstrap": "^3.4.1",
     "font-awesome": "^4.7.0",
-    "jquery": "^3.2.1"
+    "jquery": "^3.6.0",
+    "sync-exec": "^0.6.2"
   }
 }

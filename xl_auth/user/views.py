@@ -90,7 +90,7 @@ def view(user_id):
     user = User.get_by_id(user_id)
     if not user:
         flash(_('User ID "%(user_id)s" does not exist', user_id=user_id), 'danger')
-        return redirect(get_redirect_target())
+        return redirect(url_for('user.profile'))
     else:
         # Cataloging admins and admins need to see more information, so they get their own view.
         if current_user.is_admin or current_user.is_cataloging_admin:
@@ -109,7 +109,7 @@ def inspect(user_id):
     user = User.get_by_id(user_id)
     if not user:
         flash(_('User ID "%(user_id)s" does not exist', user_id=user_id), 'danger')
-        return redirect(get_redirect_target())
+        return redirect(url_for("user.profile"))
     else:
         tokens = Token.query.filter_by(user=user).all()
 
@@ -155,7 +155,7 @@ def administer(user_id):
     user = User.get_by_id(user_id)
     if not user:
         flash(_('User ID "%(user_id)s" does not exist', user_id=user_id), 'danger')
-        return redirect(get_redirect_target())
+        return redirect(url_for("user.profile"))
 
     administer_form = AdministerForm(current_user, user.email, request.form)
     if administer_form.validate_on_submit():
@@ -208,7 +208,7 @@ def change_password(user_id):
     user = User.get_by_id(user_id)
     if not user:
         flash(_('User ID "%(user_id)s" does not exist', user_id=user_id), 'danger')
-        return redirect(get_redirect_target())
+        return redirect(url_for('user.home'))
 
     change_password_form = ChangePasswordForm(current_user, user.email, request.form)
     if change_password_form.validate_on_submit():

@@ -19,8 +19,11 @@
 
     <!-- Mobile viewport optimized: h5bp.com/viewport -->
     <meta name="viewport" content="width=device-width">
-
-    {{ stylesheet_tag('main_css') | safe }}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ static_url_for('static', filename='build/main_css.bundle.css') }}"
+    />
 
     {% block css %}{% endblock %}
 
@@ -62,7 +65,8 @@
     {% include "footer.html" %}
 
     <!-- JavaScript at the bottom for fast page loading -->
-    {{ javascript_tag('main_js') | safe }}
+     <script src="{{ static_url_for('static', filename='build/main_js.bundle.js') }}"></script>
+<!--    {{ static_url_for('static', filename='build/main_js.js') }}-->
     {% block js %}{% endblock %}
     <!-- end scripts -->
 {% endblock %}

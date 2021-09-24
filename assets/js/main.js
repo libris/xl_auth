@@ -6,7 +6,7 @@
 
 // JavaScript modules
 require('jquery');
-require('font-awesome-webpack');
+require('@fortawesome/fontawesome-free');
 require('bootstrap');
 
 // Your own code
