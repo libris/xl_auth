@@ -197,6 +197,11 @@ DB Models
 Changelog
 =========
 
+v. 1.7.1
+--------
+
+* Make locally stored token lifetime explicit
+
 v. 1.7.0
 --------
 

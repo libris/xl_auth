@@ -27,7 +27,7 @@ class Token(SurrogatePK, Model):
     refresh_token = Column(db.String(256), unique=True)
 
     expires_at = Column(db.DateTime, nullable=False,
-                        default=lambda: datetime.utcnow() + timedelta(seconds=3600))
+                        default=lambda: datetime.utcnow() + timedelta(seconds=36000))
 
     _scopes = Column(db.Text, nullable=False)
 
