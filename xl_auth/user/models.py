@@ -290,6 +290,10 @@ class User(UserMixin, SurrogatePK, Model):
         """Set password."""
         self.password = bcrypt.generate_password_hash(password)
 
+    def set_email(self, email):
+        """Set email."""
+        self.email = email
+
     def check_password(self, value):
         """Check password."""
         return bcrypt.check_password_hash(self.password, value)

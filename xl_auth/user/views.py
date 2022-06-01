@@ -9,11 +9,12 @@ from flask_login import current_user, login_required
 
 from ..collection.models import Collection
 from ..oauth.client.models import Client
+from ..oauth.grant.models import Grant
 from ..oauth.token.models import Token
 from ..permission.models import Permission
 from ..utils import flash_errors, get_redirect_target
-from .forms import AdministerForm, ApproveToSForm, ChangePasswordForm, EditDetailsForm, RegisterForm
-from .models import PasswordReset, User
+from .forms import AdministerForm, ApproveToSForm, ChangePasswordForm, EditDetailsForm, RegisterForm, ChangeEmailForm, DeleteUserForm
+from .models import PasswordReset, User, FailedLoginAttempt
 
 blueprint = Blueprint('user', __name__, url_prefix='/users', static_folder='../static')
 
@@ -160,6 +161,7 @@ def administer(user_id):
     administer_form = AdministerForm(current_user, user.email, request.form)
     if administer_form.validate_on_submit():
         user.update_as(current_user,
+                       username=administer_form.username.data,
                        full_name=administer_form.full_name.data,
                        is_active=administer_form.is_active.data,
                        is_admin=administer_form.is_admin.data).save()
@@ -222,3 +224,68 @@ def change_password(user_id):
         return render_template(
             'users/change_password.html', change_password_form=change_password_form, user=user,
             next_redirect_url=get_redirect_target())
+
+
+@blueprint.route('/change_email/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+def change_email(user_id):
+    """Change user email."""
+    if (current_user.id != user_id) and not current_user.is_admin:
+        abort(403)
+
+    user = User.get_by_id(user_id)
+    if not user:
+        flash(_('User ID "%(user_id)s" does not exist', user_id=user_id), 'danger')
+        return redirect(url_for('user.home'))
+
+    change_email_form = ChangeEmailForm(current_user, user.email, request.form)
+    if change_email_form.validate_on_submit():
+        user.set_email(change_email_form.email.data)
+        user.save_as(current_user)
+        flash(_('Thank you for changing email for "%(username)s".', username=user.email),
+              'success')
+        return redirect(get_redirect_target())
+    else:
+        flash_errors(change_email_form)
+        return render_template(
+            'users/change_email.html', change_email_form=change_email_form, user=user,
+            next_redirect_url=get_redirect_target())
+
+
+@blueprint.route('/delete_user/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+def delete_user(user_id):
+    """Delete user."""
+    if not current_user.is_admin:
+        abort(403)
+
+    user = User.get_by_id(user_id)
+    if not user:
+        flash(_('User ID "%(user_id)s" does not exist', user_id=user_id), 'danger')
+        return redirect(url_for('user.home'))
+
+    delete_user_form = DeleteUserForm(current_user, user, request.form)
+    if delete_user_form.validate_on_submit():
+        Token.delete_all_by_user(user)
+        Grant.delete_all_by_user(user)
+        Permission.delete_all_by_user(user)
+        PasswordReset.delete_all_by_user(user)
+        FailedLoginAttempt.delete_all_by_user(user)
+        user.delete()
+
+        flash(_('"%(username)s" deleted.', username=user.email),
+              'success')
+        return redirect(get_redirect_target())
+    else:
+        flash_errors(delete_user_form)
+
+        tokens = Token.get_all_by_user(user)
+        grants = Grant.get_all_by_user(user)
+        failed_login_attempts = FailedLoginAttempt.get_all_by_user(user)
+        permissions = user.permissions
+        password_resets = user.password_resets
+
+        return render_template(
+            'users/delete_user.html', delete_user_form=delete_user_form, user=user, tokens=tokens,
+            grants=grants, failed_login_attempts=failed_login_attempts, permissions=permissions,
+            password_resets=password_resets, next_redirect_url=get_redirect_target())
