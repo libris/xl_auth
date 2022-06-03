@@ -246,9 +246,11 @@ class User(UserMixin, SurrogatePK, Model):
 
     @staticmethod
     def get_modified_and_created_by_user(user):
-        """Get all users created or modified by specified user."""
-        return User.query.filter(or_(User.created_by == user,
-                                     User.modified_by == user)).all()
+        """Get all users (except itself) created or modified by specified user."""
+        return (User.query
+                .filter(or_(User.created_by == user, User.modified_by == user))
+                .filter(User.id != user.id)
+                .all())
 
     @hybrid_property
     def is_cataloging_admin(self):
