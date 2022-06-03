@@ -5,19 +5,18 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.2.1\n"
+"Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-02 14:54+0200\n"
-"PO-Revision-Date: 2022-06-02 15:56+0200\n"
+"POT-Creation-Date: 2022-06-03 14:01+0200\n"
+"PO-Revision-Date: 2022-06-03 14:00+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
-"Language-Team: sv <LL@li.org>\n"
 "Language: sv\n"
+"Language-Team: sv <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.7.0\n"
-"X-Generator: Poedit 3.0.1\n"
 
 #: tests/end2end/test_collection_editing.py:60 tests/end2end/test_collection_registering.py:56
 msgid "category"
@@ -261,8 +260,8 @@ msgstr "Återställningsnyckel \"%(code)s\" har redan förbrukats (%(isoformat)s
 #: tests/end2end/test_public_reset_password.py:175 tests/forms/test_public_forgot_password.py:48
 #: xl_auth/public/forms.py:67
 msgid ""
-"You already have an active password reset. Please check your email inbox (and your Spam folder) or "
-"try again later."
+"You already have an active password reset. Please check your email inbox (and your Spam folder) "
+"or try again later."
 msgstr ""
 "Du har redan en aktiv lösenordsåterställning. Vänligen leta i din inkorg (och i mappen för "
 "skräppost) eller försök igen senare."
@@ -892,11 +891,13 @@ msgstr ""
 #: xl_auth/templates/public/about.html:11
 #, python-format
 msgid ""
-"Current release version is <code>%(version)s</code>. Please check out the <a href=\"https://github."
-"com/libris/xl_auth/releases\">releases overview</a> page for recent changes."
+"Current release version is <code>%(version)s</code>. Please check out the <a "
+"href=\"https://github.com/libris/xl_auth/releases\">releases overview</a> page for recent "
+"changes."
 msgstr ""
-"Detta är version <code>%(version)s</code>. Se <a href=\"https://github.com/libris/xl_auth/"
-"releases\">release-översikten</a> på GitHub för info om ändringar mellan olika versioner."
+"Detta är version <code>%(version)s</code>. Se <a "
+"href=\"https://github.com/libris/xl_auth/releases\">release-översikten</a> på GitHub för info om "
+"ändringar mellan olika versioner."
 
 #: xl_auth/templates/public/forgot_password.html:5
 msgid "Request Password Reset"
@@ -924,16 +925,16 @@ msgstr ""
 #: xl_auth/templates/public/home.html:27 xl_auth/templates/users/approve_tos.html:12
 #: xl_auth/templates/users/profile.html:36
 msgid ""
-"The National Library of Sweden processes personal data in accordance with the European Union General "
-"Data Protection Regulation (2018), GDRP, <a href=\"https://www.kb.se/om-oss/hantering-av-"
-"personuppgifter.html\">find out more here</a>. This is how the National Library of Sweden processes "
-"your personal data <a href=\"https://www.kb.se/om-oss/hantering-av-personuppgifter."
-"html#XLkat\">while using login.libris.kb.se</a>."
+"The National Library of Sweden processes personal data in accordance with the European Union "
+"General Data Protection Regulation (2018), GDRP, <a href=\"https://www.kb.se/om-oss/hantering-av-"
+"personuppgifter.html\">find out more here</a>. This is how the National Library of Sweden "
+"processes your personal data <a href=\"https://www.kb.se/om-oss/hantering-av-"
+"personuppgifter.html#XLkat\">while using login.libris.kb.se</a>."
 msgstr ""
-"Kungliga biblioteket hanterar dina personuppgifter i enlighet med EU:s dataskyddsförordning (2018), "
-"GDPR. <a href=\"https://www.kb.se/om-oss/hantering-av-personuppgifter.html\">Läs mer om hur det "
-"funkar här</a>. Så här hanterar KB dina uppgifter vid <a href=\"https://www.kb.se/om-oss/hantering-"
-"av-personuppgifter.html#XLkat\">användning av denna tjänst</a>."
+"Kungliga biblioteket hanterar dina personuppgifter i enlighet med EU:s dataskyddsförordning "
+"(2018), GDPR. <a href=\"https://www.kb.se/om-oss/hantering-av-personuppgifter.html\">Läs mer om "
+"hur det funkar här</a>. Så här hanterar KB dina uppgifter vid <a href=\"https://www.kb.se/om-oss"
+"/hantering-av-personuppgifter.html#XLkat\">användning av denna tjänst</a>."
 
 #: xl_auth/templates/public/home.html:36 xl_auth/templates/public/home.html:45
 msgid "Log in"
@@ -962,8 +963,8 @@ msgstr "Här kommer lite viktig information innan du börjar använda Libris Log
 #: xl_auth/templates/users/approve_tos.html:10
 msgid "Your name, email address, permissions and other account details is visible to other users"
 msgstr ""
-"Ditt namn, din epost, dina behörigheter och annan kontoinformation är synlig för andra Libris Login-"
-"användare"
+"Ditt namn, din epost, dina behörigheter och annan kontoinformation är synlig för andra Libris "
+"Login-användare"
 
 #: xl_auth/templates/users/approve_tos.html:19
 msgid "You assume full responsibility for your account and actions performed under your authentication"
@@ -974,12 +975,12 @@ msgid ""
 "(If you log out now, no further personal data will be registered. The button is in the top right "
 "corner.)"
 msgstr ""
-"(Om du loggar ut nu så registreras inga ytterligare personuppgifter om dig, knappen finns uppe till "
-"höger.)"
+"(Om du loggar ut nu så registreras inga ytterligare personuppgifter om dig, knappen finns uppe "
+"till höger.)"
 
 #: xl_auth/templates/users/change_email.html:5
 msgid "Change User Email"
-msgstr ""
+msgstr "Ändra epostadress"
 
 #: xl_auth/templates/users/change_email.html:20
 msgid "Email (again)"
@@ -987,27 +988,27 @@ msgstr "Epostadress (igen)"
 
 #: xl_auth/templates/users/change_password.html:5
 msgid "Change User Password"
-msgstr "Byt användarepostadress"
+msgstr "Byt användarlösenord"
 
 #: xl_auth/templates/users/delete_user.html:5 xl_auth/templates/users/home.html:71
 msgid "Delete User"
-msgstr ""
+msgstr "Ta bort användare"
 
 #: xl_auth/templates/users/delete_user.html:12
 msgid "These tokens would be deleted:"
-msgstr ""
+msgstr "Dessa tokens skulle tas bort:"
 
 #: xl_auth/templates/users/delete_user.html:21
 msgid "These grants would be deleted:"
-msgstr ""
+msgstr "Dessa grants skulle tas bort:"
 
 #: xl_auth/templates/users/delete_user.html:30
 msgid "These failed login attempts would be deleted:"
-msgstr ""
+msgstr "Dessa misslyckade inloggningsförsök skulle tas bort:"
 
 #: xl_auth/templates/users/delete_user.html:39
 msgid "These permissions would be deleted:"
-msgstr ""
+msgstr "Dessa behörigheter skulle tas bort:"
 
 #: xl_auth/templates/users/delete_user.html:48
 msgid "These password resets would be deleted:"
@@ -1152,50 +1153,50 @@ msgstr "Information om dina behörigheter"
 
 #: xl_auth/templates/users/profile.html:52
 msgid ""
-"If you are missing a permission or any of the permissions below are incorrect, please contact the "
-"cataloging admin for that collection."
+"If you are missing a permission or any of the permissions below are incorrect, please contact the"
+" cataloging admin for that collection."
 msgstr ""
-"Om du saknar en behörighet eller om någon av behörigheterna nedan är felaktiga, vänligen kontakta "
-"katalogiseringsadmin för aktuellt sigel."
+"Om du saknar en behörighet eller om någon av behörigheterna nedan är felaktiga, vänligen kontakta"
+" katalogiseringsadmin för aktuellt sigel."
 
 #: xl_auth/templates/users/profile.html:54
 #, python-format
 msgid ""
-"You can find the collection administrator contact information by following the collection link below "
-"or by going to <a href=\"%(collections_link)s\">the Collections list view</a> and selecting the "
-"collection there."
+"You can find the collection administrator contact information by following the collection link "
+"below or by going to <a href=\"%(collections_link)s\">the Collections list view</a> and selecting"
+" the collection there."
 msgstr ""
-"Kontaktuppgifter till rätt administratör hittar du genom att klicka på länken för respektive sigel, "
-"eller genom att gå till listvyn för <a href=\"%(collections_link)s\">Sigler</a> och där klicka på "
-"aktuellt sigel."
+"Kontaktuppgifter till rätt administratör hittar du genom att klicka på länken för respektive "
+"sigel, eller genom att gå till listvyn för <a href=\"%(collections_link)s\">Sigler</a> och där "
+"klicka på aktuellt sigel."
 
 #: xl_auth/templates/users/profile.html:57
 msgid ""
-"For any other questions or concerns, please contact customer service at <a href=\"mailto:libris@kb."
-"se\">libris@kb.se</a>."
+"For any other questions or concerns, please contact customer service at <a "
+"href=\"mailto:libris@kb.se\">libris@kb.se</a>."
 msgstr ""
-"För övriga frågor, vänligen kontakta Libris kundservice på <a href=\"mailto:libris@kb.se\">libris@kb."
-"se</a>."
+"För övriga frågor, vänligen kontakta Libris kundservice på <a "
+"href=\"mailto:libris@kb.se\">libris@kb.se</a>."
 
 #: xl_auth/templates/users/profile.html:70
 msgid ""
-"You are a cataloging admin in Libris Login. This means that you are responsible for managing other "
-"users' access to your collections. You manage permissions by going to your collection's detail view "
-"and use the add/edit/delete buttons."
+"You are a cataloging admin in Libris Login. This means that you are responsible for managing "
+"other users' access to your collections. You manage permissions by going to your collection's "
+"detail view and use the add/edit/delete buttons."
 msgstr ""
 "Du är katalogiseringsadmin i Libris Login. Detta innebär att du är ansvarig för att hålla "
-"behörighetslistan korrekt och aktuell för dina sigler. Du administrerar behörigheter genom att gå "
-"till detaljvyn för ett sigel och använda knapparna <em>\"Lägg till\"</em>, <em>\"Ändra\"</em> och "
-"<em>\"Ta bort\"</em>."
+"behörighetslistan korrekt och aktuell för dina sigler. Du administrerar behörigheter genom att gå"
+" till detaljvyn för ett sigel och använda knapparna <em>\"Lägg till\"</em>, <em>\"Ändra\"</em> "
+"och <em>\"Ta bort\"</em>."
 
 #: xl_auth/templates/users/profile.html:76
 msgid ""
-"When attempting to grant a new permission, you might find that the intended user does not exist. In "
-"this event, you may register the user account by following this link:"
+"When attempting to grant a new permission, you might find that the intended user does not exist. "
+"In this event, you may register the user account by following this link:"
 msgstr ""
 "I samband med att du avser tilldela en behörighet så kan du, från tid till tid, finna att den "
-"avsedda mottagaren inte finns registrerad. I detta fall bör du lägga till ett nytt konto via länken "
-"som följer:"
+"avsedda mottagaren inte finns registrerad. I detta fall bör du lägga till ett nytt konto via "
+"länken som följer:"
 
 #: xl_auth/templates/users/profile.html:87
 msgid "Your Permissions"
@@ -1255,7 +1256,7 @@ msgstr "Kan inte ta bort användaren \"%(username)s\" eftersom den skapat eller 
 #: xl_auth/user/forms.py:240
 #, python-format
 msgid "User \"%(username)s\" created or modified permissions, refusing to delete."
-msgstr "Kan inte ta bort användaren \"%(username)s\" eftersom den skapat eller modifierat rättigheter."
+msgstr "Kan inte ta bort användaren \"%(username)s\" eftersom den skapat eller modifierat behörigheter."
 
 #: xl_auth/user/models.py:80
 #, python-format
@@ -1279,8 +1280,8 @@ msgid ""
 msgstr ""
 "Hej %(full_name)s,\n"
 "\n"
-"Du har tilldelats ett användarkonto på %(server_name)s av %(current_user)s. Klicka på länken nedan "
-"för att skapa ditt personliga lösenord (och därmed aktivera kontot):\n"
+"Du har tilldelats ett användarkonto på %(server_name)s av %(current_user)s. Klicka på länken "
+"nedan för att skapa ditt personliga lösenord (och därmed aktivera kontot):\n"
 "\n"
 "%(password_reset_url)s\n"
 "\n"
@@ -1294,15 +1295,17 @@ msgstr ""
 #, python-format
 msgid ""
 "<p>Hello %(full_name)s,<br/><br/>You have been granted a user account at %(server_name)s by "
-"%(current_user)s. Use the secret link below to set a personal password, and thereby activating your "
-"account:<br/><br/><a href=\"%(password_reset_url)s\">%(password_reset_url)s</a><br/><br/></"
-"p><p><small>P.S. If you received this mail for no obvious reason, please inform us about it at <a "
+"%(current_user)s. Use the secret link below to set a personal password, and thereby activating "
+"your account:<br/><br/><a "
+"href=\"%(password_reset_url)s\">%(password_reset_url)s</a><br/><br/></p><p><small>P.S. If you "
+"received this mail for no obvious reason, please inform us about it at <a "
 "href=\"mailto:libris@kb.se\">libris@kb.se</a>!</small></p>"
 msgstr ""
 "<p>Hej %(full_name)s,<br/><br/>Du har tilldelats ett användarkonto på %(server_name)s av "
-"%(current_user)s. Klicka på länken nedan för att skapa ditt personliga lösenord (och därmed aktivera "
-"kontot):<br/><br/><a href=\"%(password_reset_url)s\">%(password_reset_url)s</a><br/><br/></"
-"p><p><small>P.S. Observera  att du inte kan svara på detta mail. Vid frågor, vänligen kontakta <a "
+"%(current_user)s. Klicka på länken nedan för att skapa ditt personliga lösenord (och därmed "
+"aktivera kontot):<br/><br/><a "
+"href=\"%(password_reset_url)s\">%(password_reset_url)s</a><br/><br/></p><p><small>P.S. Observera"
+"  att du inte kan svara på detta mail. Vid frågor, vänligen kontakta <a "
 "href=\"mailto:libris@kb.se\">Libris kundservice</a>!</small></p>"
 
 #: xl_auth/user/models.py:120
@@ -1332,21 +1335,24 @@ msgstr ""
 "\n"
 "\n"
 "\n"
-"P.S. Om du inte vet varför du mottagit detta mail, vänligen kontakta kundservice på libris@kb.se!\n"
+"P.S. Om du inte vet varför du mottagit detta mail, vänligen kontakta kundservice på libris@kb.se!"
+"\n"
 "\n"
 
 #: xl_auth/user/models.py:134
 #, python-format
 msgid ""
 "<p>Hello %(full_name)s,<br/><br/>Here is the secret link for resetting your personal account "
-"password:<br/><br/><a href=\"%(password_reset_url)s\">%(password_reset_url)s</a><br/><br/></"
-"p><p><small>P.S. If you received this mail for no obvious reason, please inform us about it at <a "
+"password:<br/><br/><a "
+"href=\"%(password_reset_url)s\">%(password_reset_url)s</a><br/><br/></p><p><small>P.S. If you "
+"received this mail for no obvious reason, please inform us about it at <a "
 "href=\"mailto:libris@kb.se\">libris@kb.se</a>!</small></p>"
 msgstr ""
-"<p>Hej %(full_name)s,<br/><br/>Klicka på länken nedan för att återställa ditt personliga lösenord:"
-"<br/><br/><a href=\"%(password_reset_url)s\">%(password_reset_url)s</a><br/><br/></p><p><small>P.S. "
-"Om du inte vet varför du mottagit detta mail, vänligen kontakta <a href=\"mailto:libris@kb."
-"se\">Libris kundservice</a>!</small></p>"
+"<p>Hej %(full_name)s,<br/><br/>Klicka på länken nedan för att återställa ditt personliga "
+"lösenord:<br/><br/><a "
+"href=\"%(password_reset_url)s\">%(password_reset_url)s</a><br/><br/></p><p><small>P.S. Om du inte"
+" vet varför du mottagit detta mail, vänligen kontakta <a href=\"mailto:libris@kb.se\">Libris "
+"kundservice</a>!</small></p>"
 
 #: xl_auth/user/views.py:41
 msgid "ToS approved."
@@ -1381,3 +1387,4 @@ msgstr "Epostadress för \"%(username)s\" har ändrats."
 #, python-format
 msgid "\"%(username)s\" deleted."
 msgstr "Användaren \"%(username)s\" har tagits bort."
+
