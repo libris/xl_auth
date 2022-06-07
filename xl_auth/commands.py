@@ -139,7 +139,7 @@ def create_user(email, full_name, password, admin_email, is_active, is_admin, fo
               help="Show what would be deleted, but don't actually delete anything.")
 @with_appcontext
 def forget_user(email, dry_run):
-    """Remove all traces of a user from the system."""
+    """Remove all traces of a user from the system. See also soft-delete-user."""
     user = User.get_by_email(email)
     if user:
         if user.is_admin:
@@ -181,6 +181,50 @@ def forget_user(email, dry_run):
                 PasswordReset.delete_all_by_user(user)
                 FailedLoginAttempt.delete_all_by_user(user)
                 user.delete()
+
+    else:
+        click.echo('User "{}" not found. Aborting...'.format(email))
+        sys.exit(1)
+
+
+@click.command()
+@click.option('-e', '--email', required=True, default=None, help='Email for user')
+@click.option('-d', '--dry-run', default=False, is_flag=True,
+              help="Show what would be deleted, but don't actually delete anything.")
+@click.option('--admin-email', default='libris@kb.se', help='Related admin (default: None)')
+@with_appcontext
+def soft_delete_user(email, dry_run, admin_email):
+    """Soft-delete a user from the system.
+    This sets is_deleted=True, and sets name and email to something non-personal.
+    The user won't show up in e.g. "inactive users" lists in the frontend.
+    """
+    user = User.get_by_email(email)
+    op_admin = User.get_by_email(admin_email)
+    if user:
+        if user.is_admin:
+            click.echo(f"Warning: user {user} is a sysadmin.")
+
+        if dry_run:
+            tokens = Token.get_all_by_user(user)
+            grants = Grant.get_all_by_user(user)
+            failed_login_attempts = FailedLoginAttempt.get_all_by_user(user)
+            permissions = user.permissions
+            password_resets = user.password_resets
+            click.echo('These tokens would be deleted: {}'.format(tokens))
+            click.echo('These grants would be deleted: {}'.format(grants))
+            click.echo('These failed login attempts would be deleted: {}'.format(
+                failed_login_attempts))
+            click.echo('These permissions would be deleted: {}'.format(permissions))
+            click.echo('These password_resets would be deleted: {}'.format(password_resets))
+        else:
+            if click.confirm('Are you sure you want to delete all information '
+                             'related to user "{}", and soft-delete the account?'.format(user)):
+                Token.delete_all_by_user(user)
+                Grant.delete_all_by_user(user)
+                Permission.delete_all_by_user(user)
+                PasswordReset.delete_all_by_user(user)
+                FailedLoginAttempt.delete_all_by_user(user)
+                user.soft_delete(op_admin)
 
     else:
         click.echo('User "{}" not found. Aborting...'.format(email))

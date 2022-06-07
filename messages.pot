@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 1.7.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-03 14:01+0200\n"
+"POT-Creation-Date: 2022-06-07 16:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -170,7 +170,7 @@ msgstr ""
 #: xl_auth/permission/forms.py:143 xl_auth/permission/forms.py:168 xl_auth/permission/forms.py:182
 #: xl_auth/permission/forms.py:228 xl_auth/templates/403.html:11 xl_auth/user/forms.py:79
 #: xl_auth/user/forms.py:128 xl_auth/user/forms.py:162 xl_auth/user/forms.py:181
-#: xl_auth/user/forms.py:205 xl_auth/user/forms.py:251
+#: xl_auth/user/forms.py:205 xl_auth/user/forms.py:235
 msgid "You do not have sufficient privileges for this operation."
 msgstr ""
 
@@ -218,7 +218,7 @@ msgstr ""
 msgid "Collections"
 msgstr ""
 
-#: tests/end2end/test_public_logging_in.py:144 xl_auth/public/views.py:115
+#: tests/end2end/test_public_logging_in.py:144 xl_auth/public/views.py:118
 msgid "You are logged out."
 msgstr ""
 
@@ -353,7 +353,7 @@ msgid "User ID \"%(user_id)s\" does not exist"
 msgstr ""
 
 #: tests/end2end/test_user_editing.py:213 xl_auth/templates/users/home.html:66
-#: xl_auth/templates/users/home.html:134 xl_auth/templates/users/profile.html:25
+#: xl_auth/templates/users/home.html:139 xl_auth/templates/users/profile.html:25
 msgid "Change Password"
 msgstr ""
 
@@ -368,7 +368,7 @@ msgid "Your Responsibilities as Cataloging Admin"
 msgstr ""
 
 #: tests/end2end/test_user_registering.py:209 tests/forms/test_user_register.py:26
-#: tests/forms/test_user_register.py:36 xl_auth/commands.py:543 xl_auth/user/forms.py:69
+#: tests/forms/test_user_register.py:36 xl_auth/commands.py:587 xl_auth/user/forms.py:69
 #: xl_auth/user/forms.py:196
 msgid "Email already registered"
 msgstr ""
@@ -379,7 +379,7 @@ msgstr ""
 msgid "View User '<a href=\"mailto:%(email)s\">%(email)s</a>'"
 msgstr ""
 
-#: tests/end2end/test_user_view.py:212 tests/models/test_user.py:272 xl_auth/user/models.py:331
+#: tests/end2end/test_user_view.py:212 tests/models/test_user.py:272 xl_auth/user/models.py:335
 msgid "You will only see permissions for those collections that you are cataloging admin for."
 msgstr ""
 
@@ -586,16 +586,16 @@ msgstr ""
 msgid "Passwords must match"
 msgstr ""
 
-#: xl_auth/public/views.py:49
+#: xl_auth/public/views.py:52
 msgid "You are logged in."
 msgstr ""
 
-#: xl_auth/public/views.py:77
+#: xl_auth/public/views.py:80
 #, python-format
 msgid "Password reset link sent to %(email)s."
 msgstr ""
 
-#: xl_auth/public/views.py:99
+#: xl_auth/public/views.py:102
 #, python-format
 msgid "Password for \"%(username)s\" has been reset."
 msgstr ""
@@ -973,6 +973,7 @@ msgid "Change User Password"
 msgstr ""
 
 #: xl_auth/templates/users/delete_user.html:5 xl_auth/templates/users/home.html:71
+#: xl_auth/templates/users/home.html:144
 msgid "Delete User"
 msgstr ""
 
@@ -1027,7 +1028,8 @@ msgstr ""
 msgid "Edit Details"
 msgstr ""
 
-#: xl_auth/templates/users/home.html:61 xl_auth/templates/users/profile.html:22
+#: xl_auth/templates/users/home.html:61 xl_auth/templates/users/home.html:134
+#: xl_auth/templates/users/profile.html:22
 msgid "Change Email"
 msgstr ""
 
@@ -1206,32 +1208,12 @@ msgstr ""
 msgid "You must confirm deletion."
 msgstr ""
 
-#: xl_auth/user/forms.py:228
-#, python-format
-msgid "User \"%(username)s\" is a sysadmin, refusing to delete."
-msgstr ""
-
-#: xl_auth/user/forms.py:232
-#, python-format
-msgid "User \"%(username)s\" has created or modified users, refusing to delete."
-msgstr ""
-
-#: xl_auth/user/forms.py:236
-#, python-format
-msgid "User \"%(username)s\" has created or modified collections, refusing to delete."
-msgstr ""
-
-#: xl_auth/user/forms.py:240
-#, python-format
-msgid "User \"%(username)s\" created or modified permissions, refusing to delete."
-msgstr ""
-
-#: xl_auth/user/models.py:80
+#: xl_auth/user/models.py:81
 #, python-format
 msgid "Account activation and password reset for %(username)s at %(server_name)s"
 msgstr ""
 
-#: xl_auth/user/models.py:82
+#: xl_auth/user/models.py:83
 #, python-format
 msgid ""
 "Hello %(full_name)s,\n"
@@ -1247,7 +1229,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: xl_auth/user/models.py:114
+#: xl_auth/user/models.py:115
 #, python-format
 msgid ""
 "<p>Hello %(full_name)s,<br/><br/>You have been granted a user account at %(server_name)s by "
@@ -1258,12 +1240,12 @@ msgid ""
 "href=\"mailto:libris@kb.se\">libris@kb.se</a>!</small></p>"
 msgstr ""
 
-#: xl_auth/user/models.py:120
+#: xl_auth/user/models.py:121
 #, python-format
 msgid "Password reset for %(username)s at %(server_name)s"
 msgstr ""
 
-#: xl_auth/user/models.py:122
+#: xl_auth/user/models.py:123
 #, python-format
 msgid ""
 "Hello %(full_name)s,\n"
@@ -1278,7 +1260,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: xl_auth/user/models.py:134
+#: xl_auth/user/models.py:135
 #, python-format
 msgid ""
 "<p>Hello %(full_name)s,<br/><br/>Here is the secret link for resetting your personal account "
@@ -1286,6 +1268,10 @@ msgid ""
 "href=\"%(password_reset_url)s\">%(password_reset_url)s</a><br/><br/></p><p><small>P.S. If you "
 "received this mail for no obvious reason, please inform us about it at <a "
 "href=\"mailto:libris@kb.se\">libris@kb.se</a>!</small></p>"
+msgstr ""
+
+#: xl_auth/user/models.py:366
+msgid "Deleted user"
 msgstr ""
 
 #: xl_auth/user/views.py:41
@@ -1317,7 +1303,7 @@ msgstr ""
 msgid "Thank you for changing email for \"%(username)s\"."
 msgstr ""
 
-#: xl_auth/user/views.py:276
+#: xl_auth/user/views.py:277
 #, python-format
 msgid "\"%(username)s\" deleted."
 msgstr ""

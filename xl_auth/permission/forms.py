@@ -31,7 +31,7 @@ class PermissionForm(FlaskForm):
         super(PermissionForm, self).__init__(*args, **kwargs)
         self.current_user = current_user
         self.user_id.choices = [(-1, _('--- Select User ---'))] + [
-            (user.id, user.email) for user in User.query.order_by('email').all()]
+            (user.id, user.email) for user in User.query.order_by('email').filter_by(is_deleted=False)]
 
         self.collection_id.choices = [(-1, _('--- Select Collection ---'))]
         if current_user.is_admin:

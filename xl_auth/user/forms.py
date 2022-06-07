@@ -224,22 +224,6 @@ class DeleteUserForm(FlaskForm):
         if not field.data:
             raise ValidationError(_('You must confirm deletion.'))
 
-        if self.target_user.is_admin:
-            raise ValidationError(_('User "%(username)s" is a sysadmin, refusing to delete.',
-                                    username=self.target_user.email))
-
-        if len(User.get_modified_and_created_by_user(self.target_user)) > 0:
-            raise ValidationError(_('User "%(username)s" has created or modified users, '
-                                    'refusing to delete.', username=self.target_user.email))
-
-        if len(Collection.get_modified_and_created_by_user(self.target_user)) > 0:
-            raise ValidationError(_('User "%(username)s" has created or modified collections, '
-                                    'refusing to delete.', username=self.target_user.email))
-
-        if len(Permission.get_modified_and_created_by_user(self.target_user)) > 0:
-            raise ValidationError(_('User "%(username)s" created or modified permissions, '
-                                    'refusing to delete.', username=self.target_user.email))
-
     def validate(self):
         """Validate the form."""
 
@@ -250,4 +234,3 @@ class DeleteUserForm(FlaskForm):
         if not self.current_user.is_admin:
             raise ValidationError(_('You do not have sufficient privileges for this operation.'))
         return True
-

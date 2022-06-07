@@ -24,7 +24,7 @@ blueprint = Blueprint('user', __name__, url_prefix='/users', static_folder='../s
 def home():
     """Users' overview landing page."""
     active_users = User.query.filter_by(is_active=True).order_by('email').all()
-    inactive_users = User.query.filter_by(is_active=False).order_by('email').all()
+    inactive_users = User.query.filter_by(is_active=False, is_deleted=False).order_by('email').all()
 
     return render_template('users/home.html', active_users=active_users,
                            inactive_users=inactive_users)
@@ -266,14 +266,15 @@ def delete_user(user_id):
 
     delete_user_form = DeleteUserForm(current_user, user, request.form)
     if delete_user_form.validate_on_submit():
+        old_email = user.email
         Token.delete_all_by_user(user)
         Grant.delete_all_by_user(user)
         Permission.delete_all_by_user(user)
         PasswordReset.delete_all_by_user(user)
         FailedLoginAttempt.delete_all_by_user(user)
-        user.delete()
+        user.soft_delete(current_user)
 
-        flash(_('"%(username)s" deleted.', username=user.email),
+        flash(_('"%(username)s" deleted.', username=old_email),
               'success')
         return redirect(get_redirect_target())
     else:

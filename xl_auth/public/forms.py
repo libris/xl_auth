@@ -33,7 +33,7 @@ class LoginForm(FlaskForm):
             return False
 
         self.user = User.get_by_email(self.username.data)
-        if not self.user:
+        if (not self.user) or self.user.is_deleted:
             self.username.errors.append(_('Unknown username/email'))
             return False
 
