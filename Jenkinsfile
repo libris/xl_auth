@@ -94,6 +94,9 @@ pipeline {
             }
         }
         stage('Install Dependencies') {
+            environment {
+                FLASK_APP = 'autoapp.py'
+            }
             steps {
                 sh 'scl enable rh-python36 "virtualenv $VENV_ROOT/py36venv"'
                 sh 'scl enable rh-python36 ". $VENV_ROOT/py36venv/bin/activate && python -m pip install -U pip"'
