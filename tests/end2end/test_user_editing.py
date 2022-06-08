@@ -100,6 +100,76 @@ def test_superuser_can_change_password_for_existing_user(superuser, user, testap
     assert res.status_code == 200
 
 
+def test_superuser_can_change_username_for_existing_user(superuser, user, testapp):
+    """Change email (username) for an existing user."""
+    # Check expected premises.
+    user_creator = user.created_by
+    initial_modified_by = user.modified_by
+    assert user_creator != superuser and initial_modified_by != superuser
+    # Goes to homepage.
+    res = testapp.get('/')
+    # Fills out login form.
+    form = res.forms['loginForm']
+    form['username'] = superuser.email
+    form['password'] = 'myPrecious'
+    # Submits.
+    res = form.submit().follow()
+    # Clicks Users button.
+    res = res.click(_('Users'))
+    # Clicks Change Email button.
+    res = res.click(href='/users/change_email/{0}'.format(user.id))
+    # Fills out the form.
+    form = res.forms['changeEmailForm']
+    new_email = 'somethingnew@example.com'
+    form['username'] = user.email
+    form['email'] = new_email
+    form['confirm'] = new_email
+    # Submits.
+    res = form.submit()
+    # Redirected back to users' overview.
+    assert res.status_code == 302
+    assert res.location.endswith(url_for('user.home'))
+    # The user was edited.
+    edited_user = User.query.filter(User.email == new_email).first()
+    assert edited_user.email == new_email
+    # 'modified_by' is updated to reflect change, with 'created_by' intact.
+    assert edited_user.created_by == user_creator
+    assert edited_user.modified_by == superuser
+    # Redirect succeeds.
+    res = res.follow()
+    assert res.status_code == 200
+
+
+def test_superuser_sees_error_message_if_new_username_already_exists(superuser, user, testapp):
+    """Show error if trying to change to a username (email) that's already taken."""
+    # Check expected premises.
+    user_creator = user.created_by
+    initial_modified_by = user.modified_by
+    assert user_creator != superuser and initial_modified_by != superuser
+    # Goes to homepage.
+    res = testapp.get('/')
+    # Fills out login form.
+    form = res.forms['loginForm']
+    form['username'] = superuser.email
+    form['password'] = 'myPrecious'
+    # Submits.
+    res = form.submit().follow()
+    # Clicks Users button.
+    res = res.click(_('Users'))
+    # Clicks Change Email button.
+    res = res.click(href='/users/change_email/{0}'.format(user.id))
+    # Fills out the form.
+    form = res.forms['changeEmailForm']
+    new_email = superuser.email
+    form['username'] = user.email
+    form['email'] = new_email
+    form['confirm'] = new_email
+    # Submits.
+    res = form.submit()
+    # Sees error message.
+    assert '{} - {}'.format(_('New email'), _('Email already registered')) in res
+
+
 def test_superuser_sees_error_message_if_username_is_changed_from_administer(superuser, testapp):
     """Show error if Edit Details form modifies user username/email."""
     # Goes to homepage.
@@ -253,3 +323,67 @@ def test_user_can_edit_own_details(user, testapp):
     # Make sure name has been updated
     assert len(res.lxml.xpath("//h1[contains(., '{0}')]".format(old_name))) == 0
     assert len(res.lxml.xpath("//h1[contains(., 'New Name')]")) == 1
+
+
+def test_user_can_edit_own_username(user, testapp):
+    """Change username (email) for self."""
+    user_creator = user.created_by
+    assert user_creator != user
+    # Goes to homepage.
+    res = testapp.get('/')
+    # Fills out login form.
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits.
+    res = form.submit()
+    assert res.status_code == 302
+    assert res.location.endswith(url_for('user.profile'))
+    res = res.follow()
+    # Click on 'Change Email' button
+    res = res.click(_('Change Email'))
+    # Change name
+    form = res.forms['changeEmailForm']
+    new_email = 'somethingnew@example.com'
+    form['username'] = user.email
+    form['email'] = new_email
+    form['confirm'] = new_email
+    res = form.submit()
+    # Redirected back to profile page.
+    assert res.status_code == 302
+    assert res.location.endswith(url_for('user.profile'))
+    # 'modified_by' is updated to reflect change, with 'created_by' intact.
+    edited_user = User.get_by_email(user.email)
+    assert edited_user.email == new_email
+    assert edited_user.created_by == user_creator
+    assert edited_user.modified_by == user
+    # Redirect succeeds.
+    res = res.follow()
+    assert res.status_code == 200
+
+
+def test_user_cannot_set_invalid_username(user, testapp):
+    """Attempt to change self's username (email) to something invalid."""
+    # Goes to homepage.
+    res = testapp.get('/')
+    # Fills out login form.
+    form = res.forms['loginForm']
+    form['username'] = user.email
+    form['password'] = 'myPrecious'
+    # Submits.
+    res = form.submit()
+    assert res.status_code == 302
+    assert res.location.endswith(url_for('user.profile'))
+    res = res.follow()
+    # Click on 'Change Email' button
+    res = res.click(_('Change Email'))
+    # Change name
+    form = res.forms['changeEmailForm']
+    new_email = 'invalid'
+    form['username'] = user.email
+    form['email'] = new_email
+    form['confirm'] = new_email
+    res = form.submit()
+    # Sees error message.
+    assert '{} - {}'.format(_('New email'), _('Invalid email address.')) in res
+

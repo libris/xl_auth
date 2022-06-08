@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 1.7.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-07 16:57+0200\n"
+"POT-Creation-Date: 2022-06-08 15:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,7 +46,7 @@ msgid "Name"
 msgstr ""
 
 #: tests/end2end/test_collection_editing.py:108 tests/end2end/test_collection_registering.py:82
-#: tests/end2end/test_collection_registering.py:105 tests/end2end/test_user_editing.py:169
+#: tests/end2end/test_collection_registering.py:105 tests/end2end/test_user_editing.py:239
 #: tests/forms/test_client_edit.py:74 tests/forms/test_client_edit.py:97
 #: tests/forms/test_client_edit.py:120 tests/forms/test_client_edit.py:131
 #: tests/forms/test_client_register.py:76 tests/forms/test_client_register.py:99
@@ -74,8 +74,8 @@ msgstr ""
 msgid "Collection code \"%(code)s\" does not exist"
 msgstr ""
 
-#: tests/end2end/test_collection_editing.py:164 tests/end2end/test_user_editing.py:212
-#: tests/end2end/test_user_editing.py:238 xl_auth/templates/collections/home.html:56
+#: tests/end2end/test_collection_editing.py:164 tests/end2end/test_user_editing.py:282
+#: tests/end2end/test_user_editing.py:308 xl_auth/templates/collections/home.html:56
 #: xl_auth/templates/collections/home.html:119 xl_auth/templates/collections/view.html:129
 #: xl_auth/templates/permissions/home.html:48 xl_auth/templates/users/view.html:122
 msgid "Edit"
@@ -101,7 +101,7 @@ msgstr ""
 #: tests/end2end/test_collection_view.py:126 tests/end2end/test_collection_view.py:155
 #: tests/end2end/test_collection_view.py:186 tests/end2end/test_permission_deleting.py:67
 #: tests/end2end/test_permission_deleting.py:104 tests/end2end/test_permission_editing.py:188
-#: tests/end2end/test_permission_registering.py:189 tests/end2end/test_user_editing.py:206
+#: tests/end2end/test_permission_registering.py:189 tests/end2end/test_user_editing.py:276
 #: tests/end2end/test_user_view.py:73 tests/end2end/test_user_view.py:100
 #: tests/end2end/test_user_view.py:123 tests/end2end/test_user_view.py:166
 #: xl_auth/templates/collections/view.html:70 xl_auth/templates/permissions/home.html:4
@@ -181,10 +181,11 @@ msgid "Updated permissions for \"%(username)s\" on collection \"%(code)s\"."
 msgstr ""
 
 #: tests/end2end/test_permission_editing.py:113 tests/end2end/test_permission_registering.py:69
-#: tests/end2end/test_user_registering.py:27 tests/end2end/test_user_registering.py:64
-#: tests/end2end/test_user_registering.py:102 tests/end2end/test_user_registering.py:142
-#: xl_auth/templates/permissions/edit.html:17 xl_auth/templates/permissions/register.html:16
-#: xl_auth/templates/users/home.html:20 xl_auth/templates/users/profile.html:79
+#: tests/end2end/test_user_deletion.py:25 tests/end2end/test_user_registering.py:27
+#: tests/end2end/test_user_registering.py:64 tests/end2end/test_user_registering.py:102
+#: tests/end2end/test_user_registering.py:142 xl_auth/templates/permissions/edit.html:17
+#: xl_auth/templates/permissions/register.html:16 xl_auth/templates/users/home.html:20
+#: xl_auth/templates/users/profile.html:79
 msgid "New User"
 msgstr ""
 
@@ -263,11 +264,13 @@ msgid ""
 "or try again later."
 msgstr ""
 
-#: tests/end2end/test_user_editing.py:27 tests/end2end/test_user_editing.py:77
-#: tests/end2end/test_user_inspection.py:23 tests/end2end/test_user_registering.py:25
-#: tests/end2end/test_user_registering.py:62 tests/end2end/test_user_registering.py:179
-#: xl_auth/templates/collections/home.html:32 xl_auth/templates/collections/home.html:95
-#: xl_auth/templates/nav.html:27 xl_auth/templates/users/home.html:4
+#: tests/end2end/test_user_deletion.py:23 tests/end2end/test_user_editing.py:27
+#: tests/end2end/test_user_editing.py:77 tests/end2end/test_user_editing.py:118
+#: tests/end2end/test_user_editing.py:158 tests/end2end/test_user_inspection.py:23
+#: tests/end2end/test_user_registering.py:25 tests/end2end/test_user_registering.py:62
+#: tests/end2end/test_user_registering.py:179 xl_auth/templates/collections/home.html:32
+#: xl_auth/templates/collections/home.html:95 xl_auth/templates/nav.html:27
+#: xl_auth/templates/users/home.html:4
 msgid "Users"
 msgstr ""
 
@@ -321,26 +324,37 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: tests/end2end/test_user_editing.py:124 tests/end2end/test_user_editing.py:148
+#: tests/end2end/test_user_editing.py:170 tests/end2end/test_user_editing.py:389
+#: xl_auth/user/forms.py:189
+msgid "New email"
+msgstr ""
+
+#: tests/end2end/test_user_editing.py:170 tests/end2end/test_user_registering.py:209
+#: tests/forms/test_user_register.py:26 tests/forms/test_user_register.py:36 xl_auth/commands.py:587
+#: xl_auth/user/forms.py:69 xl_auth/user/forms.py:196
+msgid "Email already registered"
+msgstr ""
+
+#: tests/end2end/test_user_editing.py:194 tests/end2end/test_user_editing.py:218
 #: xl_auth/public/forms.py:54 xl_auth/public/forms.py:82 xl_auth/templates/users/home.html:26
 #: xl_auth/templates/users/home.html:100 xl_auth/templates/users/inspect.html:131
 #: xl_auth/templates/users/inspect.html:185 xl_auth/user/forms.py:15
 msgid "Email"
 msgstr ""
 
-#: tests/end2end/test_user_editing.py:124 tests/end2end/test_user_editing.py:148
+#: tests/end2end/test_user_editing.py:194 tests/end2end/test_user_editing.py:218
 #: tests/forms/test_user_administer.py:42 tests/forms/test_user_change_password.py:19
 #: tests/forms/test_user_edit_details.py:25 xl_auth/user/forms.py:100
 msgid "Email cannot be modified"
 msgstr ""
 
-#: tests/end2end/test_user_editing.py:169 xl_auth/templates/users/inspect.html:8
+#: tests/end2end/test_user_editing.py:239 xl_auth/templates/users/inspect.html:8
 #: xl_auth/templates/users/simple_view.html:10 xl_auth/templates/users/view.html:10
 #: xl_auth/user/forms.py:16
 msgid "Full name"
 msgstr ""
 
-#: tests/end2end/test_user_editing.py:187 tests/end2end/test_user_editing.py:191
+#: tests/end2end/test_user_editing.py:257 tests/end2end/test_user_editing.py:261
 #: tests/end2end/test_user_inspection.py:63 tests/end2end/test_user_view.py:49
 #: tests/forms/test_client_edit.py:62 tests/forms/test_client_register.py:64
 #: tests/forms/test_permission_edit.py:90 tests/forms/test_permission_register.py:62
@@ -352,9 +366,19 @@ msgstr ""
 msgid "User ID \"%(user_id)s\" does not exist"
 msgstr ""
 
-#: tests/end2end/test_user_editing.py:213 xl_auth/templates/users/home.html:66
+#: tests/end2end/test_user_editing.py:283 xl_auth/templates/users/home.html:66
 #: xl_auth/templates/users/home.html:139 xl_auth/templates/users/profile.html:25
 msgid "Change Password"
+msgstr ""
+
+#: tests/end2end/test_user_editing.py:344 tests/end2end/test_user_editing.py:379
+#: xl_auth/templates/users/home.html:61 xl_auth/templates/users/home.html:134
+#: xl_auth/templates/users/profile.html:22
+msgid "Change Email"
+msgstr ""
+
+#: tests/end2end/test_user_editing.py:389
+msgid "Invalid email address."
 msgstr ""
 
 #: tests/end2end/test_user_inspection.py:28 xl_auth/templates/users/inspect.html:4
@@ -365,12 +389,6 @@ msgstr ""
 #: tests/end2end/test_user_registering.py:100 tests/end2end/test_user_registering.py:140
 #: xl_auth/templates/users/profile.html:66
 msgid "Your Responsibilities as Cataloging Admin"
-msgstr ""
-
-#: tests/end2end/test_user_registering.py:209 tests/forms/test_user_register.py:26
-#: tests/forms/test_user_register.py:36 xl_auth/commands.py:587 xl_auth/user/forms.py:69
-#: xl_auth/user/forms.py:196
-msgid "Email already registered"
 msgstr ""
 
 #: tests/end2end/test_user_view.py:29 xl_auth/templates/users/simple_view.html:5
@@ -1028,11 +1046,6 @@ msgstr ""
 msgid "Edit Details"
 msgstr ""
 
-#: xl_auth/templates/users/home.html:61 xl_auth/templates/users/home.html:134
-#: xl_auth/templates/users/profile.html:22
-msgid "Change Email"
-msgstr ""
-
 #: xl_auth/templates/users/inspect.html:14 xl_auth/user/forms.py:22
 msgid "ToS Approved"
 msgstr ""
@@ -1186,10 +1199,6 @@ msgstr ""
 
 #: xl_auth/user/forms.py:56
 msgid "Send password reset email"
-msgstr ""
-
-#: xl_auth/user/forms.py:189
-msgid "New email"
 msgstr ""
 
 #: xl_auth/user/forms.py:190
