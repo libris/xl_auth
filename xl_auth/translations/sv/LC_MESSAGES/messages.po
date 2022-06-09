@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-09 10:39+0200\n"
-"PO-Revision-Date: 2022-06-09 10:39+0200\n"
+"POT-Creation-Date: 2022-06-09 11:16+0200\n"
+"PO-Revision-Date: 2022-06-09 11:16+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
 "Language-Team: sv <LL@li.org>\n"
@@ -1031,7 +1031,7 @@ msgstr "Dessa behörigheter skulle tas bort:"
 
 #: xl_auth/templates/users/delete_user.html:48
 msgid "These password resets would be deleted:"
-msgstr "Följande lösenordsinställningar "
+msgstr "Följande lösenordsåterställningar skulle tas bort:"
 
 #: xl_auth/templates/users/delete_user.html:61
 msgid "YES, delete user"
