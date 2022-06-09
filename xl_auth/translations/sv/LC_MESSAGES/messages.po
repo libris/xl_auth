@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-09 11:16+0200\n"
-"PO-Revision-Date: 2022-06-09 11:16+0200\n"
+"POT-Creation-Date: 2022-06-09 13:38+0200\n"
+"PO-Revision-Date: 2022-06-09 13:31+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
 "Language-Team: sv <LL@li.org>\n"
@@ -76,9 +76,9 @@ msgid "Collection code \"%(code)s\" does not exist"
 msgstr "Sigel \"%(code)s\" existerar inte"
 
 #: tests/end2end/test_collection_editing.py:164 tests/end2end/test_user_editing.py:282
-#: tests/end2end/test_user_editing.py:308 xl_auth/templates/collections/home.html:56
-#: xl_auth/templates/collections/home.html:119 xl_auth/templates/collections/view.html:129
-#: xl_auth/templates/permissions/home.html:48 xl_auth/templates/users/view.html:122
+#: xl_auth/templates/collections/home.html:56 xl_auth/templates/collections/home.html:119
+#: xl_auth/templates/collections/view.html:129 xl_auth/templates/permissions/home.html:48
+#: xl_auth/templates/users/view.html:122
 msgid "Edit"
 msgstr "Ändra"
 
@@ -233,7 +233,7 @@ msgstr "Felaktigt lösenord"
 #: tests/forms/test_public_forgot_password.py:21 tests/forms/test_public_login.py:35
 #: xl_auth/public/forms.py:37 xl_auth/public/forms.py:74
 msgid "Unknown username/email"
-msgstr "Okänd epost/användarnamn"
+msgstr "Okänd e-postadress/användarnamn"
 
 #: tests/end2end/test_public_reset_password.py:30 tests/end2end/test_public_reset_password.py:153
 #: tests/end2end/test_public_reset_password.py:168 xl_auth/templates/public/home.html:47
@@ -327,29 +327,29 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nej"
 
-#: tests/end2end/test_user_editing.py:170 tests/end2end/test_user_editing.py:388
+#: tests/end2end/test_user_editing.py:170 tests/end2end/test_user_editing.py:389
 #: xl_auth/user/forms.py:189
 msgid "New email"
-msgstr "Ny epostadress"
+msgstr "Ny e-postadress"
 
 #: tests/end2end/test_user_editing.py:170 tests/end2end/test_user_registering.py:209
-#: tests/forms/test_user_register.py:26 tests/forms/test_user_register.py:36 xl_auth/commands.py:587
+#: tests/forms/test_user_register.py:26 tests/forms/test_user_register.py:36 xl_auth/commands.py:583
 #: xl_auth/user/forms.py:69 xl_auth/user/forms.py:196
 msgid "Email already registered"
-msgstr "Epostadressen är redan registrerad"
+msgstr "E-postadressen är redan registrerad"
 
 #: tests/end2end/test_user_editing.py:194 tests/end2end/test_user_editing.py:218
 #: xl_auth/public/forms.py:54 xl_auth/public/forms.py:82 xl_auth/templates/users/home.html:26
 #: xl_auth/templates/users/home.html:100 xl_auth/templates/users/inspect.html:131
 #: xl_auth/templates/users/inspect.html:185 xl_auth/user/forms.py:15
 msgid "Email"
-msgstr "Epost"
+msgstr "E-postadress"
 
 #: tests/end2end/test_user_editing.py:194 tests/end2end/test_user_editing.py:218
 #: tests/forms/test_user_administer.py:42 tests/forms/test_user_change_password.py:19
 #: tests/forms/test_user_edit_details.py:25 xl_auth/user/forms.py:100
 msgid "Email cannot be modified"
-msgstr "Epost/användarnamn går inte att ändra"
+msgstr "E-postadress/användarnamn går inte att ändra"
 
 #: tests/end2end/test_user_editing.py:239 xl_auth/templates/users/inspect.html:8
 #: xl_auth/templates/users/simple_view.html:10 xl_auth/templates/users/view.html:10
@@ -372,17 +372,21 @@ msgstr "Användare med databas-ID \"%(user_id)s\" existerar inte"
 #: tests/end2end/test_user_editing.py:283 xl_auth/templates/users/home.html:66
 #: xl_auth/templates/users/home.html:139 xl_auth/templates/users/profile.html:25
 msgid "Change Password"
-msgstr "Byt lösenord"
+msgstr "Ändra lösenord"
+
+#: tests/end2end/test_user_editing.py:308 xl_auth/templates/users/profile.html:19
+msgid "Edit Display Name"
+msgstr "Ändra visningsnamn"
 
 #: tests/end2end/test_user_editing.py:344 tests/end2end/test_user_editing.py:379
 #: xl_auth/templates/users/home.html:61 xl_auth/templates/users/home.html:134
 #: xl_auth/templates/users/profile.html:22
 msgid "Change Email"
-msgstr "Byt epostadress"
+msgstr "Ändra e-postadress"
 
-#: tests/end2end/test_user_editing.py:388
+#: tests/end2end/test_user_editing.py:389 xl_auth/user/forms.py:189
 msgid "Invalid email address."
-msgstr "Felaktig epost-adress."
+msgstr "Felaktig e-postadress."
 
 #: tests/end2end/test_user_inspection.py:28 xl_auth/templates/users/inspect.html:4
 #, python-format
@@ -400,7 +404,7 @@ msgstr "Ditt ansvar som katalogiseringsadmin"
 msgid "View User '<a href=\"mailto:%(email)s\">%(email)s</a>'"
 msgstr "Användare '<a href=\"mailto:%(email)s\">%(email)s</a>'"
 
-#: tests/end2end/test_user_view.py:212 tests/models/test_user.py:272 xl_auth/user/models.py:335
+#: tests/end2end/test_user_view.py:212 tests/models/test_user.py:272 xl_auth/user/models.py:343
 msgid "You will only see permissions for those collections that you are cataloging admin for."
 msgstr "Du ser enbart behörigheter på de sigler du är katalogiseringsadmin för."
 
@@ -981,8 +985,8 @@ msgstr "Här kommer lite viktig information innan du börjar använda Libris Log
 #: xl_auth/templates/users/approve_tos.html:10
 msgid "Your name, email address, permissions and other account details is visible to other users"
 msgstr ""
-"Ditt namn, din epost, dina behörigheter och annan kontoinformation är synlig för andra Libris "
-"Login-användare"
+"Ditt namn, din e-postadress, dina behörigheter och annan kontoinformation är synlig för andra "
+"Libris Login-användare"
 
 #: xl_auth/templates/users/approve_tos.html:19
 msgid "You assume full responsibility for your account and actions performed under your authentication"
@@ -998,44 +1002,44 @@ msgstr ""
 
 #: xl_auth/templates/users/change_email.html:5
 msgid "Change User Email"
-msgstr "Ändra epostadress"
+msgstr "Ändra e-postadress"
 
 #: xl_auth/templates/users/change_email.html:20
 msgid "Email (again)"
-msgstr "Epostadress (igen)"
+msgstr "E-postadress (igen)"
 
 #: xl_auth/templates/users/change_password.html:5
 msgid "Change User Password"
-msgstr "Byt användarlösenord"
+msgstr "Ändra användarlösenord"
 
 #: xl_auth/templates/users/delete_user.html:5 xl_auth/templates/users/home.html:71
 #: xl_auth/templates/users/home.html:144
 msgid "Delete User"
 msgstr "Ta bort användare"
 
-#: xl_auth/templates/users/delete_user.html:12
+#: xl_auth/templates/users/delete_user.html:8
 msgid "These tokens would be deleted:"
-msgstr "Dessa tokens skulle tas bort:"
+msgstr "Följande tokens kommer tas bort:"
 
-#: xl_auth/templates/users/delete_user.html:21
+#: xl_auth/templates/users/delete_user.html:17
 msgid "These grants would be deleted:"
-msgstr "Dessa grants skulle tas bort:"
+msgstr "Följande grants kommer tas bort:"
 
-#: xl_auth/templates/users/delete_user.html:30
+#: xl_auth/templates/users/delete_user.html:26
 msgid "These failed login attempts would be deleted:"
-msgstr "Dessa misslyckade inloggningsförsök skulle tas bort:"
+msgstr "Följande misslyckade inloggningsförsök kommer tas bort:"
 
-#: xl_auth/templates/users/delete_user.html:39
+#: xl_auth/templates/users/delete_user.html:35
 msgid "These permissions would be deleted:"
-msgstr "Dessa behörigheter skulle tas bort:"
+msgstr "Följande behörigheter kommer tas bort:"
 
-#: xl_auth/templates/users/delete_user.html:48
+#: xl_auth/templates/users/delete_user.html:44
 msgid "These password resets would be deleted:"
-msgstr "Följande lösenordsåterställningar skulle tas bort:"
+msgstr "Följande lösenordsåterställningar kommer tas bort:"
 
 #: xl_auth/templates/users/delete_user.html:61
 msgid "YES, delete user"
-msgstr "JA, ta bort användare"
+msgstr "Ja, ta bort användare"
 
 #: xl_auth/templates/users/home.html:9 xl_auth/templates/users/home.html:95
 msgid "Inactive Users"
@@ -1154,10 +1158,6 @@ msgstr "Välkommen"
 msgid "This is your personal profile page."
 msgstr "Det här är din personliga profil-sida."
 
-#: xl_auth/templates/users/profile.html:19
-msgid "Edit Display Name"
-msgstr "Ändra visningsnamn"
-
 #: xl_auth/templates/users/profile.html:32
 msgid "Information About GDPR"
 msgstr "Information om GDPR"
@@ -1235,11 +1235,11 @@ msgstr "Maila ut lösenordsåterställningslänk"
 
 #: xl_auth/user/forms.py:190
 msgid "Confirm new email"
-msgstr "Bekräfta ny epostadress"
+msgstr "Bekräfta ny e-postadress"
 
 #: xl_auth/user/forms.py:191
 msgid "Email addresses must match"
-msgstr "Epostadresserna måste matcha"
+msgstr "E-postadresserna måste matcha"
 
 #: xl_auth/user/forms.py:213
 msgid "Confirm deletion"
@@ -1345,7 +1345,7 @@ msgstr ""
 " vet varför du mottagit detta mail, vänligen kontakta <a href=\"mailto:libris@kb.se\">Libris "
 "kundservice</a>!</small></p>"
 
-#: xl_auth/user/models.py:366
+#: xl_auth/user/models.py:374
 msgid "Deleted user"
 msgstr "Borttagen användare"
 
@@ -1376,9 +1376,9 @@ msgstr "Lösenord för \"%(username)s\" har ändrats."
 #: xl_auth/user/views.py:245
 #, python-format
 msgid "Email address changed to \"%(username)s\"."
-msgstr "Epostadress ändrad till \"%(username)s\"."
+msgstr "E-postadress ändrad till \"%(username)s\"."
 
-#: xl_auth/user/views.py:277
+#: xl_auth/user/views.py:275
 #, python-format
 msgid "\"%(username)s\" deleted."
 msgstr "Användaren \"%(username)s\" har tagits bort."

@@ -48,6 +48,10 @@ class Permission(SurrogatePK, Model):
         """Create instance."""
         db.Model.__init__(self, **kwargs)
 
+    @property
+    def display_value(self):
+        return f"{self.user.email} - {self.collection.code} ({self.collection.friendly_name})"
+
     def __repr__(self):
         """Represent instance as a unique string."""
         return '<Permission({user!r}@{collection!r})>'.format(user=self.user,

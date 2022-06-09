@@ -160,6 +160,10 @@ at libris@kb.se!'
 
         assert result.status_code == 250
 
+    @property
+    def display_value(self):
+        return f"{self.user.email}: {self.created_at}"
+
     def __repr__(self):
         """Represent instance as a unique string."""
         return '<PasswordReset({email!r})>'.format(email=self.user.email)
@@ -200,6 +204,10 @@ class FailedLoginAttempt(SurrogatePK, Model):
     def delete_all_by_user(user):
         """Delete all failed login attempts for specified user."""
         FailedLoginAttempt.query.filter_by(username=user.email).delete()
+
+    @property
+    def display_value(self):
+        return f"{self.username}: {self.created_at}, {self.remote_addr}"
 
     def __repr__(self):
         """Represent instance as a unique string."""

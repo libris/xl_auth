@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 1.7.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-09 11:16+0200\n"
+"POT-Creation-Date: 2022-06-09 13:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -75,9 +75,9 @@ msgid "Collection code \"%(code)s\" does not exist"
 msgstr ""
 
 #: tests/end2end/test_collection_editing.py:164 tests/end2end/test_user_editing.py:282
-#: tests/end2end/test_user_editing.py:308 xl_auth/templates/collections/home.html:56
-#: xl_auth/templates/collections/home.html:119 xl_auth/templates/collections/view.html:129
-#: xl_auth/templates/permissions/home.html:48 xl_auth/templates/users/view.html:122
+#: xl_auth/templates/collections/home.html:56 xl_auth/templates/collections/home.html:119
+#: xl_auth/templates/collections/view.html:129 xl_auth/templates/permissions/home.html:48
+#: xl_auth/templates/users/view.html:122
 msgid "Edit"
 msgstr ""
 
@@ -324,13 +324,13 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: tests/end2end/test_user_editing.py:170 tests/end2end/test_user_editing.py:388
+#: tests/end2end/test_user_editing.py:170 tests/end2end/test_user_editing.py:389
 #: xl_auth/user/forms.py:189
 msgid "New email"
 msgstr ""
 
 #: tests/end2end/test_user_editing.py:170 tests/end2end/test_user_registering.py:209
-#: tests/forms/test_user_register.py:26 tests/forms/test_user_register.py:36 xl_auth/commands.py:587
+#: tests/forms/test_user_register.py:26 tests/forms/test_user_register.py:36 xl_auth/commands.py:583
 #: xl_auth/user/forms.py:69 xl_auth/user/forms.py:196
 msgid "Email already registered"
 msgstr ""
@@ -371,13 +371,17 @@ msgstr ""
 msgid "Change Password"
 msgstr ""
 
+#: tests/end2end/test_user_editing.py:308 xl_auth/templates/users/profile.html:19
+msgid "Edit Display Name"
+msgstr ""
+
 #: tests/end2end/test_user_editing.py:344 tests/end2end/test_user_editing.py:379
 #: xl_auth/templates/users/home.html:61 xl_auth/templates/users/home.html:134
 #: xl_auth/templates/users/profile.html:22
 msgid "Change Email"
 msgstr ""
 
-#: tests/end2end/test_user_editing.py:388
+#: tests/end2end/test_user_editing.py:389 xl_auth/user/forms.py:189
 msgid "Invalid email address."
 msgstr ""
 
@@ -397,7 +401,7 @@ msgstr ""
 msgid "View User '<a href=\"mailto:%(email)s\">%(email)s</a>'"
 msgstr ""
 
-#: tests/end2end/test_user_view.py:212 tests/models/test_user.py:272 xl_auth/user/models.py:335
+#: tests/end2end/test_user_view.py:212 tests/models/test_user.py:272 xl_auth/user/models.py:343
 msgid "You will only see permissions for those collections that you are cataloging admin for."
 msgstr ""
 
@@ -995,23 +999,23 @@ msgstr ""
 msgid "Delete User"
 msgstr ""
 
-#: xl_auth/templates/users/delete_user.html:12
+#: xl_auth/templates/users/delete_user.html:8
 msgid "These tokens would be deleted:"
 msgstr ""
 
-#: xl_auth/templates/users/delete_user.html:21
+#: xl_auth/templates/users/delete_user.html:17
 msgid "These grants would be deleted:"
 msgstr ""
 
-#: xl_auth/templates/users/delete_user.html:30
+#: xl_auth/templates/users/delete_user.html:26
 msgid "These failed login attempts would be deleted:"
 msgstr ""
 
-#: xl_auth/templates/users/delete_user.html:39
+#: xl_auth/templates/users/delete_user.html:35
 msgid "These permissions would be deleted:"
 msgstr ""
 
-#: xl_auth/templates/users/delete_user.html:48
+#: xl_auth/templates/users/delete_user.html:44
 msgid "These password resets would be deleted:"
 msgstr ""
 
@@ -1134,10 +1138,6 @@ msgstr ""
 
 #: xl_auth/templates/users/profile.html:14
 msgid "This is your personal profile page."
-msgstr ""
-
-#: xl_auth/templates/users/profile.html:19
-msgid "Edit Display Name"
 msgstr ""
 
 #: xl_auth/templates/users/profile.html:32
@@ -1279,7 +1279,7 @@ msgid ""
 "href=\"mailto:libris@kb.se\">libris@kb.se</a>!</small></p>"
 msgstr ""
 
-#: xl_auth/user/models.py:366
+#: xl_auth/user/models.py:374
 msgid "Deleted user"
 msgstr ""
 
@@ -1312,7 +1312,7 @@ msgstr ""
 msgid "Email address changed to \"%(username)s\"."
 msgstr ""
 
-#: xl_auth/user/views.py:277
+#: xl_auth/user/views.py:275
 #, python-format
 msgid "\"%(username)s\" deleted."
 msgstr ""

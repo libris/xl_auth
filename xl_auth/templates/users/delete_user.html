@@ -2,56 +2,56 @@
 {% extends "layout.html" %}
 {% block content %}
     <div class="container-narrow">
-        <h1 class="word-break-all">{{ _('Delete User') }} {{ user.email }}</h1>
+        <h3 class="word-break-all">{{ _('Delete User') }} {{ user.email }}</h3>
         <br>
+        {% if tokens %}
+            <p>{{  _('These tokens would be deleted:') }}</p>
+            <ul>
+                {% for token in tokens %}
+                    <li>{{ token.display_value }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if grants %}
+            <p>{{  _('These grants would be deleted:') }}</p>
+            <ul>
+                {% for grant in grants %}
+                    <li>{{ grant.display_value }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if failed_login_attempts %}
+            <p>{{ _('These failed login attempts would be deleted:') }}</p>
+            <ul>
+                {% for failed_login_attempt in failed_login_attempts %}
+                    <li>{{ failed_login_attempt.display_value }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if permissions %}
+            <p>{{  _('These permissions would be deleted:') }}</p>
+            <ul>
+                {% for permission in permissions %}
+                    <li>{{ permission.display_value }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if password_resets %}
+            <p>{{ _('These password resets would be deleted:') }}</p>
+            <ul>
+                {% for password_reset in password_resets %}
+                    <li>{{ password_reset.display_value }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
         <form id="deleteUserForm" class="form form-edit" method="POST" action="" role="form">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             {{ delete_user_form.next_redirect(value=next_redirect_url or "") }}
-
-            {% if tokens %}
-                <p>{{  _('These tokens would be deleted:') }}</p>
-                <ul>
-                    {% for token in tokens %}
-                        <li>{{ token }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-
-            {% if grants %}
-                <p>{{  _('These grants would be deleted:') }}</p>
-                <ul>
-                    {% for grant in grants %}
-                        <li>{{ grant }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-
-            {% if failed_login_attempts %}
-                <p>{{ _('These failed login attempts would be deleted:') }}</p>
-                <ul>
-                    {% for failed_login_attempt in failed_login_attempts %}
-                        <li>{{ failed_login_attempt }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-
-            {% if permissions %}
-                <p>{{  _('These permissions would be deleted:') }}</p>
-                <ul>
-                    {% for permission in permissions %}
-                        <li>{{ permission }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-
-            {% if password_resets %}
-                <p>{{ _('These password resets would be deleted:') }}</p>
-                <ul>
-                    {% for password_reset in password_resets %}
-                        <li>{{ password_reset }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
 
             <div class="form-group">
                 {{ delete_user_form.confirm.label }}

@@ -10,6 +10,7 @@ from sqlalchemy.ext.hybrid import hybrid_property
 
 from ...database import Column, Model, SurrogatePK, db, reference_col, relationship
 
+from flask_babel import lazy_gettext as _
 
 class Grant(SurrogatePK, Model):
     """An OAuth2 Grant token."""
@@ -58,6 +59,10 @@ class Grant(SurrogatePK, Model):
             self._scopes = ' '.join(value)
         else:
             self._scopes = value
+
+    @property
+    def display_value(self):
+        return f"{self.user.email}: {_('client')} {self.client.name}, {_('expires At')} {self.client.expires_at}"
 
     def __repr__(self):
         """Represent instance as a unique string."""

@@ -305,7 +305,7 @@ def test_user_can_edit_own_details(user, testapp):
     old_name = user.full_name
     res = res.follow()
     # Click on 'Edit' button
-    res = res.click(_('Edit'))
+    res = res.click(_('Edit Display Name'))
     # Change name
     form = res.forms['editDetailsForm']
     form['full_name'] = 'New Name'
@@ -384,6 +384,7 @@ def test_user_cannot_set_invalid_username(user, testapp):
     form['email'] = new_email
     form['confirm'] = new_email
     res = form.submit()
+    print(res)
     # Sees error message.
     assert '{} - {}'.format(_('New email'), _('Invalid email address.')) in res
 

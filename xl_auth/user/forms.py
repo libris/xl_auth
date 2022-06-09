@@ -186,7 +186,7 @@ class ChangePasswordForm(_EditForm):
 class ChangeEmailForm(_EditForm):
     """Change email form."""
 
-    email = StringField(_('New email'), validators=[DataRequired(), Email(), Length(min=6, max=255)])
+    email = StringField(_('New email'), validators=[DataRequired(), Email(message=_("Invalid email address.")), Length(min=6, max=255)])
     confirm = StringField(_('Confirm new email'), validators=[
         DataRequired(), EqualTo('email', message=_('Email addresses must match'))])
 
