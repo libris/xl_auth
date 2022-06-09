@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-09 13:38+0200\n"
-"PO-Revision-Date: 2022-06-09 13:31+0200\n"
+"POT-Creation-Date: 2022-06-09 15:36+0200\n"
+"PO-Revision-Date: 2022-06-09 15:36+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
 "Language-Team: sv <LL@li.org>\n"
@@ -404,7 +404,7 @@ msgstr "Ditt ansvar som katalogiseringsadmin"
 msgid "View User '<a href=\"mailto:%(email)s\">%(email)s</a>'"
 msgstr "Användare '<a href=\"mailto:%(email)s\">%(email)s</a>'"
 
-#: tests/end2end/test_user_view.py:212 tests/models/test_user.py:272 xl_auth/user/models.py:343
+#: tests/end2end/test_user_view.py:212 tests/models/test_user.py:272 xl_auth/user/models.py:344
 msgid "You will only see permissions for those collections that you are cataloging admin for."
 msgstr "Du ser enbart behörigheter på de sigler du är katalogiseringsadmin för."
 
@@ -662,6 +662,11 @@ msgstr "Ursäkta, något gick fel i vårt system."
 #: xl_auth/templates/500.html:12
 msgid "Please let us know and try again later."
 msgstr "Låt oss veta vad som hände och försök igen senare."
+
+#: xl_auth/templates/delete_user_list.html:6
+#, python-format
+msgid "…%(number_of_items)s more (not shown)…"
+msgstr "…%(number_of_items)s fler (visas ej)…"
 
 #: xl_auth/templates/footer.html:6 xl_auth/templates/public/about.html:5
 msgid "About"
@@ -1021,23 +1026,23 @@ msgstr "Ta bort användare"
 msgid "These tokens would be deleted:"
 msgstr "Följande tokens kommer tas bort:"
 
-#: xl_auth/templates/users/delete_user.html:17
+#: xl_auth/templates/users/delete_user.html:15
 msgid "These grants would be deleted:"
 msgstr "Följande grants kommer tas bort:"
 
-#: xl_auth/templates/users/delete_user.html:26
+#: xl_auth/templates/users/delete_user.html:22
 msgid "These failed login attempts would be deleted:"
 msgstr "Följande misslyckade inloggningsförsök kommer tas bort:"
 
-#: xl_auth/templates/users/delete_user.html:35
+#: xl_auth/templates/users/delete_user.html:29
 msgid "These permissions would be deleted:"
 msgstr "Följande behörigheter kommer tas bort:"
 
-#: xl_auth/templates/users/delete_user.html:44
+#: xl_auth/templates/users/delete_user.html:36
 msgid "These password resets would be deleted:"
 msgstr "Följande lösenordsåterställningar kommer tas bort:"
 
-#: xl_auth/templates/users/delete_user.html:61
+#: xl_auth/templates/users/delete_user.html:51
 msgid "YES, delete user"
 msgstr "Ja, ta bort användare"
 
@@ -1249,12 +1254,12 @@ msgstr "Bekräfta borttagande"
 msgid "You must confirm deletion."
 msgstr "Du måste bekräfta borttagandet."
 
-#: xl_auth/user/models.py:81
+#: xl_auth/user/models.py:82
 #, python-format
 msgid "Account activation and password reset for %(username)s at %(server_name)s"
 msgstr "Din kontoaktivering för Libris Login (%(server_name)s)"
 
-#: xl_auth/user/models.py:83
+#: xl_auth/user/models.py:84
 #, python-format
 msgid ""
 "Hello %(full_name)s,\n"
@@ -1282,7 +1287,7 @@ msgstr ""
 "libris@kb.se!\n"
 "\n"
 
-#: xl_auth/user/models.py:115
+#: xl_auth/user/models.py:116
 #, python-format
 msgid ""
 "<p>Hello %(full_name)s,<br/><br/>You have been granted a user account at %(server_name)s by "
@@ -1299,12 +1304,12 @@ msgstr ""
 "  att du inte kan svara på detta mail. Vid frågor, vänligen kontakta <a "
 "href=\"mailto:libris@kb.se\">Libris kundservice</a>!</small></p>"
 
-#: xl_auth/user/models.py:121
+#: xl_auth/user/models.py:122
 #, python-format
 msgid "Password reset for %(username)s at %(server_name)s"
 msgstr "Lösenordsåterställning för %(username)s (%(server_name)s)"
 
-#: xl_auth/user/models.py:123
+#: xl_auth/user/models.py:124
 #, python-format
 msgid ""
 "Hello %(full_name)s,\n"
@@ -1330,7 +1335,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: xl_auth/user/models.py:135
+#: xl_auth/user/models.py:136
 #, python-format
 msgid ""
 "<p>Hello %(full_name)s,<br/><br/>Here is the secret link for resetting your personal account "
@@ -1345,7 +1350,7 @@ msgstr ""
 " vet varför du mottagit detta mail, vänligen kontakta <a href=\"mailto:libris@kb.se\">Libris "
 "kundservice</a>!</small></p>"
 
-#: xl_auth/user/models.py:374
+#: xl_auth/user/models.py:375
 msgid "Deleted user"
 msgstr "Borttagen användare"
 

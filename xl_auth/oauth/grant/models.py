@@ -6,6 +6,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from datetime import datetime, timedelta
 
 from six import string_types
+from sqlalchemy import desc
 from sqlalchemy.ext.hybrid import hybrid_property
 
 from ...database import Column, Model, SurrogatePK, db, reference_col, relationship
@@ -38,7 +39,7 @@ class Grant(SurrogatePK, Model):
     @staticmethod
     def get_all_by_user(user):
         """Get all grants for specified user."""
-        return Grant.query.filter_by(user=user).all()
+        return Grant.query.filter_by(user=user).order_by(desc('expires_at')).all()
 
     @staticmethod
     def delete_all_by_user(user):

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 1.7.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-09 13:38+0200\n"
+"POT-Creation-Date: 2022-06-09 15:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -401,7 +401,7 @@ msgstr ""
 msgid "View User '<a href=\"mailto:%(email)s\">%(email)s</a>'"
 msgstr ""
 
-#: tests/end2end/test_user_view.py:212 tests/models/test_user.py:272 xl_auth/user/models.py:343
+#: tests/end2end/test_user_view.py:212 tests/models/test_user.py:272 xl_auth/user/models.py:344
 msgid "You will only see permissions for those collections that you are cataloging admin for."
 msgstr ""
 
@@ -658,6 +658,11 @@ msgstr ""
 
 #: xl_auth/templates/500.html:12
 msgid "Please let us know and try again later."
+msgstr ""
+
+#: xl_auth/templates/delete_user_list.html:6
+#, python-format
+msgid "…%(number_of_items)s more (not shown)…"
 msgstr ""
 
 #: xl_auth/templates/footer.html:6 xl_auth/templates/public/about.html:5
@@ -1003,23 +1008,23 @@ msgstr ""
 msgid "These tokens would be deleted:"
 msgstr ""
 
-#: xl_auth/templates/users/delete_user.html:17
+#: xl_auth/templates/users/delete_user.html:15
 msgid "These grants would be deleted:"
 msgstr ""
 
-#: xl_auth/templates/users/delete_user.html:26
+#: xl_auth/templates/users/delete_user.html:22
 msgid "These failed login attempts would be deleted:"
 msgstr ""
 
-#: xl_auth/templates/users/delete_user.html:35
+#: xl_auth/templates/users/delete_user.html:29
 msgid "These permissions would be deleted:"
 msgstr ""
 
-#: xl_auth/templates/users/delete_user.html:44
+#: xl_auth/templates/users/delete_user.html:36
 msgid "These password resets would be deleted:"
 msgstr ""
 
-#: xl_auth/templates/users/delete_user.html:61
+#: xl_auth/templates/users/delete_user.html:51
 msgid "YES, delete user"
 msgstr ""
 
@@ -1217,12 +1222,12 @@ msgstr ""
 msgid "You must confirm deletion."
 msgstr ""
 
-#: xl_auth/user/models.py:81
+#: xl_auth/user/models.py:82
 #, python-format
 msgid "Account activation and password reset for %(username)s at %(server_name)s"
 msgstr ""
 
-#: xl_auth/user/models.py:83
+#: xl_auth/user/models.py:84
 #, python-format
 msgid ""
 "Hello %(full_name)s,\n"
@@ -1238,7 +1243,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: xl_auth/user/models.py:115
+#: xl_auth/user/models.py:116
 #, python-format
 msgid ""
 "<p>Hello %(full_name)s,<br/><br/>You have been granted a user account at %(server_name)s by "
@@ -1249,12 +1254,12 @@ msgid ""
 "href=\"mailto:libris@kb.se\">libris@kb.se</a>!</small></p>"
 msgstr ""
 
-#: xl_auth/user/models.py:121
+#: xl_auth/user/models.py:122
 #, python-format
 msgid "Password reset for %(username)s at %(server_name)s"
 msgstr ""
 
-#: xl_auth/user/models.py:123
+#: xl_auth/user/models.py:124
 #, python-format
 msgid ""
 "Hello %(full_name)s,\n"
@@ -1269,7 +1274,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: xl_auth/user/models.py:135
+#: xl_auth/user/models.py:136
 #, python-format
 msgid ""
 "<p>Hello %(full_name)s,<br/><br/>Here is the secret link for resetting your personal account "
@@ -1279,7 +1284,7 @@ msgid ""
 "href=\"mailto:libris@kb.se\">libris@kb.se</a>!</small></p>"
 msgstr ""
 
-#: xl_auth/user/models.py:374
+#: xl_auth/user/models.py:375
 msgid "Deleted user"
 msgstr ""
 

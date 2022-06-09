@@ -1,0 +1,8 @@
+<ul>
+    {% for item in items[:10] %}
+        <li>{{ item.display_value }}</li>
+    {% endfor %}
+    {% if items|length > 10 %}
+        {{ _('…%(number_of_items)s more (not shown)…', number_of_items=items|length-10) }}
+    {% endif %}
+</ul>

@@ -13,6 +13,7 @@ from flask import current_app, url_for
 from flask_babel import lazy_gettext as _
 from flask_emails import Message
 from flask_login import UserMixin
+from sqlalchemy import desc
 from sqlalchemy.ext.hybrid import hybrid_property
 
 from ..database import Column, Model, SurrogatePK, db, or_, reference_col, relationship
@@ -198,7 +199,7 @@ class FailedLoginAttempt(SurrogatePK, Model):
     @staticmethod
     def get_all_by_user(user):
         """Get all failed login attempts for specified user."""
-        return FailedLoginAttempt.query.filter_by(username=user.email).all()
+        return FailedLoginAttempt.query.filter_by(username=user.email).order_by(desc('created_at')).all()
 
     @staticmethod
     def delete_all_by_user(user):

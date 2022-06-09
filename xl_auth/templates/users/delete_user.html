@@ -6,47 +6,37 @@
         <br>
         {% if tokens %}
             <p>{{  _('These tokens would be deleted:') }}</p>
-            <ul>
-                {% for token in tokens %}
-                    <li>{{ token.display_value }}</li>
-                {% endfor %}
-            </ul>
+            {% with items=tokens %}
+                {% include "delete_user_list.html" %}
+            {% endwith %}
         {% endif %}
 
         {% if grants %}
             <p>{{  _('These grants would be deleted:') }}</p>
-            <ul>
-                {% for grant in grants %}
-                    <li>{{ grant.display_value }}</li>
-                {% endfor %}
-            </ul>
+            {% with items=grants %}
+                {% include "delete_user_list.html" %}
+            {% endwith %}
         {% endif %}
 
         {% if failed_login_attempts %}
             <p>{{ _('These failed login attempts would be deleted:') }}</p>
-            <ul>
-                {% for failed_login_attempt in failed_login_attempts %}
-                    <li>{{ failed_login_attempt.display_value }}</li>
-                {% endfor %}
-            </ul>
+            {% with items=failed_login_attempts %}
+                {% include "delete_user_list.html" %}
+            {% endwith %}
         {% endif %}
 
         {% if permissions %}
             <p>{{  _('These permissions would be deleted:') }}</p>
-            <ul>
-                {% for permission in permissions %}
-                    <li>{{ permission.display_value }}</li>
-                {% endfor %}
-            </ul>
+            {% with items=permissions %}
+                {% include "delete_user_list.html" %}
+            {% endwith %}
         {% endif %}
 
         {% if password_resets %}
             <p>{{ _('These password resets would be deleted:') }}</p>
-            <ul>
-                {% for password_reset in password_resets %}
-                    <li>{{ password_reset.display_value }}</li>
-                {% endfor %}
-            </ul>
+            {% with items=password_resets %}
+                {% include "delete_user_list.html" %}
+            {% endwith %}
         {% endif %}
 
         <form id="deleteUserForm" class="form form-edit" method="POST" action="" role="form">
