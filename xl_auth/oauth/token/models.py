@@ -10,6 +10,7 @@ from sqlalchemy.ext.hybrid import hybrid_property
 
 from ...database import Column, Model, SurrogatePK, db, reference_col, relationship
 
+from flask_babel import lazy_gettext as _
 
 class Token(SurrogatePK, Model):
     """An OAuth2 Bearer token."""
