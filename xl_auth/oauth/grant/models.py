@@ -62,7 +62,7 @@ class Grant(SurrogatePK, Model):
 
     @property
     def display_value(self):
-        return f"{self.user.email}: {_('client')} {self.client.name}, {_('expires At')} {self.client.expires_at}"
+        return f"{self.user.email}: {_('Client').lower()} {self.client.name}, {_('Expires At').lower()} {self.client.expires_at}"
 
     def __repr__(self):
         """Represent instance as a unique string."""

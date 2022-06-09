@@ -75,7 +75,7 @@ class Token(SurrogatePK, Model):
 
     @property
     def display_value(self):
-        return f"{self.user.email}: {_('Client')} {self.client.name}, {_('Expires At')} {self.expires_at}"
+        return f"{self.user.email}: {_('Client').lower()} {self.client.name}, {_('Expires At').lower()} {self.expires_at}"
 
     def __repr__(self):
         """Represent instance as a unique string."""
