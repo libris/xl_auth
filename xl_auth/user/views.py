@@ -267,12 +267,12 @@ def delete_user(user_id):
     delete_user_form = DeleteUserForm(current_user, user, request.form)
     if delete_user_form.validate_on_submit():
         old_email = user.email
+        user.soft_delete()
         Token.delete_all_by_user(user)
         Grant.delete_all_by_user(user)
         Permission.delete_all_by_user(user)
         PasswordReset.delete_all_by_user(user)
         FailedLoginAttempt.delete_all_by_user(user)
-        user.soft_delete(current_user)
 
         flash(_('"%(username)s" deleted.', username=old_email),
               'success')

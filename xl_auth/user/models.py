@@ -376,8 +376,8 @@ class User(UserMixin, SurrogatePK, Model):
             # "sqlalchemy.exc.CircularDependencyError: Circular dependency detected."
         return self.save(commit=commit, preserve_modified=preserve_modified)
 
-    def soft_delete(self, current_user):
-        """Soft delete instance as 'current_user'."""
+    def soft_delete(self):
+        """Soft delete instance."""
         self.email = f"DELETED-{str(uuid.uuid4())}"
         self.is_active = False
         self.is_deleted = True
