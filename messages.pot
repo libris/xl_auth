@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xl_auth 1.7.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-08 15:06+0200\n"
+"POT-Creation-Date: 2022-06-09 10:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -324,7 +324,7 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: tests/end2end/test_user_editing.py:170 tests/end2end/test_user_editing.py:389
+#: tests/end2end/test_user_editing.py:170 tests/end2end/test_user_editing.py:388
 #: xl_auth/user/forms.py:189
 msgid "New email"
 msgstr ""
@@ -377,7 +377,7 @@ msgstr ""
 msgid "Change Email"
 msgstr ""
 
-#: tests/end2end/test_user_editing.py:389
+#: tests/end2end/test_user_editing.py:388
 msgid "Invalid email address."
 msgstr ""
 
@@ -1309,7 +1309,7 @@ msgstr ""
 
 #: xl_auth/user/views.py:245
 #, python-format
-msgid "Thank you for changing email for \"%(username)s\"."
+msgid "Email address changed to \"%(username)s\"."
 msgstr ""
 
 #: xl_auth/user/views.py:277

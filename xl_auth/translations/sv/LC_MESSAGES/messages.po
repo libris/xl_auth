@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-08 15:06+0200\n"
-"PO-Revision-Date: 2022-06-08 15:06+0200\n"
+"POT-Creation-Date: 2022-06-09 10:39+0200\n"
+"PO-Revision-Date: 2022-06-09 10:39+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
 "Language-Team: sv <LL@li.org>\n"
@@ -327,7 +327,7 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nej"
 
-#: tests/end2end/test_user_editing.py:170 tests/end2end/test_user_editing.py:389
+#: tests/end2end/test_user_editing.py:170 tests/end2end/test_user_editing.py:388
 #: xl_auth/user/forms.py:189
 msgid "New email"
 msgstr "Ny epostadress"
@@ -380,7 +380,7 @@ msgstr "Byt lösenord"
 msgid "Change Email"
 msgstr "Byt epostadress"
 
-#: tests/end2end/test_user_editing.py:389
+#: tests/end2end/test_user_editing.py:388
 msgid "Invalid email address."
 msgstr "Felaktig epost-adress."
 
@@ -1375,11 +1375,14 @@ msgstr "Lösenord för \"%(username)s\" har ändrats."
 
 #: xl_auth/user/views.py:245
 #, python-format
-msgid "Thank you for changing email for \"%(username)s\"."
-msgstr "Epostadress för \"%(username)s\" har ändrats."
+msgid "Email address changed to \"%(username)s\"."
+msgstr "Epostadress ändrad till \"%(username)s\"."
 
 #: xl_auth/user/views.py:277
 #, python-format
 msgid "\"%(username)s\" deleted."
 msgstr "Användaren \"%(username)s\" har tagits bort."
+
+#~ msgid "Thank you for changing email for \"%(username)s\"."
+#~ msgstr "Epostadress för \"%(username)s\" har ändrats."
 

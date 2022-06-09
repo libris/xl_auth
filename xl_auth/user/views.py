@@ -242,7 +242,7 @@ def change_email(user_id):
     if change_email_form.validate_on_submit():
         user.set_email(change_email_form.email.data)
         user.save_as(current_user)
-        flash(_('Thank you for changing email for "%(username)s".', username=user.email),
+        flash(_('Email address changed to "%(username)s".', username=user.email),
               'success')
         return redirect(get_redirect_target())
     else:
