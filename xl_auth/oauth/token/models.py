@@ -12,6 +12,7 @@ from ...database import Column, Model, SurrogatePK, db, reference_col, relations
 
 from flask_babel import lazy_gettext as _
 
+
 class Token(SurrogatePK, Model):
     """An OAuth2 Bearer token."""
 
@@ -74,7 +75,7 @@ class Token(SurrogatePK, Model):
 
     @property
     def display_value(self):
-        return f"{self.user.email}: {_('Client')} {self.client.name}, {_('Expires At')} {self.client.expires_at}"
+        return f"{self.user.email}: {_('Client')} {self.client.name}, {_('Expires At')} {self.expires_at}"
 
     def __repr__(self):
         """Represent instance as a unique string."""
