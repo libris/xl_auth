@@ -197,6 +197,16 @@ DB Models
 Changelog
 =========
 
+v. 1.8.1
+--------
+
+* Bump version number
+
+v. 1.8.0
+--------
+
+* Delete users in web interface
+
 v. 1.7.1
 --------
 
