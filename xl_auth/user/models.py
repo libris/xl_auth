@@ -378,6 +378,10 @@ class User(UserMixin, SurrogatePK, Model):
 
     def soft_delete(self):
         """Soft delete instance."""
+        for permission in self.permissions:
+            permission.delete()
+        for password_reset in self.password_resets:
+            password_reset.delete()
         self.email = f"DELETED-{str(uuid.uuid4())}"
         self.is_active = False
         self.is_deleted = True

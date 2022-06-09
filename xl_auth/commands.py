@@ -199,7 +199,6 @@ def soft_delete_user(email, dry_run, admin_email):
     The user won't show up in e.g. "inactive users" lists in the frontend.
     """
     user = User.get_by_email(email)
-    op_admin = User.get_by_email(admin_email)
     if user:
         if user.is_admin:
             click.echo(f"Warning: user {user} is a sysadmin.")
@@ -221,11 +220,8 @@ def soft_delete_user(email, dry_run, admin_email):
                              'related to user "{}", and soft-delete the account?'.format(user)):
                 Token.delete_all_by_user(user)
                 Grant.delete_all_by_user(user)
-                Permission.delete_all_by_user(user)
-                PasswordReset.delete_all_by_user(user)
                 FailedLoginAttempt.delete_all_by_user(user)
-                user.soft_delete(op_admin)
-
+                user.soft_delete()
     else:
         click.echo('User "{}" not found. Aborting...'.format(email))
         sys.exit(1)
