@@ -30,7 +30,7 @@
                 <th class="hidden-xs min-width-90px">{{ _('Last Login At') }}</th>
                 <th class="hidden-xs min-width-90px">{{ _('Created At') }}</th>
                 {% if current_user.is_admin %}
-                    <th class="min-width-100px"></th>
+                    <th class="min-width-150px"></th>
                 {% endif %}
             </tr>
             </thead>
@@ -58,10 +58,20 @@
                                         + '?next=' + url_for('user.home') }}">
                                 <i class="fa fa-pencil-alt"></i>
                             </a>
+                            <a class="btn btn-xs btn-default" title="{{ _('Change Email') }}"
+                               href="{{ url_for('user.change_email', user_id=user.id)
+                                        + '?next=' + url_for('user.home') }}">
+                                <i class="fa fa-envelope"></i>
+                            </a>
                             <a class="btn btn-xs btn-default" title="{{ _('Change Password') }}"
                                href="{{ url_for('user.change_password', user_id=user.id)
                                         + '?next=' + url_for('user.home') }}">
                                 <i class="fa fa-key"></i>
+                            </a>
+                            <a class="btn btn-xs btn-danger" title="{{ _('Delete User') }}"
+                               href="{{ url_for('user.delete_user', user_id=user.id)
+                                        + '?next=' + url_for('user.home') }}">
+                                <i class="fa fa-trash"></i>
                             </a>
                         </td>
                     {% endif %}
@@ -94,7 +104,7 @@
                 <th class="hidden-xs min-width-90px">{{ _('Last Login At') }}</th>
                 <th class="hidden-xs min-width-90px">{{ _('Created At') }}</th>
                 {% if current_user.is_admin %}
-                    <th class="min-width-100px"></th>
+                    <th class="min-width-150px"></th>
                 {% endif %}
             </tr>
             </thead>
@@ -121,9 +131,20 @@
                                href="{{ url_for('user.administer', user_id=user.id) }}">
                                 <i class="fa fa-pencil-alt"></i>
                             </a>
+                            <a class="btn btn-xs btn-default" title="{{ _('Change Email') }}"
+                               href="{{ url_for('user.change_email', user_id=user.id)
+                                        + '?next=' + url_for('user.home') }}">
+                                <i class="fa fa-envelope"></i>
+                            </a>
                             <a class="btn btn-xs btn-default" title="{{ _('Change Password') }}"
-                               href="{{ url_for('user.change_password', user_id=user.id) }}">
+                               href="{{ url_for('user.change_password', user_id=user.id)
+                                        + '?next=' + url_for('user.home') }}">
                                 <i class="fa fa-key"></i>
+                            </a>
+                            <a class="btn btn-xs btn-danger" title="{{ _('Delete User') }}"
+                               href="{{ url_for('user.delete_user', user_id=user.id)
+                                        + '?next=' + url_for('user.home') }}">
+                                <i class="fa fa-trash"></i>
                             </a>
                         </td>
                     {% endif %}

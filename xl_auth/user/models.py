@@ -7,6 +7,7 @@ import hashlib
 from binascii import hexlify
 from datetime import datetime, timedelta
 from os import urandom
+import uuid
 
 from flask import current_app, url_for
 from flask_babel import lazy_gettext as _
@@ -216,6 +217,7 @@ class User(UserMixin, SurrogatePK, Model):
     last_login_at = Column(db.DateTime, default=None)
     tos_approved_at = Column(db.DateTime, default=None)
     is_active = Column(db.Boolean(), default=False, nullable=False)
+    is_deleted = Column(db.Boolean(), default=False, nullable=False)
     is_admin = Column(db.Boolean(), default=False, nullable=False)
     permissions = relationship('Permission', back_populates='user',
                                foreign_keys='Permission.user_id', lazy='joined')
@@ -246,9 +248,11 @@ class User(UserMixin, SurrogatePK, Model):
 
     @staticmethod
     def get_modified_and_created_by_user(user):
-        """Get all users created or modified by specified user."""
-        return User.query.filter(or_(User.created_by == user,
-                                     User.modified_by == user)).all()
+        """Get all users (except itself) created or modified by specified user."""
+        return (User.query
+                .filter(or_(User.created_by == user, User.modified_by == user))
+                .filter(User.id != user.id)
+                .all())
 
     @hybrid_property
     def is_cataloging_admin(self):
@@ -289,6 +293,10 @@ class User(UserMixin, SurrogatePK, Model):
     def set_password(self, password):
         """Set password."""
         self.password = bcrypt.generate_password_hash(password)
+
+    def set_email(self, email):
+        """Set email."""
+        self.email = email
 
     def check_password(self, value):
         """Check password."""
@@ -352,6 +360,12 @@ class User(UserMixin, SurrogatePK, Model):
         """Return a list of active and recent password resets for this user."""
         return [reset for reset in self.password_resets if reset.is_active and reset.is_recent]
 
+    @property
+    def display_name(self):
+        if self.is_deleted:
+            return _('Deleted user')
+        return self.full_name
+
     def save_as(self, current_user, commit=True, preserve_modified=False):
         """Save instance as 'current_user'."""
         if current_user and not self.created_at:
@@ -361,6 +375,14 @@ class User(UserMixin, SurrogatePK, Model):
             # Using ``self.modified_by = current_user`` yields an error when user modifies itself:
             # "sqlalchemy.exc.CircularDependencyError: Circular dependency detected."
         return self.save(commit=commit, preserve_modified=preserve_modified)
+
+    def soft_delete(self, current_user):
+        """Soft delete instance as 'current_user'."""
+        self.email = f"DELETED-{str(uuid.uuid4())}"
+        self.is_active = False
+        self.is_deleted = True
+        self.full_name = "DELETED"
+        return self.save(commit=True)
 
     def __repr__(self):
         """Represent instance as a unique string."""

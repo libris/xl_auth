@@ -94,19 +94,15 @@ pipeline {
             }
         }
         stage('Install Dependencies') {
+            environment {
+                FLASK_APP = 'autoapp.py'
+            }
             steps {
-                //noinspection GroovyAssignabilityCheck
-                parallel(
-                    'Npm install + build assets': {
-                        sh 'npm install'
-                        sh 'npm run build'
-                    },
-                    'Create virtualenv (py36)': {
-                        sh 'scl enable rh-python36 "virtualenv $VENV_ROOT/py36venv"'
-                        sh 'scl enable rh-python36 ". $VENV_ROOT/py36venv/bin/activate && python -m pip install -U pip"'
-                        sh 'scl enable rh-python36 "$VENV_ROOT/py36venv/bin/pip --cache-dir ~/.cache/pip36/$EXECUTOR_NUMBER install -r requirements/dev.txt"'
-                    }
-                )
+                sh 'scl enable rh-python36 "virtualenv $VENV_ROOT/py36venv"'
+                sh 'scl enable rh-python36 ". $VENV_ROOT/py36venv/bin/activate && python -m pip install -U pip"'
+                sh 'scl enable rh-python36 "$VENV_ROOT/py36venv/bin/pip --cache-dir ~/.cache/pip36/$EXECUTOR_NUMBER install -r requirements/dev.txt"'
+                sh 'npm install'
+                sh 'scl enable rh-python36 ". $VENV_ROOT/py36venv/bin/activate && npm run build"'
             }
             post {
                 success {

@@ -101,7 +101,7 @@ def test_get_access_token(grant, testapp):
     token = Token.query.filter_by(user_id=grant.user_id, client_id=grant.client_id).first()
     assert res.json_body['scope'] == ' '.join(grant.scopes)
     assert res.json_body['token_type'] == 'Bearer'
-    assert res.json_body['expires_in'] == 3600
+    assert res.json_body['expires_in'] == 36000
     assert res.json_body['access_token'] == token.access_token
     assert res.json_body['refresh_token'] == token.refresh_token
     assert res.json_body['app_version'] == __version__
@@ -123,7 +123,7 @@ def test_refresh_access_token(token, testapp):
     assert updated_token.id == token.id
     assert res.json_body['scope'] == ' '.join(updated_token.scopes)
     assert res.json_body['token_type'] == 'Bearer'
-    assert res.json_body['expires_in'] == 3600
+    assert res.json_body['expires_in'] == 36000
     assert res.json_body['access_token'] == updated_token.access_token
     assert res.json_body['refresh_token'] == updated_token.refresh_token
     assert res.json_body['app_version'] == __version__

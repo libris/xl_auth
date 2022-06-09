@@ -18,6 +18,9 @@
                    href="{{ url_for('user.edit_details', user_id=current_user.id)
                             + '?next=' + url_for('user.profile') }}">{{ _('Edit Display Name') }}</a>
                 <a class="btn btn-default"
+                   href="{{ url_for('user.change_email', user_id=current_user.id)
+                            + '?next=' + url_for('user.profile') }}">{{ _('Change Email') }}</a>
+                <a class="btn btn-default"
                    href="{{ url_for('user.change_password', user_id=current_user.id)
                             + '?next=' + url_for('user.profile')}}">{{ _('Change Password') }}</a>
             {% endif %}

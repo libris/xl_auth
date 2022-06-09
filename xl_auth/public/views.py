@@ -21,7 +21,10 @@ blueprint = Blueprint('public', __name__, static_folder='../static')
 @login_manager.user_loader
 def load_user(user_id):
     """Load user by ID."""
-    return User.get_by_id(int(user_id))
+    user = User.get_by_id(int(user_id))
+    if user is not None and (user.is_deleted or not user.is_active):
+        return None
+    return user
 
 
 @login_manager.unauthorized_handler
