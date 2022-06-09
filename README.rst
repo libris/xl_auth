@@ -29,9 +29,9 @@ Run the following commands to bootstrap your environment ::
     pip install wheel
     pip install -r requirements/dev.txt
     npm install
-    npm run build
     export FLASK_APP=$(pwd)/autoapp.py
     export FLASK_DEBUG=1
+    npm run build
     flask db upgrade
     flask create-user --email me@example.com -p password --is-admin --is-active
     npm start  # run webpack dev server and flask server using concurrently

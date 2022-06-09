@@ -8,7 +8,7 @@
     <div class="panel panel-default">
         <dl class="dl-horizontal">
             <dt>{{ _('Full name') }}:</dt>
-            <dd>{{ user.full_name }}</dd>
+            <dd>{{ user.display_name }}</dd>
 
             <dt>{{ _('Last Login At') }}:</dt>
             <dd>{{ '-' if not user.last_login_at else user.last_login_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}</dd>
@@ -17,7 +17,7 @@
             <dd>
                 {{ user.modified_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}, {{ _('by') }}
                 <a href="{{ url_for('user.view', user_id=user.modified_by.id) }}">
-                    {{ user.modified_by.full_name }}
+                    {{ user.modified_by.display_name }}
                 </a>
             </dd>
 
@@ -25,7 +25,7 @@
             <dd>
                 {{ user.created_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}, {{ _('by') }}
                 <a href="{{ url_for('user.view', user_id=user.created_by.id) }}">
-                    {{ user.created_by.full_name }}
+                    {{ user.created_by.display_name }}
                 </a>
             </dd>
 
@@ -113,7 +113,7 @@
                     </td>
                     <td>{{ permission.modified_at.strftime('%y-%m-%d') }}, {{ _('by') }}
                         <a href="{{ url_for('user.view', user_id=permission.modified_by.id) }}">
-                            {{ permission.modified_by.full_name }}
+                            {{ permission.modified_by.display_name }}
                         </a>
                     </td>
                     <td class="actions">

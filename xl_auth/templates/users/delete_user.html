@@ -1,0 +1,54 @@
+<!-- users/edit_details_form.html -->
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container-narrow">
+        <h3 class="word-break-all">{{ _('Delete User') }} {{ user.email }}</h3>
+        <br>
+        {% if tokens %}
+            <p>{{  _('These tokens would be deleted:') }}</p>
+            {% with items=tokens %}
+                {% include "delete_user_list.html" %}
+            {% endwith %}
+        {% endif %}
+
+        {% if grants %}
+            <p>{{  _('These grants would be deleted:') }}</p>
+            {% with items=grants %}
+                {% include "delete_user_list.html" %}
+            {% endwith %}
+        {% endif %}
+
+        {% if failed_login_attempts %}
+            <p>{{ _('These failed login attempts would be deleted:') }}</p>
+            {% with items=failed_login_attempts %}
+                {% include "delete_user_list.html" %}
+            {% endwith %}
+        {% endif %}
+
+        {% if permissions %}
+            <p>{{  _('These permissions would be deleted:') }}</p>
+            {% with items=permissions %}
+                {% include "delete_user_list.html" %}
+            {% endwith %}
+        {% endif %}
+
+        {% if password_resets %}
+            <p>{{ _('These password resets would be deleted:') }}</p>
+            {% with items=password_resets %}
+                {% include "delete_user_list.html" %}
+            {% endwith %}
+        {% endif %}
+
+        <form id="deleteUserForm" class="form form-edit" method="POST" action="" role="form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            {{ delete_user_form.next_redirect(value=next_redirect_url or "") }}
+
+            <div class="form-group">
+                {{ delete_user_form.confirm.label }}
+                {{ delete_user_form.confirm() }}
+            </div>
+
+            <p><input class="btn btn-danger btn-submit" type="submit" value="{{ _('YES, delete user') }}"></p>
+        </form>
+    </div>
+{% endblock %}
