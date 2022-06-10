@@ -197,6 +197,10 @@ DB Models
 Changelog
 =========
 
+v. 1.8.2
+--------
+* CSS fixes
+
 v. 1.8.1
 --------
 
@@ -205,7 +209,7 @@ v. 1.8.1
 v. 1.8.0
 --------
 
-* Delete users in web interface
+* Soft-delete users in web interface and using `flask soft-delete-user`; support changing user email address
 
 v. 1.7.1
 --------

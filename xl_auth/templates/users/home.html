@@ -30,7 +30,7 @@
                 <th class="hidden-xs min-width-90px">{{ _('Last Login At') }}</th>
                 <th class="hidden-xs min-width-90px">{{ _('Created At') }}</th>
                 {% if current_user.is_admin %}
-                    <th class="min-width-150px"></th>
+                    <th class="min-width-users-button-row"></th>
                 {% endif %}
             </tr>
             </thead>
@@ -42,7 +42,7 @@
                             {{ user.email }}
                         </a>
                     </td>
-                    <td class="hidden-xs">{{ user.full_name }}</td>
+                    <td class="hidden-xs word-break-all">{{ user.full_name }}</td>
                     <td>{{ user.permissions | length }}</td>
                     <td class="{{ "bool-value-{}".format(user.is_admin).lower() }}">{{ _('Yes') if user.is_admin else _('No') }}</td>
                     <td class="hidden-xs">{{ '-' if not user.last_login_at else user.last_login_at.strftime('%y-%m-%d') }}</td>
@@ -104,7 +104,7 @@
                 <th class="hidden-xs min-width-90px">{{ _('Last Login At') }}</th>
                 <th class="hidden-xs min-width-90px">{{ _('Created At') }}</th>
                 {% if current_user.is_admin %}
-                    <th class="min-width-150px"></th>
+                    <th class="min-width-users-button-row"></th>
                 {% endif %}
             </tr>
             </thead>
@@ -116,7 +116,7 @@
                             {{ user.email }}
                         </a>
                     </td>
-                    <td class="hidden-xs">{{ user.full_name }}</td>
+                    <td class="hidden-xs word-break-all">{{ user.full_name }}</td>
                     <td>{{ user.permissions | length }}</td>
                     <td class="{{ "bool-value-{}".format(user.is_admin).lower() }}">{{ _('Yes') if user.is_admin else _('No') }}</td>
                     <td class="hidden-xs">{{ '-' if not user.last_login_at else user.last_login_at.strftime('%y-%m-%d') }}</td>
