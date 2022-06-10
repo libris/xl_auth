@@ -197,6 +197,10 @@ DB Models
 Changelog
 =========
 
+v. 1.8.3
+--------
+Bump dependencies
+
 v. 1.8.2
 --------
 * CSS fixes
