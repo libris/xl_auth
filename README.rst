@@ -197,6 +197,10 @@ DB Models
 Changelog
 =========
 
+v. 1.9.0
+--------
+* Include user id in `/verify` response
+
 v. 1.8.3
 --------
 Bump dependencies
