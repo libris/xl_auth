@@ -160,6 +160,7 @@ def verify():
         user={
             'full_name': oauth.user.full_name,
             'email': oauth.user.email,
+            'id': oauth.user.id,
             'permissions': [{'code': permission.collection.code,
                              'friendly_name': permission.collection.friendly_name,
                              'cataloger': permission.cataloger,

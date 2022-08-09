@@ -8,6 +8,7 @@ Jinja2==2.11.3
 itsdangerous==0.24
 click==7.1.2
 sh==1.12.14
+flask-cors==3.0.10
 
 # Database
 Flask-SQLAlchemy==2.5.1
