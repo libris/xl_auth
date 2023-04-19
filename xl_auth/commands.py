@@ -20,6 +20,7 @@ from werkzeug.exceptions import MethodNotAllowed, NotFound
 from xl_auth.collection.models import Collection
 from xl_auth.oauth.grant.models import Grant
 from xl_auth.oauth.token.models import Token
+from xl_auth.oauth.client.models import Client
 from xl_auth.permission.models import Permission
 from xl_auth.user.models import FailedLoginAttempt, PasswordReset, User
 
@@ -225,6 +226,76 @@ def soft_delete_user(email, dry_run, admin_email):
     else:
         click.echo('User "{}" not found. Aborting...'.format(email))
         sys.exit(1)
+
+
+@click.command()
+@with_appcontext
+@click.option('--name', required=True, help='OAuth2 client name')
+@click.option('--description', default="", help='OAuth2 client description')
+@click.option('--is-confidential', default=True, is_flag=True, help='Confidential')
+@click.option('--redirect-uris', required=True, help='Redirect URIs')
+@click.option('--default-scopes', required=True, help='Default scopes, e.g. `read write`')
+@click.option('--admin-email', default='libris@kb.se', help='Related admin (default: libris@kb.se)')
+def add_oauth_client(name, description, is_confidential, redirect_uris, default_scopes, admin_email):
+    """Add OAuth2 client."""
+    op_admin = User.get_by_email(admin_email)
+
+    client = Client.create_as(op_admin, name=name, description=description,
+                              is_confidential=is_confidential, redirect_uris=redirect_uris,
+                              default_scopes=default_scopes)
+    click.echo(client.client_id)
+
+
+@click.command()
+@with_appcontext
+@click.option('--code', required=True, help='Code (sigel)')
+@click.option('--name', required=True, help='Name')
+@click.option('--category', required=True, default='uncategorized', help='Category (default `uncategorized`)')
+@click.option('--admin-email', default='libris@kb.se', help='Related admin (default: libris@kb.se)')
+def add_collection(code, name, category, admin_email):
+    op_admin = User.get_by_email(admin_email)
+
+    if Collection.get_by_code(code):
+        click.echo(f"Collection {code} already exists. Aborting...")
+        sys.exit(1)
+
+    collection = Collection.create_as(op_admin, code=code, friendly_name=name, category=category)
+    click.echo(f"Created collection {collection.code}")
+
+
+@click.command()
+@with_appcontext
+@click.option('--user-email', required=True, help='Email of user')
+@click.option('--collection-code', required=True, help='Collection (code/sigel)')
+@click.option('--is-registrant', default=False, is_flag=True)
+@click.option('--is-cataloger', default=False, is_flag=True)
+@click.option('--is-cataloging-admin', default=False, is_flag=True)
+@click.option('--is-global-registrant', default=False, is_flag=True)
+@click.option('--admin-email', default='libris@kb.se', help='Related admin (default: libris@kb.se)')
+def add_user_to_collection(user_email, collection_code, is_registrant, is_cataloger, is_cataloging_admin, is_global_registrant, admin_email):
+    op_admin = User.get_by_email(admin_email)
+
+    user = User.get_by_email(user_email)
+    if not user:
+        click.echo(f"User {user_email} not found. Aborting...")
+        sys.exit(1)
+
+    collection = Collection.get_by_code(collection_code)
+    if not collection:
+        click.echo(f"Collection {collection_code} not found. Aborting...")
+        sys.exit(1)
+
+    existing_permission = Permission.query.filter_by(user_id=user.id, collection_id=collection.id).first()
+    if existing_permission:
+        click.echo(f"Permission already exist: {existing_permission.display_value}")
+        click.echo("Aborting...")
+        sys.exit(1)
+
+    permission = Permission.create_as(op_admin, user=user, collection=collection, registrant=is_registrant,
+                                      cataloger=is_cataloger, cataloging_admin=is_cataloging_admin,
+                                      global_registrant=is_global_registrant)
+
+    click.echo(f"Added permission {permission.display_value}")
 
 
 @click.command()
