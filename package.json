@@ -10,6 +10,7 @@
   },
   "scripts": {
     "build": "NODE_ENV=production webpack --progress --color --optimization-minimize && flask digest compile",
+    "build-no-flask": "NODE_ENV=production webpack --progress --color --optimization-minimize",
     "start": "concurrently -n \"WEBPACK,FLASK\" -c \"bgBlue.bold,bgMagenta.bold\" \"npm run webpack-watch\" \"npm run flask-server\"",
     "webpack-watch": "NODE_ENV=debug webpack --mode development --watch",
     "flask-server": "FLASK_APP=$PWD/autoapp.py FLASK_DEBUG=1 flask run --port 5001",
