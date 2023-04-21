@@ -54,8 +54,9 @@ class DevConfig(Config):
     ENV = 'dev'
     DEBUG = True
     DB_NAME = 'dev.db'
-    # Put the db file in project root
-    DB_PATH = os.path.join(Config.PROJECT_ROOT, DB_NAME)
+    # Put the db file in project root.
+    # Can be overridden with env variable, e.g. XL_AUTH_DB_PATH=/foo/bar/xl_auth.db
+    DB_PATH = os.getenv('XL_AUTH_DB_PATH', os.path.join(Config.PROJECT_ROOT, DB_NAME))
     SQLALCHEMY_DATABASE_URI = 'sqlite:///{0}'.format(DB_PATH)
     DEBUG_TB_ENABLED = True
     CACHE_TYPE = 'SimpleCache'  # Can be "memcached", "redis", etc.
