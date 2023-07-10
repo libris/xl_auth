@@ -46,33 +46,6 @@ In general, before running flask shell commands, set the ``FLASK_APP`` and
 
 Setting FLASK_DEBUG=1 will tell the application to use ``DevConfig`` as specified in ./xl_auth/settings.py. This configuration sets up a SQLite db for development and points the SQLALCHEMY_DATABASE_URI environment variable to this db.
 
-Deployment
-==========
-
-Local dev deployment ::
-
-    export FLASK_DEBUG=0
-    export SQLALCHEMY_DATABASE_URI=postgresql://localhost/db')
-    npm run build    # build assets with webpack
-    flask translate  # compile translations
-    flask run        # start the flask server
-
-In your production environment, make sure the ``FLASK_DEBUG`` environment variable is set to ``0``,
-so that ``ProdConfig`` is used.
-
-Staging dev deployment ::
-
-    cd ansible/
-    vagrant up --provision
-
-Rolling out latest Docker on login.libris.kb.se dev server ::
-
-    cd ansible/
-    ansible-playbook deployment.yml -u <my-exchange-username> --ask-pass --ask-become-pass
-
-For creating an initial admin account during provisioning, with username libris@kb.se,
-append ``-e xl_auth_admin_pass=my-secret-password`` to the Ansible invocation.
-
 
 Shell
 =====
