@@ -1,6 +1,5 @@
 """Test inspecting user."""
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from flask import url_for
 from flask_babel import gettext as _

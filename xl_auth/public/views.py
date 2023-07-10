@@ -1,6 +1,5 @@
 """Public section, including homepage and signup."""
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from flask import (Blueprint, current_app, flash, make_response, redirect, render_template, request,
                    session, url_for)

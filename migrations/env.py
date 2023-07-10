@@ -1,6 +1,5 @@
 """Some script added by Flask-Migrate `db init` command."""
 
-from __future__ import with_statement
 
 import logging
 from logging.config import fileConfig

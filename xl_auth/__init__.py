@@ -1,6 +1,5 @@
 """Root Python package providing KB ``xl_auth`` OAuth2 provider."""
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 import json
 from os import path

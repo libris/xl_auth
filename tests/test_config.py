@@ -1,6 +1,5 @@
 """Test configs."""
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from xl_auth.app import create_app
 from xl_auth.settings import DevConfig, ProdConfig

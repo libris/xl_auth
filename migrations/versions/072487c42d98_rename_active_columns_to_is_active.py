@@ -6,7 +6,6 @@ Create Date: 2017-11-14 15:46:33.118004
 
 """
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from alembic import op
 
