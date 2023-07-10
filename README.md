@@ -149,6 +149,16 @@ Technology choices:
 
 ## Changelog
 
+### v. 1.10.0 (unreleased)
+
+- Bump dependencies to make xl_auth work with newer (3.9+) versions of Python
+- Make Dockerfile work again
+- Update README; remove outdated things
+- Remove old, unused Ansible files
+- Remove old, unused docker-compose file
+- Convert README from rst to Markdown
+
+
 ### v. 1.9.0
 
 -   Include user id in [/verify]{.title-ref} response
