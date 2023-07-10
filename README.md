@@ -61,7 +61,7 @@ use ASCII. Solve it like so:
 
 ## Running Tests
 
-To run all tests, run :
+To run all tests, run:
 
     flask test
 
@@ -98,7 +98,7 @@ to refer to it inside your HTML page. If all of your static files are
 managed this way, then their filenames will change whenever their
 contents do, and you can ask Flask to tell web browsers that they should
 cache all your assets forever by including the following line in your
-`settings.py` :
+`settings.py`:
 
     SEND_FILE_MAX_AGE_DEFAULT = 31556926  # one year
 
