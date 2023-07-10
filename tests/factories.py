@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Factories to help in tests."""
 
 from __future__ import absolute_import, division, print_function, unicode_literals
