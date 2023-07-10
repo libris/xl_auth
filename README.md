@@ -53,8 +53,7 @@ To compile Swedish localization support using Babel, run:
 
     flask translate
 
-
-_Note_: Might fail with a [RuntimeError]{.title-ref} if your shell env is set to
+_Note_: Might fail with a `RuntimeError` if your shell env is set to
 use ASCII. Solve it like so:
 
     export LC_ALL=sv_SE.UTF-8
@@ -68,8 +67,7 @@ To run all tests, run :
 
 ## Migrations
 
-Whenever a database migration needs to be made. Run the following
-commands:
+Whenever a database migration needs to be made. Run the following commands:
 
     flask db migrate
 
@@ -109,18 +107,15 @@ cache all your assets forever by including the following line in your
 The latest application build can be built and run using Docker for
 testing purposes:
 
-    docker build -t mblomdahl/xl_auth .
-    docker run -it -p 5000:5000 mblomdahl/xl_auth
+    docker build -t xl_auth .
+    docker run -it -p 5000:5000 xl_auth
 
 All Flask command-line tools are accessed by optional input argument to
-the container, e.g. `flask shell -> docker run -it ...ahl/auth shell`,
-`flask db -> docker run -it ...ahl/auth db`.
+the container, e.g. `flask shell -> docker run -it xl_auth shell`,
+`flask db -> docker run -it xl_auth db`.
 
-Docker images built by Jenkins can be tried out locally by executing the
-following steps:
+Create a user:
 
-    docker run -itp 5000:5000 --rm --name xl_auth mblomdahl/xl_auth:next
-    # Above command does not detach, so, in another terminal:
     docker exec -it xl_auth /usr/local/bin/flask create-user -e me@kb.se -p 1234 --force \
         --is-admin --is-active
     # Now open localhost:5000 in the browser and login as me@kb.se
