@@ -98,7 +98,7 @@ pipeline {
                 FLASK_APP = 'autoapp.py'
             }
             steps {
-                sh 'scl enable rh-python38 "virtualenv $VENV_ROOT/py38venv"'
+                sh 'scl enable rh-python38 "python3 -m venv $VENV_ROOT/py38venv"'
                 sh 'scl enable rh-python38 ". $VENV_ROOT/py38venv/bin/activate && python -m pip install -U pip"'
                 sh 'scl enable rh-python38 "$VENV_ROOT/py38venv/bin/pip --cache-dir ~/.cache/pip38/$EXECUTOR_NUMBER install -r requirements/dev.txt"'
                 sh 'npm install'
