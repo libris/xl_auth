@@ -98,15 +98,15 @@ pipeline {
                 FLASK_APP = 'autoapp.py'
             }
             steps {
-                sh 'scl enable rh-python36 "virtualenv $VENV_ROOT/py36venv"'
-                sh 'scl enable rh-python36 ". $VENV_ROOT/py36venv/bin/activate && python -m pip install -U pip"'
-                sh 'scl enable rh-python36 "$VENV_ROOT/py36venv/bin/pip --cache-dir ~/.cache/pip36/$EXECUTOR_NUMBER install -r requirements/dev.txt"'
+                sh 'scl enable rh-python38 "virtualenv $VENV_ROOT/py38venv"'
+                sh 'scl enable rh-python38 ". $VENV_ROOT/py38venv/bin/activate && python -m pip install -U pip"'
+                sh 'scl enable rh-python38 "$VENV_ROOT/py38venv/bin/pip --cache-dir ~/.cache/pip38/$EXECUTOR_NUMBER install -r requirements/dev.txt"'
                 sh 'npm install'
-                sh 'scl enable rh-python36 ". $VENV_ROOT/py36venv/bin/activate && npm run build"'
+                sh 'scl enable rh-python38 ". $VENV_ROOT/py38venv/bin/activate && npm run build"'
             }
             post {
                 success {
-                    sh 'scl enable rh-python36 ". $VENV_ROOT/py36venv/bin/activate && \
+                    sh 'scl enable rh-python38 ". $VENV_ROOT/py38venv/bin/activate && \
 FLASK_APP=autoapp.py flask translate"'
                 }
             }
@@ -133,14 +133,14 @@ FLASK_APP=autoapp.py flask translate"'
 //                             }
 //                         }
 //                     },
-                    'pytest (py36)': {
+                    'pytest (py38)': {
                         script {
                             try {
-                                sh 'scl enable rh-python36 ". $VENV_ROOT/py36venv/bin/activate && \
-flask test --junit-xml=py36test-junit.xml"'
+                                sh 'scl enable rh-python38 ". $VENV_ROOT/py38venv/bin/activate && \
+flask test --junit-xml=py38test-junit.xml"'
                             }
                             finally {
-                                junit 'py36test-junit.xml'
+                                junit 'py38test-junit.xml'
                             }
                         }
                     }

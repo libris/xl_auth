@@ -137,8 +137,7 @@ Technology choices:
     behind Nginx reverse-proxying in production and utilizing
     [Flask-OAuthlib](https://flask-oauthlib.readthedocs.io/en/latest/)
     for OAuth2 support
--   Python 3.6 strongly preferred, but should probably run on 2.7 as
-    well
+-   Python 3.8+
 -   Jenkins multi-branch declarative pipeline for CI during development
 -   The production database of choice is Postgres, using SQLAlchemy
     PostgreSQL Engine
