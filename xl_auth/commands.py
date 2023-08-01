@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """Click commands."""
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 import datetime as dt
 import json
@@ -49,7 +47,7 @@ def test(junit_xml=None):
               help='Fix imports using isort, before linting')
 def lint(fix_imports):
     """Lint and check code style with flake8/isort."""
-    skip = ['node_modules', 'venv', 'py27venv', 'py35venv', 'py36venv', 'requirements']
+    skip = ['node_modules', 'venv', 'py27venv', 'py35venv', 'py36venv', 'py38venv', 'requirements']
     root_files = glob('*.py')
     root_directories = [
         name for name in next(os.walk('.'))[1] if not name.startswith('.')]

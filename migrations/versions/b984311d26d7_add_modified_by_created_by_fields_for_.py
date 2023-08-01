@@ -6,7 +6,6 @@ Create Date: 2017-11-21 15:50:10.745763
 
 """
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from binascii import hexlify
 from codecs import getencoder

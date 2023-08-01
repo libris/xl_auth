@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """Database module, including the SQLAlchemy database object and DB-related utilities."""
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from codecs import getencoder
 from os import urandom

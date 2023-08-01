@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """OAuth Grant views."""
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from flask import Blueprint, abort, flash, redirect, render_template, url_for
 from flask_babel import lazy_gettext as _

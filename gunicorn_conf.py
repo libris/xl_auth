@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """Gunicorn production config."""
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from click import echo
 

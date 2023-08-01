@@ -6,7 +6,6 @@ Create Date: 2018-08-21 12:58:24.101819
 
 """
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 import sqlalchemy as sa
 from alembic import op
