@@ -26,7 +26,7 @@
                     <td>{{ grant.expires_at.strftime('%y-%m-%d %H:%M:%S') }}</td>
                     <td class="actions">
                         <a class="btn btn-xs btn-danger" title="{{ _('Delete Grant') }}"
-                           href="{{ url_for('oauth.grant.delete', grant_id=grant.id) }}">
+                           href="{{ url_for('oauth_grant.delete', grant_id=grant.id) }}">
                             <i class="fa fa-trash"></i>
                         </a>
                     </td>

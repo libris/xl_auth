@@ -7,7 +7,7 @@ from flask_login import current_user, login_required
 
 from .models import Token
 
-blueprint = Blueprint('oauth.token', __name__, url_prefix='/oauth/tokens',
+blueprint = Blueprint('oauth_token', __name__, url_prefix='/oauth/tokens',
                       static_folder='../../static')
 
 
@@ -38,4 +38,4 @@ def delete(token_id):
         token.delete()
         flash(_('Successfully deleted OAuth2 Bearer token "%(token_id)s".', token_id=token_id),
               'success')
-    return redirect(url_for('oauth.token.home'))
+    return redirect(url_for('oauth_token.home'))
