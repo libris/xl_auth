@@ -5,7 +5,7 @@
         "node": true
     },
     "parser": "@babel/eslint-parser",
-    parserOptions: {
+    "parserOptions": {
         requireConfigFile: false
     },
     "rules": {
