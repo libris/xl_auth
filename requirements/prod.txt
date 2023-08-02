@@ -11,9 +11,9 @@ sh==1.12.14
 flask-cors==4.0.0
 
 # Database
-Flask-SQLAlchemy==2.5.1
-psycopg2-binary==2.8.6
-SQLAlchemy==1.4.17
+Flask-SQLAlchemy==3.0.5
+psycopg2-binary==2.9.6
+SQLAlchemy==1.4.18
 alembic==1.6.5
 
 # Migrations
