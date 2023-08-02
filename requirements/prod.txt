@@ -19,9 +19,10 @@ alembic==1.6.5
 # Migrations
 Flask-Migrate==3.0.1
 
-# Forms (omitting version for WTForms for hacky-technical reasons)
+# Forms
 Flask-WTF==1.1.1
-git+https://github.com/libris/wtforms.git
+WTForms==3.0.1
+email-validator==2.0.0.post2
 
 # Deployment
 gunicorn==19.7.1
