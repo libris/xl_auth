@@ -20,13 +20,13 @@ def test_superuser_can_delete_existing_client(superuser, client, testapp):
     # Submits
     res = form.submit().follow()
     # Clicks Clients button
-    # res = res.click(href=url_for('oauth.client.home'))
+    # res = res.click(href=url_for('oauth_client.home'))
     # FIXME: No nav link yet
-    assert res.lxml.xpath("//a[contains(@href,'{0}')]".format(url_for('oauth.client.home'))) == []
+    assert res.lxml.xpath("//a[contains(@href,'{0}')]".format(url_for('oauth_client.home'))) == []
 
     res = testapp.get('/oauth/clients/')
     # Clicks Delete button on a client
-    res = res.click(href=url_for('oauth.client.delete', client_id=client.client_id)).follow()
+    res = res.click(href=url_for('oauth_client.delete', client_id=client.client_id)).follow()
     assert res.status_code == 200
     # Client was deleted, so number of clients are 1 less than initial state
     assert _('Successfully deleted OAuth2 Client "%(name)s".', name=name) in res
@@ -52,7 +52,7 @@ def test_user_cannot_delete_client(user, client, testapp):
     testapp.get('/oauth/clients/', status=403)
 
     # Try to delete
-    testapp.delete(url_for('oauth.client.delete', client_id=client.client_id), status=403)
+    testapp.delete(url_for('oauth_client.delete', client_id=client.client_id), status=403)
 
     # Nothing was deleted
     assert len(Client.query.all()) == old_count

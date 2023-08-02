@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 
 from flask import current_app, url_for
 from flask_babel import gettext as _
-from jinja2 import escape
+from markupsafe import escape
 
 from xl_auth.user.models import PasswordReset
 

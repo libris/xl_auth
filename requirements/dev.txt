@@ -3,7 +3,7 @@
 
 # Testing and stuff
 pytest==7.4.0
-WebTest==2.0.35
+WebTest==3.0.0
 factory-boy==2.9.2
 coverage==4.4.1
 flask-shell-ipython==0.3.1
