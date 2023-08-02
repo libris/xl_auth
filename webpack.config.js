@@ -55,16 +55,17 @@ module.exports = {
                     'css-loader'
                 ]
             },
-            {test: /\.html$/, loader: 'raw-loader'},
+            {
+                test: /\.html$/,
+                type: 'asset/source'
+            },
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'url-loader',
-                options: {limit: 10000, mimetype: 'application/font-woff'}
+                type: 'asset'
             },
             {
                 test: /\.(ttf|eot|svg|png|jpe?g|gif|ico)(\?.*)?$/i,
-                loader: 'file-loader',
-                options: {context: rootAssetPath, name: '[path][name].[ext]'}
+                type: 'asset/resource'
             },
             {
                 test: /\.js$/,
