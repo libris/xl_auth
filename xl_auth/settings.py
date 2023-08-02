@@ -14,7 +14,6 @@ class Config(object):
     APP_NAME = __name__
     APP_VERSION = __version__
     APP_AUTHOR = __author__
-    JSON_AS_ASCII = False
     SECRET_KEY = os.environ.get('XL_AUTH_SECRET', 'secret-key')  # TODO: Change me
     APP_DIR = os.path.abspath(os.path.dirname(__file__))  # This directory.
     PROJECT_ROOT = os.path.abspath(os.path.join(APP_DIR, os.pardir))
