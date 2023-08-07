@@ -9,6 +9,8 @@ itsdangerous==2.1.2
 click==8.1.6
 sh==1.12.14
 flask-cors==4.0.0
+# TODO: upgrade urllib3 to 2.x
+urllib3==1.26.16
 
 # Database
 Flask-SQLAlchemy==3.0.5
