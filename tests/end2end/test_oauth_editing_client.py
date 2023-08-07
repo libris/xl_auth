@@ -23,13 +23,13 @@ def test_superuser_can_edit_existing_client(superuser, client, testapp):
     res = form.submit().follow()
 
     # Clicks Clients button
-    # res = res.click(href=url_for('oauth.client.home'))
+    # res = res.click(href=url_for('oauth_client.home'))
     # FIXME: No nav link yet
-    assert res.lxml.xpath("//a[contains(@href,'{0}')]".format(url_for('oauth.client.home'))) == []
+    assert res.lxml.xpath("//a[contains(@href,'{0}')]".format(url_for('oauth_client.home'))) == []
 
     res = testapp.get('/oauth/clients/')
     # Clicks Edit Client button
-    res = res.click(href=url_for('oauth.client.edit', client_id=client.client_id))
+    res = res.click(href=url_for('oauth_client.edit', client_id=client.client_id))
 
     # Fills out the form
     form = res.forms['editForm']
@@ -72,10 +72,10 @@ def test_user_cannot_edit_existing_client(user, client, testapp):
     res = form.submit().follow()
 
     # No Client home button for regular users
-    assert res.lxml.xpath("//a[contains(@href,'{0}')]".format(url_for('oauth.client.home'))) == []
+    assert res.lxml.xpath("//a[contains(@href,'{0}')]".format(url_for('oauth_client.home'))) == []
 
     # Try to go there directly
     testapp.get('/oauth/clients/', status=403)
 
     # Try to go directly to edit
-    testapp.get(url_for('oauth.client.edit', client_id=client.client_id), status=403)
+    testapp.get(url_for('oauth_client.edit', client_id=client.client_id), status=403)

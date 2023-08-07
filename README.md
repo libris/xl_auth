@@ -82,7 +82,7 @@ For a full migration command reference, run `flask db --help`.
 ## Asset Management
 
 Files placed inside the `assets` directory and its subdirectories
-(excluding `js` and `css`) will be copied by webpack\'s `file-loader`
+(excluding `js` and `css`) will be copied by webpack's Asset Modules
 into the `static/build` directory, with hashes of their contents
 appended to their names.
 
@@ -156,6 +156,8 @@ Technology choices:
 - Remove old, unused Ansible files
 - Remove old, unused docker-compose file
 - Convert README from rst to Markdown
+- Upgrade to Flask 2.2.x
+- Bump various Python and Node.js dependencies
 
 
 ### v. 1.9.0

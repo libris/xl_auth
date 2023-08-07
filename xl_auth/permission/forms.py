@@ -88,9 +88,9 @@ class RegisterForm(PermissionForm):
             raise ValidationError(
                 _('You do not have sufficient privileges for this operation.'))
 
-    def validate(self):
+    def validate(self, extra_validators=None):
         """Validate the form."""
-        initial_validation = super(RegisterForm, self).validate()
+        initial_validation = super(RegisterForm, self).validate(extra_validators)
         if not initial_validation:
             return False
 
@@ -166,9 +166,9 @@ class EditForm(PermissionForm):
             raise ValidationError(_('You do not have sufficient privileges '
                                     'for this operation.'))
 
-    def validate(self):
+    def validate(self, extra_validators=None):
         """Validate the form."""
-        initial_validation = super(EditForm, self).validate()
+        initial_validation = super(EditForm, self).validate(extra_validators)
         if not initial_validation:
             return False
 
@@ -210,9 +210,9 @@ class DeleteForm(FlaskForm):
         self.permission_id.default = target_permission_id
         self.permission_id.validators = [AnyOf([target_permission_id])]
 
-    def validate(self):
+    def validate(self, extra_validators=None):
         """Validate the form."""
-        initial_validation = super(DeleteForm, self).validate()
+        initial_validation = super(DeleteForm, self).validate(extra_validators)
         if not initial_validation:
             return False
 

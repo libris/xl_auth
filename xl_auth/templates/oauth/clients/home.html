@@ -8,7 +8,7 @@
             <strong>{{ _('OAuth2 Clients') }}</strong>
             {% if current_user.is_admin %}
                 <a class="btn btn-xs btn-primary pull-right"
-                   href="{{ url_for('oauth.client.register') }}">{{ _('New Client') }}</a>
+                   href="{{ url_for('oauth_client.register') }}">{{ _('New Client') }}</a>
             {% endif %}
         </div>
         <table class="table table-hover">
@@ -28,11 +28,11 @@
                     <td>{{ client.description }}</td>
                     <td class="actions">
                         <a class="btn btn-xs btn-default" title="{{ _('Edit Client') }}"
-                           href="{{ url_for('oauth.client.edit', client_id=client.client_id) }}">
+                           href="{{ url_for('oauth_client.edit', client_id=client.client_id) }}">
                             <i class="fa fa-pencil-alt"></i>
                         </a>
                         <a class="btn btn-xs btn-danger" title="{{ _('Delete Client') }}"
-                           href="{{ url_for('oauth.client.delete', client_id=client.client_id) }}">
+                           href="{{ url_for('oauth_client.delete', client_id=client.client_id) }}">
                             <i class="fa fa-trash"></i>
                         </a>
                     </td>
