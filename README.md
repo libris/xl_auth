@@ -148,7 +148,7 @@ Technology choices:
 
 ## Changelog
 
-### v. 1.10.0 (unreleased)
+### v. 1.10.0
 
 - Bump dependencies to make xl_auth work with newer (3.9+) versions of Python
 - Make Dockerfile work again
