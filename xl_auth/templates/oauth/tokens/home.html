@@ -26,7 +26,7 @@
                     <td>{{ token.expires_at.strftime('%y-%m-%d %H:%M:%S') }}</td>
                     <td class="actions">
                         <a class="btn btn-xs btn-danger" title="{{ _('Delete Token') }}"
-                           href="{{ url_for('oauth.token.delete', token_id=token.id) }}">
+                           href="{{ url_for('oauth_token.delete', token_id=token.id) }}">
                             <i class="fa fa-trash"></i>
                         </a>
                     </td>

@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """Test viewing collection."""
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from flask import escape, url_for
 from flask_babel import gettext as _

@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """Public forms."""
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from datetime import datetime
 
@@ -26,9 +24,9 @@ class LoginForm(FlaskForm):
         super(LoginForm, self).__init__(*args, **kwargs)
         self.user = None
 
-    def validate(self):
+    def validate(self, extra_validators=None):
         """Validate the form."""
-        initial_validation = super(LoginForm, self).validate()
+        initial_validation = super(LoginForm, self).validate(extra_validators)
         if not initial_validation:
             return False
 
@@ -53,9 +51,9 @@ class ForgotPasswordForm(FlaskForm):
 
     username = StringField(_('Email'), validators=[DataRequired()])
 
-    def validate(self):
+    def validate(self, extra_validators=None):
         """Validate the form."""
-        initial_validation = super(ForgotPasswordForm, self).validate()
+        initial_validation = super(ForgotPasswordForm, self).validate(extra_validators)
 
         if not initial_validation:
             return False
@@ -85,9 +83,9 @@ class ResetPasswordForm(FlaskForm):
                             validators=[DataRequired(),
                                         EqualTo('password', message=_('Passwords must match'))])
 
-    def validate(self):
+    def validate(self, extra_validators=None):
         """Validate the form."""
-        initial_validation = super(ResetPasswordForm, self).validate()
+        initial_validation = super(ResetPasswordForm, self).validate(extra_validators)
 
         if not initial_validation:
             return False

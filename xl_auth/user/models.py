@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """User models."""
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 import hashlib
 from binascii import hexlify

@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """The app module, containing the app factory function."""
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from flask import Flask, render_template, request
 from flask_login import current_user
@@ -19,6 +17,7 @@ def create_app(config_object=ProdConfig):
     """
     app = Flask(__name__.split('.')[0])
     app.config.from_object(config_object)
+    app.json.ensure_ascii = False
     register_extensions(app)
     register_blueprints(app)
     register_error_handlers(app)
@@ -101,6 +100,9 @@ def register_commands(app):
     app.cli.add_command(commands.create_user)
     app.cli.add_command(commands.forget_user)
     app.cli.add_command(commands.soft_delete_user)
+    app.cli.add_command(commands.add_oauth_client)
+    app.cli.add_command(commands.add_collection)
+    app.cli.add_command(commands.add_user_to_collection)
     app.cli.add_command(commands.urls)
     app.cli.add_command(commands.import_data)
     app.cli.add_command(commands.prod_run)

@@ -1,5 +1,0 @@
----
-
-logging_kibana_host: "http://elk:5601"
-
-...

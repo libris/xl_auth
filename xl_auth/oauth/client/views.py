@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """OAuth Client views."""
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from flask import Blueprint, abort, flash, redirect, render_template, request, url_for
 from flask_babel import lazy_gettext as _
@@ -11,7 +9,7 @@ from ...utils import flash_errors
 from .forms import EditForm, RegisterForm
 from .models import Client
 
-blueprint = Blueprint('oauth.client', __name__, url_prefix='/oauth/clients',
+blueprint = Blueprint('oauth_client', __name__, url_prefix='/oauth/clients',
                       static_folder='../../static')
 
 
@@ -48,7 +46,7 @@ def register():
                          default_scopes=register_form.default_scopes.data,
                          created_by=current_user.id).save()
         flash(_('Client "%(name)s" created.', name=register_form.name.data), 'success')
-        return redirect(url_for('oauth.client.home'))
+        return redirect(url_for('oauth_client.home'))
     else:
         flash_errors(register_form)
     return render_template('oauth/clients/register.html', register_form=register_form)
@@ -68,7 +66,7 @@ def delete(client_id):
         name = client.name
         client.delete()
         flash(_('Successfully deleted OAuth2 Client "%(name)s".', name=name), 'success')
-    return redirect(url_for('oauth.client.home'))
+    return redirect(url_for('oauth_client.home'))
 
 
 @blueprint.route('/edit/<string:client_id>', methods=['GET', 'POST'])
@@ -96,7 +94,7 @@ def edit(client_id):
                          default_scopes=edit_form.default_scopes.data).save()
         flash(_('Thank you for updating client details for "%(client_id)s".', client_id=client_id),
               'success')
-        return redirect(url_for('oauth.client.home'))
+        return redirect(url_for('oauth_client.home'))
     else:
         edit_form.set_defaults(client)
         flash_errors(edit_form)

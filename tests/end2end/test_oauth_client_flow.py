@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """Test OAuth2 implementation."""
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from base64 import b64encode
 from datetime import datetime, timedelta

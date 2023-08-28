@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """Create an application instance."""
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from flask.helpers import get_debug_flag
 from flask_cors import CORS

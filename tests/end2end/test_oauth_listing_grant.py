@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """Test listing grants."""
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from flask import url_for
 
@@ -18,9 +16,9 @@ def test_superuser_can_list_existing_grant(superuser, grant, testapp):
     res = form.submit().follow()
 
     # Clicks Grant button
-    # res = res.click(href=url_for('oauth.grant.home'))
+    # res = res.click(href=url_for('oauth_grant.home'))
     # FIXME: No nav link yet
-    assert res.lxml.xpath("//a[contains(@href,'{0}')]".format(url_for('oauth.grant.home'))) == []
+    assert res.lxml.xpath("//a[contains(@href,'{0}')]".format(url_for('oauth_grant.home'))) == []
 
     res = testapp.get('/oauth/grants/')
 
@@ -41,7 +39,7 @@ def test_user_cannot_list_existing_grant(user, testapp):
     res = form.submit().follow()
 
     # No Grant home link for regular users
-    assert res.lxml.xpath("//a[contains(@href,'{0}')]".format(url_for('oauth.grant.home'))) == []
+    assert res.lxml.xpath("//a[contains(@href,'{0}')]".format(url_for('oauth_grant.home'))) == []
 
     # Try to go there directly
-    testapp.get(url_for('oauth.grant.home'), status=403)
+    testapp.get(url_for('oauth_grant.home'), status=403)

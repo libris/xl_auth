@@ -1,11 +1,9 @@
-# -*- coding: utf-8 -*-
 """Test editing permissions."""
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from flask import url_for
 from flask_babel import gettext as _
-from jinja2 import escape
+from markupsafe import escape
 
 from xl_auth.permission.models import Permission
 from xl_auth.user.models import User

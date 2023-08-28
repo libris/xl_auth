@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """Test listing tokens."""
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from flask import url_for
 
@@ -18,9 +16,9 @@ def test_superuser_can_list_existing_token(superuser, token, testapp):
     res = form.submit().follow()
 
     # Clicks Token button
-    # res = res.click(href=url_for('oauth.token.home'))
+    # res = res.click(href=url_for('oauth_token.home'))
     # FIXME: No nav link yet
-    assert res.lxml.xpath("//a[contains(@href,'{0}')]".format(url_for('oauth.token.home'))) == []
+    assert res.lxml.xpath("//a[contains(@href,'{0}')]".format(url_for('oauth_token.home'))) == []
 
     res = testapp.get('/oauth/tokens/')
 
@@ -41,7 +39,7 @@ def test_user_cannot_list_existing_token(user, testapp):
     res = form.submit().follow()
 
     # No Token home link for regular users
-    assert res.lxml.xpath("//a[contains(@href,'{0}')]".format(url_for('oauth.token.home'))) == []
+    assert res.lxml.xpath("//a[contains(@href,'{0}')]".format(url_for('oauth_token.home'))) == []
 
     # Try to go there directly
-    testapp.get(url_for('oauth.token.home'), status=403)
+    testapp.get(url_for('oauth_token.home'), status=403)

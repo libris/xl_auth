@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """Collection forms."""
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from flask_babel import lazy_gettext as _
 from flask_wtf import FlaskForm
@@ -30,9 +28,9 @@ class CollectionForm(FlaskForm):
 class RegisterForm(CollectionForm):
     """Collection registration form."""
 
-    def validate(self):
+    def validate(self, extra_validators=None):
         """Validate the form."""
-        initial_validation = super(RegisterForm, self).validate()
+        initial_validation = super(RegisterForm, self).validate(extra_validators)
 
         if not initial_validation:
             return False
@@ -62,9 +60,9 @@ class EditForm(CollectionForm):
         if field.data and field.data != self.target_collection_code:
             raise ValidationError(_('Code cannot be modified'))
 
-    def validate(self):
+    def validate(self, extra_validators=None):
         """Validate the form."""
-        initial_validation = super(EditForm, self).validate()
+        initial_validation = super(EditForm, self).validate(extra_validators)
 
         if not initial_validation:
             return False

@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """OAuth Grant views."""
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from flask import Blueprint, abort, flash, redirect, render_template, url_for
 from flask_babel import lazy_gettext as _
@@ -9,7 +7,7 @@ from flask_login import current_user, login_required
 
 from .models import Grant
 
-blueprint = Blueprint('oauth.grant', __name__, url_prefix='/oauth/grants',
+blueprint = Blueprint('oauth_grant', __name__, url_prefix='/oauth/grants',
                       static_folder='../../static')
 
 
@@ -40,4 +38,4 @@ def delete(grant_id):
         grant.delete()
         flash(_('Successfully deleted OAuth2 Grant token "%(grant_id)s".', grant_id=grant_id),
               'success')
-    return redirect(url_for('oauth.grant.home'))
+    return redirect(url_for('oauth_grant.home'))

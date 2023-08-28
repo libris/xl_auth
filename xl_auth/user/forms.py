@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """User forms."""
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from flask_babel import lazy_gettext as _
 from flask_wtf import FlaskForm
@@ -27,9 +25,9 @@ class ApproveToSForm(FlaskForm):
         super(ApproveToSForm, self).__init__(*args, **kwargs)
         self.user = user
 
-    def validate(self):
+    def validate(self, extra_validators=None):
         """Validate the form."""
-        initial_validation = super(ApproveToSForm, self).validate()
+        initial_validation = super(ApproveToSForm, self).validate(extra_validators)
 
         if not initial_validation:
             return False
@@ -68,9 +66,9 @@ class RegisterForm(FlaskForm):
         if User.get_by_email(field.data):
             raise ValidationError(_('Email already registered'))
 
-    def validate(self):
+    def validate(self, extra_validators=None):
         """Validate the form."""
-        initial_validation = super(RegisterForm, self).validate()
+        initial_validation = super(RegisterForm, self).validate(extra_validators)
         if not initial_validation:
             return False
 
@@ -99,9 +97,9 @@ class _EditForm(FlaskForm):
         if field.data and field.data != self.target_username:
             raise ValidationError(_('Email cannot be modified'))
 
-    def validate(self):
+    def validate(self, extra_validators=None):
         """Validate the form."""
-        initial_validation = super(_EditForm, self).validate()
+        initial_validation = super(_EditForm, self).validate(extra_validators)
         if not initial_validation:
             return False
 
@@ -118,9 +116,9 @@ class EditDetailsForm(_EditForm):
 
     full_name = full_name
 
-    def validate(self):
+    def validate(self, extra_validators=None):
         """Validate the form."""
-        initial_validation = super(EditDetailsForm, self).validate()
+        initial_validation = super(EditDetailsForm, self).validate(extra_validators)
         if not initial_validation:
             return False
 
@@ -151,9 +149,9 @@ class AdministerForm(_EditForm):
         self.is_admin.default = user.is_admin
         self.process()
 
-    def validate(self):
+    def validate(self, extra_validators=None):
         """Validate the form."""
-        initial_validation = super(AdministerForm, self).validate()
+        initial_validation = super(AdministerForm, self).validate(extra_validators)
 
         if not initial_validation:
             return False
@@ -171,9 +169,9 @@ class ChangePasswordForm(_EditForm):
     confirm = PasswordField(_('Verify password'), validators=[
         DataRequired(), EqualTo('password', message=_('Passwords must match'))])
 
-    def validate(self):
+    def validate(self, extra_validators=None):
         """Validate the form."""
-        initial_validation = super(ChangePasswordForm, self).validate()
+        initial_validation = super(ChangePasswordForm, self).validate(extra_validators)
         if not initial_validation:
             return False
 
@@ -195,9 +193,9 @@ class ChangeEmailForm(_EditForm):
         if User.get_by_email(field.data):
             raise ValidationError(_('Email already registered'))
 
-    def validate(self):
+    def validate(self, extra_validators=None):
         """Validate the form."""
-        initial_validation = super(ChangeEmailForm, self).validate()
+        initial_validation = super(ChangeEmailForm, self).validate(extra_validators)
         if not initial_validation:
             return False
 
@@ -224,10 +222,10 @@ class DeleteUserForm(FlaskForm):
         if not field.data:
             raise ValidationError(_('You must confirm deletion.'))
 
-    def validate(self):
+    def validate(self, extra_validators=None):
         """Validate the form."""
 
-        initial_validation = super(DeleteUserForm, self).validate()
+        initial_validation = super(DeleteUserForm, self).validate(extra_validators)
         if not initial_validation:
             return False
 
