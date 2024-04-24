@@ -148,6 +148,10 @@ Technology choices:
 
 ## Changelog
 
+### v. 1.11.0
+
+- Bump various dependencies, notably Gunicorn to 22.0.0
+
 ### v. 1.10.0
 
 - Bump dependencies to make xl_auth work with newer (3.9+) versions of Python
@@ -158,7 +162,6 @@ Technology choices:
 - Convert README from rst to Markdown
 - Upgrade to Flask 2.2.x
 - Bump various Python and Node.js dependencies
-
 
 ### v. 1.9.0
 
