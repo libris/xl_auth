@@ -8,9 +8,9 @@ Jinja2==3.1.4
 itsdangerous==2.1.2
 click==8.1.6
 sh==1.12.14
-flask-cors==4.0.0
+flask-cors==4.0.1
 # TODO: upgrade urllib3 to 2.x
-urllib3==1.26.18
+urllib3==1.26.19
 
 # Database
 Flask-SQLAlchemy==3.0.5
@@ -52,4 +52,4 @@ Babel==2.9.1
 pytz==2023.3
 
 # CLI commands
-requests==2.31.0
+requests==2.32.0
