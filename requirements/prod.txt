@@ -10,7 +10,7 @@ click==8.1.6
 sh==1.12.14
 flask-cors==4.0.0
 # TODO: upgrade urllib3 to 2.x
-urllib3==1.26.18
+urllib3==1.26.19
 
 # Database
 Flask-SQLAlchemy==3.0.5
