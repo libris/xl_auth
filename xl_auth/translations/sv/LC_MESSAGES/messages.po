@@ -937,7 +937,7 @@ msgstr "namn@organisation.se"
 
 #: xl_auth/templates/public/forgot_password.html:14
 msgid "Send activation code to my email"
-msgstr "Maila min återtällningsnyckel"
+msgstr "Maila min återställningsnyckel"
 
 #: xl_auth/templates/public/home.html:8
 msgid "Welcome to xl_auth"
