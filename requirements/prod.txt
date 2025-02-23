@@ -8,7 +8,7 @@ Jinja2==3.1.4
 itsdangerous==2.1.2
 click==8.1.6
 sh==1.12.14
-flask-cors==4.0.1
+flask-cors==5.0.0
 # TODO: upgrade urllib3 to 2.x
 urllib3==1.26.19
 
