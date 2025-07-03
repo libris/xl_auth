@@ -17,12 +17,11 @@ Run the following commands to bootstrap your environment:
 
     git clone https://github.com/libris/xl_auth
     cd xl_auth
-    uv sync
     npm install
     export FLASK_APP=$(pwd)/autoapp.py
     export FLASK_DEBUG=1
     npm run build
-    flask db upgrade
+    uv run flask db upgrade
     flask create-user --email me@example.com -p password --is-admin --is-active
     npm start  # run webpack dev server and flask server using concurrently
 
@@ -102,29 +101,6 @@ cache all your assets forever by including the following line in your
 
     SEND_FILE_MAX_AGE_DEFAULT = 31556926  # one year
 
-## Docker
-
-The latest application build can be built and run using Docker for
-testing purposes:
-
-    docker build -t xl_auth .
-    docker run -it -p 5000:5000 xl_auth
-
-All Flask command-line tools are accessed by optional input argument to
-the container, e.g. `flask shell -> docker run -it xl_auth shell`,
-`flask db -> docker run -it xl_auth db`.
-
-Create a user:
-
-    docker exec -it xl_auth /usr/local/bin/flask create-user -e me@kb.se -p 1234 --force \
-        --is-admin --is-active
-    # Now open localhost:5000 in the browser and login as me@kb.se
-
-To import users, collections and permissions into the Docker container,
-run:
-
-    docker exec -it xl_auth /usr/local/bin/flask import-data --admin-email=libris@kb.se
-
 ## Project Notes
 
 Technology choices:
@@ -138,7 +114,6 @@ Technology choices:
     [Flask-OAuthlib](https://flask-oauthlib.readthedocs.io/en/latest/)
     for OAuth2 support
 -   Python 3.8+
--   Jenkins multi-branch declarative pipeline for CI during development
 -   The production database of choice is Postgres, using SQLAlchemy
     PostgreSQL Engine
 
