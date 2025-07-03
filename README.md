@@ -11,13 +11,13 @@ example, add the following to `.bashrc` or `.bash_profile`.
 export XL_AUTH_SECRET='something-really-secret'
 ```
 
+Make sure https://github.com/astral-sh/uv is installed.
+
 Run the following commands to bootstrap your environment:
 
     git clone https://github.com/libris/xl_auth
     cd xl_auth
-    python3 -m venv venv && source venv/bin/activate
-    pip install wheel
-    pip install -r requirements/dev.txt
+    uv sync
     npm install
     export FLASK_APP=$(pwd)/autoapp.py
     export FLASK_DEBUG=1
@@ -43,7 +43,7 @@ variable to this db.
 
 To open the interactive shell, run:
 
-    flask shell
+    uv run flask shell
 
 By default, you will have access to the flask `app`.
 
@@ -51,7 +51,7 @@ By default, you will have access to the flask `app`.
 
 To compile Swedish localization support using Babel, run:
 
-    flask translate
+    uv run flask translate
 
 _Note_: Might fail with a `RuntimeError` if your shell env is set to
 use ASCII. Solve it like so:
@@ -63,21 +63,21 @@ use ASCII. Solve it like so:
 
 To run all tests, run:
 
-    flask test
+    uv run flask test
 
 ## Migrations
 
 Whenever a database migration needs to be made. Run the following commands:
 
-    flask db migrate
+    uv run flask db migrate
 
 This will generate a new migration script. Then run:
 
-    flask db upgrade
+    uv run flask db upgrade
 
 To apply the migration.
 
-For a full migration command reference, run `flask db --help`.
+For a full migration command reference, run `uv run flask db --help`.
 
 ## Asset Management
 
