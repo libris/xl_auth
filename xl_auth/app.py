@@ -1,13 +1,15 @@
 """The app module, containing the app factory function."""
 
 
+import os
+
 from flask import Flask, render_template, request
 from flask_login import current_user
 
 from . import collection, commands, oauth, permission, public, user
 from .extensions import (babel, bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager,
                          migrate, oauth_provider, flask_static_digest)
-from .settings import ProdConfig
+from .settings import DEFAULT_SECRET_KEY, ProdConfig
 
 
 def create_app(config_object=ProdConfig):
@@ -17,6 +19,12 @@ def create_app(config_object=ProdConfig):
     """
     app = Flask(__name__.split('.')[0])
     app.config.from_object(config_object)
+    if not app.debug and not app.testing:
+        secret = os.environ.get('XL_AUTH_SECRET')
+        if not secret or secret == DEFAULT_SECRET_KEY:
+            raise RuntimeError('XL_AUTH_SECRET must be set to a non-default value in '
+                               'production; refusing to start with the default secret key.')
+        app.config['SECRET_KEY'] = secret
     app.json.ensure_ascii = False
     register_extensions(app)
     register_blueprints(app)
