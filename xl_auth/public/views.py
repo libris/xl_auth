@@ -71,11 +71,17 @@ def forgot_password():
     forgot_password_form = ForgotPasswordForm(request.form)
     if request.method == 'POST':
         if forgot_password_form.validate_on_submit():
+            # Always the same response, to prevent user enumeration.
             user = User.get_by_email(forgot_password_form.username.data)
-            password_reset = PasswordReset(user)
-            password_reset.send_email()
-            password_reset.save()
-            flash(_('Password reset link sent to %(email)s.', email=user.email), 'success')
+            if user and not user.is_deleted:
+                active_resets = user.get_active_and_recent_password_resets()
+                max_active = current_app.config['XL_AUTH_MAX_ACTIVE_PASSWORD_RESETS']
+                if len(active_resets) < max_active:
+                    password_reset = PasswordReset(user)
+                    password_reset.send_email()
+                    password_reset.save()
+            flash(_('If that account exists, a password reset link has been sent to its '
+                    'email address.'), 'success')
             return redirect(url_for('public.home'))
         else:
             flash_errors(forgot_password_form)
@@ -111,7 +117,7 @@ def reset_password(email, code):
 @login_required
 def logout():
     """Logout."""
-    session.pop('has_authorized_scopes', None)
+    session.pop('authorized_scopes', None)
     logout_user()
     flash(_('You are logged out.'), 'info')
     return redirect(url_for('public.home'))

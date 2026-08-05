@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-07 10:27+0200\n"
+"POT-Creation-Date: 2026-08-05 15:23+0200\n"
 "PO-Revision-Date: 2022-06-09 15:36+0200\n"
 "Last-Translator: Mats Blomdahl <mats.blomdahl@gmail.com>\n"
 "Language: sv\n"
 "Language-Team: sv <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
+"Generated-By: Babel 2.10.3\n"
 
 #: tests/end2end/test_collection_editing.py:58 tests/end2end/test_collection_registering.py:54
 msgid "category"
@@ -220,52 +220,42 @@ msgstr "Vidare till tjänsten"
 msgid "Collections"
 msgstr "Sigler"
 
-#: tests/end2end/test_public_logging_in.py:142 xl_auth/public/views.py:116
+#: tests/end2end/test_public_logging_in.py:142 xl_auth/public/views.py:124
 msgid "You are logged out."
 msgstr "Du är utloggad."
 
-#: tests/end2end/test_public_logging_in.py:156 tests/end2end/test_public_logging_in.py:190
-#: tests/forms/test_public_login.py:43 xl_auth/public/forms.py:39
-msgid "Invalid password"
-msgstr "Felaktigt lösenord"
+#: tests/end2end/test_public_logging_in.py:156 tests/end2end/test_public_logging_in.py:173
+#: tests/end2end/test_public_logging_in.py:190 tests/forms/test_public_login.py:28
+#: xl_auth/public/forms.py:41
+msgid "The username or password you entered is incorrect."
+msgstr "Användarnamnet eller lösenordet du angav är felaktigt."
 
-#: tests/end2end/test_public_logging_in.py:173 tests/end2end/test_public_reset_password.py:78
-#: tests/forms/test_public_forgot_password.py:19 tests/forms/test_public_login.py:33
-#: xl_auth/public/forms.py:35 xl_auth/public/forms.py:72
-msgid "Unknown username/email"
-msgstr "Okänd e-postadress/användarnamn"
-
-#: tests/end2end/test_public_reset_password.py:28 tests/end2end/test_public_reset_password.py:151
-#: tests/end2end/test_public_reset_password.py:166 xl_auth/templates/public/home.html:47
+#: tests/end2end/test_public_reset_password.py:28 tests/end2end/test_public_reset_password.py:173
+#: tests/end2end/test_public_reset_password.py:188 xl_auth/templates/public/home.html:47
 msgid "Forgot password?"
 msgstr "Glömt ditt lösenord?"
 
-#: tests/end2end/test_public_reset_password.py:99 tests/forms/test_public_reset_password.py:18
-#: xl_auth/public/forms.py:107
+#: tests/end2end/test_public_reset_password.py:67 xl_auth/public/views.py:85
+msgid "If that account exists, a password reset link has been sent to its email address."
+msgstr "Om kontot finns har en återställningslänk skickats till dess e-postadress."
+
+#: tests/end2end/test_public_reset_password.py:121 tests/forms/test_public_reset_password.py:18
+#: xl_auth/public/forms.py:102
 #, python-format
 msgid "Reset code \"%(code)s\" does not exit"
 msgstr "Återställningsnyckel \"%(code)s\" finns inte"
 
-#: tests/end2end/test_public_reset_password.py:117 tests/forms/test_public_reset_password.py:30
-#: xl_auth/public/forms.py:98
+#: tests/end2end/test_public_reset_password.py:139 tests/forms/test_public_reset_password.py:30
+#: xl_auth/public/forms.py:93
 #, python-format
 msgid "Reset code \"%(code)s\" expired at %(isoformat)s"
 msgstr "Giltighetstiden för återställningsnyckel \"%(code)s\" har gått ut (%(isoformat)s)"
 
-#: tests/end2end/test_public_reset_password.py:141 tests/forms/test_public_reset_password.py:42
-#: xl_auth/public/forms.py:103
+#: tests/end2end/test_public_reset_password.py:163 tests/forms/test_public_reset_password.py:42
+#: xl_auth/public/forms.py:98
 #, python-format
 msgid "Reset code \"%(code)s\" already used (%(isoformat)s)"
 msgstr "Återställningsnyckel \"%(code)s\" har redan förbrukats (%(isoformat)s)"
-
-#: tests/end2end/test_public_reset_password.py:173 tests/forms/test_public_forgot_password.py:46
-#: xl_auth/public/forms.py:65
-msgid ""
-"You already have an active password reset. Please check your email inbox (and your Spam folder) "
-"or try again later."
-msgstr ""
-"Du har redan en aktiv lösenordsåterställning. Vänligen leta i din inkorg (och i mappen för "
-"skräppost) eller försök igen senare."
 
 #: tests/end2end/test_user_deletion.py:21 tests/end2end/test_user_editing.py:25
 #: tests/end2end/test_user_editing.py:75 tests/end2end/test_user_editing.py:116
@@ -339,7 +329,7 @@ msgid "Email already registered"
 msgstr "E-postadressen är redan registrerad"
 
 #: tests/end2end/test_user_editing.py:192 tests/end2end/test_user_editing.py:216
-#: xl_auth/public/forms.py:52 xl_auth/public/forms.py:80 xl_auth/templates/users/home.html:26
+#: xl_auth/public/forms.py:63 xl_auth/public/forms.py:75 xl_auth/templates/users/home.html:26
 #: xl_auth/templates/users/home.html:100 xl_auth/templates/users/inspect.html:131
 #: xl_auth/templates/users/inspect.html:185 xl_auth/user/forms.py:13
 msgid "Email"
@@ -457,10 +447,6 @@ msgstr "Ett sigel måste väljas."
 msgid "Collection ID \"%(collection_id)s\" does not exist"
 msgstr "Sigel med databas-ID \"%(collection_id)s\" existerar inte"
 
-#: tests/forms/test_public_login.py:54 xl_auth/public/forms.py:43
-msgid "User not activated"
-msgstr "Användarkontot ej aktiverat; återställ ditt lösenord"
-
 #: tests/forms/test_user_administer.py:30 xl_auth/user/forms.py:108
 msgid "User does not exist"
 msgstr "Användaren existerar inte"
@@ -552,6 +538,18 @@ msgstr "Klient \"%(name)s\" skapad."
 msgid "Thank you for updating client details for \"%(client_id)s\"."
 msgstr "Inställningar för \"%(client_id)s\" uppdaterade."
 
+#: xl_auth/oauth/grant/models.py:64 xl_auth/oauth/token/models.py:77
+#: xl_auth/templates/oauth/grants/home.html:15 xl_auth/templates/oauth/tokens/home.html:15
+#: xl_auth/templates/users/inspect.html:258
+msgid "Client"
+msgstr "Klient"
+
+#: xl_auth/oauth/grant/models.py:64 xl_auth/oauth/token/models.py:77
+#: xl_auth/templates/oauth/grants/home.html:16 xl_auth/templates/oauth/tokens/home.html:16
+#: xl_auth/templates/users/inspect.html:229 xl_auth/templates/users/inspect.html:261
+msgid "Expires At"
+msgstr "Förfaller"
+
 #: xl_auth/oauth/grant/views.py:39
 #, python-format
 msgid "Successfully deleted OAuth2 Grant token \"%(grant_id)s\"."
@@ -593,21 +591,21 @@ msgstr "Katalogiseringsadmin"
 msgid "--- Select Collection ---"
 msgstr "--- Välj sigel ---"
 
-#: xl_auth/public/forms.py:18 xl_auth/templates/public/home.html:41
+#: xl_auth/public/forms.py:23 xl_auth/templates/public/home.html:41
 msgid "Username"
 msgstr "Användarnamn"
 
-#: xl_auth/public/forms.py:19 xl_auth/public/forms.py:81 xl_auth/templates/public/home.html:43
+#: xl_auth/public/forms.py:24 xl_auth/public/forms.py:76 xl_auth/templates/public/home.html:43
 #: xl_auth/templates/public/reset_password.html:16 xl_auth/templates/users/change_password.html:16
 #: xl_auth/user/forms.py:168
 msgid "Password"
 msgstr "Lösenord"
 
-#: xl_auth/public/forms.py:82 xl_auth/user/forms.py:169
+#: xl_auth/public/forms.py:77 xl_auth/user/forms.py:169
 msgid "Verify password"
 msgstr "Upprepa lösenord"
 
-#: xl_auth/public/forms.py:84 xl_auth/user/forms.py:170
+#: xl_auth/public/forms.py:79 xl_auth/user/forms.py:170
 msgid "Passwords must match"
 msgstr "Lösenorden måste stämma överens"
 
@@ -615,12 +613,7 @@ msgstr "Lösenorden måste stämma överens"
 msgid "You are logged in."
 msgstr "Du har loggat in."
 
-#: xl_auth/public/views.py:78
-#, python-format
-msgid "Password reset link sent to %(email)s."
-msgstr "Återställningslänk skickad till %(email)s."
-
-#: xl_auth/public/views.py:100
+#: xl_auth/public/views.py:108
 #, python-format
 msgid "Password for \"%(username)s\" has been reset."
 msgstr "Lösenordet för \"%(username)s\" har återställts."
@@ -867,16 +860,6 @@ msgstr "Grant-tokens för OAuth2"
 #: xl_auth/templates/users/inspect.html:256
 msgid "ID"
 msgstr "ID"
-
-#: xl_auth/templates/oauth/grants/home.html:15 xl_auth/templates/oauth/tokens/home.html:15
-#: xl_auth/templates/users/inspect.html:258
-msgid "Client"
-msgstr "Klient"
-
-#: xl_auth/templates/oauth/grants/home.html:16 xl_auth/templates/oauth/tokens/home.html:16
-#: xl_auth/templates/users/inspect.html:229 xl_auth/templates/users/inspect.html:261
-msgid "Expires At"
-msgstr "Förfaller"
 
 #: xl_auth/templates/oauth/grants/home.html:28
 msgid "Delete Grant"
@@ -1390,4 +1373,25 @@ msgstr "Användaren \"%(username)s\" har tagits bort."
 
 #~ msgid "Thank you for changing email for \"%(username)s\"."
 #~ msgstr "Epostadress för \"%(username)s\" har ändrats."
+
+#~ msgid "Invalid password"
+#~ msgstr "Felaktigt lösenord"
+
+#~ msgid "Unknown username/email"
+#~ msgstr "Okänd e-postadress/användarnamn"
+
+#~ msgid ""
+#~ "You already have an active password reset. Please"
+#~ " check your email inbox (and your Spam folder)"
+#~ " or try again later."
+#~ msgstr ""
+#~ "Du har redan en aktiv lösenordsåterställning. Vänligen "
+#~ "leta i din inkorg (och i mappen för skräppost)"
+#~ " eller försök igen senare."
+
+#~ msgid "User not activated"
+#~ msgstr "Användarkontot ej aktiverat; återställ ditt lösenord"
+
+#~ msgid "Password reset link sent to %(email)s."
+#~ msgstr "Återställningslänk skickad till %(email)s."
 

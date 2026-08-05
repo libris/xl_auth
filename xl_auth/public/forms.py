@@ -3,13 +3,15 @@
 
 from datetime import datetime
 
-from flask import current_app
 from flask_babel import lazy_gettext as _
 from flask_wtf import FlaskForm
 from wtforms import HiddenField, PasswordField, StringField
 from wtforms.validators import DataRequired, EqualTo, Length
 
+from ..extensions import bcrypt
 from ..user.models import PasswordReset, User
+
+_TIMING_EQUALIZER_HASH = bcrypt.generate_password_hash('timing-equalizer')
 
 
 class LoginForm(FlaskForm):
@@ -30,17 +32,21 @@ class LoginForm(FlaskForm):
         if not initial_validation:
             return False
 
+        # Generic message for each kind of failure (unknown user, invalid password,
+        # inactive/deleted account) to prevent user enumeration.
+        generic_error = _('The username or password you entered is incorrect.')
+
         self.user = User.get_by_email(self.username.data)
-        if (not self.user) or self.user.is_deleted:
-            self.username.errors.append(_('Unknown username/email'))
+        if (not self.user) or self.user.is_deleted or not self.user.is_active:
+            # Do a bcrypt comparison so that this path "costs" the same as the one for
+            # valid users, because skipping the hash check would be a timing oracle.
+            bcrypt.check_password_hash(_TIMING_EQUALIZER_HASH, self.password.data)
+            self.form_errors.append(generic_error)
+            self.user = None
             return False
 
         if not self.user.check_password(self.password.data):
-            self.password.errors.append(_('Invalid password'))
-            return False
-
-        if not self.user.is_active:
-            self.username.errors.append(_('User not activated'))
+            self.form_errors.append(generic_error)
             return False
 
         return True
@@ -51,27 +57,8 @@ class ForgotPasswordForm(FlaskForm):
 
     username = StringField(_('Email'), validators=[DataRequired()])
 
-    def validate(self, extra_validators=None):
-        """Validate the form."""
-        initial_validation = super(ForgotPasswordForm, self).validate(extra_validators)
-
-        if not initial_validation:
-            return False
-
-        user = User.get_by_email(self.username.data)
-        if user:
-            active_resets = user.get_active_and_recent_password_resets()
-            if len(active_resets) >= current_app.config['XL_AUTH_MAX_ACTIVE_PASSWORD_RESETS']:
-                self.username.errors.append(_('You already have an active password reset. Please '
-                                              'check your email inbox (and your Spam folder) or '
-                                              'try again later.'))
-                return False
-            else:
-                return True
-        else:
-            self.username.errors.append(_('Unknown username/email'))
-            return False
-
+    # To prevent user enumeration we *don't* check for account existence or
+    # reset limit here.
 
 class ResetPasswordForm(FlaskForm):
     """Reset password form."""

@@ -113,6 +113,20 @@ def require_oauth_invalid(req):
     return jsonify(app_version=current_app.config['APP_VERSION'], message=req.error_message), 401
 
 
+def _already_authorized(client_id, scopes):
+    """Whether `client_id` was already granted (at least) `scopes` this session."""
+    authorized = session.get('authorized_scopes', {})
+    return set(scopes).issubset(set(authorized.get(client_id, [])))
+
+
+def _remember_authorization(client_id, scopes):
+    """Record in-session consent for `client_id` covering (at least) `scopes`."""
+    authorized = session.get('authorized_scopes', {})
+    previously = set(authorized.get(client_id, []))
+    authorized[client_id] = sorted(previously | set(scopes))
+    session['authorized_scopes'] = authorized
+
+
 @blueprint.route('/authorize', methods=['GET', 'POST'])
 @login_required
 @oauth_provider.authorize_handler
@@ -123,16 +137,18 @@ def authorize(*_, **kwargs):
         client_id = kwargs.get('client_id')
         client = Client.query.filter_by(client_id=client_id).first()
         kwargs['client'] = client
-        has_authorized_scopes = session.get('has_authorized_scopes', False)
-        if has_authorized_scopes:
+        # Skip the consent screen only when this specific client has already been
+        # authorized for (at least) the requested scopes this session.
+        if _already_authorized(client_id, kwargs.get('scopes') or []):
             return True
         else:
             return render_template('oauth/authorize.html', authorize_form=authorize_form, **kwargs)
 
     confirm = authorize_form['confirm'].data == 'y'
     if confirm:
-        # TODO https://jira.kb.se/browse/LXL-1319
-        session['has_authorized_scopes'] = True
+        client_id = request.values.get('client_id')
+        scopes = (request.values.get('scope') or '').split()
+        _remember_authorization(client_id, scopes)
     return confirm
 
 

@@ -5,6 +5,10 @@ import os
 
 from . import __author__, __name__, __version__
 
+# For dev/test. In other environments the env var XL_AUTH_SECRET (which
+# overrides this) must be set, otherwise the server will not start.
+DEFAULT_SECRET_KEY = 'not-so-secret-key'
+
 
 class Config(object):
     """Base configuration."""
@@ -14,7 +18,7 @@ class Config(object):
     APP_NAME = __name__
     APP_VERSION = __version__
     APP_AUTHOR = __author__
-    SECRET_KEY = os.environ.get('XL_AUTH_SECRET', 'secret-key')  # TODO: Change me
+    SECRET_KEY = os.environ.get('XL_AUTH_SECRET', DEFAULT_SECRET_KEY)
     APP_DIR = os.path.abspath(os.path.dirname(__file__))  # This directory.
     PROJECT_ROOT = os.path.abspath(os.path.join(APP_DIR, os.pardir))
     BCRYPT_LOG_ROUNDS = 13

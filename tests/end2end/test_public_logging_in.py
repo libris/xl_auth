@@ -152,8 +152,8 @@ def test_sees_error_message_if_password_is_incorrect(user, testapp):
     form['password'] = 'wrong'
     # Submits.
     res = form.submit()
-    # Sees error.
-    assert _('Invalid password') in res
+    # Sees the generic error (does not reveal the password was the wrong part).
+    assert _('The username or password you entered is incorrect.') in res
     # Also traceable in Nginx logs:
     assert res.headers['X-Username'] == user.email
 
@@ -169,8 +169,8 @@ def test_sees_error_message_if_username_doesnt_exist(user, testapp):
     form['password'] = 'myPrecious'
     # Submits.
     res = form.submit()
-    # Sees error.
-    assert _('Unknown username/email') in res
+    # Sees the same generic error as a wrong password (no account enumeration).
+    assert _('The username or password you entered is incorrect.') in res
     # Also traceable in Nginx logs:
     assert res.headers['X-Username'] == 'unknown@example.com'
 
@@ -186,8 +186,8 @@ def test_block_login_on_too_many_failed_attempts(user, testapp):
     form['password'] = 'wrong'
     # Submits.
     res = form.submit()
-    # Sees error.
-    assert _('Invalid password') in res
+    # Sees the generic error.
+    assert _('The username or password you entered is incorrect.') in res
 
     # Goes to homepage a second time.
     res = testapp.get('/')
