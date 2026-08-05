@@ -9,7 +9,7 @@
     "url": "https://github.com/libris/xl_auth/issues"
   },
   "scripts": {
-    "build": "NODE_ENV=production webpack --progress --color --optimization-minimize && uv run flask digest compile",
+    "build": "NODE_ENV=production webpack --progress --color --optimization-minimize && FLASK_APP=$PWD/autoapp.py XL_AUTH_SECRET=build-only-not-a-real-secret uv run flask digest compile",
     "build-no-flask": "NODE_ENV=production webpack --progress --color --optimization-minimize",
     "start": "concurrently -n \"WEBPACK,FLASK\" -c \"bgBlue.bold,bgMagenta.bold\" \"npm run webpack-watch\" \"npm run flask-server\"",
     "webpack-watch": "NODE_ENV=debug webpack --mode development --watch",
