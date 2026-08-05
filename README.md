@@ -22,7 +22,7 @@ Run the following commands to bootstrap your environment:
     export FLASK_DEBUG=1
     npm run build
     uv run flask db upgrade
-    flask create-user --email me@example.com -p password --is-admin --is-active
+    uv run flask create-user --email me@example.com -p password --is-admin --is-active
     npm start  # run webpack dev server and flask server using concurrently
 
 You will see a pretty welcome screen.
