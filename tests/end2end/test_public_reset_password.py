@@ -64,22 +64,50 @@ def test_can_complete_password_reset_flow(db, testapp):
     assert updated_password_reset.user.modified_by == updated_password_reset.user
 
 
+def _generic_forgot_message():
+    """The locale-resolved generic forgot-password message.
+
+    Evaluated on call (inside the app context) rather than at import time, so it
+    resolves to the active locale and matches what the view actually flashes.
+    """
+    return _('If that account exists, a password reset link has been sent to '
+             'its email address.')
+
+
 # noinspection PyUnusedLocal
-def test_sees_error_message_if_username_does_not_exist(user, testapp):
-    """Show error if username doesn't exist."""
+def test_unknown_username_shows_generic_message(user, testapp):
+    """An unknown email shows the same generic message and creates no reset."""
     # Goes to 'Forgot Password?' page.
     res = testapp.get(url_for('public.forgot_password'))
-    # Fills out ForgotPasswordForm.
+    # Fills out ForgotPasswordForm with an address that has no account.
     form = res.forms['forgotPasswordForm']
     form['username'] = 'unknown@example.com'
     # Submits.
-    res = form.submit()
-    # Sees error.
-    assert _('Unknown username/email') in res
+    res = form.submit().follow()
+    # Sees the generic, non-enumerating message.
+    assert escape(_generic_forgot_message()) in res
 
     # No PasswordReset is added.
-    password_reset = PasswordReset.query.filter_by(user=user).first()
-    assert password_reset is None
+    assert PasswordReset.query.count() == 0
+
+
+def test_known_and_unknown_usernames_are_indistinguishable(user, testapp):
+    """A known and an unknown email produce the same visible response body."""
+    def submit(email):
+        res = testapp.get(url_for('public.forgot_password'))
+        form = res.forms['forgotPasswordForm']
+        form['username'] = email
+        return res.forms['forgotPasswordForm'].submit().follow()
+
+    known_res = submit(user.email)
+    unknown_res = submit('definitely-not-a-user@example.com')
+
+    # Same generic message shown in both cases ...
+    assert escape(_generic_forgot_message()) in known_res
+    assert escape(_generic_forgot_message()) in unknown_res
+    # ... and only the real account got a reset created.
+    assert PasswordReset.query.count() == 1
+    assert PasswordReset.query.first().user == user
 
 
 # noinspection PyUnusedLocal
@@ -141,8 +169,8 @@ def test_sees_error_message_if_attempting_to_use_reset_code_twice(password_reset
                     isoformat=password_reset.modified_at.isoformat() + 'Z')) in res
 
 
-def test_sees_error_message_if_too_many_active_password_resets(user, testapp):
-    """Show error if too many active password resets exist."""
+def test_too_many_active_password_resets_shows_generic_message(user, testapp):
+    """Hitting the active-reset limit shows the generic message and creates no new reset."""
     # Create active password resets
     for _i in range(0, current_app.config['XL_AUTH_MAX_ACTIVE_PASSWORD_RESETS']):
         # Goes to homepage.
@@ -168,7 +196,10 @@ def test_sees_error_message_if_too_many_active_password_resets(user, testapp):
     form = res.forms['forgotPasswordForm']
     form['username'] = user.email
     # Submits.
-    res = form.submit()
+    res = form.submit().follow()
     assert res.status_code == 200
-    assert _('You already have an active password reset. Please check your email inbox (and your '
-             'Spam folder) or try again later.') in res
+    # Same generic message as always -- the limit is not disclosed to the requester.
+    assert escape(_generic_forgot_message()) in res
+    # And no additional reset was created beyond the limit.
+    assert len(user.get_active_and_recent_password_resets()) == \
+        current_app.config['XL_AUTH_MAX_ACTIVE_PASSWORD_RESETS']
