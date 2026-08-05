@@ -117,7 +117,7 @@ def reset_password(email, code):
 @login_required
 def logout():
     """Logout."""
-    session.pop('has_authorized_scopes', None)
+    session.pop('authorized_scopes', None)
     logout_user()
     flash(_('You are logged out.'), 'info')
     return redirect(url_for('public.home'))

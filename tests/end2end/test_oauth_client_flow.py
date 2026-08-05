@@ -10,7 +10,7 @@ from xl_auth import __version__
 from xl_auth.oauth.grant.models import Grant
 from xl_auth.oauth.token.models import Token
 
-from ..factories import CollectionFactory, PermissionFactory
+from ..factories import ClientFactory, CollectionFactory, PermissionFactory
 
 
 def test_oauth_authorize_success(user, client, testapp):
@@ -40,6 +40,77 @@ def test_oauth_authorize_success(user, client, testapp):
     assert grant is not None
     assert res.status_code == 308
     assert res.location == client.default_redirect_uri + '/?code={}'.format(grant.code)
+
+
+def _login(res, user):
+    """Follow the redirect to the login page, then fill out and submit the login form."""
+    # An unauthenticated /oauth/authorize GET returns a 302 to the login page.
+    res = res.follow()
+    login_form = res.forms['loginForm']
+    login_form['username'] = user.email
+    login_form['password'] = 'myPrecious'
+    return login_form.submit().follow()
+
+
+def test_reauthorizing_same_client_and_scopes_skips_consent(user, client, testapp):
+    """Once a client is authorized, the same client+scopes is not prompted again."""
+    authorize_params = {'client_id': client.client_id, 'response_type': 'code',
+                        'redirect_uri': client.default_redirect_uri,
+                        'scope': ' '.join(client.default_scopes)}
+    # First authorization: log in, see consent form, confirm. Confirming redirects to
+    # the client's redirect_uri with the grant code.
+    res = _login(testapp.get('/oauth/authorize', params=authorize_params), user)
+    assert 'authorizeForm' in res.forms
+    res = res.forms['authorizeForm'].submit()
+    assert res.status_code in (302, 308)
+    assert res.location.startswith(client.default_redirect_uri) and 'code=' in res.location
+
+    # Second authorization for the *same* client and scopes: no consent form is shown,
+    # the grant is issued directly (redirect straight to the client with a code).
+    res = testapp.get('/oauth/authorize', params=authorize_params)
+    assert res.status_code in (302, 308)
+    assert res.location.startswith(client.default_redirect_uri) and 'code=' in res.location
+
+
+def test_authorizing_one_client_does_not_authorize_another(user, client, testapp):
+    """A prior consent must not silently approve a different client (enumeration/phishing)."""
+    other_client = ClientFactory()
+    other_client.save()
+
+    # Authorize the first client fully.
+    res = _login(testapp.get('/oauth/authorize',
+                             params={'client_id': client.client_id, 'response_type': 'code',
+                                     'redirect_uri': client.default_redirect_uri,
+                                     'scope': ' '.join(client.default_scopes)}), user)
+    res.forms['authorizeForm'].submit().follow()
+
+    # Now a *different* client must still get the consent screen, not an auto-grant.
+    res = testapp.get('/oauth/authorize',
+                      params={'client_id': other_client.client_id, 'response_type': 'code',
+                              'redirect_uri': other_client.default_redirect_uri,
+                              'scope': ' '.join(other_client.default_scopes)})
+    assert 'authorizeForm' in res.forms
+    # And no grant exists for the other client until the user actually confirms.
+    assert Grant.query.filter_by(client_id=other_client.client_id).first() is None
+
+
+def test_authorizing_narrow_scope_does_not_authorize_broader(user, testapp):
+    """Consent for a subset of scopes must not auto-approve a request for more scopes."""
+    client = ClientFactory(default_scopes='read write')
+    client.save()
+    redirect_uri = client.default_redirect_uri
+
+    # Authorize for 'read' only.
+    res = _login(testapp.get('/oauth/authorize',
+                             params={'client_id': client.client_id, 'response_type': 'code',
+                                     'redirect_uri': redirect_uri, 'scope': 'read'}), user)
+    res.forms['authorizeForm'].submit().follow()
+
+    # Requesting the broader 'read write' still prompts.
+    res = testapp.get('/oauth/authorize',
+                      params={'client_id': client.client_id, 'response_type': 'code',
+                              'redirect_uri': redirect_uri, 'scope': 'read write'})
+    assert 'authorizeForm' in res.forms
 
 
 def test_oauth_authorize_missing_client_id(user, testapp):
