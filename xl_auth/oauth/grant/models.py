@@ -63,6 +63,18 @@ class Grant(SurrogatePK, Model):
     def display_value(self):
         return f"{self.user.email}: {_('Client').lower()} {self.client.name}, {_('Expires At').lower()} {self.client.expires_at}"
 
+    def get_redirect_uri(self):
+        """Return redirect URI."""
+        return self.redirect_uri
+
+    def get_scope(self):
+        """Return scopes string."""
+        return ' '.join(self.scopes)
+
+    def is_expired(self):
+        """Return whether grant has expired."""
+        return self.expires_at < datetime.utcnow()
+
     def __repr__(self):
         """Represent instance as a unique string."""
         return '<Grant({user!r},{client!r})>'.format(user=self.user.email,

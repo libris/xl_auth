@@ -2,6 +2,7 @@
 
 
 from datetime import datetime
+from secrets import compare_digest
 
 from six import string_types
 from sqlalchemy.ext.hybrid import hybrid_property
@@ -93,6 +94,41 @@ class Client(Model):
             self._default_scopes = ' '.join(value)
         else:
             self._default_scopes = value
+
+    def get_client_id(self):
+        """Return client_id."""
+        return self.client_id
+
+    def get_default_redirect_uri(self):
+        """Return default redirect URI."""
+        return self.default_redirect_uri
+
+    def get_allowed_scope(self, scope):
+        """Return the requested scopes that are supported by this client."""
+        if not scope:
+            return ''
+        allowed = set(self.default_scopes)
+        return ' '.join([s for s in scope.split() if s in allowed])
+
+    def check_redirect_uri(self, redirect_uri):
+        """Return whether 'redirect_uri' is registered for this client."""
+        return redirect_uri in self.redirect_uris
+
+    def check_client_secret(self, client_secret):
+        """Return whether 'client_secret' matches."""
+        return compare_digest(self.client_secret, client_secret or '')
+
+    def check_endpoint_auth_method(self, method, endpoint):
+        """Return whether client supports auth 'method' for 'endpoint'."""
+        return method in ('client_secret_basic', 'client_secret_post', 'none')
+
+    def check_response_type(self, response_type):
+        """Return whether client supports 'response_type'."""
+        return response_type == 'code'
+
+    def check_grant_type(self, grant_type):
+        """Return whether client supports 'grant_type'."""
+        return grant_type in ('authorization_code', 'refresh_token', 'client_credentials')
 
     def __repr__(self):
         """Represent instance as a unique string."""
