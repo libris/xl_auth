@@ -29,6 +29,9 @@ class Grant(SurrogatePK, Model):
 
     _scopes = Column(db.Text, nullable=False)
 
+    code_challenge = Column(db.String(128), nullable=True)
+    code_challenge_method = Column(db.String(10), nullable=True)
+
     def __init__(self, scopes=None, **kwargs):
         """Create instance."""
         db.Model.__init__(self, **kwargs)

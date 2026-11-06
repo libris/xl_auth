@@ -4,10 +4,11 @@
 from datetime import datetime, timedelta
 
 from authlib.oauth2 import OAuth2Error
-from authlib.oauth2.rfc6749 import grants
+from authlib.oauth2.rfc6749 import InvalidRequestError, grants
 from authlib.oauth2.rfc6750 import BearerTokenValidator
 from authlib.oauth2.rfc6750.errors import InsufficientScopeError, InvalidTokenError
 from authlib.oauth2.rfc7009 import RevocationEndpoint
+from authlib.oauth2.rfc7636 import CodeChallenge
 from flask import (Blueprint, current_app, json, jsonify, redirect, render_template, request,
                    session, url_for)
 from flask_login import current_user, login_required
@@ -62,9 +63,9 @@ def save_token(new_token, request_):
 
 
 class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
-    """Authorization code grant backed by the Grant model."""
+    """Authorization code grant with mandatory PKCE, backed by the Grant model."""
 
-    TOKEN_ENDPOINT_AUTH_METHODS = ['client_secret_basic', 'client_secret_post']
+    TOKEN_ENDPOINT_AUTH_METHODS = ['client_secret_basic', 'client_secret_post', 'none']
     TOKEN_ENDPOINT_HTTP_METHODS = ['POST', 'GET']
 
     def save_authorization_code(self, code, request):
@@ -76,6 +77,8 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
             redirect_uri=request.payload.redirect_uri or request.client.default_redirect_uri,
             scopes=request.payload.scope,
             user_id=request.user.id,
+            code_challenge=request.payload.data.get('code_challenge'),
+            code_challenge_method=request.payload.data.get('code_challenge_method'),
             expires_at=expires_at
         ).save()
 
@@ -93,6 +96,37 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
     def authenticate_user(self, authorization_code):
         """Return user bound to Grant object."""
         return authorization_code.user
+
+
+def _authenticate_implicit_client(query_client, request):
+    """Identify implicit-grant client by client_id only, without client secret."""
+    client_id = request.payload.client_id
+    if client_id and not request.payload.data.get('client_secret'):
+        return query_client(client_id)
+    return None
+
+
+class MandatoryCodeChallenge(CodeChallenge):
+    """PKCE extension requiring a code challenge for every authorization code request."""
+
+    def validate_code_challenge(self, grant, redirect_uri):
+        """Require 'code_challenge' in the authorization request."""
+        if not grant.request.payload.data.get('code_challenge'):
+            raise InvalidRequestError("Missing 'code_challenge'.")
+        super(MandatoryCodeChallenge, self).validate_code_challenge(grant, redirect_uri)
+
+    def validate_code_verifier(self, grant, result):
+        """Require a stored code challenge when exchanging an authorization code."""
+        authorization_code = grant.request.authorization_code
+        if not self.get_authorization_code_challenge(authorization_code):
+            raise InvalidRequestError("Missing 'code_challenge'.")
+        super(MandatoryCodeChallenge, self).validate_code_verifier(grant, result)
+
+
+class ImplicitGrant(grants.ImplicitGrant):
+    """Implicit grant returning access tokens in the redirect URI fragment."""
+
+    TOKEN_ENDPOINT_AUTH_METHODS = ['implicit_client']
 
 
 class ClientCredentialsGrant(grants.ClientCredentialsGrant):
@@ -165,7 +199,9 @@ class BearerValidator(BearerTokenValidator):
             raise InsufficientScopeError()
 
 
-oauth_server.register_grant(AuthorizationCodeGrant)
+oauth_server.register_client_auth_method('implicit_client', _authenticate_implicit_client)
+oauth_server.register_grant(AuthorizationCodeGrant, [MandatoryCodeChallenge()])
+oauth_server.register_grant(ImplicitGrant)
 oauth_server.register_grant(ClientCredentialsGrant)
 oauth_server.register_grant(RefreshTokenGrant)
 oauth_server.register_endpoint(Revocation)

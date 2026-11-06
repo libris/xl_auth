@@ -34,7 +34,7 @@ class Config(object):
     EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '25'))
     EMAIL_TIMEOUT = int(os.environ.get('EMAIL_TIMEOUT', '5'))
     OAUTH2_TOKEN_EXPIRES_IN = {'authorization_code': 36000, 'refresh_token': 36000,
-                               'client_credentials': 36000}
+                               'client_credentials': 36000, 'implicit': 36000}
     OAUTH2_REFRESH_TOKEN_GENERATOR = True
     XL_AUTH_MAX_ACTIVE_PASSWORD_RESETS = 2
     XL_AUTH_FAILED_LOGIN_TIMEFRAME = 60 * 60

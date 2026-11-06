@@ -120,11 +120,16 @@ class Client(Model):
 
     def check_endpoint_auth_method(self, method, endpoint):
         """Return whether client supports auth 'method' for 'endpoint'."""
-        return method in ('client_secret_basic', 'client_secret_post', 'none')
+        if method in ('client_secret_basic', 'client_secret_post', 'implicit_client'):
+            return True
+        if endpoint == 'revocation':
+            return True
+        # 'none' at the token endpoint is only for public clients using PKCE.
+        return not self.is_confidential
 
     def check_response_type(self, response_type):
         """Return whether client supports 'response_type'."""
-        return response_type == 'code'
+        return response_type in ('code', 'token')
 
     def check_grant_type(self, grant_type):
         """Return whether client supports 'grant_type'."""
