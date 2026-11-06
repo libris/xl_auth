@@ -113,7 +113,7 @@ Technology choices:
     behind Nginx reverse-proxying in production and utilizing
     [Flask-OAuthlib](https://flask-oauthlib.readthedocs.io/en/latest/)
     for OAuth2 support
--   Python 3.8+
+-   Python 3.11+
 -   The production database of choice is Postgres, using SQLAlchemy
     PostgreSQL Engine
 
