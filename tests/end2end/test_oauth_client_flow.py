@@ -12,6 +12,8 @@ from xl_auth.oauth.token.models import Token
 
 from ..factories import ClientFactory, CollectionFactory, PermissionFactory
 
+CODE_CHALLENGE = 'E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM'
+
 
 def test_oauth_authorize_success(user, client, testapp):
     """Go to authorize page and confirm grant."""
@@ -20,7 +22,8 @@ def test_oauth_authorize_success(user, client, testapp):
                       params={'client_id': client.client_id,
                               'response_type': 'code',
                               'redirect_uri': client.default_redirect_uri,
-                              'scope': ' '.join(client.default_scopes)})
+                              'scope': ' '.join(client.default_scopes),
+                              'code_challenge': CODE_CHALLENGE})
     # Redirected to homepage
     res = res.follow()
     # Fills out login form
@@ -56,7 +59,8 @@ def test_reauthorizing_same_client_and_scopes_skips_consent(user, client, testap
     """Once a client is authorized, the same client+scopes is not prompted again."""
     authorize_params = {'client_id': client.client_id, 'response_type': 'code',
                         'redirect_uri': client.default_redirect_uri,
-                        'scope': ' '.join(client.default_scopes)}
+                        'scope': ' '.join(client.default_scopes),
+                        'code_challenge': CODE_CHALLENGE}
     # First authorization: log in, see consent form, confirm. Confirming redirects to
     # the client's redirect_uri with the grant code.
     res = _login(testapp.get('/oauth/authorize', params=authorize_params), user)
@@ -81,14 +85,16 @@ def test_authorizing_one_client_does_not_authorize_another(user, client, testapp
     res = _login(testapp.get('/oauth/authorize',
                              params={'client_id': client.client_id, 'response_type': 'code',
                                      'redirect_uri': client.default_redirect_uri,
-                                     'scope': ' '.join(client.default_scopes)}), user)
+                                     'scope': ' '.join(client.default_scopes),
+                                     'code_challenge': CODE_CHALLENGE}), user)
     res.forms['authorizeForm'].submit().follow()
 
     # Now a *different* client must still get the consent screen, not an auto-grant.
     res = testapp.get('/oauth/authorize',
                       params={'client_id': other_client.client_id, 'response_type': 'code',
                               'redirect_uri': other_client.default_redirect_uri,
-                              'scope': ' '.join(other_client.default_scopes)})
+                              'scope': ' '.join(other_client.default_scopes),
+                              'code_challenge': CODE_CHALLENGE})
     assert 'authorizeForm' in res.forms
     # And no grant exists for the other client until the user actually confirms.
     assert Grant.query.filter_by(client_id=other_client.client_id).first() is None
@@ -103,13 +109,15 @@ def test_authorizing_narrow_scope_does_not_authorize_broader(user, testapp):
     # Authorize for 'read' only.
     res = _login(testapp.get('/oauth/authorize',
                              params={'client_id': client.client_id, 'response_type': 'code',
-                                     'redirect_uri': redirect_uri, 'scope': 'read'}), user)
+                                     'redirect_uri': redirect_uri, 'scope': 'read',
+                                     'code_challenge': CODE_CHALLENGE}), user)
     res.forms['authorizeForm'].submit().follow()
 
     # Requesting the broader 'read write' still prompts.
     res = testapp.get('/oauth/authorize',
                       params={'client_id': client.client_id, 'response_type': 'code',
-                              'redirect_uri': redirect_uri, 'scope': 'read write'})
+                              'redirect_uri': redirect_uri, 'scope': 'read write',
+                              'code_challenge': CODE_CHALLENGE})
     assert 'authorizeForm' in res.forms
 
 
@@ -159,12 +167,17 @@ def test_oauth_authorize_invalid_client_id(user, client, testapp):
 
 def test_get_access_token(grant, testapp):
     """Get access token using grant code."""
+    grant.code_challenge = CODE_CHALLENGE
+    grant.code_challenge_method = 'plain'
+    grant.save()
+
     credentials = '%s:%s' % (grant.client.client_id, grant.client.client_secret)
     auth_code = str(b64encode(credentials.encode()).decode())
     res = testapp.get(url_for('oauth.create_access_token'),
                       params={'grant_type': 'authorization_code',
                               'code': grant.code,
-                              'redirect_uri': grant.redirect_uri},
+                              'redirect_uri': grant.redirect_uri,
+                              'code_verifier': CODE_CHALLENGE},
                       headers={'Authorization': str('Basic ' + auth_code)})
 
     token = Token.query.filter_by(user_id=grant.user_id, client_id=grant.client_id).first()
@@ -271,6 +284,20 @@ def test_verify_returns_permissions_on_active_collections_only(token, testapp):
     assert returned_permission['registrant'] == permission2.registrant
     assert returned_permission['cataloger'] == permission2.cataloger
     assert returned_permission['friendly_name'] == active_collection.friendly_name
+
+
+def test_verify_with_insufficient_scope(token, testapp):
+    """Attempt getting user details with token lacking one of the required scopes."""
+    token.scopes = ['read']
+    token.save()
+
+    res = testapp.get(url_for('oauth.verify'), expect_errors=True,
+                      headers={'Authorization': str('Bearer ' + token.access_token)})
+
+    assert res.status_code == 403
+    assert res.json_body['app_version'] == __version__
+    assert res.json_body['message'] == 'The request requires higher privileges ' \
+                                       'than provided by the access token.'
 
 
 def test_verify_without_bearer(testapp):

@@ -29,6 +29,9 @@ class Grant(SurrogatePK, Model):
 
     _scopes = Column(db.Text, nullable=False)
 
+    code_challenge = Column(db.String(128), nullable=True)
+    code_challenge_method = Column(db.String(10), nullable=True)
+
     def __init__(self, scopes=None, **kwargs):
         """Create instance."""
         db.Model.__init__(self, **kwargs)
@@ -62,6 +65,18 @@ class Grant(SurrogatePK, Model):
     @property
     def display_value(self):
         return f"{self.user.email}: {_('Client').lower()} {self.client.name}, {_('Expires At').lower()} {self.client.expires_at}"
+
+    def get_redirect_uri(self):
+        """Return redirect URI."""
+        return self.redirect_uri
+
+    def get_scope(self):
+        """Return scopes string."""
+        return ' '.join(self.scopes)
+
+    def is_expired(self):
+        """Return whether grant has expired."""
+        return self.expires_at < datetime.utcnow()
 
     def __repr__(self):
         """Represent instance as a unique string."""

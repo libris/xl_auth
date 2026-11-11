@@ -3,11 +3,17 @@
 
 from datetime import datetime, timedelta
 
-from flask import Blueprint, current_app, jsonify, render_template, request, session
+from authlib.oauth2 import OAuth2Error
+from authlib.oauth2.rfc6749 import InvalidRequestError, grants
+from authlib.oauth2.rfc6750 import BearerTokenValidator
+from authlib.oauth2.rfc6750.errors import InsufficientScopeError, InvalidTokenError
+from authlib.oauth2.rfc7009 import RevocationEndpoint
+from authlib.oauth2.rfc7636 import CodeChallenge
+from flask import (Blueprint, current_app, json, jsonify, redirect, render_template, request,
+                   session, url_for)
 from flask_login import current_user, login_required
-from oauthlib.oauth2 import OAuth2Error
 
-from ..extensions import csrf_protect, oauth_provider
+from ..extensions import csrf_protect, oauth_server, require_oauth
 from ..user.models import User
 from .client.models import Client
 from .forms import AuthorizeForm
@@ -17,64 +23,32 @@ from .token.models import Token
 blueprint = Blueprint('oauth', __name__, url_prefix='/oauth', static_folder='../static')
 
 
-@oauth_provider.clientgetter
-def get_client(client_id):
+def query_client(client_id):
     """Return Client object."""
     return Client.get_by_id(client_id)
 
 
-@oauth_provider.grantsetter
-def set_grant(client_id, code, request_, **_):
-    """Create Grant object."""
-    expires_at = None
-    return Grant(
-        client_id=client_id,
-        code=code['code'],
-        redirect_uri=request_.redirect_uri,
-        scopes=request_.scopes,
-        user_id=current_user.id,
-        expires_at=expires_at
-    ).save()
+def save_token(new_token, request_):
+    """Create or update Token object."""
+    expires_at = datetime.utcnow() + timedelta(seconds=new_token.get('expires_in', 36000))
+    grant_type = request_.payload.grant_type
 
-
-@oauth_provider.grantgetter
-def get_grant(client_id, code):
-    """Return Grant object."""
-    return Grant.query.filter_by(client_id=client_id, code=code).first()
-
-
-@oauth_provider.tokensetter
-def set_token(new_token, request_, **_):
-    """Create Token object."""
-    expires_at = datetime.utcnow() + timedelta(seconds=new_token.get('expires_in'))
-    request_params = dict((key, value) for key, value in request_.uri_query_params)
-    if request_.body:
-        request_params.update(request_.body)
-
-    user_id = _get_user_id(request_)
-
-    if 'grant_type' in request_params and request_params['grant_type'] == 'refresh_token':
+    if grant_type == 'refresh_token':
         token = Token.query.filter_by(client_id=request_.client.client_id,
-                                      user_id=user_id,
-                                      refresh_token=request_params['refresh_token']).first()
+                                      user_id=request_.user.id,
+                                      refresh_token=request_.form.get('refresh_token')).first()
         token.access_token = new_token['access_token']
         token.refresh_token = new_token['refresh_token']
         token.expires_at = expires_at
-    elif 'grant_type' in request_params and request_params['grant_type'] == 'client_credentials':
-        if not user_id:
-            # TODO: this should ideally happen before the call to set_token.
-            raise OAuth2Error(status_code=400, description='No user bound to client')
+    else:
+        user_id = request_.user.id if request_.user else None
+        if grant_type == 'client_credentials':
+            if not request_.client.user_id:
+                # TODO: this should ideally happen before the call to save_token.
+                raise OAuth2Error(error='invalid_request', status_code=400,
+                                  description='No user bound to client')
+            user_id = request_.client.user_id
 
-        token = Token(
-            access_token=new_token['access_token'],
-            refresh_token=new_token.get('refresh_token', None),
-            token_type=new_token['token_type'],
-            scopes=new_token['scope'],
-            expires_at=expires_at,
-            client_id=request_.client.client_id,
-            user_id=user_id
-        )
-    else:  # if request_params['grant_type'] == 'code':
         token = Token(
             access_token=new_token['access_token'],
             refresh_token=new_token.get('refresh_token', None),
@@ -88,29 +62,165 @@ def set_token(new_token, request_, **_):
     return token.save()
 
 
-def _get_user_id(request_):
-    if request_.user and request_.user.id:
-        return request_.user.id
-    elif hasattr(current_user, 'id'):
-        return current_user.id
-    else:
+class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
+    """Authorization code grant with mandatory PKCE, backed by the Grant model."""
+
+    TOKEN_ENDPOINT_AUTH_METHODS = ['client_secret_basic', 'client_secret_post', 'none']
+    TOKEN_ENDPOINT_HTTP_METHODS = ['POST', 'GET']
+
+    def save_authorization_code(self, code, request):
+        """Create Grant object."""
+        expires_at = None
+        return Grant(
+            client_id=request.client.client_id,
+            code=code,
+            redirect_uri=request.payload.redirect_uri or request.client.default_redirect_uri,
+            scopes=request.scope,
+            user_id=request.user.id,
+            code_challenge=request.payload.data.get('code_challenge'),
+            code_challenge_method=request.payload.data.get('code_challenge_method'),
+            expires_at=expires_at
+        ).save()
+
+    def query_authorization_code(self, code, client):
+        """Return Grant object if valid."""
+        item = Grant.query.filter_by(client_id=client.client_id, code=code).first()
+        if item and not item.is_expired():
+            return item
         return None
 
+    def delete_authorization_code(self, authorization_code):
+        """Delete Grant object."""
+        authorization_code.delete()
 
-@oauth_provider.tokengetter
-def get_token(access_token=None, refresh_token=None):
-    """Return Token object."""
-    if access_token:
-        return Token.query.filter_by(access_token=access_token).first()
-    if refresh_token:
-        return Token.query.filter_by(refresh_token=refresh_token).first()
+    def authenticate_user(self, authorization_code):
+        """Return user bound to Grant object."""
+        return authorization_code.user
+
+
+def _authenticate_implicit_client(query_client, request):
+    """Identify implicit-grant client by client_id only, without client secret."""
+    client_id = request.payload.client_id
+    if client_id and not request.payload.data.get('client_secret'):
+        return query_client(client_id)
     return None
 
 
-@oauth_provider.invalid_response
-def require_oauth_invalid(req):
-    """OAuth2 errors JSONified."""
-    return jsonify(app_version=current_app.config['APP_VERSION'], message=req.error_message), 401
+class MandatoryCodeChallenge(CodeChallenge):
+    """PKCE extension requiring a code challenge for every authorization code request."""
+
+    def validate_code_challenge(self, grant, redirect_uri):
+        """Require 'code_challenge' in the authorization request."""
+        if not grant.request.payload.data.get('code_challenge'):
+            raise InvalidRequestError("Missing 'code_challenge'.")
+        super(MandatoryCodeChallenge, self).validate_code_challenge(grant, redirect_uri)
+
+    def validate_code_verifier(self, grant, result):
+        """Require a stored code challenge when exchanging an authorization code."""
+        authorization_code = grant.request.authorization_code
+        if not self.get_authorization_code_challenge(authorization_code):
+            raise InvalidRequestError("Missing 'code_challenge'.")
+        super(MandatoryCodeChallenge, self).validate_code_verifier(grant, result)
+
+
+class ImplicitGrant(grants.ImplicitGrant):
+    """Implicit grant returning access tokens in the redirect URI fragment."""
+
+    TOKEN_ENDPOINT_AUTH_METHODS = ['implicit_client']
+
+
+class ClientCredentialsGrant(grants.ClientCredentialsGrant):
+    """Client credentials grant binding tokens to the client's user."""
+
+    TOKEN_ENDPOINT_AUTH_METHODS = ['client_secret_basic', 'client_secret_post']
+    TOKEN_ENDPOINT_HTTP_METHODS = ['POST', 'GET']
+
+    def create_token_response(self):
+        """Issue token including refresh token, like the legacy implementation."""
+        token = self.generate_token(scope=self.request.payload.scope,
+                                    include_refresh_token=True)
+        self.save_token(token)
+        return 200, token, self.TOKEN_RESPONSE_HEADER
+
+
+class RefreshTokenGrant(grants.RefreshTokenGrant):
+    """Refresh token grant rotating tokens in place."""
+
+    TOKEN_ENDPOINT_AUTH_METHODS = ['client_secret_basic', 'client_secret_post']
+    TOKEN_ENDPOINT_HTTP_METHODS = ['POST', 'GET']
+    INCLUDE_NEW_REFRESH_TOKEN = True
+
+    def authenticate_refresh_token(self, refresh_token):
+        """Return Token object."""
+        return Token.query.filter_by(refresh_token=refresh_token).first()
+
+    def authenticate_user(self, credential):
+        """Return user bound to Token object."""
+        return credential.user
+
+    def revoke_old_credential(self, credential):
+        """Keep Token row; it is updated in place by 'save_token'."""
+        pass
+
+
+class Revocation(RevocationEndpoint):
+    """Token revocation endpoint, also authenticating clients without a secret."""
+
+    CLIENT_AUTH_METHODS = ['client_secret_basic', 'client_secret_post', 'none']
+
+    def query_token(self, token_string, token_type_hint):
+        """Return Token object."""
+        if token_type_hint == 'refresh_token':
+            return Token.query.filter_by(refresh_token=token_string).first()
+        token = Token.query.filter_by(access_token=token_string).first()
+        if not token:
+            token = Token.query.filter_by(refresh_token=token_string).first()
+        return token
+
+    def revoke_token(self, token, request):
+        """Delete Token object."""
+        token.delete()
+
+
+class BearerValidator(BearerTokenValidator):
+    """Bearer token validator with the legacy error messages."""
+
+    def authenticate_token(self, token_string):
+        """Return Token object."""
+        return Token.query.filter_by(access_token=token_string).first()
+
+    def validate_token(self, token, scopes, request):
+        """Validate Token object."""
+        if not token:
+            raise InvalidTokenError(description='Bearer token not found.')
+        if token.is_expired():
+            raise InvalidTokenError(description='Bearer token is expired.')
+        if self.scope_insufficient(token.get_scope(), scopes):
+            raise InsufficientScopeError()
+
+
+oauth_server.register_client_auth_method('implicit_client', _authenticate_implicit_client)
+oauth_server.register_grant(AuthorizationCodeGrant, [MandatoryCodeChallenge()])
+oauth_server.register_grant(ImplicitGrant)
+oauth_server.register_grant(ClientCredentialsGrant)
+oauth_server.register_grant(RefreshTokenGrant)
+oauth_server.register_endpoint(Revocation)
+require_oauth.register_token_validator(BearerValidator())
+
+
+def init_app(app):
+    """Initialize the OAuth2 server for 'app'."""
+    oauth_server.init_app(app, query_client=query_client, save_token=save_token)
+
+
+def _authorize_error_description(error):
+    """Map OAuth2Error to the legacy authorize error description."""
+    client_id = request.values.get('client_id')
+    if not client_id:
+        return 'Missing client_id parameter.'
+    if not query_client(client_id):
+        return 'Invalid client_id parameter value.'
+    return error.get_error_description()
 
 
 def _already_authorized(client_id, scopes):
@@ -129,48 +239,54 @@ def _remember_authorization(client_id, scopes):
 
 @blueprint.route('/authorize', methods=['GET', 'POST'])
 @login_required
-@oauth_provider.authorize_handler
-def authorize(*_, **kwargs):
+def authorize():
     """OAuth2'orize."""
+    try:
+        consent_grant = oauth_server.get_consent_grant()
+    except OAuth2Error as error:
+        return redirect(url_for('oauth.render_errors', error=error.error,
+                                error_description=_authorize_error_description(error)))
+
     authorize_form = AuthorizeForm(request.form)
+    client_id = consent_grant.client.client_id
+    scopes = (request.values.get('scope') or '').split()
+
     if request.method == 'GET':
-        client_id = kwargs.get('client_id')
-        client = Client.query.filter_by(client_id=client_id).first()
-        kwargs['client'] = client
-        # Skip the consent screen only when this specific client has already been
-        # authorized for (at least) the requested scopes this session.
-        if _already_authorized(client_id, kwargs.get('scopes') or []):
-            return True
-        else:
-            return render_template('oauth/authorize.html', authorize_form=authorize_form, **kwargs)
+        if _already_authorized(client_id, scopes):
+            return oauth_server.create_authorization_response(
+                grant=consent_grant, grant_user=current_user)
+        return render_template('oauth/authorize.html', authorize_form=authorize_form,
+                               client=consent_grant.client, scopes=scopes)
 
     confirm = authorize_form['confirm'].data == 'y'
     if confirm:
-        client_id = request.values.get('client_id')
-        scopes = (request.values.get('scope') or '').split()
         _remember_authorization(client_id, scopes)
-    return confirm
+    return oauth_server.create_authorization_response(
+        grant=consent_grant, grant_user=current_user if confirm else None)
 
 
 @csrf_protect.exempt
 @blueprint.route('/token', methods=['POST', 'GET'])
-@oauth_provider.token_handler
 def create_access_token():
     """Generate access token."""
-    return {'app_version': current_app.config['APP_VERSION']}
+    response = oauth_server.create_token_response()
+    if response.status_code == 200:
+        body = json.loads(response.get_data(as_text=True))
+        body['app_version'] = current_app.config['APP_VERSION']
+        response.set_data(json.dumps(body))
+    return response
 
 
 @blueprint.route('/verify', methods=['GET'])
-@oauth_provider.require_oauth('read', 'write')
+@require_oauth('read write')
 def verify():
     """Verify access token is valid and return a bunch of user details."""
-    # noinspection PyUnresolvedReferences
     oauth = request.oauth
     assert isinstance(oauth.user, User)
 
     return jsonify(
         app_version=current_app.config['APP_VERSION'],
-        expires_at=oauth.access_token.expires_at.isoformat() + 'Z',
+        expires_at=oauth.expires_at.isoformat() + 'Z',
         user={
             'full_name': oauth.user.full_name,
             'email': oauth.user.email,
@@ -188,10 +304,9 @@ def verify():
 
 @blueprint.route('/revoke', methods=['POST'])
 @login_required
-@oauth_provider.revoke_handler
 def revoke_access_token():
     """Revoke access token."""
-    pass
+    return oauth_server.create_endpoint_response('revocation')
 
 
 @blueprint.route('/errors', methods=['GET'])

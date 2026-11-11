@@ -76,6 +76,22 @@ class Token(SurrogatePK, Model):
     def display_value(self):
         return f"{self.user.email}: {_('Client').lower()} {self.client.name}, {_('Expires At').lower()} {self.expires_at}"
 
+    def check_client(self, client):
+        """Return whether token was issued to 'client'."""
+        return self.client_id == client.client_id
+
+    def get_scope(self):
+        """Return scopes string."""
+        return ' '.join(self.scopes)
+
+    def is_expired(self):
+        """Return whether token has expired."""
+        return self.expires_at < datetime.utcnow()
+
+    def is_revoked(self):
+        """Return whether token is revoked; revoked tokens are deleted."""
+        return False
+
     def __repr__(self):
         """Represent instance as a unique string."""
         return '<Token({user!r},{client!r})>'.format(user=self.user.email,

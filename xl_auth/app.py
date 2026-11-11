@@ -8,7 +8,7 @@ from flask_login import current_user
 
 from . import collection, commands, oauth, permission, public, user
 from .extensions import (babel, bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager,
-                         migrate, oauth_provider, flask_static_digest)
+                         migrate, flask_static_digest)
 from .settings import DEFAULT_SECRET_KEY, ProdConfig
 
 
@@ -45,7 +45,7 @@ def register_extensions(app):
     login_manager.init_app(app)
     debug_toolbar.init_app(app)
     migrate.init_app(app, db)
-    oauth_provider.init_app(app)
+    oauth.views.init_app(app)
     flask_static_digest.init_app(app)
     return None
 

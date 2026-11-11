@@ -111,9 +111,9 @@ Technology choices:
     stable release
 -   Solution implemented as Gunicorn-Flask application, intended to run
     behind Nginx reverse-proxying in production and utilizing
-    [Flask-OAuthlib](https://flask-oauthlib.readthedocs.io/en/latest/)
+    [Authlib](https://docs.authlib.org/en/latest/flask/2/index.html)
     for OAuth2 support
--   Python 3.8+
+-   Python 3.11+
 -   The production database of choice is Postgres, using SQLAlchemy
     PostgreSQL Engine
 
