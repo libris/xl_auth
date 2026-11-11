@@ -286,6 +286,20 @@ def test_verify_returns_permissions_on_active_collections_only(token, testapp):
     assert returned_permission['friendly_name'] == active_collection.friendly_name
 
 
+def test_verify_with_insufficient_scope(token, testapp):
+    """Attempt getting user details with token lacking one of the required scopes."""
+    token.scopes = ['read']
+    token.save()
+
+    res = testapp.get(url_for('oauth.verify'), expect_errors=True,
+                      headers={'Authorization': str('Bearer ' + token.access_token)})
+
+    assert res.status_code == 403
+    assert res.json_body['app_version'] == __version__
+    assert res.json_body['message'] == 'The request requires higher privileges ' \
+                                       'than provided by the access token.'
+
+
 def test_verify_without_bearer(testapp):
     """Attempt getting expiry and user details without 'Bearer' header."""
     res = testapp.get(url_for('oauth.verify'), expect_errors=True)

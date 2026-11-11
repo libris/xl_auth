@@ -278,7 +278,7 @@ def create_access_token():
 
 
 @blueprint.route('/verify', methods=['GET'])
-@require_oauth(['read', 'write'])
+@require_oauth('read write')
 def verify():
     """Verify access token is valid and return a bunch of user details."""
     oauth = request.oauth
