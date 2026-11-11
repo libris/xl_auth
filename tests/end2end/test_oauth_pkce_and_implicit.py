@@ -190,6 +190,17 @@ def test_confidential_client_still_requires_secret(user, client, testapp):
     assert res.json_body['error'] == 'invalid_client'
 
 
+def test_authorize_stores_resolved_scope(user, client, testapp):
+    """Scopes unsupported by the client are filtered out of the stored grant."""
+    res = _authorize(testapp, user, client_id=client.client_id, response_type='code',
+                     redirect_uri=client.default_redirect_uri, scope='read write madeup',
+                     code_challenge=_s256(CODE_VERIFIER), code_challenge_method='S256')
+    assert res.status_code in (302, 308)
+
+    grant = Grant.query.filter_by(client_id=client.client_id, user_id=user.id).first()
+    assert grant.scopes == ['read', 'write']
+
+
 def test_implicit_grant_returns_token_in_fragment(user, client, testapp):
     """Implicit grant puts the access token in the redirect URI fragment."""
     res = _authorize(testapp, user, client_id=client.client_id, response_type='token',

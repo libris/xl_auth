@@ -75,7 +75,7 @@ class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
             client_id=request.client.client_id,
             code=code,
             redirect_uri=request.payload.redirect_uri or request.client.default_redirect_uri,
-            scopes=request.payload.scope,
+            scopes=request.scope,
             user_id=request.user.id,
             code_challenge=request.payload.data.get('code_challenge'),
             code_challenge_method=request.payload.data.get('code_challenge_method'),
